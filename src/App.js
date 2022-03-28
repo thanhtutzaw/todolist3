@@ -89,13 +89,14 @@ function App() {
         </ul>
 
       </section>
-      <nav>
+      <nav className="nav">
       <ul>
       <li className='add-btn-parent'>
       <VscAdd className='add-btn' />
       </li>
       </ul>
       </nav>
+      
     </div>
   );
 }
