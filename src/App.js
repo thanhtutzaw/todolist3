@@ -1,102 +1,28 @@
-import logo from './logo.svg';
-import profile from '../src/profile.webp'
-import React from 'react';
-import {RiCheckboxBlankCircleLine} from 'react-icons/ri'
-import {VscAdd} from 'react-icons/vsc'
-import {CgChevronRightR} from 'react-icons/cg'
+import logo from "./logo.svg";
 
-import './App.css';
+import React from "react";
+import Header from "./components/Header";
+
+import { CgChevronRightR } from "react-icons/cg";
+
+import "./App.css";
+import Todolist from "./components/Todolist";
+import Nav from "./components/Nav";
 
 function App() {
   return (
     <div className="main container ">
-       <a className="btnParent" href="https://todolistzee.netlify.app"><button className="btn" type="button"><CgChevronRightR /></button></a>
-     
-      <header className='header-row'>
-        <div className='header-text'>
-          <h1>My tasks</h1>
-          <p className='header-nobold'>4 tasks for <span>Today</span></p>
-        </div>
-        <div className='header-image'>
-          <img src={profile} alt="Profile" />
-        </div>
-      </header>
+      <a className="btnParent" href="https://todolistzee.netlify.app">
+        <button className="btn" type="button">
+          <CgChevronRightR />
+        </button>
+      </a>
 
-      <section className='todo-parent row'>
-        <ul>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          <li className='todo'>
-            <RiCheckboxBlankCircleLine className='todo-checkbox' />
-            <label className='todo-label'>
-              loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-            </label>
-          </li>
-          
-          
-        </ul>
+      <Header />
 
-      </section>
-      <nav className="nav">
-      <ul>
-      <li className='add-btn-parent'>
-      <VscAdd className='add-btn' />
-      </li>
-      </ul>
-      </nav>
-      
+      <Todolist />
+
+      <Nav />
     </div>
   );
 }
