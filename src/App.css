@@ -17,7 +17,7 @@
 .main {
   /* background-color: #282c34; */
   background-color: white;
-  min-height: 100vh;
+  min-height: 86vh;
   color: var(--primary-color);
   font-size: calc(10px + 2vmin);
 }
