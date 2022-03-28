@@ -1,38 +1,174 @@
-.App {
-  text-align: center;
+.container {
+  /* text-align: center; */
+  padding: 0 2rem;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100&display=swap");
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+:root {
+  --primary-color: rgb(28, 28, 65);
 }
-
-.App-header {
-  background-color: #282c34;
+.main {
+  /* background-color: #282c34; */
+  background-color: white;
   min-height: 100vh;
+  color: var(--primary-color);
+  font-size: calc(10px + 2vmin);
+}
+.row {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-text {
+  font-family: "Catamaran", sans-serif;
+}
+.header-image {
+}
+.header-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 36%;
+  object-fit: cover;
+}
+header {
+  margin: 2rem 0;
+}
+/* .header-text span {
+  font-weight: 300;
+  font-family: 'Catamaran', sans-serif;
+} */
+.header-nobold {
+  /* font-weight:lighter; */
+  font-family: "Catamaran", sans-serif;
+}
+ul li {
+  list-style: none;
+}
+.todo {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+  margin-bottom: 1.4rem;
+  gap: 0.8rem;
+  max-width: 700px;
+  margin-right:1rem;
+}
+.todo-label {
+  max-width: 85%;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+.todo::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -25%;
+  height: 2px;
+  background-color: black;
+  opacity: 0.1;
+}
+.todo-parent {
+  text-align: center;
+  height: 400px;
+  overflow-y: auto;
+
+  /* border: 2px solid red; */
+}
+.todo-parent {
+  /* border-bottom: 2px solid black; */
+  display: block;
+}
+.todo-checkbox {
+}
+.btnParent{
+  position: absolute;
+  top:0;
+  right:6px;
+}
+.btn{
+  font-size: 1.4rem;
+  color:rgb(0, 0, 0);
+  padding:.7rem;
+  /* background-color: rgba(182, 182, 182, 0.383); */
+  background-color: transparent;
+  border: none;
+  /* margin-top:-3px; */
+}
+.btn:focus{
+  outline:none;
 }
 
-.App-link {
-  color: #61dafb;
+@media (max-width: 991px){
+  body{
+    /* display: none; */
+  }
+  .todo-parent::-webkit-scrollbar {
+    visibility: visible;
+  }
+  .todo-parent::-webkit-scrollbar-thumb{
+    visibility: visible;
+  }
+}
+.todo-parent:hover::-webkit-scrollbar {
+  opacity: 1;
+
+  visibility: visible;
+}
+.todo-parent:hover::-webkit-scrollbar-thumb {
+  visibility: visible;
+  opacity: 1;
+}
+*::-webkit-scrollbar{
+  opacity: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+*::-webkit-scrollbar-thumb {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s linear, opacity 0.3s linear;
+  /* transition: all 1s ease-in-out; */
+
+  background-color: rgba(100, 100, 100, 0.1);
+  scrollbar-width: thin;
+
+  border-radius: 6px;
+}
+*::-webkit-scrollbar-track {
+  /* box-shadow: inset 0 0 5px grey; */
+  border-radius: 10px;
+  scrollbar-width: thin;
+}
+.add-btn-parent{
+  /* border: 2px solid var(--primary-color); */
+  background-color: rgb(197, 197, 197);
+  
+  position: relative;
+  left:75%;
+
+  margin:2rem;
+  padding: 2rem;
+  border-radius: 12px;
+  width:20px;
+  height: 20px;
+  font-size: 2rem;
+}
+.add-btn{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
 }
