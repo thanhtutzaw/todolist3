@@ -25,20 +25,12 @@ body {
   display: flex;
   justify-content: center;
   background-color: rgb(236, 236, 236);
-  /* border: 3px solid red; */
-  /* min-height: 90vh; */
 }
 .main {
   min-height: 100vh;
   max-width: 500px;
   width:100vw;
-  /* border: 3px solid red; */
-
-  /* border: 2px solid red; */
-  /* background-color: #282c34; */
   background-color: white;
-  /* min-height: 86vh; */
-  /* min-width:60vw; */
   color: var(--primary-color);
   font-size: calc(10px + 2vmin);
 }
@@ -104,8 +96,6 @@ ul li {
   opacity: 0.1;
 }
 .todo-parent {
-  /*   
-  max-width: 40%; */
   text-align: center;
   height: 400px;
   overflow-y: auto;
@@ -133,8 +123,7 @@ ul li {
 }
 
 @media (max-width: 991px) {
-  .container{
-  }
+  
   .todo-parent::-webkit-scrollbar {
     visibility: visible;
   }
@@ -159,15 +148,12 @@ ul li {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.3s linear, opacity 0.3s linear;
-  /* transition: all 1s ease-in-out; */
-
   background-color: rgba(100, 100, 100, 0.1);
   scrollbar-width: thin;
 
   border-radius: 6px;
 }
 *::-webkit-scrollbar-track {
-  /* box-shadow: inset 0 0 5px grey; */
   border-radius: 10px;
   scrollbar-width: thin;
 }
@@ -177,8 +163,6 @@ ul li {
   position: relative;
 }
 .add-btn-parent {
-  
-  
   position: absolute;
   right:0;
   bottom: 0;
@@ -192,5 +176,4 @@ ul li {
 }
 .add-btn{
   position: relative;
-
 }

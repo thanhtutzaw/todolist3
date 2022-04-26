@@ -1,30 +1,64 @@
+import "./App.css";
 import logo from "./logo.svg";
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header";
 
-import { CgChevronRightR } from "react-icons/cg";
 
-import "./App.css";
 import Todolist from "./components/Todolist";
 import Nav from "./components/Nav";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Home from "./components/Home";
+import Login from "./components/Login";
+
 
 function App() {
-  return (
-    <div className="main container ">
-      <a className="btnParent" href="https://todolistzee.netlify.app">
-        <button className="btn" type="button">
-          <CgChevronRightR />
-        </button>
-      </a>
+  const [isUserSignin, setisUserSignin] = useState(true);
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) =>{
+    if(user){
+      return setisUserSignin(true)
+    }
+    setisUserSignin(false)
+  } )
+    // if(user){
+      
+    // }
+    // else{
 
-      <Header />
-
-      <Todolist />
-
-      <Nav />
-    </div>
-  );
+    // }
+  
+return (
+  (isUserSignin === true) ? (
+    <Router>
+        
+        <Routes>
+          <Route exact path="/" element={<Home />}>
+          </Route>
+          </Routes>
+          
+    </Router>
+  ) : (
+    <Router>
+        
+        <Routes>
+          <Route exact path="/" element={<Login />}>
+          </Route>
+          </Routes>
+          
+    </Router>
+  )
+)
+  
+    
+  
+  
 }
 
 export default App;
