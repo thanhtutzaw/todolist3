@@ -12,12 +12,6 @@ import { auth } from './Firebase/firebase';
 
 function Home() {
 
-
-
-
-  
-
-
   return (
     <div className="main container ">
       <a className="btnParent" href="https://todolistzee.netlify.app">

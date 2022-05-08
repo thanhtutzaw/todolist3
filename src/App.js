@@ -1,7 +1,7 @@
 import "./App.css";
 import logo from "./logo.svg";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./components/Header";
 
 
@@ -20,13 +20,20 @@ import Login from "./components/Login";
 
 function App() {
   const [isUserSignin, setisUserSignin] = useState(true);
+  const [currentUser, setcurrentUser] = useState();
+
   const auth = getAuth();
-  onAuthStateChanged(auth, (user) =>{
-    if(user){
-      return setisUserSignin(true)
-    }
-    setisUserSignin(false)
-  } )
+
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) =>{
+        if(user){
+          setcurrentUser(user)
+          return setisUserSignin(true)
+        }
+        setisUserSignin(false)
+      } )
+    }, []);
+
     // if(user){
       
     // }
@@ -35,11 +42,11 @@ function App() {
     // }
   
 return (
-  (isUserSignin === true) ? (
+  isUserSignin ? (
     <Router>
         
         <Routes>
-          <Route exact path="/" element={<Home />}>
+          <Route  path="/" element={<Home />}>
           </Route>
           </Routes>
           
@@ -48,7 +55,7 @@ return (
     <Router>
         
         <Routes>
-          <Route exact path="/" element={<Login />}>
+          <Route  path="/" element={<Login />}>
           </Route>
           </Routes>
           

@@ -18,14 +18,11 @@ const btn = {
     
     
 
-    "&:hover": {
-        backgroundColor : 'red'
-    }
+    // "&:hover": {
+    //     backgroundColor : 'red'
+    // }
 
 }
-
-
-
 const signinHandle = () =>{
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth,provider)
@@ -34,6 +31,7 @@ const signinHandle = () =>{
         // setuser(user)
     })
     .catch( (err)=>{
+        alert(err.message)
         console.log(err)
     })
 }
