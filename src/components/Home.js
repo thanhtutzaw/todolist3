@@ -5,12 +5,22 @@ import Todolist from './Todolist';
 import Nav from './Nav';
 
 import { CgChevronRightR } from "react-icons/cg";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from './Firebase/firebase';
-
+import { getAuth, onAuthStateChanged} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+// import { auth } from './Firebase/firebase';
 
 
 function Home() {
+  const auth = getAuth()
+const nevigate = useNavigate()
+
+  useEffect(() => {
+    auth.onAuthStateChanged( (user)=>{
+      if(!user){
+        nevigate('/login')
+      }
+    })
+  }, []);
 
   return (
     <div className="main container ">

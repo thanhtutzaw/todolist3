@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CgChevronRightR } from "react-icons/cg";
 import { auth } from './Firebase/firebase';
-import {signInWithPopup,GoogleAuthProvider} from 'firebase/auth'
+import {signInWithPopup,GoogleAuthProvider,onAuthStateChanged} from 'firebase/auth'
+import { useNavigate } from 'react-router-dom';
+
+function Login() {
+  const nevigate = useNavigate()
+
 const row ={
     display:'flex',
     justifyContent:'center',
@@ -23,21 +28,32 @@ const btn = {
     // }
 
 }
+useEffect(() => {
+  auth.onAuthStateChanged( (user)=>{
+    if(user){
+      nevigate('/')
+    }
+    
+  })
+}, []);
 const signinHandle = () =>{
     const provider = new GoogleAuthProvider()
     signInWithPopup(auth,provider)
     .then( (res)=>{
+      nevigate('/')
         // const user = res.user
         // setuser(user)
     })
     .catch( (err)=>{
-        alert(err.message)
+        alert(`Error! ${err.message}`)
         console.log(err)
     })
 }
 
 
-function Login() {
+
+
+
   return (
     <div className="main container " style={row}>
       <a className="btnParent" href="https://todolistzee.netlify.app">

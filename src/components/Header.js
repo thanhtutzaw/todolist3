@@ -2,30 +2,46 @@ import { setUserId } from "firebase/analytics";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useState,useEffect } from "react";
 import profile from "../profile.webp";
-
+import { useNavigate } from 'react-router-dom';
 
 
 function header(props) {
 const [userphoto, setuserphoto] = useState();
+
 const auth = getAuth()
+const nevigate = useNavigate()
 // const user = auth.currentUser
-onAuthStateChanged( auth , (user)=>{
-  if (user !== null) {
-    // alert('user exist')
-    // The user object has basic properties such as display name, email, etc.
-    const displayName = user.displayName;
-    const email = user.email;
-    const photoURL = user.photoURL;
-    console.log(photoURL)
-    setuserphoto(photoURL)
-    const emailVerified = user.emailVerified;
-  
-    // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    const uid = user.uid;
-  }
-})
+useEffect(() => {
+  onAuthStateChanged( auth , (user)=>{
+    if (user) {
+
+      const photoURL = user.photoURL;
+      console.log(photoURL)
+      setuserphoto(photoURL)
+
+    
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      const uid = user.uid;
+    }
+    // if (user !== null) {
+    //   // alert('user exist')
+    //   // The user object has basic properties such as display name, email, etc.
+    //   const displayName = user.displayName;
+    //   const email = user.email;
+    //   const photoURL = user.photoURL;
+    //   console.log(photoURL)
+    //   setuserphoto(photoURL)
+    //   const emailVerified = user.emailVerified;
+    
+    //   // The user's ID, unique to the Firebase project. Do NOT use
+    //   // this value to authenticate with your backend server, if
+    //   // you have one. Use User.getToken() instead.
+    //   const uid = user.uid;
+    // }
+  })
+}, []);
 // useEffect(() => {
 //   onAuthStateChanged( auth , (user)=>{
 //     user ? setuserphoto(user.photoURL) : setuserphoto()
@@ -39,6 +55,7 @@ const logoutHandle = () => {
   
   signOut(auth)
   .then( ()=>{
+    nevigate('/login')
   })
   .catch( (err) => {
     console.log(err)
