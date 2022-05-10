@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore"
+import { collection , addDoc } from "firebase/firestore"
+// require('dotenv').config()
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,6 +22,22 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
+export const db = getFirestore(app)
+// async function addNewDocument() {
+
+//   try {
+//     const docRef = await addDoc( collection(db , 'users'), {
+//       name: 'John',
+//       age:20
+//     })
+//     console.log("Document Created : id",docRef.id)
+    
+//   } catch (error) {
+//     console.error("Error adding document ", error)
+//   }
+// }
+
+const analytics = getAnalytics(app);
+// addNewDocument()
 export const auth = getAuth(app) ;
