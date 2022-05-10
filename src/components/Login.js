@@ -26,9 +26,9 @@ const btn = {
     backgroundColor: 'white',
     borderRadius: '5px',
     outline: 'none',
-    border: '1px solid rgba(0,0,0,.2)',
+    border: '1px solid rgba(0,0,0,.1)',
     cursor: 'pointer',
-    boxShadow: '0px 3px 3px #0000004f'
+    boxShadow: '0px 2px 20px #0000001f'
     
     
 
