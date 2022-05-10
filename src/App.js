@@ -16,31 +16,65 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import { AuthProvider } from "./Context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  // const nevigate = useNavigate()
+  const [Auth, setAuth] = useState(
+    false || window.localStorage.getItem("auth") === "ture"
+  );
   // const [isUserSignin, setisUserSignin] = useState(true);
-  const [currentUser, setcurrentUser] = useState();
+  // const [currentUser, setcurrentUser] = useState();
 
   const auth = getAuth();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      // if(localStorage.getItem('isUsersignin') === 'true'){
+      //   nevigate('/')
+      // }
+      // else{
+      //   nevigate('/login')
+      // }
+
       if (user) {
-        // nevigate('/')
-        // setcurrentUser(user);
-        // return setisUserSignin(true);
+        setAuth(true);
+        window.localStorage.setItem("auth", "true");
+      } else {
+        setAuth(false);
+        window.localStorage.setItem("auth", "false");
       }
-      // setisUserSignin(false);
     });
   }, []);
+
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       // nevigate('/')
+  //       // setcurrentUser(user);
+  //       // return setisUserSignin(true);
+  //     }
+  //     // setisUserSignin(false);
+  //   });
+  // }, []);
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* {Auth ? (<Route path="/" element={<Home />} />)
+          : (<Route path="/login" element={<Login />} />)} */}
+          
+           
+          <Route path="/" element={<Home />} />
+          
+
+          <Route path="/login" element={<Login />} />
+      
+          
+          
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
