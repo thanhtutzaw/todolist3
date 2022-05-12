@@ -1,71 +1,17 @@
 import React from "react";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-function Todolist() {
+function Todolist({todo}) {
   return (
-    <section className="todo-parent row">
-      <ul>
+      <section>
+        <ul>
         <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-        <li className="todo">
-          <RiCheckboxBlankCircleLine className="todo-checkbox" />
-          <label className="todo-label">
-            loremkjfdksfddfdsfdfdsfdsfdsfdsdfdsfdsfdsffdsfdsfdsfsfdfdsfdsfdsfds
-          </label>
-        </li>
-      </ul>
-    </section>
+            <RiCheckboxBlankCircleLine className="todo-checkbox" />
+            <label className="todo-label">
+              {todo.text}
+            </label>
+          </li>
+        </ul>
+      </section>
   );
 }
 
