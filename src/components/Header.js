@@ -1,49 +1,48 @@
 import { setUserId } from "firebase/analytics";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useState,useEffect } from "react";
-import profile from "../profile.webp";
+// import profile from "../profile.webp";
 import { useNavigate } from 'react-router-dom';
 import { MdDarkMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 function header(props) {
-const [userphoto, setuserphoto] = useState();
 const [opentools, setopentools] = useState(false);
 
 
 const auth = getAuth()
 const nevigate = useNavigate()
 // const user = auth.currentUser
+onAuthStateChanged( auth , (user)=>{
+  if (user) {
+
+    
+
+  
+    // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+    // const uid = user.uid;
+  }
+  // if (user !== null) {
+  //   // alert('user exist')
+  //   // The user object has basic properties such as display name, email, etc.
+  //   const displayName = user.displayName;
+  //   const email = user.email;
+  //   const photoURL = user.photoURL;
+  //   console.log(photoURL)
+  //   setuserphoto(photoURL)
+  //   const emailVerified = user.emailVerified;
+  
+  //   // The user's ID, unique to the Firebase project. Do NOT use
+  //   // this value to authenticate with your backend server, if
+  //   // you have one. Use User.getToken() instead.
+  //   const uid = user.uid;
+  // }
+})
+
 useEffect(() => {
-  onAuthStateChanged( auth , (user)=>{
-    if (user) {
-
-      const photoURL = user.photoURL;
-      console.log(photoURL)
-      setuserphoto(photoURL)
-
-    
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-      const uid = user.uid;
-    }
-    // if (user !== null) {
-    //   // alert('user exist')
-    //   // The user object has basic properties such as display name, email, etc.
-    //   const displayName = user.displayName;
-    //   const email = user.email;
-    //   const photoURL = user.photoURL;
-    //   console.log(photoURL)
-    //   setuserphoto(photoURL)
-    //   const emailVerified = user.emailVerified;
-    
-    //   // The user's ID, unique to the Firebase project. Do NOT use
-    //   // this value to authenticate with your backend server, if
-    //   // you have one. Use User.getToken() instead.
-    //   const uid = user.uid;
-    // }
-  })
+  
 }, []);
 // useEffect(() => {
 //   onAuthStateChanged( auth , (user)=>{
@@ -83,7 +82,7 @@ const handleTools = () => {
         </div>
         <div className="header-image">
           {/* <img  src={userphoto} srcSet={`${userphoto} 1x , ${userphoto} 2x`}  onClick={logoutHandle}/> */}
-          <img src={userphoto} onClick={handleTools}  />
+          <img src={props.userphoto} onClick={handleTools}  />
 
 
         </div>

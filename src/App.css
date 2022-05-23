@@ -81,7 +81,7 @@ ul li {
 
 .todo-label {
   flex-wrap: wrap;
-  user-select: none;
+  /* user-select: none; */
   max-width: 85%;
   text-align: left;
   overflow-wrap: break-word;
