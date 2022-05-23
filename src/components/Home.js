@@ -89,6 +89,7 @@ function Home({ Auth }) {
           );
           console.log("data rendered");
         });
+        // return () => unsub()
       }
 
       // const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -105,7 +106,11 @@ function Home({ Auth }) {
       // this function call will console
       // consoleMe()
     });
-  }, [text]);
+    // return () => unsub()
+    
+  }, []);
+
+ 
 
   // const consoleMe = () => {
   //   console.log("lol")
