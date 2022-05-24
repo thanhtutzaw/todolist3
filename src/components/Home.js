@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Todolist from "./Todolist";
 import Nav from "./Nav";
-// import photo from "..//profile.jpg"
+import photo from "../profile 2.jpg"
 
 import { CgChevronRightR } from "react-icons/cg";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -31,7 +31,7 @@ function Home({ Auth }) {
   const [todos, settodos] = useState([]);
 
   const [User, setUser] = useState([]);
-  const [userphoto, setuserphoto] = useState("photo");
+  const [userphoto, setuserphoto] = useState(photo);
 
   const [UserId, setUserId] = useState();
   const auth = getAuth();
@@ -49,7 +49,42 @@ function Home({ Auth }) {
   //     console.log(u.uid)
   //   })
   // }
+  useEffect(() => {
+   var request = window.indexedDB.open("firebaseLocalStorageDb",1)
+   request.onsuccess = function (e){
+     console.log("db initilalized")
+     const db = request.result;
+     getData(db)
+   }
+  }, []);
+function getData (db) {
+  console.log("this is get data")
 
+  var transaction  = db.transaction(["firebaseLocalStorage"],"readwrite")
+
+  transaction.oncomplete = function (e){
+    console.log(
+"transaction complete"
+    )
+  }
+
+  transaction.onerror = function (e){
+    console.error(e)
+  }
+
+  var objectStore = transaction.objectStore('firebaseLocalStorage')
+
+  objectStore.openCursor().onsuccess = function(e){
+    let cursor= e.target.result;
+    if(cursor){
+      cursor.continue();
+      // console.log("hey data   "+ data.value.uid)
+      console.log(cursor.value.value.photoURL);
+      setuserphoto(cursor.value.value.photoURL)
+    }
+  }
+  
+}
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -320,7 +355,8 @@ function Home({ Auth }) {
       </a>
 
       <Tools />
-      <Header userphoto={User.photoURL} todoLength={todos.length} />
+      {/* <Header userphoto={User.photoURL} todoLength={todos.length} /> */}
+      <Header userphoto={userphoto} todoLength={todos.length} />
 
       <div className="todo-parent row">
         {todos.map((todo) => (
