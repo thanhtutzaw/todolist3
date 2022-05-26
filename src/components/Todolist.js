@@ -1,17 +1,15 @@
 import React from "react";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-function Todolist({todo}) {
+function Todolist({ todo }) {
   return (
-      <section>
-        <ul>
+    <section>
+      <ul>
         <li className="todo">
-            <RiCheckboxBlankCircleLine className="todo-checkbox" />
-            <label className="todo-label">
-              {todo.text}
-            </label>
-          </li>
-        </ul>
-      </section>
+          <RiCheckboxBlankCircleLine className="todo-checkbox" />
+          <label className="todo-label">{todo.text}</label>
+        </li>
+      </ul>
+    </section>
   );
 }
 

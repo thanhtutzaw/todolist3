@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Todolist from "./Todolist";
 import Nav from "./Nav";
-import photo from "../profile 2.jpg"
+import photo from "../profile 2.jpg";
 
 import { CgChevronRightR } from "react-icons/cg";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -20,13 +20,12 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { db } from "./Firebase/firebase";
+import { db ,auth } from "./Firebase/firebase";
 import Tools from "./Tools";
 
-// import { auth } from './Firebase/firebase';
 
 // Home js
-function Home({ Auth }) {
+function Home() {
   const [text, settext] = useState("");
   const [todos, settodos] = useState([]);
 
@@ -34,8 +33,8 @@ function Home({ Auth }) {
   const [userphoto, setuserphoto] = useState(photo);
 
   const [UserId, setUserId] = useState();
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
+  // const auth = getAuth();
+  // const currentUser = auth.currentUser;
 
   //   if(currentUser){
   //     setUserId("hdy")
@@ -49,63 +48,71 @@ function Home({ Auth }) {
   //     console.log(u.uid)
   //   })
   // }
-  useEffect(() => {
-   var request = window.indexedDB.open("firebaseLocalStorageDb",1)
-   request.onsuccess = function (e){
-     console.log("db initilalized")
-     const db = request.result;
-     getData(db)
-   }
+  useEffect(() => { // get profile from firebase indexDb
+    // let isSubscribed = true
+    var request = window.indexedDB.open("firebaseLocalStorageDb", 1);
+    request.onsuccess = function(e) {
+      console.log("db initilalized");
+      const db = request.result;
+      getData(db)
+      // if(isSubscribed){
+      //   getData(db)
+      // }
+      // (isSubscribed ? getData(db) : null)
+    };
+    // return ()=> ( isSubscribed = false)
   }, []);
-function getData (db) {
-  console.log("this is get data")
+  function getData(db) {
+    // console.log("this is get data");
 
-  var transaction  = db.transaction(["firebaseLocalStorage"],"readwrite")
+    var transaction = db.transaction(["firebaseLocalStorage"], "readwrite");
 
-  transaction.oncomplete = function (e){
-    console.log(
-"transaction complete"
-    )
+    transaction.oncomplete = function(e) {
+      // console.log("transaction complete");
+    };
+
+    transaction.onerror = function(e) {
+      console.error(e);
+    };
+
+    var objectStore = transaction.objectStore("firebaseLocalStorage");
+
+    objectStore.openCursor().onsuccess = function(e) {
+      let cursor = e.target.result;
+      if (cursor) {
+        cursor.continue();
+        // console.log("hey data   "+ data.value.uid)
+        // console.log(cursor.value.value.photoURL);
+        // (isSubscribed ? setuserphoto(cursor.value.value.photoURL) : null)
+        setuserphoto(cursor.value.value.photoURL)
+      }
+    };
   }
 
-  transaction.onerror = function (e){
-    console.error(e)
-  }
+  // console.log(User)
+  // const photoURL = user.photoURL;
+  // setuserphoto(photoURL)
+  // console.log("photo rendered")
 
-  var objectStore = transaction.objectStore('firebaseLocalStorage')
+  // User.map( (u) => {
+  //   console.log(u)
+  // })
+  // console.log(User.length)
 
-  objectStore.openCursor().onsuccess = function(e){
-    let cursor= e.target.result;
-    if(cursor){
-      cursor.continue();
-      // console.log("hey data   "+ data.value.uid)
-      console.log(cursor.value.value.photoURL);
-      setuserphoto(cursor.value.value.photoURL)
-    }
-  }
-  
-}
+  // console.log(User + "from user state")
+  // User.map( u => {
+  //   console.log(u.uid)
+  // })
+
+  // console.log("setuser")
+  // console.log("first ui rendered");
+
   useEffect(() => {
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        console.log("setuser")
         setUserId(user.uid);
-        // console.log(User + "from user state")
-        // User.map( u => {
-        //   console.log(u.uid)
-        // })
-        console.log("first ui rendered");
-        // console.log(User)
-        // const photoURL = user.photoURL;
-        // setuserphoto(photoURL)
-        // console.log("photo rendered")
-
-        // User.map( (u) => {
-        //   console.log(u)
-        // })
-        // console.log(User.length)
-
         const q = query(
           collection(db, "users/" + user.uid + "/todos"),
           orderBy("timeStamp", "desc")
@@ -113,14 +120,10 @@ function getData (db) {
 
         onSnapshot(q, (snapshot) => {
           settodos(
-            snapshot.docs.map( (doc) => 
-            (
-              {
+            snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
-              }
-            )
-            )
+            }))
           );
           console.log("data rendered");
         });
@@ -142,10 +145,7 @@ function getData (db) {
       // consoleMe()
     });
     // return () => unsub()
-    
   }, []);
-
- 
 
   // const consoleMe = () => {
   //   console.log("lol")
@@ -246,7 +246,7 @@ function getData (db) {
 
   // }
   // const q = query(collection(db, "users", "todos"))
-  useEffect(() => {
+  // useEffect(() => {
     // getTodos()
     // const snap = getDocs(q)
     // const unsub =  snap.forEach( (doc)=>{
@@ -263,7 +263,7 @@ function getData (db) {
     //   settodos(todosArray)
     // })
     // return () => unsub
-  }, []);
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -361,7 +361,7 @@ function getData (db) {
       <div className="todo-parent row">
         {todos.map((todo) => (
           // console.log(todo.text)
-          <Todolist key={todo.id} todo={todo} />
+          <Todolist todo={todo} key={todo.id} />
         ))}
       </div>
       <Nav text={text} settext={settext} handleSubmit={handleSubmit} />

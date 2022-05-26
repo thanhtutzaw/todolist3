@@ -1,86 +1,73 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { CgChevronRightR } from "react-icons/cg";
-import { auth } from './Firebase/firebase';
-import {signInWithPopup,GoogleAuthProvider,onAuthStateChanged} from 'firebase/auth'
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext'
-import btnImage from '../signin-assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png'
-import GoogleLogin from 'react-google-login';
-
+import { auth } from "./Firebase/firebase";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
+import btnImage from "../signin-assets/google_signin_buttons/web/1x/btn_google_signin_light_normal_web.png";
+import GoogleLogin from "react-google-login";
 
 // const {login} = useAuth()
 
-
-
 function Login() {
-  const nevigate = useNavigate()
+  const nevigate = useNavigate();
 
-const row ={
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center',
-}
-const btn = {
-    padding: '.7rem',
-    color: 'black',
-    backgroundColor: 'white',
-    borderRadius: '5px',
-    outline: 'none',
-    border: '1px solid rgba(0,0,0,.1)',
-    cursor: 'pointer',
-    boxShadow: '0px 2px 20px #0000001f'
-    
-    
+  const row = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+  const btn = {
+    padding: ".7rem",
+    color: "black",
+    backgroundColor: "white",
+    borderRadius: "5px",
+    outline: "none",
+    border: "1px solid rgba(0,0,0,.1)",
+    cursor: "pointer",
+    boxShadow: "0px 2px 20px #0000001f",
 
     // "&:hover": {
     //     backgroundColor : 'red'
     // }
-
-}
-//Login js
-useEffect(() => {
-
-    if(localStorage.getItem('isUsersignin') === 'true'){
-      nevigate('/')
-    }else{
-      nevigate('/login')
+  };
+  //Login js
+  useEffect(() => {
+    if (localStorage.getItem("isUsersignin") === "true") {
+      nevigate("/");
+    } else {
+      nevigate("/login");
     }
 
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        nevigate("/");
+        localStorage.setItem("isUsersignin", "true");
+      }
+      // else{
+      //   nevigate('/login')
+      // }
+    });
+  }, []);
+  const provider = new GoogleAuthProvider();
+  const signinHandle = () => {
+    // console.log("hey")
 
-
-  auth.onAuthStateChanged( (user)=>{
-    if(user){
-      nevigate('/')
-      localStorage.setItem('isUsersignin','true')
-    }
-    // else{
-    //   nevigate('/login')
-    // }
-    
-  })
-}, []); 
-const provider = new GoogleAuthProvider()
-const signinHandle = () =>{
-  console.log("hey")
- 
-      signInWithPopup(auth,provider)
-      .then( (res)=>{
-          nevigate('/')
-            // const user = res.user
-            // setuser(user)
-        })
-        .catch( (err)=>{
-            alert(`Error! ${err.message}`)
-            console.log(err)
-        })
- 
-    
-    
-}
-
-
-
-
+    signInWithPopup(auth, provider)
+      .then((res) => {
+        nevigate("/");
+        // const user = res.user
+        // setuser(user)
+      })
+      .catch((err) => {
+        alert(`Error! ${err.message}`);
+        console.log(err);
+      });
+  };
 
   return (
     <div className="main container " style={row}>
@@ -91,10 +78,12 @@ const signinHandle = () =>{
         </button>
       </a>
 
-      <button onClick={signinHandle} style={btn}>Google Sign-in</button>
+      <button onClick={signinHandle} style={btn}>
+        Google Sign-in
+      </button>
       {/* <GoogleLogin clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} onSuccess={signinHandle} disabledStyle={false} theme="light"></GoogleLogin> */}
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
