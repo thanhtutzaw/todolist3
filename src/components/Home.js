@@ -124,7 +124,7 @@ function Home() {
 
             snapshot.docChanges().map((change) => {
               if (change.type === "added") {
-                console.log(change.doc.data())
+                // console.log(change.doc.data())
                 // id: doc.id,
                 // ...doc.data(),
               }
