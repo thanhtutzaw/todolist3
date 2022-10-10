@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"
+import { disableNetwork, getFirestore } from "firebase/firestore"
 import { collection , addDoc } from "firebase/firestore"
 // require('dotenv').config()
 // TODO: Add SDKs for Firebase products that you want to use
@@ -24,6 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app)
+// export const db = disableNetwork(onlinedb)
 // async function addNewDocument() {
 
 //   try {

@@ -29,6 +29,7 @@ function Home() {
   const [text, settext] = useState("");
   const [todos, settodos] = useState([]);
 
+  let id; //  for profile 
   const [User, setUser] = useState([]);
   const [userphoto, setuserphoto] = useState(photo);
 
@@ -48,102 +49,147 @@ function Home() {
   //     console.log(u.uid)
   //   })
   // }
-  useEffect(() => { // get profile from firebase indexDb
+  // window.addEventListener('load', ()=> {
+  // })
+  useEffect(() => {
+    // setLoading(true)
+    // get profile from firebase indexDb
     // let isSubscribed = true
     var request = window.indexedDB.open("firebaseLocalStorageDb", 1);
-    request.onsuccess = function(e) {
+    request.onsuccess = function (e) {
       console.log("db initilalized");
-      const db = request.result;
-      getData(db)
+      const indexDB = request.result;
+      getData(indexDB);
+
       // if(isSubscribed){
-      //   getData(db)
+      //   getData(indexDB)
       // }
-      // (isSubscribed ? getData(db) : null)
+      // (isSubscribed ? getData(indexDB) : null)
     };
     // return ()=> ( isSubscribed = false)
   }, []);
-  function getData(db) {
+  function getData(indexDB) {
     // console.log("this is get data");
 
-    var transaction = db.transaction(["firebaseLocalStorage"], "readwrite");
+    var transaction = indexDB.transaction(
+      ["firebaseLocalStorage"],
+      "readwrite"
+    );
 
-    transaction.oncomplete = function(e) {
+    transaction.oncomplete = function (e) {
       // console.log("transaction complete");
     };
 
-    transaction.onerror = function(e) {
+    transaction.onerror = function (e) {
       console.error(e);
     };
 
     var objectStore = transaction.objectStore("firebaseLocalStorage");
 
-    objectStore.openCursor().onsuccess = function(e) {
+    objectStore.openCursor().onsuccess = async (e) => {
       let cursor = e.target.result;
+
       if (cursor) {
+        setuserphoto(cursor.value.value.photoURL);
         cursor.continue();
         // console.log("hey data   "+ data.value.uid)
         // console.log(cursor.value.value.photoURL);
         // (isSubscribed ? setuserphoto(cursor.value.value.photoURL) : null)
-        setuserphoto(cursor.value.value.photoURL)
-      }
-    };
-  }
+        // setUserId()
+        id = cursor.value.value.uid;
+        if (id) {
+          const q = query(
+            collection(db, "users/" + id + "/todos"),
+            orderBy("timeStamp", "desc")
+          );
 
-  // console.log(User)
-  // const photoURL = user.photoURL;
-  // setuserphoto(photoURL)
-  // console.log("photo rendered")
+          // const dataSnap = await getDocs(q);
+          //         settodos(
 
-  // User.map( (u) => {
-  //   console.log(u)
-  // })
-  // console.log(User.length)
+          //           dataSnap.docs.map((doc) => ({
+          // setUserId
+          //             id: doc.id,
+          //               ...doc.data(),
+          //   // doc.data() is never undefined for query doc snapshots
+          //   // console.log("get once")
+          //   // console.log(doc.id, " => ", doc.data());
+          // })
+          //           )
 
-  // console.log(User + "from user state")
-  // User.map( u => {
-  //   console.log(u.uid)
-  // })
+          // );
 
-  // console.log("setuser")
-  // console.log("first ui rendered");
 
-  useEffect(() => {
-    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setUserId(user.uid);
-        const q = query(
-          collection(db, "users/" + user.uid + "/todos"),
+
+          onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
+
+            snapshot.docChanges().map((change) => {
+              if (change.type === "added") {
+                console.log(change.doc.data())
+                // id: doc.id,
+                // ...doc.data(),
+              }
+            })
+
+            const source = snapshot.metadata.fromCache ? "local cache" : "server";
+            console.log("Data came from " + source);
+            console.log("data rendered " + id);
+          });
+          console.log(id);
+        }
+
+        const q2 = query(
+          collection(db, "users/" + id + "/todos"),
           orderBy("timeStamp", "desc")
         );
 
-        onSnapshot(q, (snapshot) => {
+        onSnapshot(q2, (snapshot) => {
           settodos(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
             }))
           );
-          console.log("data rendered");
+          console.log("data rendered " + id);
         });
-        // return () => unsub()
+        // snapshotData(id)
+        // console.log(id)
       }
+    };
+  }
+  // console.log(UserId)
+  // console.log(User + "from user state")
+  // User.map( u => {
+  //   console.log(u.uid)
+  // })
 
-      // const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      //   const todos = [];
-      //   querySnapshot.forEach((doc) => {
-      //     todos.push({ ...doc.data(), id: doc.id });
-      //   });
-      //   settodos(todos);
-      //   console.log("if user exists data render");
-      // });
 
-      // console.log(UserId)
-      // getData(user.uid);
-      // this function call will console
-      // consoleMe()
-    });
+  // console.log("first ui rendered");
+
+  const snapshotData = (id) => { };
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user.uid)
+      if (user) {
+        console.log("if user" + user.uid)
+        // setUser(user);
+        setUserId(user.uid);
+      }
+    })
+    // return () => unsub()
+    // }
+    // const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    //   const todos = [];
+    //   querySnapshot.forEach((doc) => {
+    //     todos.push({ ...doc.data(), id: doc.id });
+    //   });
+    //   settodos(todos);
+    //   console.log("if user exists data render");
+    // });
+    // console.log(UserId)
+    // getData(user.uid);
+    // this function call will console
+    // consoleMe()
+    // });
     // return () => unsub()
   }, []);
 
@@ -247,22 +293,22 @@ function Home() {
   // }
   // const q = query(collection(db, "users", "todos"))
   // useEffect(() => {
-    // getTodos()
-    // const snap = getDocs(q)
-    // const unsub =  snap.forEach( (doc)=>{
-    //   console.log(doc.id , doc.data())
-    // })
-    // q.onSnapshot(  (snap) => {
-    //   const todosArray = []
-    //   snap.forEach( (doc)=>{
-    //     const todo = doc.data()
-    //     todo.id = doc.id
-    //     todosArray.push(todo)
-    //     // todosArray.push({...doc.data()})
-    //   })
-    //   settodos(todosArray)
-    // })
-    // return () => unsub
+  // getTodos()
+  // const snap = getDocs(q)
+  // const unsub =  snap.forEach( (doc)=>{
+  //   console.log(doc.id , doc.data())
+  // })
+  // q.onSnapshot(  (snap) => {
+  //   const todosArray = []
+  //   snap.forEach( (doc)=>{
+  //     const todo = doc.data()
+  //     todo.id = doc.id
+  //     todosArray.push(todo)
+  //     // todosArray.push({...doc.data()})
+  //   })
+  //   settodos(todosArray)
+  // })
+  // return () => unsub
   // }, []);
 
   const handleSubmit = (e) => {
@@ -295,16 +341,15 @@ function Home() {
 
     if (text !== "") {
       const collectionRef = collection(db, "users", UserId, "todos");
-
-      addDoc(collectionRef, data, { merge: true });
-      // alert('Created')
+      console.log(collectionRef)
       // addDoc(userRef,{
       //   text,
       //   completed:false
       // })
+      addDoc(collectionRef, data, { merge: true });
       settodos([...todos, text]);
 
-      settext("");
+      settext("")
     }
 
     // addDoc(userRef,"hey")
@@ -360,8 +405,7 @@ function Home() {
 
       <div className="todo-parent row">
         {todos.map((todo) => (
-          // console.log(todo.text)
-          <Todolist todo={todo} key={todo.id} />
+            <Todolist todo={todo} key={todo.id} />
         ))}
       </div>
       <Nav text={text} settext={settext} handleSubmit={handleSubmit} />
