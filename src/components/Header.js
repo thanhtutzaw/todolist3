@@ -1,76 +1,29 @@
-import { setUserId } from "firebase/analytics";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useState,useEffect } from "react";
-// import profile from "../profile.webp";
+import { getAuth, signOut } from "firebase/auth";
+import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { MdDarkMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
-function header(props) {
-const [opentools, setopentools] = useState(false);
+export default function header(props) {
 
+  const [opentools, setopentools] = useState(false);
 
-const auth = getAuth()
-const nevigate = useNavigate()
-// const user = auth.currentUser
-onAuthStateChanged( auth , (user)=>{
-  if (user) {
+  const auth = getAuth()
 
-    
+  const nevigate = useNavigate()
 
-  
-    // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    // const uid = user.uid;
+  const logoutHandle = () => {
+    signOut(auth)
+      .then(() => {
+        nevigate('/login')
+      })
+      .catch((err) => {
+        console.log("signout",err)
+      })
   }
-  // if (user !== null) {
-  //   // alert('user exist')
-  //   // The user object has basic properties such as display name, email, etc.
-  //   const displayName = user.displayName;
-  //   const email = user.email;
-  //   const photoURL = user.photoURL;
-  //   console.log(photoURL)
-  //   setuserphoto(photoURL)
-  //   const emailVerified = user.emailVerified;
-  
-  //   // The user's ID, unique to the Firebase project. Do NOT use
-  //   // this value to authenticate with your backend server, if
-  //   // you have one. Use User.getToken() instead.
-  //   const uid = user.uid;
-  // }
-})
-
-useEffect(() => {
-  
-}, []);
-// useEffect(() => {
-//   onAuthStateChanged( auth , (user)=>{
-//     user ? setuserphoto(user.photoURL) : setuserphoto()
-//     // setuserphoto(user.photoURL)
-//   })
-// }, []);
-
-
-const logoutHandle = () => {
-
-  
-  signOut(auth)
-  .then( ()=>{
-    nevigate('/login')
-  })
-  .catch( (err) => {
-    console.log(err)
-  })
-}
-
-const handleTools = () => {
-  setopentools((prevstate) => !prevstate);
-}
-
-  
-
-
+  const handleTools = () => {
+    setopentools((prevstate) => !prevstate);
+  }
   return (
     <header>
       <div className="header-row">
@@ -81,27 +34,20 @@ const handleTools = () => {
           </p>
         </div>
         <div className="header-image">
-          {/* <img  src={userphoto} srcSet={`${userphoto} 1x , ${userphoto} 2x`}  onClick={logoutHandle}/> */}
-          <img src={props.userphoto} onClick={handleTools}  />
-
-
+          <img src={props.userphoto} onClick={handleTools} alt={props.userName} />
         </div>
       </div>
-        <div className="dropdown">
+      <div className="dropdown">
         <nav className={opentools ? "nav-active" : ""}>
-          {/* <div className="nav-icon-parent" onClick={}>
-            <MdModeEdit className="nav-icon" />
-          </div> */}
         </nav>
-
         {opentools && (
           <div className="tools-parent">
             <div className="tools-container">
-              <div  className="edit-parent" >
+              <div className="edit-parent" >
                 <MdDarkMode className="edit-btn" />
                 <span>Theme</span>
               </div>
-              <div  className="delete-parent" onClick={logoutHandle}>
+              <div className="delete-parent" onClick={logoutHandle}>
                 <RiLogoutBoxFill className="delte-btn" />
                 <span>Logout</span>
               </div>
@@ -112,5 +58,3 @@ const handleTools = () => {
     </header>
   );
 }
-
-export default header;

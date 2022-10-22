@@ -1,6 +1,7 @@
 import React from "react";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-function Todolist({ todo }) {
+
+export default function Todolist({ todo }) {
   return (
     <section>
       <ul>
@@ -13,4 +14,4 @@ function Todolist({ todo }) {
   );
 }
 
-export default Todolist;
+
