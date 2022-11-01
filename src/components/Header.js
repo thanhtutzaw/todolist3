@@ -1,14 +1,33 @@
 import { getAuth, signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { MdDarkMode } from "react-icons/md";
+// import { MdDarkMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
+let MdDarkMode
+import("react-icons/md").then(icon => {
+  if (icon) {
+    MdDarkMode = icon.MdDarkMode
+  }
+  console.log(MdDarkMode)
+})
 
 export default function header(props) {
+  const { user, userphoto, todoLength, selectCount } = props
+  
 
   const [opentools, setopentools] = useState(false);
 
   const auth = getAuth()
+  let displayName;
+  if(user){
+    displayName = user.displayName
+  }
+
+  // const user = auth.currentUser
+  // let userName
+  // if(user){
+  //   userName = user.displayName
+  // }
 
   const nevigate = useNavigate()
 
@@ -18,23 +37,23 @@ export default function header(props) {
         nevigate('/login')
       })
       .catch((err) => {
-        console.log("signout",err)
+        console.log("signout", err)
       })
   }
   const handleTools = () => {
     setopentools((prevstate) => !prevstate);
   }
   return (
-    <header>
+    <header style={{ pointerEvents: selectCount && 'none' }}>
       <div className="header-row">
         <div className="header-text">
           <h1>My tasks</h1>
-          <p className="header-nobold">
-            {props.todoLength} tasks for <span>Today</span>
+          <p className="header-nobold"> 
+            {todoLength} tasks for <span>Today</span>
           </p>
         </div>
         <div className="header-image">
-          <img src={props.userphoto} onClick={handleTools} alt={props.userName} />
+          <img src={userphoto} onClick={handleTools}  alt={displayName}/>
         </div>
       </div>
       <div className="dropdown">

@@ -9,14 +9,16 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-    const [currentUser, setcurrentUser] = useState(null);
-    // const provider = new GoogleAuthProvider()
+    // const [currentUser, setcurrentUser] = useState(null);
 
-  useEffect(() => {
-    onAuthStateChanged( auth , (user)=> {
-      setcurrentUser(user)
-    })
-    console.log("context", currentUser)
-    }, []);
+  // useEffect(() => {
+  //   onAuthStateChanged( auth , (user)=> {
+  //     setcurrentUser(user)
+  //   })
+  //   console.log("context", currentUser)
+  //   }, []);
+
+
+
   return <AuthContext.Provider value={{currentUser}}>{children}</AuthContext.Provider>;
 }

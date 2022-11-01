@@ -31,17 +31,17 @@ export default function Login() {
     // }
   };
   useEffect(() => {
-    if (localStorage.getItem("isUsersignin") === "true") {
-      nevigate("/");
-    } else {
-      nevigate("/login");
-    }
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        nevigate("/");
-        localStorage.setItem("isUsersignin", "true");
-      }
-    });
+    // if (localStorage.getItem("isUsersignin") === "true") {
+    //   nevigate("/");
+    // } else {
+    //   nevigate("/login");
+    // }
+    // auth.onAuthStateChanged((user) => {
+    //   if (user) {
+    //     nevigate("/");
+    //     localStorage.setItem("isUsersignin", "true");
+    //   }
+    // });
   }, []);
 
   const provider = new GoogleAuthProvider();
