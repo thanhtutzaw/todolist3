@@ -1,18 +1,19 @@
 import React from "react";
 import { VscAdd } from "react-icons/vsc";
 
-function Nav({ settext, handleSubmit, text }) {
+function Nav({ inputRef, settext, handleSubmit, text }) {
   return (
     <nav className="nav">
       <form>
         <div>
           <input
+          ref={inputRef}
             className="input-text"
             type="text"
-            value={text}
-            onChange={(e) => {
-              settext(e.target.value);
-            }}
+            // value={text}
+            // onChange={(e) => {
+            //   settext(e.target.value);
+            // }}
           />
         </div>
         <div>

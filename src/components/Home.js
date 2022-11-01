@@ -45,6 +45,7 @@ function Home() {
   // console.log(todos)
   const auth = getAuth();
   // const user = auth.currentUser;
+  const inputRef = useRef(null)
   const editInput = useRef(null)
   const eleRef = useRef(null)
 
@@ -140,28 +141,31 @@ function Home() {
     return () => unsubscribe;
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     eleRef.current.scrollIntoView({ behavior: "smooth"});
+    const inputText = inputRef.current.value;
     const data = {
-      text,
+      text:inputText,
       timeStamp: serverTimestamp(),
       completed: false,
     };
-    if (text !== "") {
+    if (inputText !== "") {
       const collectionRef = collection(db, "users", UserId, "todos");
       // console.log(collectionRef)
       // addDoc(userRef,{
       //   text,
       //   completed:false
       // })
-      settodos([...todos, text]);
       // console.log(todos )  
-      addDoc(collectionRef, data, { merge: true });
-      settext("")
+      // settext("")
+      inputRef.current.value = ""
+      settodos([...todos, inputText]);
+      await addDoc(collectionRef, data, { merge: true });
       // console.log(todos.id , typeof(todos.id))
     }
   };
+  
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       nevigate("/login");
@@ -243,7 +247,6 @@ function Home() {
       const chunk = SelectedID.slice(i, i + chunkSize);
       // console.log(chunk)   
       for (let j = 0; j < chunk.length; j++) {
-
         const TodoRef = doc(db, "users", UserId, "todos", chunk[j])
         batch.delete(TodoRef)
 
@@ -277,8 +280,9 @@ function Home() {
 
 
     // this.onCancel(e);
+    // console.log(deleteHandle)
   }
-
+  // console.log(deleteHandle)
 
   return (
     <div className="main container " style={{ margin: '0 auto', zIndex: '99' }}>
@@ -337,7 +341,7 @@ function Home() {
         </section>
       </div>
 
-      <Nav text={text} settext={settext} handleSubmit={handleSubmit} />
+      <Nav inputRef={inputRef} text={text} settext={settext} handleSubmit={handleSubmit} />
     </div>
   );
 }
