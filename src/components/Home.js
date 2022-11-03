@@ -4,7 +4,7 @@ import Todolist from "./Todolist";
 import Nav from "./Nav";
 import photo from "../profile 2.jpg";
 import { CgChevronRightR } from "react-icons/cg";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 import {
@@ -17,33 +17,28 @@ import {
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore";
-import { db } from "../lib/firebase";
+import { db, auth } from "../lib/firebase";
 import Skeleton from 'react-loading-skeleton'
+import EditModal from "./EditModal";
 // import EditModal from "./EditModal";
 
-// Home js
+
 function Home() {
-  // window.addEventListener('pageshow', (event) => {
-  //   if (event.persisted) {
-  //     console.log('This page was restored from the bfcache.');
-  //   } else {
-  //     console.log('This page was loaded normally.');
-  //   }
-  // });
+
   const [Loading, setLoading] = useState(true);
-  const [text, settext] = useState("");
+
   const [todos, settodos] = useState([]);
   let id; //  for profile 
   const [userName, setuserName] = useState();
   const [userphoto, setuserphoto] = useState(photo);
-  const [UserId, setUserId] = useState();
+  // const [UserId, setUserId] = useState();
 
-  const [User, setUser] = useState(null);
+  // const [User, setUser] = useState(null);
   // const [user, setuser] = useState(null)
   // console.log(current)
   const nevigate = useNavigate();
   // console.log(todos)
-  const auth = getAuth();
+  // const auth = getAuth();
   // const user = auth.currentUser;
   const inputRef = useRef(null)
   const editInput = useRef(null)
@@ -84,9 +79,11 @@ function Home() {
       if (cursor) {
         setuserphoto(cursor.value.value.photoURL);
         setuserName(cursor.value.value.displayName)
+        // console.log(cursor.value.value)
         cursor.continue();
         id = cursor.value.value.uid;
         if (id) {
+          // console.log(id)
           // const q = query(
           //   collection(db, "users/" + id + "/todos"),
           //   orderBy("timeStamp", "desc")
@@ -109,17 +106,18 @@ function Home() {
       }
     };
   }
-
+  // console.log(id)
+  // console.log(qid)
   useEffect(() => {
-    let unsubscribe
+    let unsubscribe;
     onAuthStateChanged(auth, (user) => {
+      // console.log(userphoto)
       if (user) {
-        setUser(user)
-        setUserId(user.uid);
+        // setUser(user)
+        // setUserId(user.uid);
         const q2 = query(
-          collection(db, "users/" + user.uid + "/todos"), orderBy("timeStamp", "desc")
+          collection(db, "users/" + auth.currentUser.uid + "/todos"), orderBy("timeStamp", "desc")
           // collection(db, "users/" + user.uid + "/todos").where('uid', "==" , user.uid),  
-          // .where('uid', isEqualTo: user.uid)
           // collection(db, `users/${id}/todos`),            
         );
         unsubscribe = onSnapshot(q2, (snapshot) => {
@@ -130,28 +128,27 @@ function Home() {
             }))
           );
           setLoading(false)
-          // console.log("data rendered by " + id);
         });
+
       }
-      else {
-        unsubscribe()
-        // settodos([])
+      else{
+        unsubscribe();
       }
     })
-    return () => unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    eleRef.current.scrollIntoView({ behavior: "smooth"});
+    eleRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
-      text:inputText,
+      text: inputText,
       timeStamp: serverTimestamp(),
       completed: false,
     };
     if (inputText !== "") {
-      const collectionRef = collection(db, "users", UserId, "todos");
+      const collectionRef = collection(db, "users", auth.currentUser.uid, "todos");
       // console.log(collectionRef)
       // addDoc(userRef,{
       //   text,
@@ -165,7 +162,7 @@ function Home() {
       // console.log(todos.id , typeof(todos.id))
     }
   };
-  
+
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       nevigate("/login");
@@ -184,7 +181,7 @@ function Home() {
   //   // setisSelect(false)
   //   f()
   // }
-  function handleFun() {
+  function closeSelect() {
     clearSelect()
     // console.log(setisSelect, typeof (setisSelect))    
   }
@@ -197,10 +194,8 @@ function Home() {
     document.getElementById("editModal").showModal()
 
     // toEdit = todos.find(todo => todo.id === SelectedID.toString())
-
-    console.log(editInput.current)
-
   }
+
   function clearSelect() {
     setSelectedID([])
     setselectCount(false)
@@ -218,20 +213,20 @@ function Home() {
     // }
 
     // todos.map(todo => {
-      const items = []
-      for (let i = 0; i < todos.length; i++) {
-        // console.log(Array.isArray(todo))
-        const id = todos[i].id
-        items.push(id)
-        // console.log(items)
+    const items = []
+    for (let i = 0; i < todos.length; i++) {
+      // console.log(Array.isArray(todo))
+      const id = todos[i].id
+      items.push(id)
+      // console.log(items)
 
-      }
-      setSelectedID(items)
+    }
+    setSelectedID(items)
     // })
     setselectCount(true)
   }
   async function deleteHandle() {
-    eleRef.current.scrollIntoView({ behavior: "smooth"});
+    eleRef.current.scrollIntoView({ behavior: "smooth" });
     // deleteHandle(filteredTodo);
     // const collectionRef = collection(db, "users", UserId, "todos", "uPChMcaETFqlTbBXgbNn");
     // const collectionRef = collection(db, `${UserId}/todos/${SelectedID}`);
@@ -241,13 +236,13 @@ function Home() {
     // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
 
     const batch = writeBatch(db);
-    console.log(batch)
+    // console.log(batch)
     const chunkSize = 10
     for (let i = 0; i < SelectedID.length; i += chunkSize) {
       const chunk = SelectedID.slice(i, i + chunkSize);
       // console.log(chunk)   
       for (let j = 0; j < chunk.length; j++) {
-        const TodoRef = doc(db, "users", UserId, "todos", chunk[j])
+        const TodoRef = doc(db, "users", auth.currentUser.uid, "todos", chunk[j])
         batch.delete(TodoRef)
 
       }
@@ -297,7 +292,7 @@ function Home() {
         <div className={`selectModal ${(selectCount && SelectedID.length !== 0) && "fadeIn"}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
           <div>
-            <GrClose className="closeSelectBtn" onClick={handleFun} />
+            <GrClose className="closeSelectBtn" onClick={closeSelect} />
             <p className="selectCount">{SelectedID.length}</p>
           </div>
           <div>
@@ -311,18 +306,14 @@ function Home() {
           </div>
         </div>
       }
-      <dialog id="editModal" className="editModal">
-        {todos.map((todo) => {
-            return (
-              <>
-                {todo.id === SelectedID.toString() && <input ref={editInput} contentEditable value={todo.text} key={todo.id} />}
-              </>
-            )
-        }
+      <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if(e.target === dialog){e.target.close()} }} id="editModal" >
+        {todos.map((todo) => (
+          <EditModal todo={todo} SelectedID={SelectedID} editInput={editInput} />
+        )
         )}
       </dialog>
 
-      <Header selectCount={selectCount} user={User} userphoto={userphoto} userName={userName} todoLength={todos.length} />
+      <Header selectCount={selectCount} userphoto={userphoto} userName={userName} todoLength={todos.length} />
 
       <div className="allSelectContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectALl}>Select All</button>} {SelectedID.length >= 2 &&
         <button onClick={clearSelect}>Deselect All</button>}
@@ -334,14 +325,14 @@ function Home() {
           <ul ref={eleRef}>
             {!Loading &&
               todos.map((todo, index) => (
-                <Todolist todos={todos} setselectCount={setselectCount} handleFun={handleFun} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
+                <Todolist todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
               ))
             }
           </ul>
         </section>
       </div>
 
-      <Nav inputRef={inputRef} text={text} settext={settext} handleSubmit={handleSubmit} />
+      <Nav inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   );
 }

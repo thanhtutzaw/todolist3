@@ -1,27 +1,29 @@
 import { getAuth, signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-// import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
-let MdDarkMode
-import("react-icons/md").then(icon => {
-  if (icon) {
-    MdDarkMode = icon.MdDarkMode
-  }
-  console.log(MdDarkMode)
-})
+// let MdDarkMode
+// import("react-icons/md").then(icon => {
+//   if (icon) {
+//     MdDarkMode = icon.MdDarkMode
+//   }
+//   console.log(MdDarkMode)
+// })
 
 export default function header(props) {
-  const { user, userphoto, todoLength, selectCount } = props
+  const { userphoto, todoLength, selectCount } = props
   
 
   const [opentools, setopentools] = useState(false);
 
   const auth = getAuth()
-  let displayName;
-  if(user){
-    displayName = user.displayName
-  }
+  // const user = auth.currentUser
+
+  // let displayName;
+  // if(user){
+  //   displayName = user.displayName
+  // }
 
   // const user = auth.currentUser
   // let userName
@@ -53,7 +55,8 @@ export default function header(props) {
           </p>
         </div>
         <div className="header-image">
-          <img src={userphoto} onClick={handleTools}  alt={displayName}/>
+          <img src={userphoto && userphoto} onClick={handleTools} alt={`profile`} />
+          {/* <img src={userphoto} onClick={handleTools}  alt={`profile`}/> */}
         </div>
       </div>
       <div className="dropdown">

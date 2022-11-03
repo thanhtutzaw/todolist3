@@ -56,7 +56,9 @@ body {
 }
 
 header {
-  padding: 3rem 0;
+  /* padding: 3rem 0; */
+  /* padding-top: 3.5rem; */
+  padding-top: 1.5rem;
 }
 
 .header-row {
@@ -116,29 +118,37 @@ header {
 }
 
 .selectCount {
-  font-size : 30px;
-  margin-top: -6px;
-  cursor: default;
+  font-size  : 30px;
+  margin-top : -6px;
+  cursor     : default;
   user-select: none;
 }
-.allSelectContainer{
-  position: relative;
-  top:-54px;
-  right:-300px;
+
+.allSelectContainer {
+  position  : relative;
+  /* top       : -54px;
+  right     : -300px; */
   transition: all 1s ease;
-  /* inset:0; */
-  width:30%;
-  height: 10px;
+  height: 50px;
+  width:100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* inset  :0; */
+  /* width     : 30%;
+  height    : 10px; */
   /* outline: 2px solid red; */
 }
-.allSelectContainer > button{
-  position: absolute;
-  padding:7px 7px;
-  color:rgb(9, 184, 253);
+
+.allSelectContainer>button {
+  position        : absolute;
+  padding         : 7px 7px;
+  color           : rgb(9, 184, 253);
   background-color: transparent;
-  border:0;
-  cursor: pointer;
+  border          : 0;
+  cursor          : pointer;
 }
+
 /* @keyframes fadeOut {
   0% {
     opacity: 1;
@@ -206,18 +216,25 @@ header {
   opacity       : .4;
   pointer-events: none;
 }
-
-dialog.editModal {
+#editModal{
+      background: unset;
+    border    : unset;
+    margin    : 0 auto;
+}
+.editModal {
+  outline:0;
   margin       : 9rem auto;
   width        : 30ch;
-  height       : 45vh;
+  outline: 3px solid red;
   /*width      :40vw; */
   border       : 0;
-  padding      : 1rem;
-  border-radius: 10px;
+  /* padding      : 1rem; */
   /* position  : absolute;
 inset          : 0; */
   animation    : fadeIn .3s ease-in-out;
+  /* background-color: white; */
+  /* position: fixed;
+  inset: 0; */
 }
 
 @keyframes fadeIn {
@@ -244,9 +261,10 @@ inset          : 0; */
   align-items: center; */
 }
 
-.editModal::backdrop,
+#editModal::backdrop,
 .deleteModal::backdrop {
-  background-color: rgb(0 0 1 / 32%);
+  background-color: rgba(0, 0, 1, 0.281);
+  
 }
 
 ul li {
@@ -270,6 +288,10 @@ ul li {
   text-align   : left;
   overflow-wrap: break-word;
 }
+
+/* .noUserSelect{
+  color:red;
+} */
 
 .todo::after {
   content         : "";
@@ -459,6 +481,31 @@ ul li {
 .delete-parent:hover {
   background-color: rgba(219, 17, 17, 0.103);
 }
+
+.editInput {
+  /* width:34ch; */
+  /* min-width: 10%; */
+  width        : 100%;
+  /* height : 45vh; */
+  border-radius: 10px;
+  /* height       : calc(50% + 20px); */
+  padding      : 10px 16px;
+  /* padding   :1rem; */
+  font-size    : 23px;
+  background-color: white;
+  /* overflow  : hidden; */
+  /* display      : block; */
+  /* word-wrap    : break-word;
+  word-break   : break-all;
+  height       : 80px;
+  overflow-wrap: break-word;
+  line-break   : strict;
+  white-space  : pre-wrap; */
+
+  outline      : none;
+}
+
+
 
 .nav-icon-parent {
   z-index         : 100;

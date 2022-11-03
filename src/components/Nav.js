@@ -1,7 +1,7 @@
 import React from "react";
 import { VscAdd } from "react-icons/vsc";
 
-function Nav({ inputRef, settext, handleSubmit, text }) {
+function Nav({ inputRef,handleSubmit}) {
   return (
     <nav className="nav">
       <form>
