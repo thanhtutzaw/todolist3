@@ -20,15 +20,13 @@ import {
 import { db, auth } from "../lib/firebase";
 import Skeleton from 'react-loading-skeleton'
 import EditModal from "./EditModal";
-// import EditModal from "./EditModal";
-
 
 function Home() {
 
   const [Loading, setLoading] = useState(true);
 
   const [todos, settodos] = useState([]);
-  let id; //  for profile 
+  // let id; //  for profile 
   const [userName, setuserName] = useState();
   const [userphoto, setuserphoto] = useState(photo);
   // const [UserId, setUserId] = useState();
@@ -42,8 +40,7 @@ function Home() {
   // const user = auth.currentUser;
   const inputRef = useRef(null)
   const editInput = useRef(null)
-  const eleRef = useRef(null)
-
+  const todoRef = useRef(null)
 
   useEffect(() => {
     // if (localStorage.getItem("isUsersignin") === "true") {
@@ -58,8 +55,13 @@ function Home() {
       console.log("db initilalized");
       const indexDB = request.result;
       getData(indexDB);
+
+
+
     };
   }, []);
+
+  // console.log(q3)
 
   function getData(indexDB) {
     // console.log("this is get data");
@@ -79,10 +81,9 @@ function Home() {
       if (cursor) {
         setuserphoto(cursor.value.value.photoURL);
         setuserName(cursor.value.value.displayName)
-        // console.log(cursor.value.value)
         cursor.continue();
-        id = cursor.value.value.uid;
-        if (id) {
+        // if (id) {
+
           // console.log(id)
           // const q = query(
           //   collection(db, "users/" + id + "/todos"),
@@ -102,7 +103,7 @@ function Home() {
           // });
           // console.log(id);
           // console.log(id)
-        }
+        // }
       }
     };
   }
@@ -111,16 +112,11 @@ function Home() {
   useEffect(() => {
     let unsubscribe;
     onAuthStateChanged(auth, (user) => {
-      // console.log(userphoto)
       if (user) {
-        // setUser(user)
-        // setUserId(user.uid);
-        const q2 = query(
-          collection(db, "users/" + auth.currentUser.uid + "/todos"), orderBy("timeStamp", "desc")
-          // collection(db, "users/" + user.uid + "/todos").where('uid', "==" , user.uid),  
-          // collection(db, `users/${id}/todos`),            
+        const q = query(
+          collection(db, "users/" + auth.currentUser.uid + "/todos"), orderBy("timeStamp", "desc")            
         );
-        unsubscribe = onSnapshot(q2, (snapshot) => {
+        unsubscribe = onSnapshot(q, (snapshot) => {
           settodos(
             snapshot.docs.map((doc) => ({
               id: doc.id,
@@ -130,8 +126,20 @@ function Home() {
           setLoading(false)
         });
 
+        // async function getDocument() {
+        //   const docSnap = await getDocs(q3)
+        //   settodos(
+        //     docSnap.docs.map(doc => ({
+                  
+        //             id: doc.id,
+        //             ...doc.data(),
+        //           }))
+        //         );
+        //         setLoading(false)
+        // }  
+        // getDocument()           
       }
-      else{
+      else {
         unsubscribe();
       }
     })
@@ -140,7 +148,7 @@ function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    eleRef.current.scrollIntoView({ behavior: "smooth" });
+    todoRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
       text: inputText,
@@ -149,17 +157,9 @@ function Home() {
     };
     if (inputText !== "") {
       const collectionRef = collection(db, "users", auth.currentUser.uid, "todos");
-      // console.log(collectionRef)
-      // addDoc(userRef,{
-      //   text,
-      //   completed:false
-      // })
-      // console.log(todos )  
-      // settext("")
       inputRef.current.value = ""
       settodos([...todos, inputText]);
       await addDoc(collectionRef, data, { merge: true });
-      // console.log(todos.id , typeof(todos.id))
     }
   };
 
@@ -226,7 +226,7 @@ function Home() {
     setselectCount(true)
   }
   async function deleteHandle() {
-    eleRef.current.scrollIntoView({ behavior: "smooth" });
+    todoRef.current.scrollIntoView({ behavior: "smooth" });
     // deleteHandle(filteredTodo);
     // const collectionRef = collection(db, "users", UserId, "todos", "uPChMcaETFqlTbBXgbNn");
     // const collectionRef = collection(db, `${UserId}/todos/${SelectedID}`);
@@ -306,7 +306,7 @@ function Home() {
           </div>
         </div>
       }
-      <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if(e.target === dialog){e.target.close()} }} id="editModal" >
+      <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if (e.target === dialog) { e.target.close() } }} id="editModal" >
         {todos.map((todo) => (
           <EditModal todo={todo} SelectedID={SelectedID} editInput={editInput} />
         )
@@ -320,9 +320,9 @@ function Home() {
       </div>
 
       <div className={`todo-parent row`} >
-        {Loading && (<Skeleton count={10} style={{ display: 'flex', gap: '0.8rem', width: "375px", marginBottom: '1rem', marginRight: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
+        { Loading &&(<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
         <section>
-          <ul ref={eleRef}>
+          <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
             {!Loading &&
               todos.map((todo, index) => (
                 <Todolist todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
@@ -332,7 +332,7 @@ function Home() {
         </section>
       </div>
 
-      <Nav inputRef={inputRef} handleSubmit={handleSubmit} />
+      <Nav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   );
 }

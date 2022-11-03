@@ -125,19 +125,19 @@ header {
 }
 
 .allSelectContainer {
-  position  : relative;
-  /* top       : -54px;
-  right     : -300px; */
-  transition: all 1s ease;
-  height: 50px;
-  width:100%;
-  display: flex;
+  position       : relative;
+  /* top         : -54px;
+  right          : -300px; */
+  transition     : all 1s ease;
+  height         : 50px;
+  width          : 100%;
+  display        : flex;
   justify-content: flex-end;
-  align-items: center;
-  /* inset  :0; */
-  /* width     : 30%;
-  height    : 10px; */
-  /* outline: 2px solid red; */
+  align-items    : center;
+  /* inset       :0; */
+  /* width       : 30%;
+  height         : 10px; */
+  /* outline     : 2px solid red; */
 }
 
 .allSelectContainer>button {
@@ -216,25 +216,27 @@ header {
   opacity       : .4;
   pointer-events: none;
 }
-#editModal{
-      background: unset;
-    border    : unset;
-    margin    : 0 auto;
+
+#editModal {
+  background: unset;
+  border    : unset;
+  margin    : 0 auto;
 }
+
 .editModal {
-  outline:0;
-  margin       : 9rem auto;
-  width        : 30ch;
-  outline: 3px solid red;
-  /*width      :40vw; */
-  border       : 0;
-  /* padding      : 1rem; */
-  /* position  : absolute;
-inset          : 0; */
-  animation    : fadeIn .3s ease-in-out;
+  outline            : 0;
+  margin             : 9rem auto;
+  width              : 30ch;
+  outline            : 3px solid red;
+  /*width            :40vw; */
+  border             : 0;
+  /* padding         : 1rem; */
+  /* position        : absolute;
+inset                : 0; */
+  animation          : fadeIn .3s ease-in-out;
   /* background-color: white; */
-  /* position: fixed;
-  inset: 0; */
+  /* position        : fixed;
+  inset              : 0; */
 }
 
 @keyframes fadeIn {
@@ -264,7 +266,7 @@ inset          : 0; */
 #editModal::backdrop,
 .deleteModal::backdrop {
   background-color: rgba(0, 0, 1, 0.281);
-  
+
 }
 
 ul li {
@@ -272,14 +274,27 @@ ul li {
 }
 
 .todo {
-  display        : flex;
-  align-items    : baseline;
-  position       : relative;
-  gap            : 0.8rem;
-  max-width      : 700px;
-  margin-right   : 1rem;
-  margin-bottom  : 3rem;
-  justify-content: space-between;
+  display          : flex;
+  align-items      : center;
+  position         : relative;
+  gap              : 0.8rem;
+  max-width        : 700px;
+  margin-right     : 1rem;
+  margin-bottom    : 3rem;
+  justify-content  : space-between;
+  transition       : all .2s ease-in;
+  padding          : 10px;
+  padding-bottom   : 0;
+  /* padding-bottom: 3px; */
+}
+
+.selected {
+  background-color   : #009eff;
+  /* padding         : 10px 0; */
+  /* scale           :.9; */
+  border-radius      : 13px;
+  padding-bottom     : 10px;
+  transition         : all .3s ease-in-out;
 }
 
 .todo-label {
@@ -288,6 +303,7 @@ ul li {
   text-align   : left;
   overflow-wrap: break-word;
 }
+
 
 /* .noUserSelect{
   color:red;
@@ -347,6 +363,12 @@ ul li {
   outline: none;
 }
 
+::-webkit-scrollbar {
+  width : 10px;
+  margin: 0 10rem;
+
+}
+
 @media (max-width: 991px) {
   .todo-checkbox {
     display: block;
@@ -355,6 +377,9 @@ ul li {
 
   .todo-parent::-webkit-scrollbar {
     visibility: visible;
+
+    /* width: 10px; */
+
   }
 
   .todo-parent::-webkit-scrollbar-thumb {
@@ -363,8 +388,7 @@ ul li {
 }
 
 .todo-parent:hover::-webkit-scrollbar {
-  opacity: 1;
-
+  opacity   : 1;
   visibility: visible;
 }
 
@@ -485,24 +509,24 @@ ul li {
 .editInput {
   /* width:34ch; */
   /* min-width: 10%; */
-  width        : 100%;
-  /* height : 45vh; */
-  border-radius: 10px;
+  width           : 100%;
+  /* height       : 45vh; */
+  border-radius   : 10px;
   /* height       : calc(50% + 20px); */
-  padding      : 10px 16px;
-  /* padding   :1rem; */
-  font-size    : 23px;
+  padding         : 10px 16px;
+  /* padding      :1rem; */
+  font-size       : 23px;
   background-color: white;
-  /* overflow  : hidden; */
+  /* overflow     : hidden; */
   /* display      : block; */
   /* word-wrap    : break-word;
-  word-break   : break-all;
-  height       : 80px;
-  overflow-wrap: break-word;
-  line-break   : strict;
-  white-space  : pre-wrap; */
+  word-break      : break-all;
+  height          : 80px;
+  overflow-wrap   : break-word;
+  line-break      : strict;
+  white-space     : pre-wrap; */
 
-  outline      : none;
+  outline: none;
 }
 
 

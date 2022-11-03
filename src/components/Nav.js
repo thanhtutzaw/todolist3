@@ -1,9 +1,9 @@
 import React from "react";
 import { VscAdd } from "react-icons/vsc";
 
-function Nav({ inputRef,handleSubmit}) {
+function Nav({ inputRef, handleSubmit ,selectCount }) {
   return (
-    <nav className="nav">
+    <nav className="nav" style={{ pointerEvents: selectCount && 'none' }}>
       <form>
         <div>
           <input

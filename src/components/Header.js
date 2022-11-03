@@ -12,7 +12,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 // })
 
 export default function header(props) {
-  const { userphoto, todoLength, selectCount } = props
+  const { userphoto,userName, todoLength, selectCount } = props
   
 
   const [opentools, setopentools] = useState(false);
@@ -55,7 +55,7 @@ export default function header(props) {
           </p>
         </div>
         <div className="header-image">
-          <img src={userphoto && userphoto} onClick={handleTools} alt={`profile`} />
+          <img src={userphoto && userphoto} onClick={handleTools} alt={`${userName}'s Profile`} />
           {/* <img src={userphoto} onClick={handleTools}  alt={`profile`}/> */}
         </div>
       </div>

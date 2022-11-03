@@ -23,8 +23,8 @@ const Todolist =( props) => {
   }, [SelectedID]);
 
   return (
-    <li className="todo">
-      <label className={`todo-label`}>{todo.text}</label>
+    <li className={`todo ${isSelect && 'selected'}`}>
+      <label  className={`todo-label`}>{todo.text}</label>
 
       {(isSelect && SelectedID.length !== 0) 
       ?
