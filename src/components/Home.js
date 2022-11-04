@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Todolist from "./Todolist";
 import Nav from "./Nav";
@@ -20,9 +20,10 @@ import {
 import { db, auth } from "../lib/firebase";
 import Skeleton from 'react-loading-skeleton'
 import EditModal from "./EditModal";
+import { useUserData } from "../lib/hook";
 
 function Home() {
-
+// const uid = useContext(useUserData);
   const [Loading, setLoading] = useState(true);
 
   const [todos, settodos] = useState([]);
@@ -114,7 +115,7 @@ function Home() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const q = query(
-          collection(db, "users/" + auth.currentUser.uid + "/todos"), orderBy("timeStamp", "desc")            
+          collection(db, "users/" + user.uid + "/todos"), orderBy("timeStamp", "desc")            
         );
         unsubscribe = onSnapshot(q, (snapshot) => {
           settodos(
@@ -278,7 +279,6 @@ function Home() {
     // console.log(deleteHandle)
   }
   // console.log(deleteHandle)
-
   return (
     <div className="main container " style={{ margin: '0 auto', zIndex: '99' }}>
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
@@ -320,7 +320,7 @@ function Home() {
       </div>
 
       <div className={`todo-parent row`} >
-        { Loading &&(<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
+        {(Loading) &&(<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
         <section>
           <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
             {!Loading &&

@@ -33,12 +33,12 @@ const Todolist =( props) => {
         setSelectedID(SelectedID.filter((id) => id !== todo.id))
       }} /> 
       :
-      <RiCheckboxBlankCircleLine value={todo.id} className="todo-checkbox" onClick={(e) => {
-        setisSelect((prev) => !prev);
-        setSelectedID([...SelectedID, todo.id])
-        setselectCount(true)
-      }
-      }/>
+          <RiCheckboxBlankCircleLine value={todo.id} className="todo-checkbox" onClick={(e) => {
+            setisSelect((prev) => !prev);
+            setSelectedID([...SelectedID, todo.id])
+            setselectCount(true)
+          }
+          }/>
       }
     </li>
   )

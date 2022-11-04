@@ -2,19 +2,24 @@ import "./App.css";
 import React from "react";
 import {
   BrowserRouter as Router, Route,
-  Routes
+  Routes,
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import { UserContext } from "./Context/UserContext";
+import { useUserData } from "./lib/hook";
 // import { AuthProvider } from "./Context/AuthContext";
 
 export default function App() {
+  const userData = useUserData()
   return (
+      <UserContext.Provider value = {userData} >
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
+      </UserContext.Provider>
   );
 }
