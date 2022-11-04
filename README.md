@@ -1,5 +1,7 @@
 NoSQL + Firestore :+1: <br>
-Delete Multiple items :+1:
+Delete Multiple items :+1:<br>
+Skeleton Loader  :+1:<br>
+Selecting Items  :+1:<br>
 
 
 
