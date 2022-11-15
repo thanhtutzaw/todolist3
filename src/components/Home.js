@@ -22,8 +22,9 @@ import Skeleton from 'react-loading-skeleton'
 import EditModal from "./EditModal";
 import { useUserData } from "../lib/hook";
 
+
 function Home() {
-// const uid = useContext(useUserData);
+  // const uid = useContext(useUserData);
   const [Loading, setLoading] = useState(true);
 
   const [todos, settodos] = useState([]);
@@ -42,6 +43,8 @@ function Home() {
   const inputRef = useRef(null)
   const editInput = useRef(null)
   const todoRef = useRef(null)
+
+  const [isPrevent, setisPrevent] = useState(false);
 
   useEffect(() => {
     // if (localStorage.getItem("isUsersignin") === "true") {
@@ -85,25 +88,25 @@ function Home() {
         cursor.continue();
         // if (id) {
 
-          // console.log(id)
-          // const q = query(
-          //   collection(db, "users/" + id + "/todos"),
-          //   orderBy("timeStamp", "desc")
-          // );
-          // onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
-          //   // snapshot.docChanges().map((change) => {
-          //   //   // if (change.type === "added") {
-          //   //   //   // console.log(change.doc.data())
-          //   //   //   // id: doc.id,
-          //   //   //   // ...doc.data(),
-          //   //   // }
-          //   // })
-          //   const source = snapshot.metadata.fromCache ? "local cache" : "server";
-          //   console.log("Data came from =" + source);
-          //   console.log("data rendered = " + id); 
-          // });
-          // console.log(id);
-          // console.log(id)
+        // console.log(id)
+        // const q = query(
+        //   collection(db, "users/" + id + "/todos"),
+        //   orderBy("timeStamp", "desc")
+        // );
+        // onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
+        //   // snapshot.docChanges().map((change) => {
+        //   //   // if (change.type === "added") {
+        //   //   //   // console.log(change.doc.data())
+        //   //   //   // id: doc.id,
+        //   //   //   // ...doc.data(),
+        //   //   // }
+        //   // })
+        //   const source = snapshot.metadata.fromCache ? "local cache" : "server";
+        //   console.log("Data came from =" + source);
+        //   console.log("data rendered = " + id); 
+        // });
+        // console.log(id);
+        // console.log(id)
         // }
       }
     };
@@ -115,30 +118,21 @@ function Home() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const q = query(
-          collection(db, "users/" + user.uid + "/todos"), orderBy("timeStamp", "desc")            
+          collection(db, "users/" + user.uid + "/todos"), orderBy("timeStamp", "desc")
         );
         unsubscribe = onSnapshot(q, (snapshot) => {
+          // window.BeforeUnloadEvent = function () {
+          //   return "A XHR request is pending, are you sure you want to leave ?";
+          // }
           settodos(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
             }))
           );
+
           setLoading(false)
         });
-
-        // async function getDocument() {
-        //   const docSnap = await getDocs(q3)
-        //   settodos(
-        //     docSnap.docs.map(doc => ({
-                  
-        //             id: doc.id,
-        //             ...doc.data(),
-        //           }))
-        //         );
-        //         setLoading(false)
-        // }  
-        // getDocument()           
       }
       else {
         unsubscribe();
@@ -147,8 +141,45 @@ function Home() {
     return () => unsubscribe();
   }, []);
 
+  // async function getDocument() {
+  //   const docSnap = await getDocs(q3)
+  //   settodos(
+  //     docSnap.docs.map(doc => ({
+
+  //             id: doc.id,
+  //             ...doc.data(),
+  //           }))
+  //         );
+  //         setLoading(false)
+  // }  
+  // getDocument()           
+  useEffect(() => {
+    function preventRefresh(event) {
+      event.returnValue = 'You have unfinished changes!';
+    }
+    if (isPrevent) {
+      window.addEventListener('beforeunload', preventRefresh);
+    }
+    // if(!selectCount && SelectedID.length == 0){
+    //   // console.log({ selectCount, SelectedID })
+    //   setisPrevent(false)
+    // }
+    // if(SelectedID.length == 0){
+    //   setisPrevent(false)
+    // }
+    // if(selectCount){
+    //   window.addEventListener('beforeunload', preventRefresh);
+    // }
+    return () => {
+      window.removeEventListener('beforeunload', preventRefresh)
+    }
+  }, [isPrevent, selectCount, SelectedID, setisPrevent]);
+  const [input, setinput] = useState("");
+  const pendingOps = new Set();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
@@ -159,9 +190,30 @@ function Home() {
     if (inputText !== "") {
       const collectionRef = collection(db, "users", auth.currentUser.uid, "todos");
       inputRef.current.value = ""
+
       settodos([...todos, inputText]);
-      await addDoc(collectionRef, data, { merge: true });
+
+      setisPrevent(true)
+      try {
+        await addDoc(collectionRef, data, { merge: true });
+      }
+      catch (err) {
+        console.log(err)
+      }
+      finally {
+        setisPrevent(false)
+      }
+
+      // pendingOps.add = (await addDoc(collectionRef, data, { merge: true }))
+      // const cleanup = () => pendingOps.delete(addDoc);
+      // console.log({addDoc})
+      // await addDoc.then(cleanup).catch(cleanup)
     }
+    // setisPrevent(false)
+    // else if(inputText === ""){
+    // setisPrevent(false)
+    // }
+
   };
 
   onAuthStateChanged(auth, (user) => {
@@ -184,6 +236,7 @@ function Home() {
   // }
   function closeSelect() {
     clearSelect()
+    // setisPrevent(false)
     // console.log(setisSelect, typeof (setisSelect))    
   }
   // let toEdit
@@ -236,6 +289,7 @@ function Home() {
     clearSelect()
     // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
 
+    // setisPrevent(true)
     const batch = writeBatch(db);
     // console.log(batch)
     const chunkSize = 10
@@ -248,7 +302,8 @@ function Home() {
 
       }
     }
-    await batch.commit()
+    await batch.commit();
+    // setisPrevent(true)
 
     // console.log(SelectedID)
 
@@ -308,7 +363,7 @@ function Home() {
       }
       <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if (e.target === dialog) { e.target.close() } }} id="editModal" >
         {todos.map((todo) => (
-          <EditModal todo={todo} SelectedID={SelectedID} editInput={editInput} />
+          <EditModal key={todo.id} todo={todo} SelectedID={SelectedID} editInput={editInput} />
         )
         )}
       </dialog>
@@ -320,19 +375,19 @@ function Home() {
       </div>
 
       <div className={`todo-parent row`} >
-        {(Loading) &&(<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
+        {(Loading) && (<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
         <section>
           <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
             {!Loading &&
               todos.map((todo, index) => (
-                <Todolist todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
+                <Todolist setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
               ))
             }
           </ul>
         </section>
       </div>
 
-      <Nav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <Nav input={input} setinput={setinput} setisPrevent={setisPrevent} selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   );
 }
