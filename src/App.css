@@ -77,6 +77,7 @@ header {
   border-radius  : 50%;
   /*border-radius: 36%;*/
   object-fit     : cover;
+  font-size      : 16px;
 }
 
 .header-nobold {
@@ -101,14 +102,14 @@ header {
   transition         : all .3s ease-in-out;
   box-shadow         : 0 1px 2px 0 rgb(60 64 67 / 30%),
     0 2px 6px 2px rgb(60 64 67 / 15%);
-  z-index: 10000;
+  z-index   : 10000;
   visibility: hidden;
 
   /* gap          :1rem;     */
 }
 
 .fadeIn {
-  opacity: 1;
+  opacity   : 1;
   visibility: visible;
 }
 
@@ -223,22 +224,27 @@ header {
   background: unset;
   border    : unset;
   margin    : 0 auto;
+
 }
 
 .editModal {
-  outline            : 0;
-  margin             : 9rem auto;
-  width              : 30ch;
-  outline            : 3px solid red;
-  /*width            :40vw; */
-  border             : 0;
-  /* padding         : 1rem; */
-  /* position        : absolute;
-inset                : 0; */
-  animation          : fadeIn .3s ease-in-out;
-  /* background-color: white; */
-  /* position        : fixed;
-  inset              : 0; */
+  outline               : 0;
+  margin                : 9rem auto;
+  width                 : 30ch;
+  /* height             :340px; */
+  height                : 330px;
+  /* outline            : 3px solid red; */
+  /* border-radius      : 10px; */
+  /*width               :40vw; */
+  border                : 0;
+  /* padding            : 1rem; */
+  /* position           : absolute;
+inset                   : 0; */
+  animation             : fadeIn .2s ease-in;
+  overflow              : auto;
+  /* background-color   : white; */
+  /* position           : fixed;
+  inset                 : 0; */
 }
 
 @keyframes fadeIn {
@@ -336,9 +342,8 @@ ul li {
   display: none;
 }
 
-.todo-checkbox-fill , .todo-checkbox {
-  
-}
+.todo-checkbox-fill,
+.todo-checkbox {}
 
 .checkbox-active {
   display: block;
@@ -513,22 +518,25 @@ ul li {
 .editInput {
   /* width:34ch; */
   /* min-width: 10%; */
-  width           : 100%;
-  /* height       : 45vh; */
-  border-radius   : 10px;
-  /* height       : calc(50% + 20px); */
-  padding         : 10px 16px;
-  /* padding      :1rem; */
-  font-size       : 23px;
-  background-color: white;
-  /* overflow     : hidden; */
-  /* display      : block; */
-  /* word-wrap    : break-word;
-  word-break      : break-all;
-  height          : 80px;
-  overflow-wrap   : break-word;
-  line-break      : strict;
-  white-space     : pre-wrap; */
+  width              : 100%;
+  /* height          : 45vh; */
+  /* border-radius   : 10px; */
+  /* height          : calc(50% + 20px); */
+  padding            : 10px 16px;
+  /* padding         :1rem; */
+  font-size          : 23px;
+  background-color   : white;
+  height             : 330px;
+  overflow           : auto;
+  border-radius      : 20px;
+  /* overflow        : hidden; */
+  /* display         : block; */
+  /* word-wrap       : break-word;
+  word-break         : break-all;
+  height             : 80px;
+  overflow-wrap      : break-word;
+  line-break         : strict;
+  white-space        : pre-wrap; */
 
   outline: none;
 }
