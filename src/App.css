@@ -250,12 +250,13 @@ padding: .5rem 0;
   border    : unset;
   margin    : 0 auto;
   min-height: 100vh;
+  /* transform: translate(0px,q90px); */
 
 }
 
 .editModal {
   outline               : 0;
-  margin                : 9rem auto;
+  /* margin                : 9rem auto; */
   width                 : 30ch;
   /* height             :340px; */
   /* height                : 330px; */
@@ -268,6 +269,7 @@ padding: .5rem 0;
 inset                   : 0; */
   animation             : fadeIn .2s ease-in;
   overflow              : auto;
+  transform: translate(0px , 220px);
   /* background-color   : white; */
   /* position           : fixed;
   inset                 : 0; */
@@ -555,7 +557,7 @@ ul li {
   /* padding         :1rem; */
   font-size          : 23px;
   background-color   : white;
-  height             : 330px;
+  height             : 260px;
   overflow           : auto;
   border-radius      : 20px;
   /* overflow        : hidden; */
