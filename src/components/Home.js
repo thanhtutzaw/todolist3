@@ -375,7 +375,7 @@ function Home() {
       </div>
 
       <div className={`todo-parent row`} >
-        {(Loading) && (<Skeleton className="skeleton" count={10} style={{ display: 'flex', gap: '0.8rem', maxWidth: "365px", marginBottom: '1rem', padding: '.5rem 0', height: "0px !important" }} />)}
+        {Loading && <Skeleton className={"loading"} count={10} />}
         <section>
           <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
             {!Loading &&

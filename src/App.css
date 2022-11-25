@@ -107,7 +107,32 @@ header {
 
   /* gap          :1rem;     */
 }
+.todo-parent span{
+  /* display: block; */
+  /* visibility: hidden; */
 
+}
+.skeleton .todo-parent span{
+  /* opacity: 0;
+  display: none;
+  visibility: hidden; */
+/* display: none; */
+
+
+}
+.loading{
+  display: flex;
+gap: 0.8rem;
+max-width: 365px;
+margin-bottom: 1rem;
+padding: .5rem 0;
+/* height: 0px !important; */
+}
+/* .noLoading{
+  opacity: 0;
+  transition: all .4s ease-in;
+  visibility: hidden;
+} */
 .fadeIn {
   opacity   : 1;
   visibility: visible;
@@ -224,6 +249,7 @@ header {
   background: unset;
   border    : unset;
   margin    : 0 auto;
+  min-height: 100vh;
 
 }
 
@@ -232,7 +258,7 @@ header {
   margin                : 9rem auto;
   width                 : 30ch;
   /* height             :340px; */
-  height                : 330px;
+  /* height                : 330px; */
   /* outline            : 3px solid red; */
   /* border-radius      : 10px; */
   /*width               :40vw; */
@@ -246,7 +272,10 @@ inset                   : 0; */
   /* position           : fixed;
   inset                 : 0; */
 }
-
+li.todo{
+  animation: fadeIn .35s ease-in;
+  /* display: none; */
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;
