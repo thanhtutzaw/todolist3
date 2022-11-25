@@ -256,7 +256,7 @@ padding: .5rem 0;
 
 .editModal {
   outline               : 0;
-  /* margin                : 9rem auto; */
+  margin                : 9rem auto;
   width                 : 30ch;
   /* height             :340px; */
   /* height                : 330px; */
@@ -269,7 +269,7 @@ padding: .5rem 0;
 inset                   : 0; */
   animation             : fadeIn .2s ease-in;
   overflow              : auto;
-  transform: translate(0px , 220px);
+  /* transform: translate(0px , 220px); */
   /* background-color   : white; */
   /* position           : fixed;
   inset                 : 0; */
@@ -568,7 +568,7 @@ ul li {
   overflow-wrap      : break-word;
   line-break         : strict;
   white-space        : pre-wrap; */
-
+position: relative;
   outline: none;
 }
 
