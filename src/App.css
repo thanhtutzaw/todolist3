@@ -71,6 +71,10 @@ header {
   font-family: "Catamaran", sans-serif;
 }
 
+.header-image {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .header-image img {
   width          : 60px;
   height         : 60px;
@@ -78,6 +82,12 @@ header {
   /*border-radius: 36%;*/
   object-fit     : cover;
   font-size      : 16px;
+
+}
+
+.header-image:active {
+  scale     : 1.1;
+  transition: all .1s ease;
 }
 
 .header-nobold {
@@ -107,27 +117,34 @@ header {
 
   /* gap          :1rem;     */
 }
-.todo-parent span{
+
+.todo-parent span {
   /* display: block; */
   /* visibility: hidden; */
 
 }
-.skeleton .todo-parent span{
+
+.skeleton .todo-parent span {
   /* opacity: 0;
   display: none;
   visibility: hidden; */
-/* display: none; */
+  /* display: none; */
 
 
 }
-.loading{
-  display: flex;
-gap: 0.8rem;
-max-width: 365px;
-margin-bottom: 1rem;
-padding: .5rem 0;
-/* height: 0px !important; */
+
+.loading {
+  display            : flex;
+  /* gap             :1rem; */
+  /* gap             : 0.8rem; */
+  max-width          : 380px;
+  /* max-width       : 365px; */
+  margin-bottom      : 1.3rem;
+  padding            : .5rem 0;
+  /* background-color: red !important; */
+  /* height          : 0px !important; */
 }
+
 /* .noLoading{
   opacity: 0;
   transition: all .4s ease-in;
@@ -139,9 +156,9 @@ padding: .5rem 0;
 }
 
 .fadeOut {
-  opacity   : 0;
-  animation : fadeOut .4s ease;
-  visibility: hidden;
+  opacity      : 0;
+  animation    : fadeOut .4s ease;
+  /* visibility: hidden; */
 
 }
 
@@ -184,6 +201,8 @@ padding: .5rem 0;
 
   100% {
     opacity: 0;
+    display: none;
+     visibility: hidden;
   }
 } */
 
@@ -246,38 +265,40 @@ padding: .5rem 0;
 }
 
 #editModal {
-  background: unset;
-  border    : unset;
-  margin    : 0 auto;
-  min-height: 100vh;
+  background  : unset;
+  border      : unset;
+  margin      : 0 auto;
+  min-height  : 100vh;
   /* transform: translate(0px,q90px); */
 
 }
 
 .editModal {
-  outline               : 0;
-  margin                : 9rem auto;
-  width                 : 30ch;
-  /* height             :340px; */
+  outline                  : 0;
+  margin                   : 9rem auto;
+  width                    : 30ch;
+  /* height                :340px; */
   /* height                : 330px; */
-  /* outline            : 3px solid red; */
-  /* border-radius      : 10px; */
-  /*width               :40vw; */
-  border                : 0;
-  /* padding            : 1rem; */
-  /* position           : absolute;
-inset                   : 0; */
-  animation             : fadeIn .2s ease-in;
-  overflow              : auto;
-  /* transform: translate(0px , 220px); */
-  /* background-color   : white; */
-  /* position           : fixed;
-  inset                 : 0; */
+  /* outline               : 3px solid red; */
+  /* border-radius         : 10px; */
+  /*width                  :40vw; */
+  border                   : 0;
+  /* padding               : 1rem; */
+  /* position              : absolute;
+inset                      : 0; */
+  animation                : fadeIn .2s ease-in;
+  overflow                 : auto;
+  /* transform             : translate(0px , 220px); */
+  /* background-color      : white; */
+  /* position              : fixed;
+  inset                    : 0; */
 }
-li.todo{
-  animation: fadeIn .35s ease-in;
+
+li.todo {
+  animation : fadeIn .35s ease-in;
   /* display: none; */
 }
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -361,12 +382,9 @@ ul li {
 
 .todo-parent {
   text-align: center;
-  height    : 400px;
+  height    : 418px;
   overflow-y: auto;
-}
-
-.todo-parent {
-  display: block;
+  display   : block;
 }
 
 .todo-checkbox {
@@ -383,6 +401,7 @@ ul li {
 .todo-parent:hover .todo-checkbox {
   display: block;
   opacity: .5;
+
 }
 
 .btnParent {
@@ -549,15 +568,20 @@ ul li {
 .editInput {
   /* width:34ch; */
   /* min-width: 10%; */
-  width              : 100%;
-  /* height          : 45vh; */
-  /* border-radius   : 10px; */
-  /* height          : calc(50% + 20px); */
-  padding            : 10px 16px;
-  /* padding         :1rem; */
-  font-size          : 23px;
-  background-color   : white;
-  height             : 260px;
+  width                 : 100%;
+  /* height             : 45vh; */
+  /* border-radius      : 10px; */
+  /* height             : calc(50% + 20px); */
+  padding               : 10px 16px;
+  /* padding            :1rem; */
+  font-size             : 23px;
+  background-color      : white;
+  /* height             : 200px; */
+  /* height             :40px; */
+  /* max-height         :45px;
+  height                :200px; */
+  /* max-height         : 200px; */
+
   overflow           : auto;
   border-radius      : 20px;
   /* overflow        : hidden; */
@@ -568,8 +592,8 @@ ul li {
   overflow-wrap      : break-word;
   line-break         : strict;
   white-space        : pre-wrap; */
-position: relative;
-  outline: none;
+  position           : rel;
+  outline            : none;
 }
 
 

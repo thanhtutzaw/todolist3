@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Todolist from "./Todolist";
 import Nav from "./Nav";
@@ -18,14 +18,14 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import EditModal from "./EditModal";
 import { useUserData } from "../lib/hook";
 
 
 function Home() {
   // const uid = useContext(useUserData);
-  const [Loading, setLoading] = useState(true);
+  const [loading, setloading] = useState(true);
 
   const [todos, settodos] = useState([]);
   // let id; //  for profile 
@@ -131,7 +131,7 @@ function Home() {
             }))
           );
 
-          setLoading(false)
+          setloading(false)
         });
       }
       else {
@@ -140,19 +140,6 @@ function Home() {
     })
     return () => unsubscribe();
   }, []);
-
-  // async function getDocument() {
-  //   const docSnap = await getDocs(q3)
-  //   settodos(
-  //     docSnap.docs.map(doc => ({
-
-  //             id: doc.id,
-  //             ...doc.data(),
-  //           }))
-  //         );
-  //         setLoading(false)
-  // }  
-  // getDocument()           
   useEffect(() => {
     function preventRefresh(event) {
       event.returnValue = 'You have unfinished changes!';
@@ -160,21 +147,11 @@ function Home() {
     if (isPrevent) {
       window.addEventListener('beforeunload', preventRefresh);
     }
-    // if(!selectCount && SelectedID.length == 0){
-    //   // console.log({ selectCount, SelectedID })
-    //   setisPrevent(false)
-    // }
-    // if(SelectedID.length == 0){
-    //   setisPrevent(false)
-    // }
-    // if(selectCount){
-    //   window.addEventListener('beforeunload', preventRefresh);
-    // }
     return () => {
       window.removeEventListener('beforeunload', preventRefresh)
     }
   }, [isPrevent, selectCount, SelectedID, setisPrevent]);
-  const [input, setinput] = useState("");
+  // const [input, setinput] = useState("");
   const pendingOps = new Set();
 
   const handleSubmit = async (e) => {
@@ -342,7 +319,7 @@ function Home() {
           <CgChevronRightR />
         </button>
       </a>
-      {/* {Loading && <Skeleton count={10}  style={{ width: "350px",margin:'20px' , padding: '.2rem 0', height: "0px !important" }} />} */}
+      {/* {loading && <Skeleton count={10}  style={{ width: "350px",margin:'20px' , padding: '.2rem 0', height: "0px !important" }} />} */}
       {
         <div className={`selectModal ${(selectCount && SelectedID.length !== 0) && "fadeIn"}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
@@ -374,20 +351,22 @@ function Home() {
         <button onClick={clearSelect}>Deselect All</button>}
       </div>
 
-      <div className={`todo-parent row`} >
-        {Loading && <Skeleton className={"loading"} count={10} />}
-        <section>
-          <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
-            {!Loading &&
+      <section className={`todo-parent row`} >
+
+        <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
+          <SkeletonTheme baseColor="#dadada" height="55px">
+            {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
+            {loading && <Skeleton className={"loading"} count={5} />}
+        </SkeletonTheme>
+          {!loading &&
               todos.map((todo, index) => (
                 <Todolist setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
               ))
-            }
-          </ul>
-        </section>
-      </div>
+          }
+        </ul>
+      </section>
 
-      <Nav input={input} setinput={setinput} setisPrevent={setisPrevent} selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <Nav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   );
 }
