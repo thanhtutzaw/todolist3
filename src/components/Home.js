@@ -319,16 +319,16 @@ function Home() {
           <CgChevronRightR />
         </button>
       </a>
-      {/* {loading && <Skeleton count={10}  style={{ width: "350px",margin:'20px' , padding: '.2rem 0', height: "0px !important" }} />} */}
       {
-        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) && "fadeIn"}`}>
+        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "fadeIn" : ''}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
           <div>
             <GrClose className="closeSelectBtn" onClick={closeSelect} />
             <p className="selectCount">{SelectedID.length}</p>
           </div>
           <div>
-            <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button>
+            <button onClick={editHandle} className={`edit`}>Edit</button>
+            {/* <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button> */}
             {/* <EditModal SelectedID={SelectedID} /> */}
             <button onClick={(e) => {
               e.stopPropagation(); if (window.confirm(`Are you sure you wish to delete this ${SelectedID.length} item?`)) {
@@ -357,11 +357,11 @@ function Home() {
           <SkeletonTheme baseColor="#dadada" height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
             {loading && <Skeleton className={"loading"} count={5} />}
-        </SkeletonTheme>
+          </SkeletonTheme>
           {!loading &&
-              todos.map((todo, index) => (
-                <Todolist setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
-              ))
+            todos.map((todo, index) => (
+              <Todolist setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
+            ))
           }
         </ul>
       </section>

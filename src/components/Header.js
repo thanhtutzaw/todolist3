@@ -12,8 +12,8 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 // })
 
 export default function header(props) {
-  const { userphoto,userName, todoLength, selectCount } = props
-  
+  const { userphoto, userName, todoLength, selectCount } = props
+
 
   const [opentools, setopentools] = useState(false);
 
@@ -46,11 +46,12 @@ export default function header(props) {
     setopentools((prevstate) => !prevstate);
   }
   return (
-    <header style={{ pointerEvents: selectCount && 'none' }}>
+    <header>
+    {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
       <div className="header-row">
         <div className="header-text">
           <h1>My tasks</h1>
-          <p className="header-nobold"> 
+          <p className="header-nobold">
             {todoLength} tasks for <span>Today</span>
           </p>
         </div>
@@ -60,17 +61,19 @@ export default function header(props) {
         </div>
       </div>
       <div className="dropdown">
-        <nav className={opentools ? "nav-active" : ""}>
-        </nav>
-        {opentools && (
-          <div className="tools-parent">
+        {/* <nav className={opentools ? "nav-active" : ""}>
+        </nav> */}
+        {(
+          <div className={`tools-parent ${opentools ? 'fadeIn' : 'fadeOut'}` }>
             <div className="tools-container">
-              <div className="edit-parent" >
-                <MdDarkMode className="edit-btn" />
+              <div className="setting-item" >
+                <MdDarkMode />
+                {/* <MdDarkMode className="edit-btn" /> */}
                 <span>Theme</span>
               </div>
-              <div className="delete-parent" onClick={logoutHandle}>
-                <RiLogoutBoxFill className="delte-btn" />
+              <div className="setting-item" onClick={logoutHandle}>
+                <RiLogoutBoxFill />
+                {/* <RiLogoutBoxFill className="delte-btn" /> */}
                 <span>Logout</span>
               </div>
             </div>

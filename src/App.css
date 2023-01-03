@@ -86,7 +86,7 @@ header {
 }
 
 .header-image:active {
-  scale     : 1.1;
+  scale     : 0.8;
   transition: all .1s ease;
 }
 
@@ -150,15 +150,26 @@ header {
   transition: all .4s ease-in;
   visibility: hidden;
 } */
-.fadeIn {
+
+/* .fadeIn {
   opacity   : 1;
   visibility: visible;
-}
+} */
 
 .fadeOut {
-  opacity      : 0;
-  animation    : fadeOut .4s ease;
-  /* visibility: hidden; */
+      opacity: 0;
+    transition: all .3s ease;
+    visibility: hidden;
+  /* 
+  animation    : fadeOut .4s ease; */
+
+}
+.fadeIn {
+      opacity: 1;
+    transition: all .3s ease;
+    visibility: visible;
+  /* 
+  animation    : fadeOut .4s ease; */
 
 }
 
@@ -548,7 +559,7 @@ ul li {
   text-align : left;
 }
 
-.edit-parent,
+.setting-item,
 .delete-parent {
   display        : flex;
   justify-content: center;
@@ -560,11 +571,15 @@ ul li {
   gap            : 6px;
 }
 
-.edit-parent:hover,
+.setting-item:hover,
 .delete-parent:hover {
-  background-color: rgba(219, 17, 17, 0.103);
-}
+  /* background-color: rgba(219, 17, 17, 0.103); */
+  background-color: rgb(232 232 232 / 92%);
 
+}
+@media only screen and (max-width: 600px) {
+/* .setting-item */
+}
 .editInput {
   /* width:34ch; */
   /* min-width: 10%; */
