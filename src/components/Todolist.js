@@ -4,7 +4,7 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 import 'react-loading-skeleton/dist/skeleton.css'
 
 const Todolist = (props) => {
-  const { setisPrevent, setselectCount, todos, todo, SelectedID, setSelectedID } = props;
+  const { isPrevent, setisPrevent, setselectCount, todos, todo, SelectedID, setSelectedID } = props;
 
   const [isSelect, setisSelect] = useState(false);
 
@@ -14,8 +14,15 @@ const Todolist = (props) => {
       // setisPrevent(false)
     }
     if (SelectedID.length === 0 && isSelect) {
+      // setisPrevent("dfdfdsfd")
+      // setisPrevent(false)
+    }
+    if (SelectedID.length > 0) {
+      setisPrevent(true)
+    } else {
       setisPrevent(false)
     }
+    // if()
     if (SelectedID.length === todos.length) {
       setisSelect(true)
       // setSelectedID([todo.id])
@@ -23,7 +30,7 @@ const Todolist = (props) => {
     // else if(SelectedID.length){
     //   setisSelect(true) 
     // }
-  }, [SelectedID]);
+  }, [SelectedID, isPrevent]);
   const isSelecting = isSelect && SelectedID.length !== 0
   return (
     <li className={`todo ${isSelect ? 'selected' : ''}`}>
@@ -34,6 +41,7 @@ const Todolist = (props) => {
         <RiCheckboxCircleFill className="todo-checkbox-fill" onClick={(e) => {
           setisSelect((prev) => !prev);
           setSelectedID(SelectedID.filter((id) => id !== todo.id))
+          setselectCount(false)
         }} />
         :
         <RiCheckboxBlankCircleLine value={todo.id} className="todo-checkbox" onClick={(e) => {

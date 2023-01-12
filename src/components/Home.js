@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Todolist from "./Todolist";
-import Nav from "./Nav";
 import photo from "../profile 2.jpg";
 import { CgChevronRightR } from "react-icons/cg";
 import { onAuthStateChanged } from "firebase/auth";
@@ -21,6 +20,7 @@ import { db, auth } from "../lib/firebase";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import EditModal from "./EditModal";
 import { useUserData } from "../lib/hook";
+import BottomNav from "./BottomNav";
 
 
 function Home() {
@@ -360,13 +360,13 @@ function Home() {
           </SkeletonTheme>
           {!loading &&
             todos.map((todo, index) => (
-              <Todolist setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
+              <Todolist isPrevent={isPrevent} setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
             ))
           }
         </ul>
       </section>
 
-      <Nav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <BottomNav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </div>
   );
 }

@@ -42,7 +42,10 @@ export default function header(props) {
         console.log("signout", err)
       })
   }
-  const handleTools = () => {
+  function handleTools(e) {
+    
+    // alert('')
+    console.log(e.target)
     setopentools((prevstate) => !prevstate);
   }
   return (
@@ -55,8 +58,8 @@ export default function header(props) {
             {todoLength} tasks for <span>Today</span>
           </p>
         </div>
-        <div className="header-image">
-          <img src={userphoto && userphoto} onClick={handleTools} alt={`${userName}'s Profile`} />
+        <div style={{cursor:'pointer'}} onClick={handleTools}>  
+          <img  className="header-image" src={userphoto && userphoto}  alt={`${userName}'s Profile`} />
           {/* <img src={userphoto} onClick={handleTools}  alt={`profile`}/> */}
         </div>
       </div>

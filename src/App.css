@@ -75,7 +75,7 @@ header {
   -webkit-tap-highlight-color: transparent;
 }
 
-.header-image img {
+.header-image {
   width          : 60px;
   height         : 60px;
   border-radius  : 50%;
