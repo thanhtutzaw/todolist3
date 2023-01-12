@@ -150,7 +150,7 @@ function Home() {
     return () => {
       window.removeEventListener('beforeunload', preventRefresh)
     }
-  }, [isPrevent, selectCount, SelectedID, setisPrevent]);
+  }, [isPrevent, setisPrevent]);
   // const [input, setinput] = useState("");
   const pendingOps = new Set();
 
@@ -354,7 +354,7 @@ function Home() {
       <section className={`todo-parent row`} >
 
         <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
-          <SkeletonTheme  height="55px">
+          <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
             {/* <Skeleton className={"loading"} count={5} /> */}
             {loading && <Skeleton className={"loading"} count={5} />}

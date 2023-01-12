@@ -12,7 +12,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 // })
 
 export default function header(props) {
-  const { userphoto, userName, todoLength, selectCount } = props
+  const { userphoto, userName, todoLength } = props
 
 
   const [opentools, setopentools] = useState(false);

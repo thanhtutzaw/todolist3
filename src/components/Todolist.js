@@ -21,6 +21,7 @@ const Todolist = (props) => {
       setisPrevent(true)
     } else {
       setisPrevent(false)
+      setselectCount(false)
     }
     // if()
     if (SelectedID.length === todos.length) {
@@ -41,7 +42,6 @@ const Todolist = (props) => {
         <RiCheckboxCircleFill className="todo-checkbox-fill" onClick={(e) => {
           setisSelect((prev) => !prev);
           setSelectedID(SelectedID.filter((id) => id !== todo.id))
-          setselectCount(false)
         }} />
         :
         <RiCheckboxBlankCircleLine value={todo.id} className="todo-checkbox" onClick={(e) => {
