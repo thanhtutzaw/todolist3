@@ -58,8 +58,8 @@ export default function header(props) {
             {todoLength} tasks for <span>Today</span>
           </p>
         </div>
-        <div style={{cursor:'pointer'}} onClick={handleTools}>  
-          <img  className="header-image" src={userphoto && userphoto}  alt={`${userName}'s Profile`} />
+        <div  style={{cursor:'pointer'}} onClick={handleTools}>  
+          <img className="header-image" src={userphoto && userphoto}  alt={`${userName}'s Profile`} />
           {/* <img src={userphoto} onClick={handleTools}  alt={`profile`}/> */}
         </div>
       </div>

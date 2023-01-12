@@ -85,7 +85,7 @@ header {
 
 }
 
-.header-image:active {
+.header-image:active  {
   scale     : 0.8;
   transition: all .1s ease;
 }
@@ -134,7 +134,7 @@ header {
 }
 
 .loading {
-  display            : flex;
+  /* display            : flex; */
   /* gap             :1rem; */
   /* gap             : 0.8rem; */
   max-width          : 380px;

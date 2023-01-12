@@ -356,6 +356,7 @@ function Home() {
         <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
           <SkeletonTheme baseColor="#dadada" height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
+            {/* <Skeleton className={"loading"} count={5} /> */}
             {loading && <Skeleton className={"loading"} count={5} />}
           </SkeletonTheme>
           {!loading &&
