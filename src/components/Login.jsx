@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { CgChevronRightR } from "react-icons/cg";
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../lib/firebase";
 // const {login} = useAuth()
@@ -18,17 +15,16 @@ export default function Login() {
   };
   const btn = {
     padding: ".7rem",
-    color: "black",
-    backgroundColor: "white",
+    color: "white",
+    // backgroundColor: "white",
+    backgroundColor: "#007af6",
     borderRadius: "5px",
     outline: "none",
     border: "1px solid rgba(0,0,0,.1)",
     cursor: "pointer",
     boxShadow: "0px 2px 20px #0000001f",
 
-    // "&:hover": {
-    //     backgroundColor : 'red'
-    // }
+    
   };
   useEffect(() => {
     // if (localStorage.getItem("isUsersignin") === "true") {
@@ -47,7 +43,6 @@ export default function Login() {
   const provider = new GoogleAuthProvider();
 
   const signinHandle = () => {
-
     signInWithPopup(auth, provider)
       .then((res) => {
         nevigate("/");
@@ -72,4 +67,3 @@ export default function Login() {
     </div>
   );
 }
-

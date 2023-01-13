@@ -5,9 +5,9 @@ import {
   Routes,
 } from "react-router-dom";
 import Home from "./components/Home";
-import Login from "./components/Login";
 import { UserContext } from "./Context/UserContext";
 import { useUserData } from "./lib/hook";
+import Login from "./components/Login.jsx";
 // import { AuthProvider } from "./Context/AuthContext";
 
 export default function App() {

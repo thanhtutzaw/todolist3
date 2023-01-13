@@ -320,7 +320,7 @@ function Home() {
         </button>
       </a>
       {
-        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "fadeIn" : ''}`}>
+        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "fadeInSelectModal" : ''}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
           <div>
             <GrClose className="closeSelectBtn" onClick={closeSelect} />
