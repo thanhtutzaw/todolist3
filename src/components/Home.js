@@ -21,13 +21,12 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import EditModal from "./EditModal";
 import { useUserData } from "../lib/hook";
 import BottomNav from "./BottomNav";
+import useFireStoreData from "../hooks/useFireStoreData";
 
 
 function Home() {
   // const uid = useContext(useUserData);
-  const [loading, setloading] = useState(true);
 
-  const [todos, settodos] = useState([]);
   // let id; //  for profile 
   const [userName, setuserName] = useState();
   const [userphoto, setuserphoto] = useState(photo);
@@ -37,7 +36,6 @@ function Home() {
   // const [user, setuser] = useState(null)
   // console.log(current)
   const nevigate = useNavigate();
-  // console.log(todos)
   // const auth = getAuth();
   // const user = auth.currentUser;
   const inputRef = useRef(null)
@@ -45,7 +43,7 @@ function Home() {
   const todoRef = useRef(null)
 
   const [isPrevent, setisPrevent] = useState(false);
-
+  const [todos, settodos, loading] = useFireStoreData()
   useEffect(() => {
     // if (localStorage.getItem("isUsersignin") === "true") {
     //   nevigate("/");
@@ -88,7 +86,6 @@ function Home() {
         cursor.continue();
         // if (id) {
 
-        // console.log(id)
         // const q = query(
         //   collection(db, "users/" + id + "/todos"),
         //   orderBy("timeStamp", "desc")
@@ -105,41 +102,11 @@ function Home() {
         //   console.log("Data came from =" + source);
         //   console.log("data rendered = " + id); 
         // });
-        // console.log(id);
-        // console.log(id)
+
         // }
       }
     };
   }
-  // console.log(id)
-  // console.log(qid)
-  useEffect(() => {
-    let unsubscribe;
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const q = query(
-          collection(db, "users/" + user.uid + "/todos"), orderBy("timeStamp", "desc")
-        );
-        unsubscribe = onSnapshot(q, (snapshot) => {
-          // window.BeforeUnloadEvent = function () {
-          //   return "A XHR request is pending, are you sure you want to leave ?";
-          // }
-          settodos(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }))
-          );
-
-          setloading(false)
-        });
-      }
-      else {
-        unsubscribe();
-      }
-    })
-    return () => unsubscribe();
-  }, []);
   useEffect(() => {
     function preventRefresh(event) {
       event.returnValue = 'You have unfinished changes!';
@@ -151,12 +118,11 @@ function Home() {
       window.removeEventListener('beforeunload', preventRefresh)
     }
   }, [isPrevent, setisPrevent]);
-  // const [input, setinput] = useState("");
+
   const pendingOps = new Set();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
@@ -170,15 +136,14 @@ function Home() {
 
       settodos([...todos, inputText]);
 
-      setisPrevent(true)
+      setisPrevent(true)  
       try {
         await addDoc(collectionRef, data, { merge: true });
+        console.log("try")
+        setisPrevent(false)
       }
       catch (err) {
-        console.log(err)
-      }
-      finally {
-        setisPrevent(false)
+        alert(err.message)
       }
 
       // pendingOps.add = (await addDoc(collectionRef, data, { merge: true }))
@@ -211,15 +176,13 @@ function Home() {
   //   // setisSelect(false)
   //   f()
   // }
-  function closeSelect() {
-    clearSelect()
-    // setisPrevent(false)
-    // console.log(setisSelect, typeof (setisSelect))    
-  }
+  // function closeSelect() {
+  //   clearSelect()
+  //   // setisPrevent(false)
+  //   // console.log(setisSelect, typeof (setisSelect))    
+  // }
   // let toEdit
   function editHandle() {
-    // const collectionRef = collection(db, "users", UserId, "todo #1s",SelectedID);
-    // console.log(collectionRef)
     editInput.current.focus()
 
     document.getElementById("editModal").showModal()
@@ -230,8 +193,9 @@ function Home() {
   function clearSelect() {
     setSelectedID([])
     setselectCount(false)
+    setisPrevent(false)
   }
-  function selectALl() {
+  function selectAll() {
     // todos.map(todo => setSelectedID(todo.id))
     // for (let i = 0; i < todos.length; i++) {
     //   const items = []
@@ -249,8 +213,6 @@ function Home() {
       // console.log(Array.isArray(todo))
       const id = todos[i].id
       items.push(id)
-      // console.log(items)
-
     }
     setSelectedID(items)
     // })
@@ -279,10 +241,13 @@ function Home() {
 
       }
     }
-    await batch.commit();
-    // setisPrevent(true)
-
-    // console.log(SelectedID)
+    setisPrevent(true)
+    try {
+      await batch.commit();
+      setisPrevent(false)
+    } catch (error) {
+      alert("Delete Error !" + error.message)
+    }
 
 
     // const q = query(collectionRef, where("Document ID","==",SelectedID))
@@ -308,9 +273,7 @@ function Home() {
 
 
     // this.onCancel(e);
-    // console.log(deleteHandle)
   }
-  // console.log(deleteHandle)
   return (
     <div className="main container " style={{ margin: '0 auto', zIndex: '99' }}>
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
@@ -320,14 +283,17 @@ function Home() {
         </button>
       </a>
       {
-        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "fadeInSelectModal" : ''}`}>
+        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "selecting" : ''}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
           <div>
-            <GrClose className="closeSelectBtn" onClick={closeSelect} />
+            <GrClose className="closeSelectBtn" onClick={()=>{
+              clearSelect();
+              
+            }} />
             <p className="selectCount">{SelectedID.length}</p>
           </div>
           <div>
-            <button onClick={editHandle} className={`edit`}>Edit</button>
+            <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button>
             {/* <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button> */}
             {/* <EditModal SelectedID={SelectedID} /> */}
             <button onClick={(e) => {
@@ -347,7 +313,7 @@ function Home() {
 
       <Header selectCount={selectCount} userphoto={userphoto} userName={userName} todoLength={todos.length} />
 
-      <div className="allSelectContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectALl}>Select All</button>} {SelectedID.length >= 2 &&
+      <div className="allSelectContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectAll}>Select All</button>} {SelectedID.length >= 2 &&
         <button onClick={clearSelect}>Deselect All</button>}
       </div>
 

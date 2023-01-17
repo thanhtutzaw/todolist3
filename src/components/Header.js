@@ -39,35 +39,30 @@ export default function header(props) {
         nevigate('/login')
       })
       .catch((err) => {
-        console.log("signout", err)
+        alert("Error signout ! ", err.message)
       })
   }
   function handleTools(e) {
-    
-    // alert('')
     console.log(e.target)
     setopentools((prevstate) => !prevstate);
   }
   return (
-    <header>
-    {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
-      <div className="header-row">
+    <>
+      <header>
+        {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
         <div className="header-text">
           <h1>My tasks</h1>
           <p className="header-nobold">
             {todoLength} tasks for <span>Today</span>
           </p>
         </div>
-        <div  style={{cursor:'pointer'}} onClick={handleTools}>  
-          <img className="header-image" src={userphoto && userphoto}  alt={`${userName}'s Profile`} />
-          {/* <img src={userphoto} onClick={handleTools}  alt={`profile`}/> */}
+        <div style={{ cursor: 'pointer' }} onClick={handleTools}>
+          {userName ? (<img className="header-image" src={userphoto && userphoto} alt={userName ? `${userName}'s Profile` : ''} />) : (<img alt="testUser Profile" className="header-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></img>)}
         </div>
-      </div>
+      </header>
       <div className="dropdown">
-        {/* <nav className={opentools ? "nav-active" : ""}>
-        </nav> */}
         {(
-          <div className={`tools-parent ${opentools ? 'fadeIn' : 'fadeOut'}` }>
+          <div className={`tools ${opentools ? 'open' : 'close'}`}>
             <div className="tools-container">
               <div className="setting-item" >
                 <MdDarkMode />
@@ -83,6 +78,6 @@ export default function header(props) {
           </div>
         )}
       </div>
-    </header>
+    </>
   );
 }
