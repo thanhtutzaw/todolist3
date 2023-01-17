@@ -10,9 +10,6 @@ import {
   addDoc,
   collection,
   doc,
-  onSnapshot,
-  orderBy,
-  query,
   serverTimestamp,
   writeBatch,
 } from "firebase/firestore";
@@ -36,12 +33,10 @@ function Home() {
   // const [user, setuser] = useState(null)
   // console.log(current)
   const nevigate = useNavigate();
-  // const auth = getAuth();
-  // const user = auth.currentUser;
   const inputRef = useRef(null)
   const editInput = useRef(null)
   const todoRef = useRef(null)
-
+  const [openModal, setOpenModal] = useState(false)
   const [isPrevent, setisPrevent] = useState(false);
   const [todos, settodos, loading] = useFireStoreData()
   useEffect(() => {
@@ -136,7 +131,7 @@ function Home() {
 
       settodos([...todos, inputText]);
 
-      setisPrevent(true)  
+      setisPrevent(true)
       try {
         await addDoc(collectionRef, data, { merge: true });
         console.log("try")
@@ -167,25 +162,14 @@ function Home() {
 
   const [SelectedID, setSelectedID] = useState([]);
   const [selectCount, setselectCount] = useState(false);
-  // const [Edit, setEdit] = useState()
 
-  // const editModalRef = null
-  // console.log(SelectedID)
-  // function handleClose(f) {
-  //   setSelectedID([])
-  //   // setisSelect(false)
-  //   f()
-  // }
-  // function closeSelect() {
-  //   clearSelect()
-  //   // setisPrevent(false)
-  //   // console.log(setisSelect, typeof (setisSelect))    
-  // }
-  // let toEdit
   function editHandle() {
-    editInput.current.focus()
+    // setOpenModal(prev => !prev)
+    // editInput.current.focus()
 
     document.getElementById("editModal").showModal()
+    // if(openModal){
+    // }
 
     // toEdit = todos.find(todo => todo.id === SelectedID.toString())
   }
@@ -286,9 +270,9 @@ function Home() {
         <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "selecting" : ''}`}>
           {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
           <div>
-            <GrClose className="closeSelectBtn" onClick={()=>{
+            <GrClose className="closeSelectBtn" onClick={() => {
               clearSelect();
-              
+
             }} />
             <p className="selectCount">{SelectedID.length}</p>
           </div>
@@ -305,10 +289,12 @@ function Home() {
         </div>
       }
       <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if (e.target === dialog) { e.target.close() } }} id="editModal" >
-        {todos.map((todo) => (
+      
+          <EditModal todo={todos.find(t => t.id === SelectedID.toString())} editInput={editInput} />
+        {/* {todos.map((todo) => (
           <EditModal key={todo.id} todo={todo} SelectedID={SelectedID} editInput={editInput} />
         )
-        )}
+        )} */}
       </dialog>
 
       <Header selectCount={selectCount} userphoto={userphoto} userName={userName} todoLength={todos.length} />

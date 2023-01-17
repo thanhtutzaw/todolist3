@@ -7,7 +7,6 @@ export  function useUserData() {
     const [uid, setuid] = useState(null);
 
     useEffect(() => {
-        // turn off realtime subscription
         let unsubscribe;
         unsubscribe = onAuthStateChanged(auth , (user) => {
             if (user) {
@@ -24,7 +23,7 @@ export  function useUserData() {
             }
         })
 
-        return unsubscribe;
+        return ()=> unsubscribe;
     }, [user, uid]);
 
   return { user ,uid }
