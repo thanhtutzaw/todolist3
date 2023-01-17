@@ -18,6 +18,9 @@ export default function header(props) {
   const [opentools, setopentools] = useState(false);
 
   const auth = getAuth()
+  const user = auth.currentUser
+  
+  
   // const user = auth.currentUser
 
   // let displayName;
@@ -57,7 +60,8 @@ export default function header(props) {
           </p>
         </div>
         <div style={{ cursor: 'pointer' }} onClick={handleTools}>
-          {userName ? (<img className="header-image" src={userphoto && userphoto} alt={userName ? `${userName}'s Profile` : ''} />) : (<img alt="testUser Profile" className="header-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></img>)}
+          <img className="header-image" src={userphoto && userphoto} alt={userName ? `${userName}'s Profile` : ''} />
+          {user && user.email === "testuser11@gmail.com" && (<img alt="testUser Profile" className="header-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></img>)}
         </div>
       </header>
       <div className="dropdown">
