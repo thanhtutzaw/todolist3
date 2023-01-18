@@ -148,8 +148,8 @@ function Home() {
     setselectCount(true)
   }
   const deleteHandle = async () => {
-    setisPrevent(true)
     console.info("%cDeleting...", "color:grey")
+    setisPrevent(true)
     clearSelect()
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
@@ -167,7 +167,6 @@ function Home() {
       await batch.commit();
       setisPrevent(false)
       console.info("%cDeleted !", "color: green")
-
     } catch (error) {
       alert("Delete Error !" + error.message)
     }
@@ -235,6 +234,7 @@ function Home() {
         }}
         id="editModal" >
         <EditModal
+          clearSelect={clearSelect}
           todo={todos.find(t => t.id === SelectedID.toString())}
           editInput={editInput}
         />

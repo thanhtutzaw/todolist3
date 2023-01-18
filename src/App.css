@@ -65,7 +65,7 @@ header {
   font-family: "Catamaran", sans-serif;
 }
 
-header {
+header , .editModalActions{
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -337,28 +337,71 @@ li.todo {
 #editModal::backdrop,
 .deleteModal::backdrop {
   background-color: rgba(0, 0, 1, 0.281);
-  backdrop-filter: blur(5px);
-  transition: all .3s ease-in-out;
-  animation: fadeIn .2s ease-in;
+  backdrop-filter : blur(5px);
+  transition      : all .3s ease-in-out;
+  animation       : fadeIn .2s ease-in;
 }
+
+.editModalActions {
+  display        : flex;
+  justify-content: flex-end;
+  /* margin      : 15px 0; */
+  margin-top     : 10px;
+  gap            : 1rem;
+  
+}
+
+.editModalActions>button {
+  /* color:red; */
+  padding      : .5rem .3rem;
+  border       : 0;
+  border-radius: .5rem;
+  font-size    : 100%;
+  min-width        : 100px;
+  cursor       : pointer;
+  user-select  : none;
+  /* margin    :0 .5rem; */
+
+}
+
+.editCloseBtn {
+  background-color: white;
+  color           : black;
+  width:100px;
+}
+
+.editCloseBtn:focus {
+  background-color: rgb(221, 221, 221);
+}
+
+.updateBtn {
+  background-color: rgb(7, 174, 240);
+  color           : white;
+  width:104px;
+}
+
+.updateBtn:focus {
+  background-color: rgb(11, 147, 201);
+}
+
 
 ul li {
   list-style: none;
 }
 
 .todo {
-  display          : flex;
+  display             : flex;
   /* align-items      : center; */
-  position         : relative;
-  gap              : 0.8rem;
-  max-width        : 700px;
-  margin-right     : 1rem;
-  margin-bottom    : 3rem;
-  justify-content  : space-between;
-  transition       : all .2s ease-in;
-  padding          : 10px;
-  padding-bottom   : 0;
-  /* padding-bottom: 3px; */
+  position            : relative;
+  gap                 : 0.8rem;
+  max-width           : 700px;
+  margin-right        : 1rem;
+  margin-bottom       : 3rem;
+  justify-content     : space-between;
+  transition          : all .2s ease-in;
+  padding             : 10px;
+  padding-bottom      : 0;
+  /* padding-bottom   : 3px; */
 }
 
 .selected {
@@ -451,6 +494,13 @@ ul li {
   .todo-parent::-webkit-scrollbar-thumb {
     visibility: visible;
   }
+  .editCloseBtn:active {
+  background-color: rgb(221, 221, 221);
+}
+
+.updateBtn:active {
+  background-color: rgb(11, 147, 201);
+}
 }
 
 .todo-parent:hover::-webkit-scrollbar {
@@ -579,15 +629,16 @@ ul li {
 .editInput {
   /* width:34ch; */
   /* min-width: 10%; */
-  width                 : 100%;
-  position              : relative;
-  /* height             : calc(50% + 20px); */
-  padding               : 10px 16px;
-  background-color      : white;
-  overflow              : auto;
-  border-radius         : 20px;
-  /* position           : rel; */
-  outline               : none;
+  width                    : 100%;
+  position                 : relative;
+  /* height                : calc(50% + 20px); */
+  /* padding               : 10px 16px; */
+  padding                  : 20px;
+  background-color         : white;
+  overflow                 : auto;
+  border-radius            : 20px;
+  /* position              : rel; */
+  outline                  : none;
 }
 
 .textarea {
