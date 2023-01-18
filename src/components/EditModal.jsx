@@ -1,40 +1,52 @@
-import { collection, collectionGroup, doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { auth, db } from "../lib/firebase";
 
 export default function EditModal(props) {
-  const { todo,clearSelect, editInput } = props;
+  const { todo, clearSelect, editInput } = props;
   const [text, settext] = useState(todo && todo.text);
   const [loading, setloading] = useState(false);
-  const updateHandle =async(id)=>{
-    // alert("save" + id);
+  // const isUpdating = text && text !== todo.text
+
+  // useEffect(() => {
+  //   console.log(isUpdating);
+  // }, [text]);
+
+  const updateHandle = async (id) => {
     const collectionRef = doc(db, "users", auth.currentUser.uid, "todos", id);
     // console.log(inputRef.current.value);
-    console.log(text)
+    // console.log(text);
     const data = {
-      ...todo , text
+      ...todo,
+      text,
+    };
+    if (text !== todo.text) {
+      console.info("%cUpdating...", "color:grey");
+      setloading(true);
+      try {
+        await updateDoc(collectionRef, data);
+        document.getElementById("editModal").close();
+        console.info("%cUpdated ✔️", "color:green");
+        setloading(false);
+        clearSelect();
+      } catch (error) {
+        alert("Update Error ! " + error.message);
+      }
+    } else {
+      closeHandle();
     }
-    console.info("%cUpdating...","color:grey")
-    setloading(true)
-    try{
-      await updateDoc(collectionRef, data)
-      document.getElementById("editModal").close();
-      console.info("%cUpdated ✔️", "color:green");
-      setloading(false)
-      clearSelect()
-    }
-    catch(error){
-      alert("Update Error ! "+ error.message)
-    }
-    settext("");
-  } 
+    // settext("");
+  };
   function closeHandle() {
     document.getElementById("editModal").close();
+    if (todo) {
+      settext(todo.text);
+    }
   }
-  const inputRef= useRef(null);
+  const inputRef = useRef(null);
   useEffect(() => {
-    if(todo){
-      settext(todo.text)
+    if (todo) {
+      settext(todo.text);
     }
   }, [todo]);
   return (
@@ -59,7 +71,7 @@ export default function EditModal(props) {
               ref={editInput}
             >
               <textarea
-enterkeyhint="done"
+                // enterKeyHint="done"
                 style={{ userSelect: loading ? "none" : "unset" }}
                 value={text}
                 ref={inputRef}

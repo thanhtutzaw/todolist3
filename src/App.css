@@ -65,7 +65,8 @@ header {
   font-family: "Catamaran", sans-serif;
 }
 
-header , .editModalActions{
+header,
+.editModalActions {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -249,7 +250,8 @@ header , .editModalActions{
   display    : flex;
   align-items: center;
   gap        : .7rem;
-  font-size  : 24px;
+  /* font-size  : 24px; */
+  /* font-size: 22px; */
 }
 
 .selectModal button {
@@ -348,7 +350,7 @@ li.todo {
   /* margin      : 15px 0; */
   margin-top     : 10px;
   gap            : 1rem;
-  
+
 }
 
 .editModalActions>button {
@@ -357,7 +359,7 @@ li.todo {
   border       : 0;
   border-radius: .5rem;
   font-size    : 100%;
-  min-width        : 100px;
+  min-width    : 100px;
   cursor       : pointer;
   user-select  : none;
   /* margin    :0 .5rem; */
@@ -367,7 +369,7 @@ li.todo {
 .editCloseBtn {
   background-color: white;
   color           : black;
-  width:100px;
+  width           : 100px;
 }
 
 .editCloseBtn:focus {
@@ -377,7 +379,7 @@ li.todo {
 .updateBtn {
   background-color: rgb(7, 174, 240);
   color           : white;
-  width:104px;
+  width           : 104px;
 }
 
 .updateBtn:focus {
@@ -436,7 +438,7 @@ ul li {
 
 .todo-parent {
   text-align: center;
-  height    : 418px;
+  height    : 432px;
   overflow-y: auto;
   display   : block;
 }
@@ -494,13 +496,14 @@ ul li {
   .todo-parent::-webkit-scrollbar-thumb {
     visibility: visible;
   }
-  .editCloseBtn:active {
-  background-color: rgb(221, 221, 221);
-}
 
-.updateBtn:active {
-  background-color: rgb(11, 147, 201);
-}
+  .editCloseBtn:active {
+    background-color: rgb(221, 221, 221);
+  }
+
+  .updateBtn:active {
+    background-color: rgb(11, 147, 201);
+  }
 }
 
 .todo-parent:hover::-webkit-scrollbar {
