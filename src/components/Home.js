@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import EditModal from "./EditModal";
+import EditModal from "./EditModal.jsx";
 import { useUserData } from "../lib/hook";
 import BottomNav from "./BottomNav";
 import useFireStoreData from "../hooks/useFireStoreData";
@@ -40,26 +40,14 @@ function Home() {
   const [isPrevent, setisPrevent] = useState(false);
   const [todos, settodos, loading] = useFireStoreData()
   useEffect(() => {
-    // if (localStorage.getItem("isUsersignin") === "true") {
-    //   nevigate("/");
-    // } else {
-    //   nevigate("/login");
-    // }
-
     // get profile from firebase indexDb
     var request = window.indexedDB.open("firebaseLocalStorageDb", 1);
     request.onsuccess = function (e) {
       console.log("db initilalized");
       const indexDB = request.result;
       getData(indexDB);
-
-
-
     };
   }, []);
-
-  // console.log(q3)
-
   function getData(indexDB) {
     // console.log("this is get data");
     var transaction = indexDB.transaction(
@@ -78,27 +66,7 @@ function Home() {
       if (cursor) {
         setuserphoto(cursor.value.value.photoURL);
         setuserName(cursor.value.value.displayName)
-        cursor.continue();
-        // if (id) {
-
-        // const q = query(
-        //   collection(db, "users/" + id + "/todos"),
-        //   orderBy("timeStamp", "desc")
-        // );
-        // onSnapshot(q, { includeMetadataChanges: true }, (snapshot) => {
-        //   // snapshot.docChanges().map((change) => {
-        //   //   // if (change.type === "added") {
-        //   //   //   // console.log(change.doc.data())
-        //   //   //   // id: doc.id,
-        //   //   //   // ...doc.data(),
-        //   //   // }
-        //   // })
-        //   const source = snapshot.metadata.fromCache ? "local cache" : "server";
-        //   console.log("Data came from =" + source);
-        //   console.log("data rendered = " + id); 
-        // });
-
-        // }
+        cursor.continue()
       }
     };
   }
@@ -146,17 +114,11 @@ function Home() {
       // console.log({addDoc})
       // await addDoc.then(cleanup).catch(cleanup)
     }
-    // setisPrevent(false)
-    // else if(inputText === ""){
-    // setisPrevent(false)
-    // }
-
   };
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
       nevigate("/login");
-      // localStorage.setItem("isUsersignin", "false");
     }
   });
 
@@ -166,12 +128,7 @@ function Home() {
   function editHandle() {
     // setOpenModal(prev => !prev)
     // editInput.current.focus()
-
     document.getElementById("editModal").showModal()
-    // if(openModal){
-    // }
-
-    // toEdit = todos.find(todo => todo.id === SelectedID.toString())
   }
 
   function clearSelect() {
@@ -181,40 +138,21 @@ function Home() {
   }
   function selectAll() {
     // todos.map(todo => setSelectedID(todo.id))
-    // for (let i = 0; i < todos.length; i++) {
-    //   const items = []
-    //   const todoObj = todos[i]
-    //   items.push(todoObj)
-    //   const todoid = items[0].id
-    //   const newArr = []
-    //   newArr = newArr.concat(todoid)
-    //   console.log(newArr)
-    // }
-
-    // todos.map(todo => {
     const items = []
     for (let i = 0; i < todos.length; i++) {
-      // console.log(Array.isArray(todo))
       const id = todos[i].id
       items.push(id)
     }
     setSelectedID(items)
-    // })
     setselectCount(true)
   }
-  async function deleteHandle() {
-    todoRef.current.scrollIntoView({ behavior: "smooth" });
-    // deleteHandle(filteredTodo);
-    // const collectionRef = collection(db, "users", UserId, "todos", "uPChMcaETFqlTbBXgbNn");
-    // const collectionRef = collection(db, `${UserId}/todos/${SelectedID}`);
-    // const collectionRef = collection(db, UserId, "todos",SelectedID.toString());
-    // console.log(collectionRef)
+  const deleteHandle = async () => {
+    setisPrevent(true)
+    console.info("%cDeleting...", "color:grey")
     clearSelect()
+    todoRef.current.scrollIntoView({ behavior: "smooth" });
     // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
-
-    // setisPrevent(true)
     const batch = writeBatch(db);
-    // console.log(batch)
     const chunkSize = 10
     for (let i = 0; i < SelectedID.length; i += chunkSize) {
       const chunk = SelectedID.slice(i, i + chunkSize);
@@ -222,13 +160,13 @@ function Home() {
       for (let j = 0; j < chunk.length; j++) {
         const TodoRef = doc(db, "users", auth.currentUser.uid, "todos", chunk[j])
         batch.delete(TodoRef)
-
       }
     }
-    setisPrevent(true)
     try {
       await batch.commit();
       setisPrevent(false)
+      console.info("%cDeleted !", "color: green")
+
     } catch (error) {
       alert("Delete Error !" + error.message)
     }
@@ -266,35 +204,38 @@ function Home() {
           <CgChevronRightR />
         </button>
       </a>
-      {
-        <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "selecting" : ''}`}>
-          {/* <div className={` ${SelectedID.length == 0 ? "fadeOut" : 'selectModal'}`}> */}
-          <div>
-            <GrClose className="closeSelectBtn" onClick={() => {
-              clearSelect();
 
-            }} />
-            <p className="selectCount">{SelectedID.length}</p>
-          </div>
-          <div>
-            <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button>
-            {/* <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>Edit</button> */}
-            {/* <EditModal SelectedID={SelectedID} /> */}
-            <button onClick={(e) => {
-              e.stopPropagation(); if (window.confirm(`Are you sure you wish to delete this ${SelectedID.length} item?`)) {
-                deleteHandle()
-              }
-            }} className="delete">Delete</button>
-          </div>
+      <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "selecting" : ''}`}>
+        <div>
+          <GrClose className="closeSelectBtn" onClick={() => {
+            clearSelect();
+          }} />
+          <p className="selectCount">{SelectedID.length}</p>
         </div>
-      }
-      <dialog onClick={(e) => { const dialog = document.querySelector("dialog"); if (e.target === dialog) { e.target.close() } }} id="editModal" >
-      
-          <EditModal todo={todos.find(t => t.id === SelectedID.toString())} editInput={editInput} />
-        {/* {todos.map((todo) => (
-          <EditModal key={todo.id} todo={todo} SelectedID={SelectedID} editInput={editInput} />
-        )
-        )} */}
+        <div>
+          <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>
+            Edit
+          </button>
+
+          <button onClick={(e) => {
+            e.stopPropagation();
+            if (window.confirm(`Are you sure you wish to delete ${SelectedID.length > 1 ? "these" : "this"} ${SelectedID.length} ${SelectedID.length > 1 ? "items" : "item"}?`)) {
+              deleteHandle()
+            }
+          }} className="delete">Delete</button>
+        </div>
+      </div>
+
+      <dialog
+        onClick={(e) => {
+          const dialog = document.querySelector("dialog");
+          if (e.target === dialog) { e.target.close(); }
+        }}
+        id="editModal" >
+        <EditModal
+          todo={todos.find(t => t.id === SelectedID.toString())}
+          editInput={editInput}
+        />
       </dialog>
 
       <Header selectCount={selectCount} userphoto={userphoto} userName={userName} todoLength={todos.length} />
