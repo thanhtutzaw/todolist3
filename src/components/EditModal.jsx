@@ -59,6 +59,7 @@ export default function EditModal(props) {
               ref={editInput}
             >
               <textarea
+enterkeyhint="done"
                 style={{ userSelect: loading ? "none" : "unset" }}
                 value={text}
                 ref={inputRef}
