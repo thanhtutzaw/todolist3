@@ -197,8 +197,24 @@ function Home() {
     // this.onCancel(e);
   }
   const selecting = selectCount && SelectedID.length !== 0;
+
+  const mountStyle = {
+    animation: "selectMount 250ms ease-in"
+  };
+  const unmountStyle = {
+    animation: "selectUnmount 270ms ease-out",
+    animationFillMode: "forwards"
+  };
+  const [mounted, setmounted] = useState(false);
+  useEffect(() => {
+    console.log(selecting)
+    if (selecting) {
+      setmounted(true)
+    }
+    console.log(mounted)
+  }, [selecting, mounted]);
   return (
-    <main className="main" style={{ margin: '0 auto', zIndex: '99' }}>
+    <main>
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <button className="btn" type="button">
@@ -206,7 +222,9 @@ function Home() {
         </button>
       </a>
 
-      <div className={`selectModal ${(selectCount && SelectedID.length !== 0) ? "selecting" : ''}`}>
+      {mounted && <div onAnimationEnd={(e) => { if (!selecting) { setmounted(false); console.log("end") } }}
+        style={selecting ? mountStyle : unmountStyle}
+        className={`selectModal `} >
         <div>
           <GrClose className="closeSelectBtn" onClick={() => {
             clearSelect();
@@ -214,7 +232,7 @@ function Home() {
           <p className="selectCount">{SelectedID.length}</p>
         </div>
         <div>
-          <button onClick={editHandle} className={`edit ${SelectedID.length > 1 && 'disabled'}`}>
+          <button onClick={editHandle} className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}>
             Edit
           </button>
 
@@ -225,7 +243,7 @@ function Home() {
             }
           }} className="delete">Delete</button>
         </div>
-      </div>
+      </div>}
 
       <dialog
         onClick={(e) => {
@@ -242,7 +260,7 @@ function Home() {
 
       <Header selecting={selecting} userphoto={userphoto} userName={userName} todoLength={todos.length} />
 
-      <div className="allSelectContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectAll}>Select All</button>} {SelectedID.length >= 2 &&
+      <div className="selectionContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectAll}>Select All</button>} {SelectedID.length >= 2 &&
         <button onClick={clearSelect}>Deselect All</button>}
       </div>
 
@@ -251,7 +269,6 @@ function Home() {
         <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
           <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
-            {/* <Skeleton className={"loading"} count={5} /> */}
             {loading && <Skeleton className={"loading"} count={5} />}
           </SkeletonTheme>
           {!loading &&
