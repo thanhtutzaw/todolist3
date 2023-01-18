@@ -12,7 +12,7 @@ import { RiLogoutBoxFill } from "react-icons/ri";
 // })
 
 export default function header(props) {
-  const { userphoto, userName, todoLength } = props
+  const {selecting, userphoto, userName, todoLength } = props
 
 
   const [opentools, setopentools] = useState(false);
@@ -51,7 +51,7 @@ export default function header(props) {
   }
   return (
     <>
-      <header>
+      <header style={{paddingTop:selecting ?'2.2rem' : ''}}>
         {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
         <div className="header-text">
           <h1>My tasks</h1>
@@ -59,7 +59,7 @@ export default function header(props) {
             {todoLength} tasks for <span>Today</span>
           </p>
         </div>
-        <div style={{ cursor: 'pointer' }} onClick={handleTools}>
+        <div className="profile" onClick={handleTools}>
           {userName && <img className="header-image" src={userphoto && userphoto} alt={userName ? `${userName}'s Profile` : ''} />}
           {user && user.email === "testuser11@gmail.com" && (<img alt="testUser Profile" className="header-image" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"></img>)}
         </div>

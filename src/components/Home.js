@@ -36,7 +36,7 @@ function Home() {
   const inputRef = useRef(null)
   const editInput = useRef(null)
   const todoRef = useRef(null)
-  const [openModal, setOpenModal] = useState(false)
+  // const [openModal, setOpenModal] = useState(false)
   const [isPrevent, setisPrevent] = useState(false);
   const [todos, settodos, loading] = useFireStoreData()
   useEffect(() => {
@@ -86,6 +86,7 @@ function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.info("%cAdding...", "color:grey")
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
@@ -102,8 +103,8 @@ function Home() {
       setisPrevent(true)
       try {
         await addDoc(collectionRef, data, { merge: true });
-        console.log("try")
         setisPrevent(false)
+        console.info("%cAdded ✔️ ", "color: green")
       }
       catch (err) {
         alert(err.message)
@@ -196,8 +197,9 @@ function Home() {
 
     // this.onCancel(e);
   }
+  const selecting = selectCount && SelectedID.length !== 0;
   return (
-    <div className="main container " style={{ margin: '0 auto', zIndex: '99' }}>
+    <main className="main" style={{ margin: '0 auto', zIndex: '99' }}>
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <button className="btn" type="button">
@@ -238,7 +240,7 @@ function Home() {
         />
       </dialog>
 
-      <Header selectCount={selectCount} userphoto={userphoto} userName={userName} todoLength={todos.length} />
+      <Header selecting={selecting} userphoto={userphoto} userName={userName} todoLength={todos.length} />
 
       <div className="allSelectContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectAll}>Select All</button>} {SelectedID.length >= 2 &&
         <button onClick={clearSelect}>Deselect All</button>}
@@ -261,7 +263,7 @@ function Home() {
       </section>
 
       <BottomNav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
-    </div>
+    </main>
   );
 }
 export default Home;
