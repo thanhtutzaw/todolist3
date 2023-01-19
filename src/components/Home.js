@@ -213,6 +213,14 @@ function Home() {
     }
     console.log(mounted)
   }, [selecting, mounted]);
+  const todo = todos.find(t => t.id === SelectedID.toString())
+  const [text, settext] = useState(todo && todo.text);
+  function closeHandle() {
+    document.getElementById("editModal").close();
+    if (todo) {
+      settext(todo.text);
+    }
+  }
   return (
     <main>
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
@@ -248,10 +256,20 @@ function Home() {
       <dialog
         onClick={(e) => {
           const dialog = document.querySelector("dialog");
-          if (e.target === dialog) { e.target.close(); }
+          if (e.target === dialog) {
+            if (text !== todo.text) {
+              document.getElementById("confirmModal").showModal();
+              // setConfirmModal((prev) => !prev);
+            } else {
+              closeHandle();
+            }
+          }
         }}
         id="editModal" >
         <EditModal
+          text={text}
+          settext={settext}
+          closeHandle={closeHandle}
           clearSelect={clearSelect}
           todo={todos.find(t => t.id === SelectedID.toString())}
           editInput={editInput}

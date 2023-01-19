@@ -1,27 +1,23 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { auth, db } from "../lib/firebase";
-import CloseConfirmModal from "./CloseConfirmModal";
-import UpdatingModal from "./UpdatingModal";
 
-export default function EditModal(props) {
-  const {text,settext,   todo, clearSelect, editInput, closeHandle } = props;
-  
+export default function CloseConfirmModal(props) {
+  const {
+    todo = [],
+    clearSelect,
+    editInput,
+    closeHandle,
+    closeConfirm,
+  } = props;
+  const [text, settext] = useState(todo && todo.text);
   const [loading, setloading] = useState(false);
-  // const [ConfirmModal, setConfirmModal] = useState(false);
   // const isUpdating = text && text !== todo.text
 
   // useEffect(() => {
   //   console.log(isUpdating);
   // }, [text]);
-// const isUpdating = text && todo[0] && text !== todo.text;
-useEffect(() => {
-  if (loading) {
-    document.getElementById("updating").showModal();
-  }else{
-    document.getElementById("updating").close();
-  }
-}, [loading]);
+
   const updateHandle = async (id) => {
     const collectionRef = doc(db, "users", auth.currentUser.uid, "todos", id);
     // console.log(inputRef.current.value);
@@ -33,49 +29,51 @@ useEffect(() => {
     if (text !== todo.text) {
       console.info("%cUpdating...", "color:grey");
       setloading(true);
-      
       try {
         await updateDoc(collectionRef, data);
         document.getElementById("editModal").close();
         console.info("%cUpdated ✔️", "color:green");
         setloading(false);
         clearSelect();
-        if(!loading){
-          // const updatingModal = document.querySelector("#updating");
-          
-        }
       } catch (error) {
         alert("Update Error ! " + error.message);
       }
     } else {
       closeHandle();
     }
+    // settext("");
   };
-  
+  // function closeHandle() {
+  //   document.getElementById("editModal").close();
+  //   if (todo) {
+  //     settext(todo.text);
+  //   }
+  // }
   const inputRef = useRef(null);
   useEffect(() => {
     if (todo) {
       settext(todo.text);
     }
   }, [todo]);
-  function closeConfirm() {
-    const confirmModal = document.querySelector("#confirmModal");
-    confirmModal.close();
 
-  }
   return (
-    <>
-      <dialog
-        id="confirmModal"
-      >
-        <CloseConfirmModal closeConfirm={closeConfirm} closeHandle={closeHandle} />
-      </dialog>
-      <dialog
-        id="updating"
-      >
-        <UpdatingModal />
-      </dialog>
-      {todo && (
+    <div className="closeConfirmModal">
+      <p style={{fontWeight:'500' , fontSize:'22px'}}>Discard Changes ?</p>
+      <div>
+        <button className="btn continueBtn" onClick={closeConfirm}>
+          Keep editing
+        </button>
+        <button
+          className="btn discardBtn"
+          onClick={() => {
+            closeConfirm();
+            closeHandle();
+          }}
+        >
+          Discard
+        </button>
+      </div>
+      {/* {todo && (
         <>
           <div
             style={{
@@ -106,17 +104,7 @@ useEffect(() => {
                 // value={text}
               />
               <div className="editModalActions">
-                <button
-                  onClick={() => {
-                    if (text !== todo.text) {
-                      document.getElementById("confirmModal").showModal();
-                      // setConfirmModal((prev) => !prev);
-                    } else {
-                      closeHandle();
-                    }
-                  }}
-                  className={`editCloseBtn`}
-                >
+                <button onClick={closeHandle} className={`editCloseBtn`}>
                   Close
                 </button>
 
@@ -127,15 +115,14 @@ useEffect(() => {
                   type="submit"
                   className="updateBtn"
                 >
-                  {/* {loading ? "Updating..." : "Save"} */}
-                  Save
+                  {loading ? "Updating..." : "Save"}
                 </button>
               </div>
             </div>
           </div>
         </>
         // </div>
-      )}
-    </>
+      )} */}
+    </div>
   );
 }
