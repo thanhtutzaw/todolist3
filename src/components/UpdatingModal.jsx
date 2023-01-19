@@ -6,7 +6,7 @@ export default function UpdatingModal(props) {
 
   return (
     <div className="closeConfirmModal">
-      <p style={{ fontWeight: "500", fontSize: "22px" }}>Updating ...</p>
+      <p style={{ fontWeight: "500", fontSize: "22px" }}>🌟 Updating...</p>
       {/* <div>
         <button className="btn continueBtn" onClick={closeConfirm}>
           Keep editing
