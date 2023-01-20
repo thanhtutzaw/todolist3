@@ -67,7 +67,7 @@ export default function Login() {
   };
 
   return (
-    <div className="main">
+    <main>
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <button className="btn" type="button">
           <CgChevronRightR />
@@ -87,6 +87,6 @@ export default function Login() {
       >
         <p>Sign in as testUser</p>
       </div>
-    </div>
+    </main>
   );
 }
