@@ -20,27 +20,14 @@ import usePrevent from "../hooks/usePrevent.js";
 import { SelectModal } from "./SelectModal.jsx";
 import useSelect from "../hooks/useSelect.js";
 
-
-
 function Home() {
-  // const uid = useContext(useUserData);
-
-  // let id; //  for profile 
-
-  // const [UserId, setUserId] = useState();
-
-  // const [User, setUser] = useState(null);
-  // const [user, setuser] = useState(null)
-  // console.log(current)
   const nevigate = useNavigate();
   const inputRef = useRef(null)
   const editInput = useRef(null)
   const todoRef = useRef(null)
-  // const [openModal, setOpenModal] = useState(false)
+
   const [todos, settodos, loading] = useFireStoreData()
-  const {isPrevent, setisPrevent} = usePrevent()
-
-
+  const { isPrevent, setisPrevent } = usePrevent()
 
   const pendingOps = new Set();
 
@@ -100,14 +87,6 @@ function Home() {
       alert("Delete Error !" + error.message)
     }
 
-
-    // const q = query(collectionRef, where("Document ID","==",SelectedID))
-    // console.log(q)
-    // const snapshot = await getDocs(q)
-    // const results = snapshot.docs.map((doc) => ({...doc.data() , id:doc.id}))
-    // console.log(results)
-
-
     // db.collection('job_skills').where('job_id', '==', post.job_id).get()
     //   .then(function (querySnapshot) {
     //     // Once we get the results, begin a batch
@@ -121,9 +100,6 @@ function Home() {
     //     // Commit the batch
     //     return batch.commit();
     //   })
-
-
-    // this.onCancel(e);
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -132,7 +108,7 @@ function Home() {
     }
   });
 
-  const {SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll} = useSelect(todos)
+  const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } = useSelect(todos)
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
@@ -148,8 +124,10 @@ function Home() {
       setmounted(true)
     }
   }, [selecting, mounted]);
+
   const todo = todos.find(t => t.id === SelectedID.toString())
   const [text, settext] = useState(todo && todo.text);
+  
   function closeHandle() {
     document.getElementById("editModal").close();
     if (todo) {
@@ -166,7 +144,7 @@ function Home() {
       </a>
 
       {mounted &&
-        <SelectModal clearSelect={clearSelect} SelectedID={SelectedID}  deleteHandle={deleteHandle} selecting={selecting} mountStyle={mountStyle} unmountStyle={unmountStyle} setmounted={setmounted} />
+        <SelectModal setisPrevent={setisPrevent} clearSelect={clearSelect} SelectedID={SelectedID} deleteHandle={deleteHandle} selecting={selecting} mountStyle={mountStyle} unmountStyle={unmountStyle} setmounted={setmounted} />
       }
 
       <dialog
@@ -183,6 +161,7 @@ function Home() {
         }}
         id="editModal" >
         <EditModal
+        setisPrevent={setisPrevent}
           clearSelect={clearSelect}
           text={text}
           settext={settext}
@@ -191,7 +170,6 @@ function Home() {
           editInput={editInput}
         />
       </dialog>
-      
 
       <Header selecting={selecting} todoLength={todos.length} />
 

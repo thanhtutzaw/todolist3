@@ -3,7 +3,7 @@ import { GrClose } from "react-icons/gr";
 import useSelect from "../hooks/useSelect";
 
 export function SelectModal(props) {
-  const {clearSelect , SelectedID} = props
+  const {clearSelect , SelectedID , setisPrevent} = props
   function editHandle() {
     // setOpenModal(prev => !prev)
     document.getElementById("editModal").showModal();
@@ -20,7 +20,7 @@ export function SelectModal(props) {
       className={`selectModal `}
     >
       <div>
-        <GrClose className="closeSelectBtn" onClick={clearSelect} />
+        <GrClose className="closeSelectBtn" onClick={()=>{clearSelect(); setisPrevent(false)}} />
         <p className="selectCount">{SelectedID.length}</p>
       </div>
       <div>

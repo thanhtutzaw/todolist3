@@ -1,15 +1,13 @@
 import { useState } from "react";
-import usePrevent from "./usePrevent";
 
 export default function useSelect(todos) {
     const [SelectedID, setSelectedID] = useState([]);
     const [selectCount, setselectCount] = useState(false);
-    const { setisPrevent } = usePrevent()
 
     function clearSelect() {
         setSelectedID([])
         setselectCount(false)
-        setisPrevent(false)
+        // setisPrevent(prev => !prev)
     }
     function selectAll() {
         // todos.map(todo => setSelectedID(todo.id))

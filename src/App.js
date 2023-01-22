@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router, Route,
   Routes,
 } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/Home.jsx";
 import { UserContext } from "./Context/UserContext";
 import { useUserData } from "./lib/hook";
 import Login from "./components/Login.jsx";

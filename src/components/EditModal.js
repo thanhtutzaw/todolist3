@@ -6,7 +6,7 @@ import CloseConfirmModal from "./CloseConfirmModal";
 import UpdatingModal from "./UpdatingModal";
 
 export default function EditModal(props) {
-  const { text, settext, todo, editInput, closeHandle, clearSelect } = props;
+  const { text, settext, todo, editInput, closeHandle, clearSelect, setisPrevent } = props;
   // const {clearSelect} = useSelect()
   const [loading, setloading] = useState(false);
 
@@ -31,12 +31,14 @@ export default function EditModal(props) {
       console.info("%cUpdating...", "color:grey");
       setloading(true);
 
+      setisPrevent(true)
       try {
         await updateDoc(collectionRef, data);
         document.getElementById("editModal").close();
         console.info("%cUpdated ✔️", "color:green");
         setloading(false);
         clearSelect();
+        setisPrevent(false)
         if (!loading) {
           // const updatingModal = document.querySelector("#updating");
         }
