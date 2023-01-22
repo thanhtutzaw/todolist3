@@ -5,21 +5,20 @@ import {
   Routes,
 } from "react-router-dom";
 import Home from "./components/Home.jsx";
-import { UserContext } from "./Context/UserContext";
-import { useUserData } from "./lib/hook";
+// import { UserContext } from "./Context/UserContext";
+// import { useUserData } from "./lib/hook";
 import Login from "./components/Login.jsx";
 // import { AuthProvider } from "./Context/AuthContext";
 
 export default function App() {
-  const userData = useUserData()
+  // const userData = useUserData()
   return (
-      <UserContext.Provider value = {userData} >
+      // <UserContext.Provider value = {userData} >
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
-      </UserContext.Provider>
   );
 }

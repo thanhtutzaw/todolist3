@@ -1,5 +1,6 @@
 import React from "react";
 import { GrClose } from "react-icons/gr";
+import { IconContext } from "react-icons";
 
 export function SelectModal(props) {
   const {clearSelect , SelectedID , setisPrevent} = props
@@ -19,7 +20,18 @@ export function SelectModal(props) {
       className={`selectModal `}
     >
       <div>
-        <GrClose className="closeSelectBtn" onClick={()=>{clearSelect(); setisPrevent(false)}} />
+        <IconContext.Provider
+          value={{className: "global-class-name" }}
+        >
+          <GrClose
+            className="closeSelectBtn"
+            onClick={() => {
+              clearSelect();
+              setisPrevent(false);
+            }}
+          />
+        </IconContext.Provider>
+
         <p className="selectCount">{SelectedID.length}</p>
       </div>
       <div>

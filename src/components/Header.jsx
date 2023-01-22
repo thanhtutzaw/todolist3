@@ -1,9 +1,10 @@
 import { getAuth, signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import useIndexDB from "../hooks/useIndexDB";
+import useTheme from "../hooks/useTheme";
 // let MdDarkMode
 // import("react-icons/md").then(icon => {
 //   if (icon) {
@@ -15,6 +16,7 @@ import useIndexDB from "../hooks/useIndexDB";
 export default function header(props) {
   const { selecting, todoLength } = props;
   const {userphoto, userName} = useIndexDB();
+  const {theme, setTheme} = useTheme()
 
   const [opentools, setopentools] = useState(false);
 
@@ -80,8 +82,16 @@ export default function header(props) {
         {
           <div className={`tools ${opentools ? "open" : "close"}`}>
             <div className="tools-container">
-              <div className="setting-item">
-                <MdDarkMode />
+              <div
+                onClick={() =>
+                  {setTheme((prev) => (prev === "light" ? "dark" : "light"));
+                  setopentools(false)
+                
+                }
+                }
+                className="setting-item"
+              >
+                {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
                 {/* <MdDarkMode className="edit-btn" /> */}
                 <span>Theme</span>
               </div>

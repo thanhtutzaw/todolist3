@@ -159,7 +159,7 @@ function Home() {
           <CgChevronRightR />
         </button>
       </a>
-<input className="test" type="search" placeholder="test" />
+{/* <input className="test" type="search" placeholder="test" /> */}
       {mounted && (
         <SelectModal
           setisPrevent={setisPrevent}
