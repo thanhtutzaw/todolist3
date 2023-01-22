@@ -1,6 +1,5 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
-import useSelect from "../hooks/useSelect.js";
 import { auth, db } from "../lib/firebase";
 import CloseConfirmModal from "./CloseConfirmModal";
 import UpdatingModal from "./UpdatingModal";

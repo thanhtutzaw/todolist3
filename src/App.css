@@ -25,6 +25,7 @@ btn,
 
 :root {
   --primary-color: rgb(28, 28, 65);
+  --main-color: rgb(9, 184, 253);
 }
 
 body {
@@ -492,14 +493,26 @@ ul li {
   gap                 : 0.8rem;
   max-width           : 700px;
   margin-right        : 1rem;
-  margin-bottom       : 3rem;
+  margin-bottom       : 30px;
   justify-content     : space-between;
   transition          : all .2s ease-in;
   padding             : 10px;
   padding-bottom      : 0;
   /* padding-bottom   : 3px; */
 }
-
+.test{
+  border:3px solid red;
+  width:100vw;
+  max-width: 500px;
+  margin:0;
+  position: fixed;
+  left:50%;
+  bottom:0;
+  transform: translate(-50%);
+  padding:.5rem;
+  font-size: 1rem;
+  background-color: var(--main-color);
+}
 .selected {
   background-color   : #009eff;
   /* padding         : 10px 0; */
@@ -525,8 +538,10 @@ ul li {
   left            : 0;
   right           : 0;
   bottom          : -35%;
+  bottom:-15px;
   height          : 2px;
   background-color: black;
+  background-color: rgb(104, 104, 104);
   opacity         : 0.1;
 }
 

@@ -12,7 +12,7 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import EditModal from "./EditModal";
 import BottomNav from "./BottomNav";
 import useFireStoreData from "../hooks/useFireStoreData";
@@ -22,18 +22,18 @@ import useSelect from "../hooks/useSelect.js";
 
 function Home() {
   const nevigate = useNavigate();
-  const inputRef = useRef(null)
-  const editInput = useRef(null)
-  const todoRef = useRef(null)
+  const inputRef = useRef(null);
+  const editInput = useRef(null);
+  const todoRef = useRef(null);
 
-  const [todos, settodos, loading] = useFireStoreData()
-  const { isPrevent, setisPrevent } = usePrevent()
+  const [todos, settodos, loading] = useFireStoreData();
+  const { isPrevent, setisPrevent } = usePrevent();
 
   const pendingOps = new Set();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.info("%cAdding...", "color:grey")
+    console.info("%cAdding...", "color:grey");
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     const inputText = inputRef.current.value;
     const data = {
@@ -42,19 +42,23 @@ function Home() {
       completed: false,
     };
     if (inputText !== "") {
-      const collectionRef = collection(db, "users", auth.currentUser.uid, "todos");
-      inputRef.current.value = ""
+      const collectionRef = collection(
+        db,
+        "users",
+        auth.currentUser.uid,
+        "todos"
+      );
+      inputRef.current.value = "";
 
       settodos([...todos, inputText]);
 
-      setisPrevent(true)
+      setisPrevent(true);
       try {
         await addDoc(collectionRef, data, { merge: true });
-        setisPrevent(false)
-        console.info("%cAdded ✔️ ", "color: green")
-      }
-      catch (err) {
-        alert(err.message)
+        setisPrevent(false);
+        console.info("%cAdded ✔️ ", "color: green");
+      } catch (err) {
+        alert(err.message);
       }
 
       // pendingOps.add = (await addDoc(collectionRef, data, { merge: true }))
@@ -64,27 +68,33 @@ function Home() {
     }
   };
   const deleteHandle = async () => {
-    console.info("%cDeleting...", "color:grey")
-    setisPrevent(true)
-    clearSelect()
+    console.info("%cDeleting...", "color:grey");
+    setisPrevent(true);
+    clearSelect();
     todoRef.current.scrollIntoView({ behavior: "smooth" });
     // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
     const batch = writeBatch(db);
-    const chunkSize = 10
+    const chunkSize = 10;
     for (let i = 0; i < SelectedID.length; i += chunkSize) {
       const chunk = SelectedID.slice(i, i + chunkSize);
-      // console.log(chunk)   
+      // console.log(chunk)
       for (let j = 0; j < chunk.length; j++) {
-        const TodoRef = doc(db, "users", auth.currentUser.uid, "todos", chunk[j])
-        batch.delete(TodoRef)
+        const TodoRef = doc(
+          db,
+          "users",
+          auth.currentUser.uid,
+          "todos",
+          chunk[j]
+        );
+        batch.delete(TodoRef);
       }
     }
     try {
       await batch.commit();
-      setisPrevent(false)
-      console.info("%cDeleted !", "color: green")
+      setisPrevent(false);
+      console.info("%cDeleted !", "color: green");
     } catch (error) {
-      alert("Delete Error !" + error.message)
+      alert("Delete Error !" + error.message);
     }
 
     // db.collection('job_skills').where('job_id', '==', post.job_id).get()
@@ -100,7 +110,7 @@ function Home() {
     //     // Commit the batch
     //     return batch.commit();
     //   })
-  }
+  };
 
   onAuthStateChanged(auth, (user) => {
     if (!user) {
@@ -108,26 +118,33 @@ function Home() {
     }
   });
 
-  const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } = useSelect(todos)
+  const {
+    SelectedID,
+    setSelectedID,
+    selectCount,
+    setselectCount,
+    clearSelect,
+    selectAll,
+  } = useSelect(todos);
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
-    animation: "selectMount 250ms ease-in"
+    animation: "selectMount 250ms ease-in",
   };
   const unmountStyle = {
     animation: "selectUnmount 270ms ease-out",
-    animationFillMode: "forwards"
+    animationFillMode: "forwards",
   };
   const [mounted, setmounted] = useState(false);
   useEffect(() => {
     if (selecting) {
-      setmounted(true)
+      setmounted(true);
     }
   }, [selecting, mounted]);
 
-  const todo = todos.find(t => t.id === SelectedID.toString())
+  const todo = todos.find((t) => t.id === SelectedID.toString());
   const [text, settext] = useState(todo && todo.text);
-  
+
   function closeHandle() {
     document.getElementById("editModal").close();
     if (todo) {
@@ -142,10 +159,19 @@ function Home() {
           <CgChevronRightR />
         </button>
       </a>
-
-      {mounted &&
-        <SelectModal setisPrevent={setisPrevent} clearSelect={clearSelect} SelectedID={SelectedID} deleteHandle={deleteHandle} selecting={selecting} mountStyle={mountStyle} unmountStyle={unmountStyle} setmounted={setmounted} />
-      }
+<input className="test" type="search" placeholder="test" />
+      {mounted && (
+        <SelectModal
+          setisPrevent={setisPrevent}
+          clearSelect={clearSelect}
+          SelectedID={SelectedID}
+          deleteHandle={deleteHandle}
+          selecting={selecting}
+          mountStyle={mountStyle}
+          unmountStyle={unmountStyle}
+          setmounted={setmounted}
+        />
+      )}
 
       <dialog
         onClick={(e) => {
@@ -159,14 +185,15 @@ function Home() {
             }
           }
         }}
-        id="editModal" >
+        id="editModal"
+      >
         <EditModal
-        setisPrevent={setisPrevent}
+          setisPrevent={setisPrevent}
           clearSelect={clearSelect}
           text={text}
           settext={settext}
           closeHandle={closeHandle}
-          todo={todos.find(t => t.id === SelectedID.toString())}
+          todo={todos.find((t) => t.id === SelectedID.toString())}
           editInput={editInput}
         />
       </dialog>
@@ -174,28 +201,42 @@ function Home() {
       <Header selecting={selecting} todoLength={todos.length} />
 
       <div className="selectionContainer">
-        {(SelectedID.length === 1 && selectCount) &&
-          <button onClick={selectAll}>Select All</button>}
+        {SelectedID.length === 1 && selectCount && (
+          <button onClick={selectAll}>Select All</button>
+        )}
 
-        {SelectedID.length >= 2 &&
-          <button onClick={clearSelect}>Deselect All</button>}
+        {SelectedID.length >= 2 && (
+          <button onClick={clearSelect}>Deselect All</button>
+        )}
       </div>
 
-      <section className={`todo-parent row`} >
-        <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
+      <section className={`todo-parent row`}>
+        <ul ref={todoRef} style={{ userSelect: selectCount && "none" }}>
           <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
             {loading && <Skeleton className={"loading"} count={5} />}
           </SkeletonTheme>
           {!loading &&
             todos.map((todo, index) => (
-              <Todolist isPrevent={isPrevent} setisPrevent={setisPrevent} todos={todos} setselectCount={setselectCount} SelectedID={SelectedID} setSelectedID={setSelectedID} todo={todo} key={index} />
-            ))
-          }
+              <Todolist
+                isPrevent={isPrevent}
+                setisPrevent={setisPrevent}
+                todos={todos}
+                setselectCount={setselectCount}
+                SelectedID={SelectedID}
+                setSelectedID={setSelectedID}
+                todo={todo}
+                key={index}
+              />
+            ))}
         </ul>
       </section>
 
-      <BottomNav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <BottomNav
+        selectCount={selectCount}
+        inputRef={inputRef}
+        handleSubmit={handleSubmit}
+      />
     </main>
   );
 }

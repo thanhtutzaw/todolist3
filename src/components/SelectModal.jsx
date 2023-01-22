@@ -1,6 +1,5 @@
 import React from "react";
 import { GrClose } from "react-icons/gr";
-import useSelect from "../hooks/useSelect";
 
 export function SelectModal(props) {
   const {clearSelect , SelectedID , setisPrevent} = props
