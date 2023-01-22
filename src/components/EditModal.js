@@ -1,27 +1,24 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
+import useSelect from "../hooks/useSelect.js";
 import { auth, db } from "../lib/firebase";
 import CloseConfirmModal from "./CloseConfirmModal";
 import UpdatingModal from "./UpdatingModal";
 
 export default function EditModal(props) {
-  const {text,settext,   todo, clearSelect, editInput, closeHandle } = props;
-  
+  const { text, settext, todo, editInput, closeHandle, clearSelect } = props;
+  // const {clearSelect} = useSelect()
   const [loading, setloading] = useState(false);
-  // const [ConfirmModal, setConfirmModal] = useState(false);
-  // const isUpdating = text && text !== todo.text
 
-  // useEffect(() => {
-  //   console.log(isUpdating);
-  // }, [text]);
-// const isUpdating = text && todo[0] && text !== todo.text;
-useEffect(() => {
-  if (loading) {
-    document.getElementById("updating").showModal();
-  }else{
-    document.getElementById("updating").close();
-  }
-}, [loading]);
+  useEffect(() => {
+    if (loading) {
+      document.getElementById("updating").showModal();
+    } else {
+      // document.getElementById("updating").showModal();
+      document.getElementById("updating").close();
+    }
+  }, [loading]);
+
   const updateHandle = async (id) => {
     const collectionRef = doc(db, "users", auth.currentUser.uid, "todos", id);
     // console.log(inputRef.current.value);
@@ -33,16 +30,15 @@ useEffect(() => {
     if (text !== todo.text) {
       console.info("%cUpdating...", "color:grey");
       setloading(true);
-      
+
       try {
         await updateDoc(collectionRef, data);
         document.getElementById("editModal").close();
         console.info("%cUpdated ✔️", "color:green");
         setloading(false);
         clearSelect();
-        if(!loading){
+        if (!loading) {
           // const updatingModal = document.querySelector("#updating");
-          
         }
       } catch (error) {
         alert("Update Error ! " + error.message);
@@ -51,7 +47,7 @@ useEffect(() => {
       closeHandle();
     }
   };
-  
+
   const inputRef = useRef(null);
   useEffect(() => {
     if (todo) {
@@ -61,18 +57,16 @@ useEffect(() => {
   function closeConfirm() {
     const confirmModal = document.querySelector("#confirmModal");
     confirmModal.close();
-
   }
   return (
     <>
-      <dialog
-        id="confirmModal"
-      >
-        <CloseConfirmModal closeConfirm={closeConfirm} closeHandle={closeHandle} />
+      <dialog id="confirmModal">
+        <CloseConfirmModal
+          closeConfirm={closeConfirm}
+          closeHandle={closeHandle}
+        />
       </dialog>
-      <dialog
-        id="updating"
-      >
+      <dialog id="updating">
         <UpdatingModal />
       </dialog>
       {todo && (
@@ -89,11 +83,7 @@ useEffect(() => {
             }}
             key={todo.id}
           >
-            <div
-              // onSubmit={()=>{console.log("first")}}
-              className="editInput"
-              ref={editInput}
-            >
+            <div className="editInput" ref={editInput}>
               <textarea
                 // enterKeyHint="done"
                 style={{ userSelect: loading ? "none" : "unset" }}
@@ -103,14 +93,12 @@ useEffect(() => {
                   settext(e.target.value);
                 }}
                 className="textarea"
-                // value={text}
               />
               <div className="editModalActions">
                 <button
                   onClick={() => {
                     if (text !== todo.text) {
                       document.getElementById("confirmModal").showModal();
-                      // setConfirmModal((prev) => !prev);
                     } else {
                       closeHandle();
                     }
@@ -127,7 +115,6 @@ useEffect(() => {
                   type="submit"
                   className="updateBtn"
                 >
-                  {/* {loading ? "Updating..." : "Save"} */}
                   Save
                 </button>
               </div>

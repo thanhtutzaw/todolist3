@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import Header from "./Header";
-import Todolist from "./Todolist";
-import photo from "../profile 2.jpg";
+import Header from "./Header.jsx";
+import Todolist from "./Todolist.jsx";
 import { CgChevronRightR } from "react-icons/cg";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { GrClose } from "react-icons/gr";
 import {
   addDoc,
   collection,
@@ -15,18 +13,20 @@ import {
 } from "firebase/firestore";
 import { db, auth } from "../lib/firebase";
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import EditModal from "./EditModal.jsx";
-import { useUserData } from "../lib/hook";
+import EditModal from "./EditModal";
 import BottomNav from "./BottomNav";
 import useFireStoreData from "../hooks/useFireStoreData";
+import usePrevent from "../hooks/usePrevent.js";
+import { SelectModal } from "./SelectModal.jsx";
+import useSelect from "../hooks/useSelect.js";
+
 
 
 function Home() {
   // const uid = useContext(useUserData);
 
   // let id; //  for profile 
-  const [userName, setuserName] = useState();
-  const [userphoto, setuserphoto] = useState(photo);
+
   // const [UserId, setUserId] = useState();
 
   // const [User, setUser] = useState(null);
@@ -37,50 +37,10 @@ function Home() {
   const editInput = useRef(null)
   const todoRef = useRef(null)
   // const [openModal, setOpenModal] = useState(false)
-  const [isPrevent, setisPrevent] = useState(false);
   const [todos, settodos, loading] = useFireStoreData()
-  useEffect(() => {
-    // get profile from firebase indexDb
-    var request = window.indexedDB.open("firebaseLocalStorageDb", 1);
-    request.onsuccess = function (e) {
-      console.log("db initilalized");
-      const indexDB = request.result;
-      getData(indexDB);
-    };
-  }, []);
-  function getData(indexDB) {
-    // console.log("this is get data");
-    var transaction = indexDB.transaction(
-      ["firebaseLocalStorage"],
-      "readwrite"
-    );
-    transaction.oncomplete = function (e) {
-      // console.log("transaction complete");
-    };
-    transaction.onerror = function (e) {
-      console.error(e);
-    };
-    var objectStore = transaction.objectStore("firebaseLocalStorage");
-    objectStore.openCursor().onsuccess = async (e) => {
-      let cursor = e.target.result;
-      if (cursor) {
-        setuserphoto(cursor.value.value.photoURL);
-        setuserName(cursor.value.value.displayName)
-        cursor.continue()
-      }
-    };
-  }
-  useEffect(() => {
-    function preventRefresh(event) {
-      event.returnValue = 'You have unfinished changes!';
-    }
-    if (isPrevent) {
-      window.addEventListener('beforeunload', preventRefresh);
-    }
-    return () => {
-      window.removeEventListener('beforeunload', preventRefresh)
-    }
-  }, [isPrevent, setisPrevent]);
+  const {isPrevent, setisPrevent} = usePrevent()
+
+
 
   const pendingOps = new Set();
 
@@ -116,37 +76,6 @@ function Home() {
       // await addDoc.then(cleanup).catch(cleanup)
     }
   };
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      nevigate("/login");
-    }
-  });
-
-  const [SelectedID, setSelectedID] = useState([]);
-  const [selectCount, setselectCount] = useState(false);
-
-  function editHandle() {
-    // setOpenModal(prev => !prev)
-    // editInput.current.focus()
-    document.getElementById("editModal").showModal()
-  }
-
-  function clearSelect() {
-    setSelectedID([])
-    setselectCount(false)
-    setisPrevent(false)
-  }
-  function selectAll() {
-    // todos.map(todo => setSelectedID(todo.id))
-    const items = []
-    for (let i = 0; i < todos.length; i++) {
-      const id = todos[i].id
-      items.push(id)
-    }
-    setSelectedID(items)
-    setselectCount(true)
-  }
   const deleteHandle = async () => {
     console.info("%cDeleting...", "color:grey")
     setisPrevent(true)
@@ -196,6 +125,14 @@ function Home() {
 
     // this.onCancel(e);
   }
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      nevigate("/login");
+    }
+  });
+
+  const {SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll} = useSelect(todos)
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
@@ -207,11 +144,9 @@ function Home() {
   };
   const [mounted, setmounted] = useState(false);
   useEffect(() => {
-    console.log(selecting)
     if (selecting) {
       setmounted(true)
     }
-    console.log(mounted)
   }, [selecting, mounted]);
   const todo = todos.find(t => t.id === SelectedID.toString())
   const [text, settext] = useState(todo && todo.text);
@@ -230,28 +165,9 @@ function Home() {
         </button>
       </a>
 
-      {mounted && <div onAnimationEnd={(e) => { if (!selecting) { setmounted(false); console.log("end") } }}
-        style={selecting ? mountStyle : unmountStyle}
-        className={`selectModal `} >
-        <div>
-          <GrClose className="closeSelectBtn" onClick={() => {
-            clearSelect();
-          }} />
-          <p className="selectCount">{SelectedID.length}</p>
-        </div>
-        <div>
-          <button onClick={editHandle} className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}>
-            Edit
-          </button>
-
-          <button onClick={(e) => {
-            e.stopPropagation();
-            if (window.confirm(`Are you sure you wish to delete ${SelectedID.length > 1 ? "these" : "this"} ${SelectedID.length} ${SelectedID.length > 1 ? "items" : "item"}?`)) {
-              deleteHandle()
-            }
-          }} className="delete">Delete</button>
-        </div>
-      </div>}
+      {mounted &&
+        <SelectModal clearSelect={clearSelect} SelectedID={SelectedID}  deleteHandle={deleteHandle} selecting={selecting} mountStyle={mountStyle} unmountStyle={unmountStyle} setmounted={setmounted} />
+      }
 
       <dialog
         onClick={(e) => {
@@ -267,23 +183,27 @@ function Home() {
         }}
         id="editModal" >
         <EditModal
+          clearSelect={clearSelect}
           text={text}
           settext={settext}
           closeHandle={closeHandle}
-          clearSelect={clearSelect}
           todo={todos.find(t => t.id === SelectedID.toString())}
           editInput={editInput}
         />
       </dialog>
+      
 
-      <Header selecting={selecting} userphoto={userphoto} userName={userName} todoLength={todos.length} />
+      <Header selecting={selecting} todoLength={todos.length} />
 
-      <div className="selectionContainer">{(SelectedID.length === 1 && selectCount) && <button onClick={selectAll}>Select All</button>} {SelectedID.length >= 2 &&
-        <button onClick={clearSelect}>Deselect All</button>}
+      <div className="selectionContainer">
+        {(SelectedID.length === 1 && selectCount) &&
+          <button onClick={selectAll}>Select All</button>}
+
+        {SelectedID.length >= 2 &&
+          <button onClick={clearSelect}>Deselect All</button>}
       </div>
 
       <section className={`todo-parent row`} >
-
         <ul ref={todoRef} style={{ userSelect: (selectCount) && 'none' }}>
           <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}

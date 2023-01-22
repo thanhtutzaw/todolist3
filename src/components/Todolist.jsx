@@ -7,8 +7,6 @@ const Todolist = (props) => {
   const { isPrevent, setisPrevent, setselectCount, todos, todo, SelectedID, setSelectedID } = props;
 
   const [isSelect, setisSelect] = useState(false);
-  // const [clicked, setclicked] = useState(false);
-  // const [unclicked, setunclicked] = useState(false);
   useEffect(() => {
     if (SelectedID.length === 0) {
       setisSelect(false)
