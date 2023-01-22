@@ -8,9 +8,12 @@ import Home from "./components/Home.jsx";
 // import { UserContext } from "./Context/UserContext";
 // import { useUserData } from "./lib/hook";
 import Login from "./components/Login.jsx";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./lib/firebase";
 // import { AuthProvider } from "./Context/AuthContext";
 
 export default function App() {
+  
   // const userData = useUserData()
   return (
       // <UserContext.Provider value = {userData} >

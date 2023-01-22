@@ -1,12 +1,13 @@
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db, auth } from "../lib/firebase";
 export default function useFireStoreData() {
     const [loading, setloading] = useState(true);
 
     const [todos, settodos] = useState([]);
-
+const nevigate = useNavigate()
     useEffect(() => {
         let unsubscribe;
         // if(!todos){
@@ -38,6 +39,7 @@ export default function useFireStoreData() {
                 });
             }
             else {
+                // nevigate("/login");
                 unsubscribe();
             }
         })

@@ -111,13 +111,19 @@ function Home() {
     //     return batch.commit();
     //   })
   };
-
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      nevigate("/login");
-    }
-  });
-
+onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        nevigate("/login");
+      }
+    });
+//   useEffect(() => {
+//     const unsubscribe= onAuthStateChanged(auth, (user) => {
+//       if (!user) {
+//         nevigate("/login");
+//       }
+//     });
+// return ()=> unsubscribe()
+//   }, []);
   const {
     SelectedID,
     setSelectedID,
