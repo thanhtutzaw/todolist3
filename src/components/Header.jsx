@@ -5,18 +5,11 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import useIndexDB from "../hooks/useIndexDB";
 import useTheme from "../hooks/useTheme";
-// let MdDarkMode
-// import("react-icons/md").then(icon => {
-//   if (icon) {
-//     MdDarkMode = icon.MdDarkMode
-//   }
-//   console.log(MdDarkMode)
-// })
 
-export default function header(props) {
+export default function Header(props) {
   const { selecting, todoLength } = props;
-  const {userphoto, userName} = useIndexDB();
-  const {theme, setTheme} = useTheme()
+  const { userphoto, userName } = useIndexDB();
+  const { theme, setTheme } = useTheme();
 
   const [opentools, setopentools] = useState(false);
 
@@ -36,12 +29,12 @@ export default function header(props) {
   //   userName = user.displayName
   // }
 
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
 
   const logoutHandle = () => {
     signOut(auth)
       .then(() => {
-        nevigate("/login");
+        navigate("/login");
       })
       .catch((err) => {
         alert("Error signout ! ", err.message);
@@ -83,12 +76,10 @@ export default function header(props) {
           <div className={`tools ${opentools ? "open" : "close"}`}>
             <div className="tools-container">
               <div
-                onClick={() =>
-                  {setTheme((prev) => (prev === "light" ? "dark" : "light"));
-                  setopentools(false)
-                
-                }
-                }
+                onClick={() => {
+                  setTheme((prev) => (prev === "light" ? "dark" : "light"));
+                  setopentools(false);
+                }}
                 className="setting-item"
               >
                 {theme === "light" ? <MdDarkMode /> : <MdLightMode />}

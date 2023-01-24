@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { CgChevronRightR } from "react-icons/cg";
-import { signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../lib/firebase";
-// const {login} = useAuth()
 
 export default function Login() {
-  const nevigate = useNavigate();
+  const navigate = useNavigate();
 
   // const row = {
   //   display: "flex",
@@ -27,17 +30,17 @@ export default function Login() {
     right: "50%",
     transform: "translate(50%, -50%)",
     wordBreak: "break-word",
-    whiteSpace:"nowrap",
+    whiteSpace: "nowrap",
   };
   useEffect(() => {
     // if (localStorage.getItem("isUsersignin") === "true") {
-    //   nevigate("/");
+    //   navigate("/");
     // } else {
-    //   nevigate("/login");
+    //   navigate("/login");
     // }
     // auth.onAuthStateChanged((user) => {
     //   if (user) {
-    //     nevigate("/");
+    //     navigate("/");
     //     localStorage.setItem("isUsersignin", "true");
     //   }
     // });
@@ -48,18 +51,18 @@ export default function Login() {
   const signinHandle = () => {
     signInWithPopup(auth, provider)
       .then((res) => {
-        nevigate("/");
+        navigate("/");
       })
       .catch((err) => {
         alert(`Cannot Signin ! ${err.message}`);
       });
   };
   const email = "testuser11@gmail.com";
-  const password = "111111"
+  const password = "111111";
   const testUserSignInHandle = () => {
-    signInWithEmailAndPassword(auth, email,password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        nevigate("/");
+        navigate("/");
       })
       .catch((err) => {
         alert(`Cannot Signin ! ${err.message}`);

@@ -1,129 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import Header from "./Header.jsx";
-import Todolist from "./Todolist.jsx";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { CgChevronRightR } from "react-icons/cg";
+import usePrevent from "../hooks/usePrevent.js";
+import useSelect from "../hooks/useSelect.js";
+import useFireStoreData from "../hooks/useFireStoreData";
+import { addTodo, deleteTodo } from "../utils/todo.js";
+import SelectModal from "./SelectModal";
+import BottomNav from "./BottomNav";
+import EditModal from "./EditModal.jsx";
+import Header from "./Header";
+import Todolist from "./Todolist";
+import { useCallback } from "react";
+import { auth } from "../lib/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  writeBatch,
-} from "firebase/firestore";
-import { db, auth } from "../lib/firebase";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import EditModal from "./EditModal";
-import BottomNav from "./BottomNav";
-import useFireStoreData from "../hooks/useFireStoreData";
-import usePrevent from "../hooks/usePrevent.js";
-import { SelectModal } from "./SelectModal.jsx";
-import useSelect from "../hooks/useSelect.js";
 
-function Home() {
-  const nevigate = useNavigate();
+export default function Home() {
+  const navigate = useNavigate();
   const inputRef = useRef(null);
   const editInput = useRef(null);
   const todoRef = useRef(null);
 
   const [todos, settodos, loading] = useFireStoreData();
   const { isPrevent, setisPrevent } = usePrevent();
-
-  const pendingOps = new Set();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.info("%cAdding...", "color:grey");
-    todoRef.current.scrollIntoView({ behavior: "smooth" });
-    const inputText = inputRef.current.value;
-    const data = {
-      text: inputText,
-      timeStamp: serverTimestamp(),
-      completed: false,
-    };
-    if (inputText !== "") {
-      const collectionRef = collection(
-        db,
-        "users",
-        auth.currentUser.uid,
-        "todos"
-      );
-      inputRef.current.value = "";
-
-      settodos([...todos, inputText]);
-
-      setisPrevent(true);
-      try {
-        await addDoc(collectionRef, data, { merge: true });
-        setisPrevent(false);
-        console.info("%cAdded ✔️ ", "color: green");
-      } catch (err) {
-        alert(err.message);
-      }
-
-      // pendingOps.add = (await addDoc(collectionRef, data, { merge: true }))
-      // const cleanup = () => pendingOps.delete(addDoc);
-      // console.log({addDoc})
-      // await addDoc.then(cleanup).catch(cleanup)
-    }
-  };
-  const deleteHandle = async () => {
-    console.info("%cDeleting...", "color:grey");
-    setisPrevent(true);
-    clearSelect();
-    todoRef.current.scrollIntoView({ behavior: "smooth" });
-    // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
-    const batch = writeBatch(db);
-    const chunkSize = 10;
-    for (let i = 0; i < SelectedID.length; i += chunkSize) {
-      const chunk = SelectedID.slice(i, i + chunkSize);
-      // console.log(chunk)
-      for (let j = 0; j < chunk.length; j++) {
-        const TodoRef = doc(
-          db,
-          "users",
-          auth.currentUser.uid,
-          "todos",
-          chunk[j]
-        );
-        batch.delete(TodoRef);
-      }
-    }
-    try {
-      await batch.commit();
-      setisPrevent(false);
-      console.info("%cDeleted !", "color: green");
-    } catch (error) {
-      alert("Delete Error !" + error.message);
-    }
-
-    // db.collection('job_skills').where('job_id', '==', post.job_id).get()
-    //   .then(function (querySnapshot) {
-    //     // Once we get the results, begin a batch
-    //     var batch = db.batch();
-
-    //     querySnapshot.forEach(function (doc) {
-    //       // For each doc, add a delete operation to the batch
-    //       batch.delete(doc.ref);
-    //     });
-
-    //     // Commit the batch
-    //     return batch.commit();
-    //   })
-  };
-onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        nevigate("/login");
-      }
-    });
-//   useEffect(() => {
-//     const unsubscribe= onAuthStateChanged(auth, (user) => {
-//       if (!user) {
-//         nevigate("/login");
-//       }
-//     });
-// return ()=> unsubscribe()
-//   }, []);
   const {
     SelectedID,
     setSelectedID,
@@ -132,6 +31,28 @@ onAuthStateChanged(auth, (user) => {
     clearSelect,
     selectAll,
   } = useSelect(todos);
+
+  const pendingOps = new Set();
+
+  const handleSubmit = useCallback(
+    addTodo(todoRef, inputRef, settodos, todos, setisPrevent),
+    [todos]
+  );
+  const deleteHandle = useCallback(
+    deleteTodo(setisPrevent, clearSelect, todoRef, SelectedID),
+    [SelectedID]
+  );
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/login");
+      } else {
+        navigate("/");
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
@@ -165,7 +86,6 @@ onAuthStateChanged(auth, (user) => {
           <CgChevronRightR />
         </button>
       </a>
-{/* <input className="test" type="search" placeholder="test" /> */}
       {mounted && (
         <SelectModal
           setisPrevent={setisPrevent}
@@ -194,10 +114,10 @@ onAuthStateChanged(auth, (user) => {
         id="editModal"
       >
         <EditModal
-          setisPrevent={setisPrevent}
-          clearSelect={clearSelect}
           text={text}
           settext={settext}
+          setisPrevent={setisPrevent}
+          clearSelect={clearSelect}
           closeHandle={closeHandle}
           todo={todos.find((t) => t.id === SelectedID.toString())}
           editInput={editInput}
@@ -246,4 +166,3 @@ onAuthStateChanged(auth, (user) => {
     </main>
   );
 }
-export default Home;

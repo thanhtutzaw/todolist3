@@ -2,10 +2,9 @@ import React from "react";
 import { GrClose } from "react-icons/gr";
 import { IconContext } from "react-icons";
 
-export function SelectModal(props) {
-  const {clearSelect , SelectedID , setisPrevent} = props
+export default function SelectModal(props) {
+  const { clearSelect, SelectedID, setisPrevent } = props;
   function editHandle() {
-    // setOpenModal(prev => !prev)
     document.getElementById("editModal").showModal();
   }
   return (
@@ -20,9 +19,7 @@ export function SelectModal(props) {
       className={`selectModal `}
     >
       <div>
-        <IconContext.Provider
-          value={{className: "global-class-name" }}
-        >
+        <IconContext.Provider value={{ className: "global-class-name" }}>
           <GrClose
             className="closeSelectBtn"
             onClick={() => {

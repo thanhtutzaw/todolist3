@@ -6,22 +6,18 @@ import UpdatingModal from "./UpdatingModal";
 
 export default function EditModal(props) {
   const { text, settext, todo, editInput, closeHandle, clearSelect, setisPrevent } = props;
-  // const {clearSelect} = useSelect()
   const [loading, setloading] = useState(false);
 
   useEffect(() => {
     if (loading) {
       document.getElementById("updating").showModal();
     } else {
-      // document.getElementById("updating").showModal();
       document.getElementById("updating").close();
     }
   }, [loading]);
 
   const updateHandle = async (id) => {
     const collectionRef = doc(db, "users", auth.currentUser.uid, "todos", id);
-    // console.log(inputRef.current.value);
-    // console.log(text);
     const data = {
       ...todo,
       text,
@@ -38,9 +34,6 @@ export default function EditModal(props) {
         setloading(false);
         clearSelect();
         setisPrevent(false)
-        if (!loading) {
-          // const updatingModal = document.querySelector("#updating");
-        }
       } catch (error) {
         alert("Update Error ! " + error.message);
       }
@@ -122,7 +115,6 @@ export default function EditModal(props) {
             </div>
           </div>
         </>
-        // </div>
       )}
     </>
   );

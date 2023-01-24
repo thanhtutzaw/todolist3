@@ -2,51 +2,57 @@
     --background-primary: white;
     --background-gray   : rgb(236, 236, 236);
     --text-primary      : rgb(28, 28, 65);
-    --main-color: rgb(0, 158, 255);
-    --btn-text-primary: rgb(5 140 192);
-    --shadow-primary: 0 2px 10px 0px rgb(0 0 1 / 30%);
-    --shadow-secondary: 0 2px 10px 0px rgb(63 63 63 / 75%);
-
-    --background-primary: white;
-    --background-gray   : rgb(236, 236, 236);
-    --text-primary      : rgb(28, 28, 65);
     --main-color        : rgb(0, 158, 255);
     --btn-text-primary  : rgb(5 140 192);
     --shadow-primary    : 0 2px 10px 0px rgb(0 0 1 / 30%);
-    --shadow-secondary  : 0 2px 10px 0px rgba(48, 48, 48, 0.75);
+    --shadow-secondary  : 0 2px 10px 0px rgb(63 63 63 / 75%);
+
+    --background-primary   : white;
+    --background-gray      : rgb(236, 236, 236);
+    --text-primary         : rgb(28, 28, 65);
+    --main-color           : rgb(0, 158, 255);
+    --btn-text-primary     : rgb(5 140 192);
+    --shadow-primary       : 0 2px 10px 0px rgb(0 0 1 / 30%);
+    --shadow-secondary     : 0 2px 10px 0px rgba(48, 48, 48, 0.75);
     /* --shadow-secondary  : 0 2px 10px 0px rgb(63 63 63 / 75%); */
 }
 
-html[theme = "dark"] body{
+html[theme="dark"] body {
     background-color: rgb(44, 44, 44);
-    transition: background-color .3s ease-in-out , color .1s ease;
+    transition      : background-color .3s ease-in-out, color .1s ease;
 }
-html[theme = "dark"] main {
+
+html[theme="dark"] main {
     /* background-color: rgb(12, 12, 12); */
     background-color: rgb(33 33 33);
-    transition: background-color .3s ease-in-out , color .1s ease;
-    color:white;
+    transition      : background-color .3s ease-in-out, color .1s ease;
+    color           : white;
 }
-html[theme = "dark"] .tools {
+
+html[theme="dark"] .tools {
     background-color: rgb(12, 12, 12);
-    color:white;
-    box-shadow: var(--shadow-secondary);
+    color           : white;
+    box-shadow      : var(--shadow-secondary);
 }
-html[theme = "dark"] .setting-item:hover {
+
+html[theme="dark"] .setting-item:hover {
     background-color: rgb(63, 63, 63);
-    color:white;
+    color           : white;
 }
-html[theme = "dark"] .input-text {
+
+html[theme="dark"] .input-text {
     /* background-color: rgb(12, 12, 12); */
     background-color: rgb(17 17 17);
-    color:white;
-    box-shadow: var(--shadow-secondary);
+    color           : white;
+    box-shadow      : var(--shadow-secondary);
 }
-html[theme = "dark"] .input-text:focus-visible {
+
+html[theme="dark"] .input-text:focus-visible {
     /* border:3px solid red; */
-    outline: 1px solid rgb(54, 54, 54)  ;
+    outline: 1px solid rgb(54, 54, 54);
 }
-html[theme = "dark"] .closeSelectBtn > path {
-    stroke: white;
-    transition:stroke .1s ease;
+
+html[theme="dark"] .closeSelectBtn>path {
+    stroke    : white;
+    transition: stroke .1s ease;
 }
