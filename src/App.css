@@ -484,6 +484,7 @@ ul li {
 
 .todo-checkbox {
   display: none;
+  margin: auto 0;
 }
 
 .checkbox-active {

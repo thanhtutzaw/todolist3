@@ -46,11 +46,12 @@ export default function Home() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         navigate("/login");
+        
       } else {
         navigate("/");
       }
     });
-    return unsubscribe;
+    return () => unsubscribe;
   }, []);
 
   const selecting = selectCount && SelectedID.length !== 0;
