@@ -120,6 +120,18 @@ header,
   /*animation    : fadeOut .4s ease; */
 }
 
+@keyframes close {
+  from {}
+
+  to {
+    opacity   : 0;
+    scale     : .8;
+    transform : translateY(-20px);
+    transition: all .2s ease;
+    visibility: hidden;
+  }
+}
+
 .selecting {
   max-width      : 500px;
   height         : 70px;
@@ -168,6 +180,22 @@ header,
   visibility   : visible;
   /* 
   animation    : fadeOut .4s ease; */
+}
+
+@keyframes open {
+  from {
+    opacity   : 0;
+    scale     : .8;
+    transform : translateY(-20px);
+    transition: all .2s ease;
+    visibility: hidden;
+  }
+
+  to {
+    opacity   : 1;
+    transition: all .3s ease;
+    visibility: visible;
+  }
 }
 
 .selectCount {
@@ -484,6 +512,10 @@ ul li {
 
 .todo-checkbox {
   display: none;
+  margin : auto 0;
+}
+
+.todo-checkbox-fill {
   margin: auto 0;
 }
 

@@ -7,6 +7,7 @@ export default function SelectModal(props) {
   function editHandle() {
     document.getElementById("editModal").showModal();
   }
+  console.log("selectmodal rendering")
   return (
     <div
       onAnimationEnd={(e) => {

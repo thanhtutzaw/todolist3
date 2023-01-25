@@ -68,7 +68,6 @@ export default function Login() {
         alert(`Cannot Signin ! ${err.message}`);
       });
   };
-
   return (
     <main>
       <a className="btnParent" href="https://todolistzee.netlify.app">

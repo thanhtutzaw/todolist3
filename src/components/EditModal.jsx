@@ -5,9 +5,17 @@ import CloseConfirmModal from "./CloseConfirmModal";
 import UpdatingModal from "./UpdatingModal";
 
 export default function EditModal(props) {
-  const { text, settext, todo, editInput, closeHandle, clearSelect, setisPrevent } = props;
+  const {
+    text,
+    settext,
+    todo,
+    editInput,
+    closeHandle,
+    clearSelect,
+    setisPrevent,
+  } = props;
   const [loading, setloading] = useState(false);
-
+  console.log("editmodal rendering");
   useEffect(() => {
     if (loading) {
       document.getElementById("updating").showModal();
@@ -26,14 +34,14 @@ export default function EditModal(props) {
       console.info("%cUpdating...", "color:grey");
       setloading(true);
 
-      setisPrevent(true)
+      setisPrevent(true);
       try {
         await updateDoc(collectionRef, data);
         document.getElementById("editModal").close();
         console.info("%cUpdated ✔️", "color:green");
         setloading(false);
         clearSelect();
-        setisPrevent(false)
+        setisPrevent(false);
       } catch (error) {
         alert("Update Error ! " + error.message);
       }
@@ -64,57 +72,55 @@ export default function EditModal(props) {
         <UpdatingModal />
       </dialog>
       {todo && (
-        <>
-          <div
-            style={{
-              pointerEvents: loading ? "none" : "auto",
-              userSelect: loading ? "none" : "unset",
-            }}
-            className="editModal"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }}
-            key={todo.id}
-          >
-            <div className="editInput" ref={editInput}>
-              <textarea
-                // enterKeyHint="done"
-                style={{ userSelect: loading ? "none" : "unset" }}
-                value={text}
-                ref={inputRef}
-                onChange={(e) => {
-                  settext(e.target.value);
+        <div
+          style={{
+            pointerEvents: loading ? "none" : "auto",
+            userSelect: loading ? "none" : "unset",
+          }}
+          className="editModal"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          key={todo.id}
+        >
+          <div className="editInput" ref={editInput}>
+            <textarea
+              // enterKeyHint="done"
+              style={{ userSelect: loading ? "none" : "unset" }}
+              value={text}
+              ref={inputRef}
+              onChange={(e) => {
+                settext(e.target.value);
+              }}
+              className="textarea"
+            />
+            <div className="editModalActions">
+              <button
+                onClick={() => {
+                  if (text !== todo.text) {
+                    document.getElementById("confirmModal").showModal();
+                  } else {
+                    closeHandle();
+                  }
                 }}
-                className="textarea"
-              />
-              <div className="editModalActions">
-                <button
-                  onClick={() => {
-                    if (text !== todo.text) {
-                      document.getElementById("confirmModal").showModal();
-                    } else {
-                      closeHandle();
-                    }
-                  }}
-                  className={`editCloseBtn`}
-                >
-                  Close
-                </button>
+                className={`editCloseBtn`}
+              >
+                Close
+              </button>
 
-                <button
-                  onClick={() => {
-                    updateHandle(todo.id);
-                  }}
-                  type="submit"
-                  className="updateBtn"
-                >
-                  Save
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  updateHandle(todo.id);
+                }}
+                type="submit"
+                className="updateBtn"
+              >
+                Save
+              </button>
             </div>
           </div>
-        </>
+        </div>
       )}
     </>
   );

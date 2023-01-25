@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { CgChevronRightR } from "react-icons/cg";
 import usePrevent from "../hooks/usePrevent.js";
@@ -16,6 +16,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 const EditModal = React.lazy(() => import("./EditModal.jsx"));
 const SelectModal = React.lazy(() => import("./SelectModal"));
+const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
@@ -88,19 +89,21 @@ export default function Home() {
         </button>
       </a>
       {mounted && (
-        <SelectModal
-          setisPrevent={setisPrevent}
-          clearSelect={clearSelect}
-          SelectedID={SelectedID}
-          deleteHandle={deleteHandle}
-          selecting={selecting}
-          mountStyle={mountStyle}
-          unmountStyle={unmountStyle}
-          setmounted={setmounted}
-        />
+        <Suspense fallback={renderLoader()}>
+          <SelectModal
+            setisPrevent={setisPrevent}
+            clearSelect={clearSelect}
+            SelectedID={SelectedID}
+            deleteHandle={deleteHandle}
+            selecting={selecting}
+            mountStyle={mountStyle}
+            unmountStyle={unmountStyle}
+            setmounted={setmounted}
+          />
+        </Suspense>
       )}
 
-      <dialog
+      {mounted &&(<dialog
         onClick={(e) => {
           const dialog = document.querySelector("dialog");
           if (e.target === dialog) {
@@ -114,16 +117,18 @@ export default function Home() {
         }}
         id="editModal"
       >
-        <EditModal
-          text={text}
-          settext={settext}
-          setisPrevent={setisPrevent}
-          clearSelect={clearSelect}
-          closeHandle={closeHandle}
-          todo={todos.find((t) => t.id === SelectedID.toString())}
-          editInput={editInput}
-        />
-      </dialog>
+        <Suspense fallback={renderLoader()}>
+          <EditModal
+            text={text}
+            settext={settext}
+            setisPrevent={setisPrevent}
+            clearSelect={clearSelect}
+            closeHandle={closeHandle}
+            todo={todos.find((t) => t.id === SelectedID.toString())}
+            editInput={editInput}
+          />
+        </Suspense>
+      </dialog>)}
 
       <Header selecting={selecting} todoLength={todos.length} />
 

@@ -1,17 +1,18 @@
 import { getAuth, signOut } from "firebase/auth";
-import React, { useState } from "react";
+import React, { Suspense, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { RiLogoutBoxFill } from "react-icons/ri";
 import useIndexDB from "../hooks/useIndexDB";
 import useTheme from "../hooks/useTheme";
-
+import { HeaderDropDown } from "./HeaderDropDown";
+// const HeaderDropDown = React.lazy(() => import("./HeaderDropDown"));
+// const renderLoader = () => <p>Loading...</p>;
 export default function Header(props) {
   const { selecting, todoLength } = props;
   const { userphoto, userName } = useIndexDB();
   const { theme, setTheme } = useTheme();
 
   const [opentools, setopentools] = useState(false);
+  const [mounted, setmounted] = useState(false);
 
   const auth = getAuth();
   const user = auth.currentUser;
@@ -37,13 +38,17 @@ export default function Header(props) {
         navigate("/login");
       })
       .catch((err) => {
-        alert("Error signout ! ", err.message);
+        alert("Signout Error ! ", err.message);
+        console.error("Signout Error ! ", err.message);
       });
   };
-  function handleTools(e) {
-    console.log(e.target);
+  const handleTools = () => {
+    if (!mounted) setmounted(true);
     setopentools((prevstate) => !prevstate);
-  }
+    console.log({ mounted });
+    console.log({ opentools });
+  };
+  // console.log("why rendering ");
   return (
     <>
       <header style={{ paddingTop: selecting ? "2.2rem" : "" }}>
@@ -71,30 +76,19 @@ export default function Header(props) {
           )}
         </div>
       </header>
-      <div className="dropdown">
-        {
-          <div className={`tools ${opentools ? "open" : "close"}`}>
-            <div className="tools-container">
-              <div
-                onClick={() => {
-                  setTheme((prev) => (prev === "light" ? "dark" : "light"));
-                  setopentools(false);
-                }}
-                className="setting-item"
-              >
-                {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
-                {/* <MdDarkMode className="edit-btn" /> */}
-                <span>Theme</span>
-              </div>
-              <div className="setting-item" onClick={logoutHandle}>
-                <RiLogoutBoxFill />
-                {/* <RiLogoutBoxFill className="delte-btn" /> */}
-                <span>Logout</span>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
+      {/* <Suspense fallback={renderLoader()}> */}
+      {mounted && (
+        <HeaderDropDown
+          mounted={mounted}
+          setmounted={setmounted}
+          theme={theme}
+          setTheme={setTheme}
+          opentools={opentools}
+          setopentools={setopentools}
+          logoutHandle={logoutHandle}
+        ></HeaderDropDown>
+      )}
+      {/* </Suspense> */}
     </>
   );
 }
