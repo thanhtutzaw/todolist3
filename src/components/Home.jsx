@@ -5,16 +5,17 @@ import usePrevent from "../hooks/usePrevent.js";
 import useSelect from "../hooks/useSelect.js";
 import useFireStoreData from "../hooks/useFireStoreData";
 import { addTodo, deleteTodo } from "../utils/todo.js";
-import SelectModal from "./SelectModal";
+// import SelectModal from "./SelectModal";
 import BottomNav from "./BottomNav";
-import EditModal from "./EditModal.jsx";
+// import EditModal from "./EditModal.jsx";
 import Header from "./Header";
 import Todolist from "./Todolist";
 import { useCallback } from "react";
 import { auth } from "../lib/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
+const EditModal = React.lazy(() => import("./EditModal.jsx"));
+const SelectModal = React.lazy(() => import("./SelectModal"));
 export default function Home() {
   const navigate = useNavigate();
   const inputRef = useRef(null);
@@ -46,7 +47,6 @@ export default function Home() {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         navigate("/login");
-        
       } else {
         navigate("/");
       }
