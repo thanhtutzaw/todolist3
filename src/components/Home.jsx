@@ -144,8 +144,8 @@ export default function Home() {
         <ul ref={todoRef} style={{ userSelect: selectCount && "none" }}>
           <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
-            {<Skeleton className={"loading"} count={5} />}
-            {/* {loading && <Skeleton className={"loading"} count={5} />} */}
+            {/* {<Skeleton className={"loading"} count={5} />} */}
+            {loading && <Skeleton className={"loading"} count={5} />}
           </SkeletonTheme>
           {!loading &&
             todos.map((todo, index) => (
