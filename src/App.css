@@ -39,7 +39,7 @@ main {
   background-color: var(--background-primary);
   color           : var(--text-primary);
   font-size       : calc(10px + 2vmin);
-  padding         : 0 2rem;
+  padding         : 0 1.2rem;
 }
 
 .row {
