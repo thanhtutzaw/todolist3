@@ -182,6 +182,11 @@ header,
   animation    : fadeOut .4s ease; */
 }
 
+html[theme="dark"] .react-loading-skeleton {
+  --base-color     : #171717 !important;
+  --highlight-color: #ffffff08 !important;
+}
+
 @keyframes open {
   from {
     opacity   : 0;

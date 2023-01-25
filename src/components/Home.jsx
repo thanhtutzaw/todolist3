@@ -5,7 +5,7 @@ import usePrevent from "../hooks/usePrevent.js";
 import useSelect from "../hooks/useSelect.js";
 import useFireStoreData from "../hooks/useFireStoreData";
 import { addTodo, deleteTodo } from "../utils/todo.js";
-// import SelectModal from "./SelectModal";
+import SelectModal from "./SelectModal";
 import BottomNav from "./BottomNav";
 // import EditModal from "./EditModal.jsx";
 import Header from "./Header";
@@ -15,7 +15,7 @@ import { auth } from "../lib/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 const EditModal = React.lazy(() => import("./EditModal.jsx"));
-const SelectModal = React.lazy(() => import("./SelectModal"));
+
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
@@ -89,7 +89,6 @@ export default function Home() {
         </button>
       </a>
       {mounted && (
-        <Suspense fallback={renderLoader()}>
           <SelectModal
             setisPrevent={setisPrevent}
             clearSelect={clearSelect}
@@ -100,7 +99,6 @@ export default function Home() {
             unmountStyle={unmountStyle}
             setmounted={setmounted}
           />
-        </Suspense>
       )}
 
       {mounted &&(<dialog
@@ -146,7 +144,8 @@ export default function Home() {
         <ul ref={todoRef} style={{ userSelect: selectCount && "none" }}>
           <SkeletonTheme height="55px">
             {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
-            {loading && <Skeleton className={"loading"} count={5} />}
+            {<Skeleton className={"loading"} count={5} />}
+            {/* {loading && <Skeleton className={"loading"} count={5} />} */}
           </SkeletonTheme>
           {!loading &&
             todos.map((todo, index) => (
