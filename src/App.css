@@ -96,7 +96,7 @@ header,
   align-items                 : center;
   justify-content             : space-between;
   /* animation                : fadeIn .3s ease-in; */
-  transition                  : all .3s ease-in-out;
+  /* transition                  : all .3s ease-in-out; */
   box-shadow                  : 0 1px 2px 0 rgb(60 64 67 / 30%),
     0 2px 6px 2px rgb(60 64 67 / 15%);
   z-index: 10000;
@@ -115,7 +115,7 @@ header,
   opacity        : 0;
   scale          : .8;
   transform      : translateY(-20px);
-  transition     : all .2s ease;
+  /* transition     : all .2s ease; */
   visibility     : hidden;
   /*animation    : fadeOut .4s ease; */
 }
@@ -127,7 +127,7 @@ header,
     opacity   : 0;
     scale     : .8;
     transform : translateY(-20px);
-    transition: all .2s ease;
+    /* transition: all .2s ease; */
     visibility: hidden;
   }
 }
@@ -138,6 +138,7 @@ header,
   opacity        : 1;
   transition     : all .3s ease;
   visibility     : visible;
+  border: 3px solid red;
   /*animation    : fadeOut .4s ease; */
 }
 
@@ -192,13 +193,13 @@ html[theme="dark"] .react-loading-skeleton {
     opacity   : 0;
     scale     : .8;
     transform : translateY(-20px);
-    transition: all .2s ease;
+    /* transition: all .2s ease; */
     visibility: hidden;
   }
 
   to {
     opacity   : 1;
-    transition: all .3s ease;
+    /* transition: all .3s ease; */
     visibility: visible;
   }
 }
@@ -214,7 +215,7 @@ html[theme="dark"] .react-loading-skeleton {
   position       : relative;
   /* top         : -54px;
   right          : -300px; */
-  transition     : all 1s ease;
+  /* transition     : all 1s ease; */
   height         : 50px;
   width          : 100%;
   display        : flex;
