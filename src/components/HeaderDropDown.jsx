@@ -6,11 +6,11 @@ export const HeaderDropDown = (props) => {
   console.log("rendering dropdown");
   const mountStyle = {
 
-    animation: "open 250ms ease-in",
+    animation: "open 200ms ease",
   };
   const unmountStyle = {
     
-    animation: "close 270ms ease-out",
+    animation: "close 150ms ease-out",
     animationFillMode: "forwards",
   };
   return (

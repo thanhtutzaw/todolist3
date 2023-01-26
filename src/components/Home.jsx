@@ -58,11 +58,11 @@ export default function Home() {
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
-    animation: "selectMount 250ms ease-in",
+    animation: "selectMount 180ms ease",
   };
   const unmountStyle = {
-    animation: "selectUnmount 270ms ease-out",
-    animationFillMode: "forwards",
+    animation: "selectUnmount 250ms ease-out",
+    // animationFillMode: "forwards",
   };
   const [mounted, setmounted] = useState(false);
   useEffect(() => {
@@ -89,44 +89,46 @@ export default function Home() {
         </button>
       </a>
       {mounted && (
-          <SelectModal
-            setisPrevent={setisPrevent}
-            clearSelect={clearSelect}
-            SelectedID={SelectedID}
-            deleteHandle={deleteHandle}
-            selecting={selecting}
-            mountStyle={mountStyle}
-            unmountStyle={unmountStyle}
-            setmounted={setmounted}
-          />
+        <SelectModal
+          setisPrevent={setisPrevent}
+          clearSelect={clearSelect}
+          SelectedID={SelectedID}
+          deleteHandle={deleteHandle}
+          selecting={selecting}
+          mountStyle={mountStyle}
+          unmountStyle={unmountStyle}
+          setmounted={setmounted}
+        />
       )}
 
-      {mounted &&(<dialog
-        onClick={(e) => {
-          const dialog = document.querySelector("dialog");
-          if (e.target === dialog) {
-            if (text !== todo.text) {
-              document.getElementById("confirmModal").showModal();
-              // setConfirmModal((prev) => !prev);
-            } else {
-              closeHandle();
+      {mounted && (
+        <dialog
+          onClick={(e) => {
+            const dialog = document.querySelector("dialog");
+            if (e.target === dialog) {
+              if (text !== todo.text) {
+                document.getElementById("confirmModal").showModal();
+                // setConfirmModal((prev) => !prev);
+              } else {
+                closeHandle();
+              }
             }
-          }
-        }}
-        id="editModal"
-      >
-        <Suspense fallback={renderLoader()}>
-          <EditModal
-            text={text}
-            settext={settext}
-            setisPrevent={setisPrevent}
-            clearSelect={clearSelect}
-            closeHandle={closeHandle}
-            todo={todos.find((t) => t.id === SelectedID.toString())}
-            editInput={editInput}
-          />
-        </Suspense>
-      </dialog>)}
+          }}
+          id="editModal"
+        >
+          <Suspense fallback={renderLoader()}>
+            <EditModal
+              text={text}
+              settext={settext}
+              setisPrevent={setisPrevent}
+              clearSelect={clearSelect}
+              closeHandle={closeHandle}
+              todo={todos.find((t) => t.id === SelectedID.toString())}
+              editInput={editInput}
+            />
+          </Suspense>
+        </dialog>
+      )}
 
       <Header selecting={selecting} todoLength={todos.length} />
 
