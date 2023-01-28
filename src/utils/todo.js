@@ -45,7 +45,7 @@ export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopen
         // console.log(canDelete)
         console.info("%cDeleting...", "color:grey");
         setloading(true)
-        // setcanDelete(true)
+        setcanDelete(true)
         // setopenDeleteToast(true)
         setisPrevent(true);
         clearSelect();

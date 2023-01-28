@@ -8,6 +8,7 @@ import { deleteTodo } from "../utils/todo";
 function ToastItem(props) {
   function handleUndo() {
     props.setcanDelete(false);
+    // setcanDelete(true);
     // props.setopenDeleteToast(false);
   }
   return (
@@ -65,6 +66,9 @@ export default function Toast(props) {
   useEffect(() => {
     let deleteTime;
     // console.log(canDelete);
+    if(openDeleteToast === false){
+      setcanDelete(true);
+    }
     if (openDeleteToast) {
       if (canDelete === false) {
         console.log("fale and cancel delect");
