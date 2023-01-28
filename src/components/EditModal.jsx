@@ -15,7 +15,6 @@ export default function EditModal(props) {
     setisPrevent,
   } = props;
   const [loading, setloading] = useState(false);
-  console.log("editmodal rendering");
   useEffect(() => {
     if (loading) {
       document.getElementById("updating").showModal();

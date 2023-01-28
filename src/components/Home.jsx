@@ -14,6 +14,7 @@ import { useCallback } from "react";
 import { auth } from "../lib/firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Toast from "./Toast.jsx";
 const EditModal = React.lazy(() => import("./EditModal.jsx"));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -40,10 +41,67 @@ export default function Home() {
     addTodo(todoRef, inputRef, settodos, todos, setisPrevent),
     [todos]
   );
-  const deleteHandle = useCallback(
-    deleteTodo(setisPrevent, clearSelect, todoRef, SelectedID),
-    [SelectedID]
-  );
+  const [deleteloading, setloading] = useState(false);
+  const [openDeleteToast, setopenDeleteToast] = useState(false);
+  const [canDelete, setcanDelete] = useState(true);
+  const [counter, setcounter] = useState(5);
+  // const deleteHandle = useCallback(
+  // let timeout;
+  useEffect(() => {
+    const interval =
+      counter > 1 &&
+      deleteloading &&
+      openDeleteToast &&
+      setInterval(() => {
+        setcounter((counter) => counter - 1);
+        // console.log(counter);
+      }, 1000);
+    // if(deleteloading === false && counter === 0){
+    //   clearInterval(interval)
+    // }
+    if (canDelete === false) {
+      clearInterval(interval);
+      setcounter(5);
+    }
+    return () => {
+      setcounter(5);
+      clearInterval(interval);
+    };
+  }, [deleteloading, openDeleteToast, canDelete]);
+  // useEffect(() => {
+  //   if (canDelete === false) {
+  //     set;
+  //   }
+  // }, [canDelete]);
+  // deleteloading === false && clearInterval(timeout);
+  const deleteHandle = ()=>{
+    setopenDeleteToast(true)
+    setloading(true)
+    let deleteTime;
+    console.log(canDelete);
+    // if(canDelete === false){
+    //   clearTimeout(deleteTime);
+    // }else{
+    //   deleteTime = setTimeout(
+    //     deleteTodo(
+    //       // timeout,
+    //       setcanDelete,
+    //       canDelete,
+    //       setcounter,
+    //       counter,
+    //       setopenDeleteToast,
+    //       setloading,
+    //       setisPrevent,
+    //       clearSelect,
+    //       todoRef,
+    //       SelectedID
+    //     ), 5000);
+
+    // }
+  }
+
+  //   [SelectedID]
+  // );
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -82,6 +140,20 @@ export default function Home() {
   }
   return (
     <main>
+      <Toast
+        SelectedID={SelectedID}
+        todoRef={todoRef}
+        clearSelect={clearSelect}
+        setisPrevent={setisPrevent}
+        setloading={setloading}
+        canDelete={canDelete}
+        setcanDelete={setcanDelete}
+        setcounter={setcounter}
+        counter={counter}
+        setopenDeleteToast={setopenDeleteToast}
+        openDeleteToast={openDeleteToast}
+        deleteloading={deleteloading}
+      />
       {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <button className="btn" type="button">
@@ -90,6 +162,7 @@ export default function Home() {
       </a>
       {mounted && (
         <SelectModal
+          todoRef={todoRef}
           setisPrevent={setisPrevent}
           clearSelect={clearSelect}
           SelectedID={SelectedID}

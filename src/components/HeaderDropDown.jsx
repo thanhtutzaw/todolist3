@@ -3,7 +3,6 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 export const HeaderDropDown = (props) => {
-  console.log("rendering dropdown");
   const mountStyle = {
 
     animation: "open 200ms ease",

@@ -7,13 +7,11 @@ export default function SelectModal(props) {
   function editHandle() {
     document.getElementById("editModal").showModal();
   }
-  console.log("selectmodal rendering")
   return (
     <div
       onAnimationEnd={(e) => {
         if (!props.selecting) {
           props.setmounted(false);
-          console.log("end");
         }
       }}
       style={props.selecting ? props.mountStyle : props.unmountStyle}

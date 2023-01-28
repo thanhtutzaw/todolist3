@@ -1,4 +1,5 @@
 import { addDoc, collection, doc, serverTimestamp, writeBatch } from "firebase/firestore";
+import { useEffect, useState } from "react";
 import { auth, db } from "../lib/firebase";
 
 export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
@@ -39,12 +40,16 @@ export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
         }
     };
 }
-
-export function deleteTodo(setisPrevent, clearSelect, todoRef, SelectedID) {
+export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
     return async () => {
+        // console.log(canDelete)
         console.info("%cDeleting...", "color:grey");
+        setloading(true)
+        // setcanDelete(true)
+        // setopenDeleteToast(true)
         setisPrevent(true);
         clearSelect();
+
         todoRef.current.scrollIntoView({ behavior: "smooth" });
         // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
         const batch = writeBatch(db);
@@ -63,10 +68,26 @@ export function deleteTodo(setisPrevent, clearSelect, todoRef, SelectedID) {
                 batch.delete(TodoRef);
             }
         }
+        // console.log("undo ?")
         try {
-            await batch.commit();
+
+            // if(canDelete === false){
+            //     clearTimeout(deleteTimer)
+            //     setopenDeleteToast(false)
+            // }
             setisPrevent(false);
-            console.info("%cDeleted !", "color: green");
+            // const deleteTimer = setTimeout(async () => {
+                // console.log({ canDelete })
+                setloading(false)
+                await batch.commit();
+                console.info("%cDeleted !", "color: green");
+                setTimeout(async () => {
+                    setopenDeleteToast(false)
+                    console.log("close Toast")
+                    setcanDelete(true)  
+                }, 1500);
+            // }, 5000);
+
         } catch (error) {
             alert("Delete Error !" + error.message);
         }

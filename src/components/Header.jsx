@@ -48,7 +48,6 @@ export default function Header(props) {
     console.log({ mounted });
     console.log({ opentools });
   };
-  // console.log("why rendering ");
   return (
     <>
       <header style={{ paddingTop: selecting ? "2.2rem" : "" }}>

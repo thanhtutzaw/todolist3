@@ -1,0 +1,83 @@
+.toastContainer {
+    position        : fixed;
+    background-color: rgba(0, 0, 255, 0.363);
+    /* position     : absolute; */
+    max-width       : 300px;
+    inset           : 0;
+    margin          : 0 auto;
+    overflow        : hidden;
+    z-index         : 200000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast[open] {
+    transform: translateY(0);
+    background-color: rgba(124, 9, 9, 0.514);
+}
+
+.toast {
+    
+
+    position : absolute;
+    max-width: 300px;
+    min-width: 200px;
+    inset    : 0;
+    margin   : 0 auto;
+
+    top                : 85%;
+    /* top             :65%; */
+    background-color   : red;
+    padding            : 0.5rem;
+    border-radius      : 0.5rem;
+    display            : flex;
+    flex               : 1;
+    align-items        : center;
+    /* position        : relative;
+    bottom             : -647px; */
+    /* width           : 100vw; */
+    height             : 66px;
+    /* width           : 100%; */
+    /* max-width       : 444px; */
+    font-size          : 1rem;
+    /* width           : 100%; */
+    /* max-width       : 444px; */
+    /* opacity         : 0; */
+    /* opacity         : 0;
+visibility             : hidden; */
+    transform          : translateY(164px);
+    transition         : all .4s ease-in-out;
+    /* position        : fixed;
+z-index                : 1;
+bottom                 : 30px; */
+        padding: 1rem;
+
+}
+
+.animate {
+    transform : translate(0);
+    opacity   : 1;
+    visibility: visible;
+    position  : fixed;
+}
+
+.toast {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin         : auto 0;
+    margin:auto;
+}
+.undoBtn{
+    background-color: transparent;
+    padding: .5rem;
+    color: white;
+    border: 1px solid white;
+    border-radius: .5rem;
+}
+.undoBtn:hover{
+    background-color: rgb(180, 180, 180);
+    padding: .5rem;
+    color: black;
+}
