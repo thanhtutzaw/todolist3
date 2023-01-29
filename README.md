@@ -23,3 +23,12 @@ Project is created with:
 ## Mobile
 [Converted apk v1](https://drive.google.com/drive/folders/1bl4e6mg2v8FKn_CPRTDHl7bN8VMUPArO?usp=sharing)
 
+## Setup
+To run this project, install it locally using npm:
+
+```
+$ cd ../todolist3
+$ cp .env.example .env.local
+$ npm install
+$ npm start
+```
