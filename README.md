@@ -1,6 +1,6 @@
 ## Technologies
 Project is created with:
-* React
+* React , Vite
 * [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases) + Auth
 * [React Icons](https://www.npmjs.com/package/react-icons)
 
