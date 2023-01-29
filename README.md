@@ -1,7 +1,7 @@
 ## Technologies
 Project is created with:
-* React , Vite
-* [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases) + Auth
+* React with Vite
+* [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases) with Google Signin
 * [React Icons](https://www.npmjs.com/package/react-icons)
 
 
@@ -27,7 +27,8 @@ Project is created with:
 To run this project, install it locally using npm:
 
 ```
-$ cd ../todolist3
+$ git clone https://github.com/thanhtutzaw/todolist3.git
+$ cd todolist3
 $ cp .env.example .env.local
 $ npm install
 $ npm start
