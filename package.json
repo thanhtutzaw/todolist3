@@ -26,6 +26,10 @@
     "build": "vite build",
     "serve": "vite preview"
   },
+  "author": {
+    "name": "Than Htut Zaw",
+    "email": "zgyi5025@gmail.com"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
