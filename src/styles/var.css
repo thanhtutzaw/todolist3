@@ -48,11 +48,14 @@ html[theme="dark"] .input-text {
 }
 
 html[theme="dark"] .input-text:focus-visible {
-    /* border:3px solid red; */
     outline: 1px solid rgb(54, 54, 54);
 }
 
 html[theme="dark"] .closeSelectBtn>path {
     stroke    : white;
     transition: stroke .1s ease;
+}
+.closeSelectBtn>path {
+    stroke    : white;
+    /* transition: stroke .1s ease; */
 }

@@ -41,8 +41,9 @@ main {
   font-size       : calc(10px + 2vmin);
   padding         : 0 1.4rem;
 }
-main > a > button {
-  padding:2px !important;
+
+main>a>button {
+  padding: 2px !important;
 }
 
 .row {
@@ -115,36 +116,31 @@ header,
 }
 
 .close {
-  opacity           : 0;
-  scale             : .8;
-  transform         : translateY(-20px);
-  /* transition     : all .2s ease; */
-  visibility        : hidden;
-  /*animation       : fadeOut .4s ease; */
+  opacity   : 0;
+  scale     : .8;
+  transform : translateY(-20px);
+  visibility: hidden;
 }
 
 @keyframes close {
   from {
-    opacity      : 1;
-    /* transition: all .3s ease; */
+    opacity: 1;
   }
 
   to {
-    opacity      : 0;
-    scale        : .8;
-    transform    : translateY(-20px);
-    /* transition: all .2s ease; */
+    opacity  : 0;
+    scale    : .8;
+    transform: translateY(-20px);
   }
 }
 
 .selecting {
-  max-width      : 500px;
-  height         : 70px;
-  opacity        : 1;
-  transition     : all .3s ease;
-  visibility     : visible;
-  border         : 3px solid red;
-  /*animation    : fadeOut .4s ease; */
+  max-width : 500px;
+  height    : 70px;
+  opacity   : 1;
+  transition: all .3s ease;
+  visibility: visible;
+  border    : 3px solid red;
 }
 
 @keyframes selectMount {
@@ -181,10 +177,7 @@ header,
 .open {
   /* height:70px; */
   opacity         : 1;
-  /* transition   : all .3s ease; */
-  /* visibility   : visible; */
-  /* 
-  animation       : fadeOut .4s ease; */
+  /*animation       : fadeOut .4s ease; */
 }
 
 html[theme="dark"] .react-loading-skeleton {
@@ -213,6 +206,7 @@ html[theme="dark"] .react-loading-skeleton {
   margin-top : -6px;
   cursor     : default;
   user-select: none;
+  color: white;
 }
 
 .selectionContainer {
@@ -641,11 +635,15 @@ ul li {
   width              : 70px;
   height             : 70px;
   border-radius      : 50px;
-  font-size          : 1rem;
+  font-size          : 2rem;
   display            : flex;
   justify-content    : center;
   align-items        : center;
   box-shadow         : 0px 3px 10px rgba(0, 0, 0, 0.4);
+  color:white;
+}
+.add-btn-parent>svg{
+  stroke-width: 1;
 }
 
 /* .add-btn {
@@ -671,7 +669,8 @@ ul li {
   gap                   : 0.5em;
   border-radius         : 8px;
   /* box-shadow         : 0px 5px 12px 0px rgb(0 0 1 / 32%); */
-  box-shadow            : var(--shadow-primary)
+  box-shadow            : var(--shadow-primary);
+  font-size: 1rem;
 }
 
 .tools-container {
