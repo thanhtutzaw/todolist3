@@ -1,8 +1,7 @@
-import React from "react";
-import { GrClose } from "react-icons/gr";
+import React, { useEffect } from "react";
 import { IconContext } from "react-icons";
+import { GrClose } from "react-icons/gr";
 import s from "../styles/Toast.module.css";
-import { useEffect } from "react";
 import { deleteTodo } from "../utils/todo";
 
 function ToastItem(props) {
@@ -23,9 +22,12 @@ function ToastItem(props) {
       open={props.openDeleteToast}
       className={s.toast}
     >
+      {/* {props.counter === 5 && props.canDelete && <p>deleting...</p>} */}
       {props.deleteloading ? (
         <>
-          <p>Deleting in {props.counter}s</p>
+          <p>
+            Deleting {!props.deleteloading ? `... ` : `in ${props.counter}s`}
+          </p>
           <button onClick={handleUndo} className={s.undoBtn}>
             Undo
           </button>
@@ -65,8 +67,8 @@ export default function Toast(props) {
 
   useEffect(() => {
     let deleteTime;
-    // console.log(canDelete);
-    if(openDeleteToast === false){
+
+    if (openDeleteToast === false) {
       setcanDelete(true);
     }
     if (openDeleteToast) {
@@ -74,27 +76,24 @@ export default function Toast(props) {
         console.log("fale and cancel delect");
         setopenDeleteToast(false);
         clearTimeout(deleteTime);
-        clearSelect()
-        setisPrevent(false)
-      } 
-        deleteTime = setTimeout(
-          deleteTodo(
-            // timeout,
-            setcanDelete,
-            canDelete,
-            setcounter,
-            counter,
-            setopenDeleteToast,
-            setloading,
-            setisPrevent,
-            clearSelect,
-            todoRef,
-            SelectedID
-          ),
-          5000
-        );
-        // console.log("do delete");
-      
+        clearSelect();
+        setisPrevent(false);
+      }
+      deleteTime = setTimeout(
+        deleteTodo(
+          setcanDelete,
+          canDelete,
+          setcounter,
+          counter,
+          setopenDeleteToast,
+          setloading,
+          setisPrevent,
+          clearSelect,
+          todoRef,
+          SelectedID
+        ),
+        5000
+      );
     }
     return () => clearTimeout(deleteTime);
   }, [canDelete, openDeleteToast]);
@@ -115,6 +114,7 @@ export default function Toast(props) {
       className={s.toastContainer}
     >
       <ToastItem
+        canDelete={canDelete}
         setcanDelete={setcanDelete}
         counter={counter}
         setopenDeleteToast={setopenDeleteToast}

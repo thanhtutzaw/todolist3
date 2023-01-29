@@ -42,7 +42,6 @@ export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
 }
 export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
     return async () => {
-        // console.log(canDelete)
         console.info("%cDeleting...", "color:grey");
         setloading(true)
         setcanDelete(true)
@@ -75,7 +74,7 @@ export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopen
             //     clearTimeout(deleteTimer)
             //     setopenDeleteToast(false)
             // }
-            setisPrevent(false);
+            // setisPrevent(false);
             // const deleteTimer = setTimeout(async () => {
                 // console.log({ canDelete })
                 setloading(false)
@@ -84,7 +83,8 @@ export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopen
                 setTimeout(async () => {
                     setopenDeleteToast(false)
                     console.log("close Toast")
-                    setcanDelete(true)  
+                    setcanDelete(true) 
+                    setisPrevent(false) 
                 }, 1500);
             // }, 5000);
 
