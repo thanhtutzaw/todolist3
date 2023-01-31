@@ -1,7 +1,7 @@
 ## Technologies
 Project is created with:
 * React with Vite
-* [Firestore](https://github.com/thanhtutzaw/todolist3/#document-bases-databases) with Google Sign-in
+* [Firestore](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png) with Google Sign-in
 * [React-Icons](https://www.npmjs.com/package/react-icons)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 
