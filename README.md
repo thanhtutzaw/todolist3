@@ -1,7 +1,7 @@
 ## Technologies
 Project is created with:
 * React with Vite
-* [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases) with Google Sign-in
+* [Firestore](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png) with Google Sign-in
 * [React-Icons](https://www.npmjs.com/package/react-icons)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 
@@ -15,7 +15,8 @@ Project is created with:
 :ballot_box_with_check:	Refresh Protected\
 :ballot_box_with_check:	Test-User Account
 ## User-Interface
-![Todo-React-App](https://user-images.githubusercontent.com/71011043/215317612-ec07874a-3c42-4c2e-8f76-e25dee82e12d.png)
+![Todo-React-App](https://user-images.githubusercontent.com/71011043/215640512-bc543ec0-bc1e-455e-8dd4-c28f30c6e17a.png)
+
 
 
 
