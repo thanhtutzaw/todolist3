@@ -3,13 +3,11 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 export const HeaderDropDown = (props) => {
-  const mountStyle = {
-
-    animation: "open 200ms ease",
+  const enterTools = {
+    animation: "enterTools 200ms ease-in",
   };
-  const unmountStyle = {
-    
-    animation: "close 150ms ease-out",
+  const exitTools = {
+    animation: "exitTools 150ms ease-out",
     animationFillMode: "forwards",
   };
   return (
@@ -22,10 +20,8 @@ export const HeaderDropDown = (props) => {
         console.log("end dropdown");
       }}
     >
-      {/* <div className={`tools  ${props.opentools ? mountStyle : unmountStyle}`}> */}
-      {/* <div className={`tools ${props.opentools ? "open" : "close"}`}> */}
       <div
-        style={props.opentools ? mountStyle : unmountStyle}
+        style={props.opentools ? enterTools : exitTools}
         className={`tools `}
       >
         <div className="tools-container">

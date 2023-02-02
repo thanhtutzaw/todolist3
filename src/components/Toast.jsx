@@ -9,23 +9,21 @@ function ToastItem(props) {
     transformStyle: "preserve-3d",
     animation: "enterDeleteToast .4s ease-in-out",
   };
-  const exitDeleteToast = {
-    animation: "exitDeleteToast .4s ease-in-out",
-  };
-  const LoadingToastClose = {
-    animation: "LoadingToastClose .4s ease-in-out",
+  const cancelDeleteToast = {
+    animation: "cancelDeleteToast .4s ease-in-out",
   };
   const LoadingToastOpen = {
+    borderRadius: "1rem",
     maxWidth: "200px",
+    animation: "LoadingToastOpen .2s ease",
+  };
+  const exitDeleteToast = {
+    maxWidth: "200px",
+    borderRadius: "1rem",
+    animation: "exitDeleteToast .2s ease-out",
   };
   function handleUndo() {
     props.setcanDelete(false);
-    // setcanDelete(true);
-    // props.setopenDeleteToast(false);
-
-    // if(!props.openDeleteToast){
-    // props.setToastMounted(false);
-    // }
   }
   return (
     <div
@@ -36,11 +34,15 @@ function ToastItem(props) {
       }}
       style={
         props.openDeleteToast
-          ? props.deleteloading ? enterDeleteToast : LoadingToastOpen
-          : props.deleteloading ? LoadingToastClose : exitDeleteToast
+          ? props.deleteloading
+            ? enterDeleteToast
+            : LoadingToastOpen
+          : props.deleteloading
+          ? cancelDeleteToast
+          : exitDeleteToast
         // props.deleteloading
         //   ? props.deleteloading
-        //     ? LoadingToastClose
+        //     ? cancelDeleteToast
         //     : LoadingToastOpen
         //   : !props.openDeleteToast
         //   ? exitDeleteToast
@@ -58,19 +60,25 @@ function ToastItem(props) {
       }
       // open={props.openDeleteToast}
       className={s.toast}
-      // className={`${!props.deleteloading ? s.loading : s.toast} `}
     >
-      {/* {props.counter === 5 && props.canDelete && <p>deleting...</p>} */}
       {props.deleteloading ? (
-        <>
-          <p>
-            Deleting {!props.deleteloading ? `... ` : `in ${props.counter}s`}
-          </p>
-          <button onClick={handleUndo} className={s.undoBtn}>
-            {/* <a>Undo</a> */}
-            Undo
-          </button>
-        </>
+        props.canDelete ? (
+          <>
+            <p>
+              Deleting {!props.deleteloading ? `... ` : `in ${props.counter}s`}
+            </p>
+            <button onClick={handleUndo} className={s.undoBtn}>
+              Undo
+            </button>
+          </>
+        ) : (
+          <>
+            <p>
+              Canceled
+            </p>
+
+          </>
+        )
       ) : (
         <>
           <p>Deleted</p>
@@ -114,12 +122,12 @@ export default function Toast(props) {
     }
     if (ToastMounted) {
       if (canDelete === false) {
-        console.log("fale and cancel delect");
+        console.log("false and cancel Delect");
         setopenDeleteToast(false);
         // setToastMounted(false)
-        clearTimeout(deleteTime);
         clearSelect();
         setisPrevent(false);
+        clearTimeout(deleteTime);
       }
       deleteTime = setTimeout(
         deleteTodo(

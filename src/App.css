@@ -20,6 +20,7 @@ nav,
 btn,
 .add-btn,
 .todo-checkbox,
+.todo-checkbox-fill,
 .todo-label {
   cursor: pointer;
 }
@@ -118,17 +119,18 @@ header,
   margin-bottom      : 1.3rem;
   padding            : .5rem 0;
   /* height          : 0px !important; */
+  background-color   : rgb(230, 134, 8);
 }
 
 .close {
-  opacity            : 0;
-  visibility         : hidden;
-  scale              : .8;
-  transform          : translateY(-20px);
-  /* background-color: yellowgreen; */
+  opacity         : 0;
+  visibility      : hidden;
+  scale           : .8;
+  transform       : translateY(-20px);
+  background-color: rgb(219, 5, 226);
 }
 
-@keyframes close {
+@keyframes exitTools {
   from {
     opacity: 1;
   }
@@ -151,138 +153,106 @@ header,
 
 @keyframes selectMount {
   from {
-    max-width: 480px;
-    height   : 0px;
-    opacity  : 0;
-
+    /* max-width: 480px; */
+    scale  : 0;
+    height : 0px;
+    opacity: 0;
   }
 
   to {
-    max-width: 500px;
-    height   : 70px;
-    opacity  : 1;
-
+    /* max-width: 500px; */
+    scale  : 1;
+    height : 70px;
+    opacity: 1;
   }
 }
 
 @keyframes selectUnmount {
   from {
-    max-width: 500px;
-    height   : 70px;
-    opacity  : 1;
+    scale  : 1;
+    height : 70px;
+    opacity: 1;
   }
 
   to {
-    max-width: 480px;
-    height   : 0px;
-    opacity  : 0;
-
+    scale        : .8;
+    height       : 54px;
+    opacity      : 0;
+    border-radius: 1rem;
   }
 }
 
 @keyframes exitDeleteToast {
-  from {
-    /* transform: translateY(0px); */
-    /* max-width: 300px; */
-    max-width: 200px;
-    padding  : 1rem;
-    font-size: 1rem;
-    scale    : 1;
-  }
+  from {}
 
   to {
-    /* transform: translateY(164px); */
-
-    /* max-width: 0px;
-    width    : 0;
-    height   : 0;
-    padding  : 0;
-    font-size: 0; */
-    width    : 0;
-    height   : 0;
-    padding  : 0;
-    font-size: 0;
-    scale    : 0;
+    scale: 0;
   }
 }
 
-@keyframes LoadingToastClose {
+@keyframes cancelDeleteToast {
   from {
-    transform   : translateY(0px);  
+    transform: translateY(0px);
     max-width: 300px;
-padding  : 1rem;
-font-size: 1rem;
-    /* max-width: 300px; */
-
-    /* max-width: 300px;
     padding  : 1rem;
     font-size: 1rem;
-    scale: 1; */
   }
 
   to {
-    transform: translateY(164px); 
-
-    /* max-width: 0px;
-    width    : 0;
-    height   : 0;
-    padding  : 0;
-    font-size: 0; */
-
-    /* width:0;
-    height:0;
-    padding:0;
-    font-size: 0;
-    scale: 0; */
+    transform: translateY(164px);
     max-width: 0px;
     padding  : 0;
     font-size: 0;
+  }
+}
+
+
+@keyframes LoadingToastOpen {
+  from {
+    max-width    : 300px;
+    border-radius: .5rem;
+
+  }
+
+  to {
+    max-width    : 200px;
+    border-radius: 1rem;
+
   }
 }
 
 @keyframes enterDeleteToast {
   from {
-    transform: translateY(164px);
+    transform   : translateY(164px);
     /* transform: rotateY(180deg); */
-    max-width: 0px;
-    padding  : 0;
-    font-size: 0;
+    max-width   : 0px;
+    padding     : 0;
+    font-size   : 0;
   }
 
   to {
-    transform: translateY(0);
+    transform   : translateY(0);
     /* transform: rotateY(0deg); */
-    max-width: 300px;
-    padding  : 1rem;
-    font-size: 1rem;
+    max-width   : 300px;
+    padding     : 1rem;
+    font-size   : 1rem;
   }
 }
-
-/* .open { */
-/* height:70px; */
-/* opacity           : 1; */
-/* background-color: rebeccapurple; */
-/*animation       : fadeOut .4s ease; */
-/* } */
 
 html[theme="dark"] .react-loading-skeleton {
   --base-color     : #171717 !important;
   --highlight-color: #ffffff08 !important;
 }
 
-@keyframes open {
+@keyframes enterTools {
   from {
-    opacity         : 0;
-    scale           : .8;
-    transform       : translateY(-20px);
-    /* transition   : all .2s ease; */
-    /* visibility   : hidden; */
+    opacity  : 0;
+    scale    : .8;
+    transform: translateY(-20px);
   }
 
   to {
-    opacity         : 1;
-    /* transition   : all .3s ease; */
-    /* visibility   : visible; */
+    opacity: 1;
   }
 }
 
@@ -295,19 +265,12 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .selectionContainer {
-  position          : relative;
-  /* top            : -54px;
-  right             : -300px; */
-  /* transition     : all 1s ease; */
-  height            : 50px;
-  width             : 100%;
-  display           : flex;
-  justify-content   : flex-end;
-  align-items       : center;
-  /* inset          :0; */
-  /* width          : 30%;
-  height            : 10px; */
-  /* outline        : 2px solid red; */
+  position       : relative;
+  height         : 50px;
+  width          : 100%;
+  display        : flex;
+  justify-content: flex-end;
+  align-items    : center;
 }
 
 .selectionContainer>button {
@@ -319,31 +282,6 @@ html[theme="dark"] .react-loading-skeleton {
   border             : 0;
   cursor             : pointer;
 }
-
-
-/* @keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    display: none;
-     visibility: hidden;
-  }
-} */
-/* .fadeIn {
-  animation: fadeIn .4s ease;
-}
-*/
-/* @keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}  */
-/* .selectModal div :nth-child(1) {} */
 
 .header-image,
 .profile,
@@ -416,7 +354,6 @@ html[theme="dark"] .react-loading-skeleton {
   user-select           : none;
   font-size             : 1rem;
   margin                : 0 5px;
-  /* font-size          : 100%; */
 }
 
 .selectModal button:active {
@@ -440,17 +377,16 @@ html[theme="dark"] .react-loading-skeleton {
 
 .editModal,
 .closeConfirmModal {
-  outline                        : 0;
-  /* width                       : 400px; */
-  width                          : 420px;
-  max-width                      : 92vw;
-  position                       : fixed;
-  top                            : 50%;
-  left                           : 50%;
-  transform                      : translate(-50%, -50%);
-  border                         : 0;
-  animation                      : fadeIn .2s ease-in;
-  overflow                       : auto;
+  outline  : 0;
+  width    : 420px;
+  max-width: 92vw;
+  position : fixed;
+  top      : 50%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+  border   : 0;
+  animation: fadeIn .2s ease-in;
+  overflow : auto;
 }
 
 .closeConfirmModal {
@@ -473,8 +409,7 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 li.todo {
-  animation : fadeIn .35s ease-in;
-  /* display: none; */
+  animation: fadeIn .35s ease-in;
 }
 
 @keyframes fadeIn {
@@ -721,11 +656,23 @@ ul li {
   bottom            : 5%;
   left              : 50%;
   transform         : translate(-50%);
+  /* border         : 3px solid; */
   /* margin-top     : 1.4em; */
+  padding           : 0 1.5rem;
+}
+
+.nav form {
+  display           : flex;
+  justify-content   : center;
+  align-items       : center;
+  /* border         : 3px solid red; */
+  width             : 100vw;
+  max-width         : 400px;
+  gap               : .5rem;
 }
 
 .add-btn-parent {
-  position           : absolute;
+  /* position           : absolute; */
   right              : 5%;
   /* right           : 0; */
   bottom             : 0;
@@ -753,14 +700,17 @@ ul li {
 } */
 
 .input-text {
-  border          : 1px solid rgba(0, 0, 0, 0.2);
-  background-color: var(--background-gray);
-  border-radius   : 5px;
-  padding         : 0.5em;
-  width           : 290px;
+  border             : 1px solid rgba(0, 0, 0, 0.2);
+  background-color   : var(--background-gray);
+  border-radius      : 5px;
+  padding            : 0.5em;
+  width              : 228px;
+  /* max-width       : 132px; */
+  /* max-width       : 200px; */
+  font-size          : 1rem;
+  /* width           : 290px; */
 }
 
-/* tools  */
 .tools {
   min-width             : 160px;
   position              : absolute;
