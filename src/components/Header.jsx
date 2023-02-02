@@ -50,7 +50,7 @@ export default function Header(props) {
   };
   return (
     <>
-      <header style={{ paddingTop: selecting ? "2.2rem" : "" }}>
+      <header style={{ paddingTop: selecting ? "2rem" : "" }}>
         {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
         <div className="header-text">
           <h1>My tasks</h1>

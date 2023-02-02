@@ -531,7 +531,7 @@ ul li {
   overflow-wrap: break-word;
 }
 
-.todo::after {
+.todo:not(:last-child)::after {
   content         : "";
   position        : absolute;
   left            : 0;
@@ -539,15 +539,26 @@ ul li {
   bottom          : -35%;
   bottom          : -15px;
   height          : 1px;
-  background-color: rgb(139, 139, 139);
+  background-color: rgb(128, 128, 128);
+  /* background-color: rgb(226, 14, 14); */
   opacity         : 0.2;
 }
+/* .todo:last-child::after {
+  display: none;
+} */
 
 .todo-parent {
-  text-align: center;
-  height    : 432px;
-  overflow-y: auto;
-  display   : block;
+  text-align      : center;
+  /* height       : 432px; */
+  /* height       : 540px; */
+  height          : 520px;
+  height          : 419px;
+  height          : 65vh;
+  height          : 72vh;
+  padding-bottom: 3rem;
+  min-height      : 400px;
+  overflow-y      : auto;
+  display         : block;
 }
 
 .todo-checkbox {
@@ -650,15 +661,20 @@ ul li {
   /* width          : 100%; */
   width             : 100vw;
   max-width         : 500px;
-  height            : 9vh;
+  /* height            : 9vh; */
+  /* height            : 15vh; */
+  height            : 14vh;
   /* position       : relative; */
   position          : fixed;
   bottom            : 5%;
+  bottom            : 0;
   left              : 50%;
   transform         : translate(-50%);
   /* border         : 3px solid; */
   /* margin-top     : 1.4em; */
   padding           : 0 1.5rem;
+  z-index           : 20000;
+  background-image  : linear-gradient(180deg, rgba(255, 255, 255, 0) 13.94%, var(--background-primary) 54.73%);
 }
 
 .nav form {
