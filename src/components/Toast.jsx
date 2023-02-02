@@ -5,22 +5,60 @@ import s from "../styles/Toast.module.css";
 import { deleteTodo } from "../utils/todo";
 
 function ToastItem(props) {
+  const enterDeleteToast = {
+    transformStyle: "preserve-3d",
+    animation: "enterDeleteToast .4s ease-in-out",
+  };
+  const exitDeleteToast = {
+    animation: "exitDeleteToast .4s ease-in-out",
+  };
+  const LoadingToastClose = {
+    animation: "LoadingToastClose .4s ease-in-out",
+  };
+  const LoadingToastOpen = {
+    maxWidth: "200px",
+  };
   function handleUndo() {
     props.setcanDelete(false);
     // setcanDelete(true);
     // props.setopenDeleteToast(false);
+
+    // if(!props.openDeleteToast){
+    // props.setToastMounted(false);
+    // }
   }
   return (
     <div
-      style={{
-        backgroundColor: props.deleteloading
-          ? "rgba(224, 17, 17, 0.836)"
-          : "red",
-        maxWidth: props.deleteloading ? "300px" : "100px",
-        borderRadius: props.deleteloading ? ".5rem" : "2rem",
+      onAnimationEnd={() => {
+        if (!props.openDeleteToast) {
+          props.setToastMounted(false);
+        }
       }}
-      open={props.openDeleteToast}
+      style={
+        props.openDeleteToast
+          ? props.deleteloading ? enterDeleteToast : LoadingToastOpen
+          : props.deleteloading ? LoadingToastClose : exitDeleteToast
+        // props.deleteloading
+        //   ? props.deleteloading
+        //     ? LoadingToastClose
+        //     : LoadingToastOpen
+        //   : !props.openDeleteToast
+        //   ? exitDeleteToast
+        //   : enterDeleteToast
+
+        // !props.deleteloading ? loadingToast : LoadingToast
+        // {
+        // backgroundColor: props.deleteloading
+        //   ? "rgba(224, 17, 17, 0.836)"
+        //   : "red",
+        // maxWidth: props.deleteloading ? "300px" : "100px",
+        // borderRadius: props.deleteloading ? ".5rem" : "2rem",
+
+        // }
+      }
+      // open={props.openDeleteToast}
       className={s.toast}
+      // className={`${!props.deleteloading ? s.loading : s.toast} `}
     >
       {/* {props.counter === 5 && props.canDelete && <p>deleting...</p>} */}
       {props.deleteloading ? (
@@ -29,6 +67,7 @@ function ToastItem(props) {
             Deleting {!props.deleteloading ? `... ` : `in ${props.counter}s`}
           </p>
           <button onClick={handleUndo} className={s.undoBtn}>
+            {/* <a>Undo</a> */}
             Undo
           </button>
         </>
@@ -51,6 +90,8 @@ function ToastItem(props) {
 
 export default function Toast(props) {
   const {
+    ToastMounted,
+    setToastMounted,
     SelectedID,
     todoRef,
     setloading,
@@ -68,19 +109,21 @@ export default function Toast(props) {
   useEffect(() => {
     let deleteTime;
 
-    if (openDeleteToast === false) {
+    if (ToastMounted === false) {
       setcanDelete(true);
     }
-    if (openDeleteToast) {
+    if (ToastMounted) {
       if (canDelete === false) {
         console.log("fale and cancel delect");
         setopenDeleteToast(false);
+        // setToastMounted(false)
         clearTimeout(deleteTime);
         clearSelect();
         setisPrevent(false);
       }
       deleteTime = setTimeout(
         deleteTodo(
+          setToastMounted,
           setcanDelete,
           canDelete,
           setcounter,
@@ -96,7 +139,7 @@ export default function Toast(props) {
       );
     }
     return () => clearTimeout(deleteTime);
-  }, [canDelete, openDeleteToast]);
+  }, [canDelete, ToastMounted]);
   // useEffect(() => {
   //   const timeout =
   //     counter < 1 &&
@@ -110,17 +153,20 @@ export default function Toast(props) {
 
   return (
     <div
-      style={{ visibility: openDeleteToast ? "visible" : "hidden" }}
+      style={{ visibility: ToastMounted ? "visible" : "hidden" }}
       className={s.toastContainer}
     >
-      <ToastItem
-        canDelete={canDelete}
-        setcanDelete={setcanDelete}
-        counter={counter}
-        setopenDeleteToast={setopenDeleteToast}
-        openDeleteToast={openDeleteToast}
-        deleteloading={deleteloading}
-      ></ToastItem>
+      {ToastMounted && (
+        <ToastItem
+          setToastMounted={setToastMounted}
+          canDelete={canDelete}
+          setcanDelete={setcanDelete}
+          counter={counter}
+          setopenDeleteToast={setopenDeleteToast}
+          openDeleteToast={openDeleteToast}
+          deleteloading={deleteloading}
+        ></ToastItem>
+      )}
     </div>
   );
 }

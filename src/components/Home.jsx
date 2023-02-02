@@ -45,6 +45,8 @@ export default function Home() {
   const [openDeleteToast, setopenDeleteToast] = useState(false);
   const [canDelete, setcanDelete] = useState(true);
   const [counter, setcounter] = useState(5);
+  const [ToastMounted, setToastMounted] = useState(false);
+
   // const deleteHandle = useCallback(
   // let timeout;
   useEffect(() => {
@@ -74,11 +76,13 @@ export default function Home() {
   //   }
   // }, [canDelete]);
   // deleteloading === false && clearInterval(timeout);
-  const deleteHandle = ()=>{
-    setopenDeleteToast(true)
-    setloading(true)
+  const deleteHandle = () => {
+    setopenDeleteToast(true);
+    setToastMounted(true);
+    setloading(true);
     let deleteTime;
-    console.log(canDelete);
+    // console.log(canDelete);
+
     // if(canDelete === false){
     //   clearTimeout(deleteTime);
     // }else{
@@ -98,7 +102,7 @@ export default function Home() {
     //     ), 5000);
 
     // }
-  }
+  };
 
   //   [SelectedID]
   // );
@@ -141,6 +145,8 @@ export default function Home() {
   return (
     <main>
       <Toast
+        setToastMounted={setToastMounted}
+        ToastMounted={ToastMounted}
         SelectedID={SelectedID}
         todoRef={todoRef}
         clearSelect={clearSelect}

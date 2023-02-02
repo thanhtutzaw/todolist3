@@ -41,7 +41,6 @@ export default function SelectModal(props) {
         <button
           onClick={(e) => {
             e.stopPropagation();
-
             if (
               window.confirm(
                 `Are you sure you wish to delete ${

@@ -12,35 +12,100 @@
     align-items        : center;
 }
 
-.toast[open] {
-    transform       : translateY(0);
-    background-color: rgba(124, 9, 9, 0.514);
-}
+/* .toast[open] { */
+/* transform: translateY(0px); */
+/* transform       : translateY(0);
+    background-color   : rgba(124, 9, 9, 0.514); */
+/* } */
+
+
+
+
+
+
 
 .toast {
-    position           : absolute;
-    max-width          : 300px;
-    min-width          : 200px;
-    inset              : 0;
-    margin             : 0 auto;
-    top                : 85%;
-    /* top             :65%; */
-    background-color   : red;
-    color              : white;
-    padding            : 0.5rem;
-    border-radius      : 0.5rem;
-    display            : flex;
-    flex               : 1;
-    align-items        : center;
-    /* position        : relative;
-    bottom             : -647px; */
-    height             : 66px;
-    font-size          : 1rem;
-    transform          : translateY(164px);
-    transition         : all .4s ease-in-out;
-    padding            : 1rem;
+    position                       : absolute;
+    /* max-width                   : 300px;
+    min-width                      : 200px; */
+    inset                          : 0;
+    margin                         : 0 auto;
+    top                            : 85%;
+    /* top                         :65%; */
+    background-color               : red;
+    background-color               : rgba(223, 16, 16, 0.884);
+    /* background-color               : rgba(231, 36, 36, 0.63); */
+    backdrop-filter: blur(20px);
+    color                          : white;
+    /* padding                     : 0.5rem; */
+    border-radius                  : .5rem;
+    display                        : flex;
+    flex                           : 1;
+    align-items                    : center;
+    /* position                    : relative;
+    bottom                         : -647px; */
+    height                         : 66px;
+    font-size                      : 1rem;
+    /* transform                   : translateY(164px); */
+    /* transition                  : all .3s ease-in-out; */
+
+    /* transition         : all .4s ease-in-out; */
+    /* transition            : all .5s cubic-bezier(1, 0.05, 0.2, 0.71); */
+    padding: 1rem;
+
+    /* transform: translateY(164px); */
 
 }
+
+.loading {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin         : auto 0;
+    margin         : auto;
+
+    position                        : absolute;
+    max-width                       : 100px;
+    min-width                       : 200px;
+    inset                           : 0;
+    margin                          : 0 auto;
+    top                             : 85%;
+    /* top                          :65%; */
+    background-color                : red;
+    color                           : white;
+    padding                         : 0.5rem;
+    border-radius                   : 0.5rem;
+    display                         : flex;
+    flex                            : 1;
+    align-items                     : center;
+    /* position                     : relative;
+    bottom                          : -647px; */
+    height                          : 66px;
+    font-size                       : 1rem;
+
+    /* transform                    : translateY(164px); */
+    /* transition                   : all .3s ease-in-out; */
+
+    /* transition         : all .4s ease-in-out; */
+    /* transition            : all .5s cubic-bezier(1, 0.05, 0.2, 0.71); */
+    padding: 1rem;
+}
+
+.toast>p {
+    /* border: 3px solid blue; */
+    /* position: relative; */
+}
+
+/* @keyframes exitDeleteToast {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(164px);
+    }
+}
+*/
 
 .toast {
     display        : flex;
@@ -48,6 +113,7 @@
     align-items    : center;
     margin         : auto 0;
     margin         : auto;
+    overflow: hidden;
 }
 
 .undoBtn {
@@ -55,11 +121,13 @@
     padding         : .5rem;
     color           : white;
     border          : 1px solid white;
+    border:0;
     border-radius   : .5rem;
 }
 
 .undoBtn:hover {
-    background-color: rgb(180, 180, 180);
-    padding         : .5rem;
-    color           : black;
+    text-decoration: underline;
+    /* background-color: rgb(180, 180, 180); */
+
+    /* color           : black; */
 }

@@ -66,7 +66,10 @@ header {
 }
 
 header,
-.editModalActions {
+.editModalActions,
+.closeSelectBtn,
+.edit,
+.delete {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -90,7 +93,7 @@ header,
 .selectModal {
   background-color               : rgb(9, 184, 253);
   background-color               : var(--main-color);
-  padding                        : 0 2rem;
+  padding                        : 0 1.4rem;
   position                       : absolute;
   inset                          : 0;
   max-width                      : 500px;
@@ -103,8 +106,9 @@ header,
   /* transition                  : all .3s ease-in-out; */
   box-shadow                     : 0 1px 2px 0 rgb(60 64 67 / 30%),
     0 2px 6px 2px rgb(60 64 67 / 15%);
-  z-index: 10000;
+  z-index  : 10000;
   font-size: 1rem;
+  font-size: 24px;
 }
 
 .loading {
@@ -117,10 +121,11 @@ header,
 }
 
 .close {
-  opacity   : 0;
-  scale     : .8;
-  transform : translateY(-20px);
-  visibility: hidden;
+  opacity            : 0;
+  visibility         : hidden;
+  scale              : .8;
+  transform          : translateY(-20px);
+  /* background-color: yellowgreen; */
 }
 
 @keyframes close {
@@ -175,11 +180,90 @@ header,
   }
 }
 
-.open {
-  /* height:70px; */
-  opacity         : 1;
-  /*animation       : fadeOut .4s ease; */
+@keyframes exitDeleteToast {
+  from {
+    /* transform: translateY(0px); */
+    /* max-width: 300px; */
+    max-width: 200px;
+    padding  : 1rem;
+    font-size: 1rem;
+    scale    : 1;
+  }
+
+  to {
+    /* transform: translateY(164px); */
+
+    /* max-width: 0px;
+    width    : 0;
+    height   : 0;
+    padding  : 0;
+    font-size: 0; */
+    width    : 0;
+    height   : 0;
+    padding  : 0;
+    font-size: 0;
+    scale    : 0;
+  }
 }
+
+@keyframes LoadingToastClose {
+  from {
+    transform   : translateY(0px);  
+    max-width: 300px;
+padding  : 1rem;
+font-size: 1rem;
+    /* max-width: 300px; */
+
+    /* max-width: 300px;
+    padding  : 1rem;
+    font-size: 1rem;
+    scale: 1; */
+  }
+
+  to {
+    transform: translateY(164px); 
+
+    /* max-width: 0px;
+    width    : 0;
+    height   : 0;
+    padding  : 0;
+    font-size: 0; */
+
+    /* width:0;
+    height:0;
+    padding:0;
+    font-size: 0;
+    scale: 0; */
+    max-width: 0px;
+    padding  : 0;
+    font-size: 0;
+  }
+}
+
+@keyframes enterDeleteToast {
+  from {
+    transform: translateY(164px);
+    /* transform: rotateY(180deg); */
+    max-width: 0px;
+    padding  : 0;
+    font-size: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    /* transform: rotateY(0deg); */
+    max-width: 300px;
+    padding  : 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* .open { */
+/* height:70px; */
+/* opacity           : 1; */
+/* background-color: rebeccapurple; */
+/*animation       : fadeOut .4s ease; */
+/* } */
 
 html[theme="dark"] .react-loading-skeleton {
   --base-color     : #171717 !important;
@@ -207,7 +291,7 @@ html[theme="dark"] .react-loading-skeleton {
   margin-top : -6px;
   cursor     : default;
   user-select: none;
-  color: white;
+  color      : white;
 }
 
 .selectionContainer {
@@ -270,11 +354,21 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .closeSelectBtn {
-  transition: stroke .1s ease;
+  transition      : stroke .1s ease;
+  background-color: #ffffff00;
+  border-radius   : 50%;
+  width           : 35px;
+  height          : 35px;
+  padding         : 6px;
+  border          : 0;
+  transition      : all .1s ease;
+}
+
+.closeSelectBtn:active {
+  background-color: #ffffff4a;
 }
 
 .edit {
-  /* color: rgb(9, 184, 253); */
   color: var(--btn-text-primary);
 }
 
@@ -284,15 +378,14 @@ html[theme="dark"] .react-loading-skeleton {
 
 .btn.discardBtn,
 .btn.continueBtn {
-  padding         : .5rem .3rem;
-  border          : 0;
-  border-radius   : .5rem;
-  /* font-size    : 100%; */
-  font-size       : 18px;
-  min-width       : 100px;
-  cursor          : pointer;
-  user-select     : none;
-  margin          : 0 5px;
+  padding      : .5rem .3rem;
+  border       : 0;
+  border-radius: .5rem;
+  font-size    : 18px;
+  min-width    : 100px;
+  cursor       : pointer;
+  user-select  : none;
+  margin       : 0 5px;
 
 }
 
@@ -305,22 +398,29 @@ html[theme="dark"] .react-loading-skeleton {
 .btn.discardBtn {}
 
 .selectModal div {
-  display       : flex;
-  align-items   : center;
-  gap           : .7rem;
-  /* font-size  : 24px; */
-  /* font-size  : 22px; */
+  display          : flex;
+  align-items      : center;
+  gap              : 5px;
+  /* gap           : .7rem; */
+  /* font-size     : 24px; */
+  /* font-size     : 22px; */
 }
 
 .selectModal button {
-  border             : none;
-  /* background-color: rgb(240, 63, 63); */
-  padding            : 12px 11px;
-  background-color   : var(--background-primary);
-  border-radius      : 15px;
-  cursor             : pointer;
-  user-select        : none;
+  border                : none;
+  /* background-color   : rgb(240, 63, 63); */
+  padding               : 12px 11px;
+  background-color      : var(--background-primary);
+  border-radius         : 15px;
+  cursor                : pointer;
+  user-select           : none;
+  font-size             : 1rem;
+  margin                : 0 5px;
   /* font-size          : 100%; */
+}
+
+.selectModal button:active {
+  background-color: rgba(255 255 255 / .8);
 }
 
 .disabled {
@@ -641,9 +741,10 @@ ul li {
   justify-content    : center;
   align-items        : center;
   box-shadow         : 0px 3px 10px rgba(0, 0, 0, 0.4);
-  color:white;
+  color              : white;
 }
-.add-btn-parent>svg{
+
+.add-btn-parent>svg {
   stroke-width: 1;
 }
 
@@ -671,7 +772,7 @@ ul li {
   border-radius         : 8px;
   /* box-shadow         : 0px 5px 12px 0px rgb(0 0 1 / 32%); */
   box-shadow            : var(--shadow-primary);
-  font-size: 1rem;
+  font-size             : 1rem;
 }
 
 .tools-container {

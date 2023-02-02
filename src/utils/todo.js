@@ -40,7 +40,7 @@ export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
         }
     };
 }
-export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
+export function deleteTodo(setToastMounted,setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
     return async () => {
         console.info("%cDeleting...", "color:grey");
         setloading(true)
@@ -81,6 +81,7 @@ export function deleteTodo(setcanDelete, canDelete, counter, setcounter, setopen
                 await batch.commit();
                 console.info("%cDeleted !", "color: green");
                 setTimeout(async () => {
+                    // setToastMounted(false)
                     setopenDeleteToast(false)
                     console.log("close Toast")
                     setcanDelete(true) 

@@ -45,8 +45,8 @@ export default function Header(props) {
   const handleTools = () => {
     if (!mounted) setmounted(true);
     setopentools((prevstate) => !prevstate);
-    console.log({ mounted });
-    console.log({ opentools });
+    // console.log({ mounted });
+    // console.log({ opentools });
   };
   return (
     <>
