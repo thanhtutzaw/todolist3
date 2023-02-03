@@ -120,7 +120,7 @@ export default function Home() {
   const selecting = selectCount && SelectedID.length !== 0;
 
   const mountStyle = {
-    animation: "selectMount 180ms ease",
+    animation: "selectMount 200ms ease-in",
   };
   const unmountStyle = {
     animation: "selectUnmount 250ms ease-out",

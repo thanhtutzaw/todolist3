@@ -149,15 +149,17 @@ header,
 @keyframes selectMount {
   from {
     opacity: 0;
-    scale  : 0;
-    height : 0px;
+    /* scale  : 0;
+    height : 0px; */
+
     /* border-radius: 1rem; */
   }
   
   to {
     opacity: 1;
-    scale  : 1;
-    height : 70px;
+    /* scale  : 1;
+    height : 70px; */
+
     /* border-radius: 0; */
   }
 }
@@ -165,15 +167,15 @@ header,
 @keyframes selectUnmount {
   from {
     opacity: 1;
-    scale  : 1;
-    height : 70px;
+    /* scale  : 1;
+    height : 70px; */
   }
 
   to {
     opacity      : 0;
-    scale        : .8;
-    height       : 54px;
-    border-radius: 1rem;
+    /* scale        : .8;
+    height       : 54px; */
+    /* border-radius: 1rem; */
   }
 }
 
@@ -340,7 +342,7 @@ html[theme="dark"] .react-loading-skeleton {
 
 }
 
-.btn.discardBtn {}
+/* .btn.discardBtn {} */
 
 .selectModal div {
   display          : flex;
@@ -392,7 +394,7 @@ html[theme="dark"] .react-loading-skeleton {
   left     : 50%;
   transform: translate(-50%, -50%);
   border   : 0;
-  animation: fadeIn .2s ease-in;
+  animation: fadeIn .3s ease-in-out;
   overflow : auto;
 }
 
@@ -441,7 +443,7 @@ li.todo {
   backdrop-filter : blur(16px);
   margin          : 0 auto;
   max-width       : 500px;
-  transition      : all .3s ease-in-out;
+  /* transition      : all .2s ease-in-out; */
   animation       : fadeIn .2s ease-in;
 }
 
