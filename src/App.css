@@ -654,37 +654,32 @@ ul li {
 }
 
 .nav {
-  display           : flex;
-  gap               : 3em;
-  justify-content   : center;
-  align-items       : center;
-  /* width          : 100%; */
-  width             : 100vw;
-  max-width         : 500px;
-  /* height            : 9vh; */
-  /* height            : 15vh; */
-  height            : 14vh;
-  /* position       : relative; */
-  position          : fixed;
-  bottom            : 5%;
-  bottom            : 0;
-  left              : 50%;
-  transform         : translate(-50%);
-  /* border         : 3px solid; */
-  /* margin-top     : 1.4em; */
-  padding           : 0 1.5rem;
-  z-index           : 20000;
+  width: 100vw;
+    display: flex;
+    gap: 3em;
+    justify-content: center;
+    align-items: center;
+    /* width: 100vw; */
+    max-width: 500px;
+    height: 14vh;
+    position: fixed;
+    bottom: 5%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 0 1.5rem;
+    z-index: 20000;
   background-image  : linear-gradient(180deg, rgba(255, 255, 255, 0) 13.94%, var(--background-primary) 54.73%);
 }
 
 .nav form {
-  display           : flex;
-  justify-content   : center;
-  align-items       : center;
-  /* border         : 3px solid red; */
-  width             : 100vw;
-  max-width         : 400px;
-  gap               : .5rem;
+    display        : flex;
+    flex           : 1;
+    justify-content: center;
+    align-items    : center;
+    /* width       : 100vw; */
+    /* max-width   : 323px; */
+    gap            : 0.5rem;
 }
 
 .add-btn-parent {
@@ -716,15 +711,15 @@ ul li {
 } */
 
 .input-text {
-  border             : 1px solid rgba(0, 0, 0, 0.2);
-  background-color   : var(--background-gray);
-  border-radius      : 5px;
-  padding            : 0.5em;
-  width              : 228px;
-  /* max-width       : 132px; */
-  /* max-width       : 200px; */
-  font-size          : 1rem;
-  /* width           : 290px; */
+    border          : 1px solid rgba(0, 0, 0, .2);
+    background-color: var(--background-gray);
+    border-radius   : 5px;
+    padding         : 0.5em;
+    /* width        : 228px; */
+    font-size       : 1rem;
+    /* display      : flex; */
+    flex            : 1;
+    width           : 100%;
 }
 
 .tools {
