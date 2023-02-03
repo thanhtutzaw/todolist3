@@ -8,7 +8,7 @@ export const HeaderDropDown = (props) => {
   };
   const exitTools = {
     animation: "exitTools 150ms ease-out",
-    animationFillMode: "forwards",
+    // animationFillMode: "forwards",
   };
   return (
     <div

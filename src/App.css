@@ -148,17 +148,17 @@ header,
 
 @keyframes selectMount {
   from {
-    opacity: 0;
+    opacity   : 0;
     /* scale  : 0;
-    height : 0px; */
+    height    : 0px; */
 
     /* border-radius: 1rem; */
   }
-  
+
   to {
-    opacity: 1;
+    opacity   : 1;
     /* scale  : 1;
-    height : 70px; */
+    height    : 70px; */
 
     /* border-radius: 0; */
   }
@@ -166,15 +166,15 @@ header,
 
 @keyframes selectUnmount {
   from {
-    opacity: 1;
+    opacity   : 1;
     /* scale  : 1;
-    height : 70px; */
+    height    : 70px; */
   }
 
   to {
-    opacity      : 0;
+    opacity         : 0;
     /* scale        : .8;
-    height       : 54px; */
+    height          : 54px; */
     /* border-radius: 1rem; */
   }
 }
@@ -244,12 +244,13 @@ html[theme="dark"] .react-loading-skeleton {
 @keyframes enterTools {
   from {
     opacity     : 0;
-    scale: .5;
-    transform: translateY(-40px);
+    scale       : .5;
+    /* transform: translateY(-40px); */
+    transform   : translateY(-80px);
   }
 
   to {
-    opacity : 1;
+    opacity: 1;
   }
 }
 
@@ -439,12 +440,12 @@ li.todo {
 
 #editModal::backdrop,
 .deleteModal::backdrop {
-  background-color: rgba(0, 0, 1, 0.281);
-  backdrop-filter : blur(16px);
-  margin          : 0 auto;
-  max-width       : 500px;
+  background-color   : rgba(0, 0, 1, 0.281);
+  backdrop-filter    : blur(16px);
+  margin             : 0 auto;
+  max-width          : 500px;
   /* transition      : all .2s ease-in-out; */
-  animation       : fadeIn .2s ease-in;
+  animation          : fadeIn .2s ease-in;
 }
 
 #confirmModal::backdrop {
@@ -744,10 +745,10 @@ ul li {
   /* box-shadow         : 0px 5px 12px 0px rgb(0 0 1 / 32%); */
   box-shadow            : var(--shadow-primary);
   font-size             : 1rem;
-
-  will-change: opacity;
-  will-change: transform;
-  will-change: scale;
+  transform-origin      : right;
+  will-change           : opacity;
+  will-change           : transform;
+  will-change           : scale;
 }
 
 .tools-container {
@@ -764,14 +765,15 @@ ul li {
 
 .setting-item,
 .delete-parent {
-  display        : flex;
-  justify-content: center;
-  align-items    : center;
-  padding        : 9px 13px;
-  display        : flex;
-  justify-content: flex-start;
-  align-items    : center;
-  gap            : 6px;
+  display                    : flex;
+  justify-content            : center;
+  align-items                : center;
+  padding                    : 9px 13px;
+  display                    : flex;
+  justify-content            : flex-start;
+  align-items                : center;
+  gap                        : 6px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .setting-item:hover,
