@@ -95,8 +95,8 @@ main>a>button {
   max-width          : 92vw;
   margin             : 0 auto;
   border             : 1px solid rgba(236, 236, 236, 0.493);
-  will-change: transform;
-  will-change: opacity;
+  will-change        : transform;
+  will-change        : opacity;
 
   z-index         : 2000000000;
   backdrop-filter : blur(8px);
@@ -343,19 +343,19 @@ html[theme="dark"] .react-loading-skeleton {
     transform: rotate3d(1, 1, 1, 0deg);
   }
 
-  20% {
+  /* 20% {
     opacity: 1;
     scale  : 1.2;
   }
 
-  70% {
+  50% {
     opacity: 1;
     scale  : .4;
-  }
+  } */
 
   100% {
     opacity  : 0;
-    scale    : .4;
+    scale    : .35;
     transform: rotate3d(1, 1, 1, -250deg);
   }
 }
@@ -541,14 +541,16 @@ li.todo {
 }
 
 .editModalActions {
-  display        : flex;
-  justify-content: flex-end;
-  flex           : 1;
-  gap            : 1rem;
-  position       : fixed;
-  bottom         : 20px;
-  right          : 20px;
-  width          : 100%;
+  display           : flex;
+  justify-content   : flex-end;
+  flex              : 1;
+  gap               : 1rem;
+  position          : fixed;
+  /* bottom         : 20px; */
+  bottom            : 0;
+  margin            : 10px 0;
+  right             : 20px;
+  width             : 100%;
 
 }
 

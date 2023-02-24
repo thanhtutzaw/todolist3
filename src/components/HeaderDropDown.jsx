@@ -10,7 +10,7 @@ export const HeaderDropDown = (props) => {
   
   };
   const exitTools = {
-    animation: "exitTools 500ms ease-out",
+    animation: "exitTools 520ms ease-in",
   
   };
   return (
