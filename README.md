@@ -2,7 +2,7 @@
 
 Project is created with:
 * React
-* Google Sign-in with [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases)
+* Google Sign-in with [Firestore](https://github.com/thanhtutzaw/todolist3/blob/main/README.md#document-bases-databases)
 * [React-Icons](https://www.npmjs.com/package/react-icons)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 
