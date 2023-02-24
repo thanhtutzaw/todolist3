@@ -1,20 +1,24 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { onAuthStateChanged } from "firebase/auth";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { CgChevronRightR } from "react-icons/cg";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
+import useFireStoreData from "../hooks/useFireStoreData";
 import usePrevent from "../hooks/usePrevent.js";
 import useSelect from "../hooks/useSelect.js";
-import useFireStoreData from "../hooks/useFireStoreData";
-import { addTodo, deleteTodo } from "../utils/todo.js";
-import SelectModal from "./SelectModal";
-import BottomNav from "./BottomNav";
-// import EditModal from "./EditModal.jsx";
-import Header from "./Header";
-import Todolist from "./Todolist";
-import { useCallback } from "react";
 import { auth } from "../lib/firebase.js";
-import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { addTodo } from "../utils/todo.js";
+import BottomNav from "./BottomNav";
+import Header from "./Header";
+import SelectModal from "./SelectModal";
 import Toast from "./Toast.jsx";
+import Todolist from "./Todolist";
 const EditModal = React.lazy(() => import("./EditModal.jsx"));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -47,8 +51,6 @@ export default function Home() {
   const [counter, setcounter] = useState(5);
   const [ToastMounted, setToastMounted] = useState(false);
 
-  // const deleteHandle = useCallback(
-  // let timeout;
   useEffect(() => {
     const interval =
       counter > 1 &&
@@ -56,11 +58,7 @@ export default function Home() {
       openDeleteToast &&
       setInterval(() => {
         setcounter((counter) => counter - 1);
-        // console.log(counter);
       }, 1000);
-    // if(deleteloading === false && counter === 0){
-    //   clearInterval(interval)
-    // }
     if (canDelete === false) {
       clearInterval(interval);
       setcounter(5);
@@ -70,42 +68,14 @@ export default function Home() {
       clearInterval(interval);
     };
   }, [deleteloading, openDeleteToast, canDelete]);
-  // useEffect(() => {
-  //   if (canDelete === false) {
-  //     set;
-  //   }
-  // }, [canDelete]);
-  // deleteloading === false && clearInterval(timeout);
+
   const deleteHandle = () => {
     setopenDeleteToast(true);
     setToastMounted(true);
     setloading(true);
     let deleteTime;
-    // console.log(canDelete);
-
-    // if(canDelete === false){
-    //   clearTimeout(deleteTime);
-    // }else{
-    //   deleteTime = setTimeout(
-    //     deleteTodo(
-    //       // timeout,
-    //       setcanDelete,
-    //       canDelete,
-    //       setcounter,
-    //       counter,
-    //       setopenDeleteToast,
-    //       setloading,
-    //       setisPrevent,
-    //       clearSelect,
-    //       todoRef,
-    //       SelectedID
-    //     ), 5000);
-
-    // }
   };
 
-  //   [SelectedID]
-  // );
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -124,7 +94,6 @@ export default function Home() {
   };
   const unmountStyle = {
     animation: "selectUnmount 250ms ease-out",
-    // animationFillMode: "forwards",
   };
   const [mounted, setmounted] = useState(false);
   useEffect(() => {
@@ -145,6 +114,7 @@ export default function Home() {
   return (
     <main>
       <Toast
+      
         setToastMounted={setToastMounted}
         ToastMounted={ToastMounted}
         SelectedID={SelectedID}
@@ -160,7 +130,6 @@ export default function Home() {
         openDeleteToast={openDeleteToast}
         deleteloading={deleteloading}
       />
-      {/* <div style={{background:'rgba(100,100,100,.1)',position:'fixed',inset:'0',width:'100vw',height:'45vh',margin:'0 auto'}}>overlay</div> */}
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <button className="btn" type="button">
           <CgChevronRightR />
@@ -168,6 +137,7 @@ export default function Home() {
       </a>
       {mounted && (
         <SelectModal
+          deleteloading={deleteloading}
           todoRef={todoRef}
           setisPrevent={setisPrevent}
           clearSelect={clearSelect}
@@ -187,7 +157,6 @@ export default function Home() {
             if (e.target === dialog) {
               if (text !== todo.text) {
                 document.getElementById("confirmModal").showModal();
-                // setConfirmModal((prev) => !prev);
               } else {
                 closeHandle();
               }
@@ -224,9 +193,7 @@ export default function Home() {
       <section className={`todo-parent row`}>
         <ul ref={todoRef} style={{ userSelect: selectCount && "none" }}>
           <SkeletonTheme height="55px">
-            {/* {<Skeleton className={`loading ${!loading ? 'fadeOut' : ''}`} count={5} />} */}
-            {/* {<Skeleton className={"loading"} count={5} />} */}
-            {loading && <Skeleton className={"loading"} count={5} />}
+            {loading && <Skeleton className={"loading"} count={10} />}
           </SkeletonTheme>
           {!loading &&
             todos.map((todo, index) => (

@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useEffect, useRef, useState } from "react";
 import { auth, db } from "../lib/firebase";
-import CloseConfirmModal from "./CloseConfirmModal";
+import ConfirmModal from "./ConfirmModal";
 import UpdatingModal from "./UpdatingModal";
 
 export default function EditModal(props) {
@@ -62,10 +62,7 @@ export default function EditModal(props) {
   return (
     <>
       <dialog id="confirmModal">
-        <CloseConfirmModal
-          closeConfirm={closeConfirm}
-          closeHandle={closeHandle}
-        />
+        <ConfirmModal closeConfirm={closeConfirm} closeHandle={closeHandle} />
       </dialog>
       <dialog id="updating">
         <UpdatingModal />
@@ -85,7 +82,6 @@ export default function EditModal(props) {
         >
           <div className="editInput" ref={editInput}>
             <textarea
-              // enterKeyHint="done"
               style={{ userSelect: loading ? "none" : "unset" }}
               value={text}
               ref={inputRef}

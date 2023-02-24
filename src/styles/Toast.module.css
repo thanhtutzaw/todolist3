@@ -1,3 +1,5 @@
+@import url('var.css');
+
 .toastContainer {
     position           : fixed;
     /* background-color: rgba(0, 0, 255, 0.363); */
@@ -25,29 +27,29 @@
 
 
 .toast {
-    position                       : absolute;
-    /* max-width                   : 300px;
-    min-width                      : 200px; */
-    inset                          : 0;
-    margin                         : 0 auto;
-    top                            : 85%;
-    /* top                         :65%; */
-    background-color               : red;
-    background-color               : rgba(223, 16, 16, 0.884);
+    position                          : absolute;
+    /* max-width                      : 300px;
+    min-width                         : 200px; */
+    inset                             : 0;
+    margin                            : 0 auto;
+    top                               : 85%;
+    /* top                            :65%; */
+    background-color                  : red;
+    background-color                  : rgba(223, 16, 16, 0.884);
     /* background-color               : rgba(231, 36, 36, 0.63); */
-    backdrop-filter: blur(20px);
-    color                          : white;
-    /* padding                     : 0.5rem; */
-    border-radius                  : .5rem;
-    display                        : flex;
-    flex                           : 1;
-    align-items                    : center;
-    /* position                    : relative;
-    bottom                         : -647px; */
-    height                         : 66px;
-    font-size                      : 1rem;
-    /* transform                   : translateY(164px); */
-    /* transition                  : all .3s ease-in-out; */
+    backdrop-filter                   : blur(20px);
+    color                             : white;
+    /* padding                        : 0.5rem; */
+    border-radius                     : .5rem;
+    display                           : flex;
+    flex                              : 1;
+    align-items                       : center;
+    /* position                       : relative;
+    bottom                            : -647px; */
+    height                            : 66px;
+    font-size                         : 1rem;
+    /* transform                      : translateY(164px); */
+    /* transition                     : all .3s ease-in-out; */
 
     /* transition         : all .4s ease-in-out; */
     /* transition            : all .5s cubic-bezier(1, 0.05, 0.2, 0.71); */
@@ -113,7 +115,7 @@
     align-items    : center;
     margin         : auto 0;
     margin         : auto;
-    overflow: hidden;
+    overflow       : hidden;
 }
 
 .undoBtn {
@@ -121,12 +123,12 @@
     padding         : .5rem;
     color           : white;
     border          : 1px solid white;
-    border:0;
+    border          : 0;
     border-radius   : .5rem;
 }
 
 .undoBtn:hover {
-    text-decoration: underline;
+    text-decoration    : underline;
     /* background-color: rgb(180, 180, 180); */
 
     /* color           : black; */

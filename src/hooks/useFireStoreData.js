@@ -24,7 +24,6 @@ export default function useFireStoreData() {
             }
             else if (window.location.href = "/login") {
                 unsubscribe()
-                // console.log(window.location.href = "/login")
             }
         })
         return unsubscribe;

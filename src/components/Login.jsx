@@ -11,11 +11,6 @@ import { auth } from "../lib/firebase";
 export default function Login() {
   const navigate = useNavigate();
 
-  // const row = {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // };
   const btn = {
     padding: ".7rem",
     color: "white",
@@ -32,19 +27,6 @@ export default function Login() {
     wordBreak: "break-word",
     whiteSpace: "nowrap",
   };
-  useEffect(() => {
-    // if (localStorage.getItem("isUsersignin") === "true") {
-    //   navigate("/");
-    // } else {
-    //   navigate("/login");
-    // }
-    // auth.onAuthStateChanged((user) => {
-    //   if (user) {
-    //     navigate("/");
-    //     localStorage.setItem("isUsersignin", "true");
-    //   }
-    // });
-  }, []);
 
   const provider = new GoogleAuthProvider();
 

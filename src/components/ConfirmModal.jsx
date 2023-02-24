@@ -1,12 +1,12 @@
 import React from "react";
 
-export default function CloseConfirmModal(props) {
+export default function ConfirmModal(props) {
   const { closeHandle, closeConfirm } = props;
   return (
-    <div className="closeConfirmModal">
+    <div className="confirmModal">
       <p style={{ fontWeight: "500", fontSize: "22px" }}>Discard Changes ?</p>
       <div>
-        <button className="btn continueBtn" onClick={closeConfirm}>
+        <button className="btn keepEditingBtn" onClick={closeConfirm}>
           Keep editing
         </button>
         <button

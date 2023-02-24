@@ -5,16 +5,14 @@ export default function useIndexDB() {
     const [userName, setuserName] = useState();
     const [userphoto, setuserphoto] = useState(photo);
     useEffect(() => {
-        // get profile from firebase indexDb
         var request = window.indexedDB.open("firebaseLocalStorageDb", 1);
         request.onsuccess = function (e) {
             console.log("db initilalized");
             const indexDB = request.result;
-            getData(indexDB);
+            getDataFromIndexDB(indexDB);
         };
     }, []);
-    function getData(indexDB) {
-        // console.log("this is get data");
+    function getDataFromIndexDB(indexDB) {
         var transaction = indexDB.transaction(
             ["firebaseLocalStorage"],
             "readwrite"

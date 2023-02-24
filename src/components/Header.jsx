@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import useIndexDB from "../hooks/useIndexDB";
 import useTheme from "../hooks/useTheme";
 import { HeaderDropDown } from "./HeaderDropDown";
-// const HeaderDropDown = React.lazy(() => import("./HeaderDropDown"));
-// const renderLoader = () => <p>Loading...</p>;
 export default function Header(props) {
   const { selecting, todoLength } = props;
   const { userphoto, userName } = useIndexDB();
@@ -16,19 +14,6 @@ export default function Header(props) {
 
   const auth = getAuth();
   const user = auth.currentUser;
-
-  // const user = auth.currentUser
-
-  // let displayName;
-  // if(user){
-  //   displayName = user.displayName
-  // }
-
-  // const user = auth.currentUser
-  // let userName
-  // if(user){
-  //   userName = user.displayName
-  // }
 
   const navigate = useNavigate();
 
@@ -45,13 +30,10 @@ export default function Header(props) {
   const handleTools = () => {
     if (!mounted) setmounted(true);
     setopentools((prevstate) => !prevstate);
-    // console.log({ mounted });
-    // console.log({ opentools });
   };
   return (
     <>
       <header style={{ paddingTop: selecting ? "2rem" : "" }}>
-        {/* <header style={{ pointerEvents: selectCount && 'none' }}> */}
         <div className="header-text">
           <h1>My tasks</h1>
           <p className="header-nobold">
@@ -75,10 +57,8 @@ export default function Header(props) {
           )}
         </div>
       </header>
-      {/* <Suspense fallback={renderLoader()}> */}
       {mounted && (
         <HeaderDropDown
-          mounted={mounted}
           setmounted={setmounted}
           theme={theme}
           setTheme={setTheme}
@@ -87,7 +67,6 @@ export default function Header(props) {
           logoutHandle={logoutHandle}
         ></HeaderDropDown>
       )}
-      {/* </Suspense> */}
     </>
   );
 }

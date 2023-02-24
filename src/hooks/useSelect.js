@@ -7,10 +7,8 @@ export default function useSelect(todos) {
     function clearSelect() {
         setSelectedID([])
         setselectCount(false)
-        // setisPrevent(prev => !prev)
     }
     function selectAll() {
-        // todos.map(todo => setSelectedID(todo.id))
         const items = []
         for (let i = 0; i < todos.length; i++) {
             const id = todos[i].id

@@ -24,6 +24,7 @@ function ToastItem(props) {
   };
   function handleUndo() {
     props.setcanDelete(false);
+    props.setloading(false);
   }
   return (
     <div
@@ -40,25 +41,7 @@ function ToastItem(props) {
           : props.deleteloading
           ? cancelDeleteToast
           : exitDeleteToast
-        // props.deleteloading
-        //   ? props.deleteloading
-        //     ? cancelDeleteToast
-        //     : LoadingToastOpen
-        //   : !props.openDeleteToast
-        //   ? exitDeleteToast
-        //   : enterDeleteToast
-
-        // !props.deleteloading ? loadingToast : LoadingToast
-        // {
-        // backgroundColor: props.deleteloading
-        //   ? "rgba(224, 17, 17, 0.836)"
-        //   : "red",
-        // maxWidth: props.deleteloading ? "300px" : "100px",
-        // borderRadius: props.deleteloading ? ".5rem" : "2rem",
-
-        // }
       }
-      // open={props.openDeleteToast}
       className={s.toast}
     >
       {props.deleteloading ? (
@@ -73,10 +56,7 @@ function ToastItem(props) {
           </>
         ) : (
           <>
-            <p>
-              Canceled
-            </p>
-
+            <p>Canceled</p>
           </>
         )
       ) : (
@@ -124,7 +104,6 @@ export default function Toast(props) {
       if (canDelete === false) {
         console.log("false and cancel Delect");
         setopenDeleteToast(false);
-        // setToastMounted(false)
         clearSelect();
         setisPrevent(false);
         clearTimeout(deleteTime);
@@ -148,17 +127,6 @@ export default function Toast(props) {
     }
     return () => clearTimeout(deleteTime);
   }, [canDelete, ToastMounted]);
-  // useEffect(() => {
-  //   const timeout =
-  //     counter < 1 &&
-  //     deleteloading === true && openDeleteToast === true &&
-  //     setInterval(() => {
-  //       console.log(counter);
-  //       setcounter(counter - 1);
-  //     }, 5000);
-  //   return () => clearInterval(timeout);
-  // }, []);
-
   return (
     <div
       style={{ visibility: ToastMounted ? "visible" : "hidden" }}
@@ -166,6 +134,7 @@ export default function Toast(props) {
     >
       {ToastMounted && (
         <ToastItem
+          setloading={setloading}
           setToastMounted={setToastMounted}
           canDelete={canDelete}
           setcanDelete={setcanDelete}

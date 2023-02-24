@@ -19,8 +19,6 @@ const Todolist = (props) => {
     if (SelectedID.length === 0) {
       setisSelect(false);
     }
-    // if (SelectedID.length === 0 && isSelect) {
-    // }
     if (SelectedID.length > 0) {
     } else {
       setselectCount(false);

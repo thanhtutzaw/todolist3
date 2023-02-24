@@ -3,40 +3,40 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 
 export const HeaderDropDown = (props) => {
+  const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } =
+    props;
   const enterTools = {
-    animation: "enterTools 200ms ease-in",
+    animation: "enterTools 350ms ease-in",
+  
   };
   const exitTools = {
-    animation: "exitTools 250ms ease-out",
-    // animationFillMode: "forwards",
+    animation: "exitTools 500ms ease-out",
+  
   };
   return (
     <div
       className="dropdown"
       onAnimationEnd={() => {
-        if (!props.opentools) {
-          props.setmounted(false);
+        if (!opentools) {
+          setmounted(false);
         }
-        console.log("end dropdown");
+        console.log("unmount dropdown");
       }}
     >
-      <div
-        style={props.opentools ? enterTools : exitTools}
-        className={`tools `}
-      >
+      <div style={opentools ? enterTools : exitTools} className={`tools `}>
         <div className="tools-container">
           <div
             onClick={useCallback(() => {
-              props.setTheme((prev) => (prev === "light" ? "dark" : "light"));
-              props.setopentools(false);
-              console.log("callback running");
-            }, [props.theme, props.opentools])}
+              setTheme((prev) => (prev === "light" ? "dark" : "light"));
+              setopentools(false);
+              // console.log("callback running");
+            }, [theme, opentools])}
             className="setting-item"
           >
-            {props.theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+            {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
             <span>Theme</span>
           </div>
-          <div className="setting-item" onClick={props.logoutHandle}>
+          <div className="setting-item" onClick={logoutHandle}>
             <RiLogoutBoxFill />
             <span>Logout</span>
           </div>

@@ -1,5 +1,4 @@
 import { addDoc, collection, doc, serverTimestamp, writeBatch } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import { auth, db } from "../lib/firebase";
 
 export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
@@ -32,25 +31,18 @@ export function addTodo(todoRef, inputRef, settodos, todos, setisPrevent) {
             } catch (err) {
                 alert(err.message);
             }
-
-            // pendingOps.add = (await addDoc(collectionRef, data, { merge: true }))
-            // const cleanup = () => pendingOps.delete(addDoc);
-            // console.log({addDoc})
-            // await addDoc.then(cleanup).catch(cleanup)
         }
     };
 }
-export function deleteTodo(setToastMounted,setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
+export function deleteTodo(setToastMounted, setcanDelete, canDelete, counter, setcounter, setopenDeleteToast, setloading, setisPrevent, clearSelect, todoRef, SelectedID) {
     return async () => {
         console.info("%cDeleting...", "color:grey");
         setloading(true)
         setcanDelete(true)
-        // setopenDeleteToast(true)
         setisPrevent(true);
         clearSelect();
 
         todoRef.current.scrollIntoView({ behavior: "smooth" });
-        // await deleteDoc(doc(db, "users",UserId, "todos", SelectedID.toString()));
         const batch = writeBatch(db);
         const chunkSize = 10;
         for (let i = 0; i < SelectedID.length; i += chunkSize) {
@@ -67,28 +59,16 @@ export function deleteTodo(setToastMounted,setcanDelete, canDelete, counter, set
                 batch.delete(TodoRef);
             }
         }
-        // console.log("undo ?")
         try {
-
-            // if(canDelete === false){
-            //     clearTimeout(deleteTimer)
-            //     setopenDeleteToast(false)
-            // }
-            // setisPrevent(false);
-            // const deleteTimer = setTimeout(async () => {
-                // console.log({ canDelete })
-                setloading(false)
-                await batch.commit();
-                console.info("%cDeleted !", "color: green");
-                setTimeout(async () => {
-                    // setToastMounted(false)
-                    setopenDeleteToast(false)
-                    console.log("close Toast")
-                    setcanDelete(true) 
-                    setisPrevent(false) 
-                }, 1500);
-            // }, 5000);
-
+            setloading(false)
+            await batch.commit();
+            console.info("%cDeleted !", "color: green");
+            setTimeout(async () => {
+                setopenDeleteToast(false)
+                console.log("close Toast")
+                setcanDelete(true)
+                setisPrevent(false)
+            }, 1500);
         } catch (error) {
             alert("Delete Error !" + error.message);
         }

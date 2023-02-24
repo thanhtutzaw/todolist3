@@ -3,7 +3,7 @@ import { GrClose } from "react-icons/gr";
 import { IconContext } from "react-icons";
 
 export default function SelectModal(props) {
-  const { clearSelect, SelectedID, setisPrevent } = props;
+  const { deleteloading, clearSelect, SelectedID, setisPrevent } = props;
   function editHandle() {
     document.getElementById("editModal").showModal();
   }
@@ -32,6 +32,8 @@ export default function SelectModal(props) {
       </div>
       <div>
         <button
+          style={{ pointerEvents: deleteloading ? "none" : "initial" }}
+          disabled={deleteloading}
           onClick={editHandle}
           className={`edit ${SelectedID.length > 1 ? "disabled" : ""}`}
         >
@@ -39,6 +41,8 @@ export default function SelectModal(props) {
         </button>
 
         <button
+          style={{ pointerEvents: deleteloading ? "none" : "initial" }}
+          disabled={deleteloading}
           onClick={(e) => {
             e.stopPropagation();
             if (
