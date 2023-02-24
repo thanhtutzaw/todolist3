@@ -419,7 +419,7 @@ html[theme="dark"] .react-loading-skeleton {
 
 .btn.discardBtn,
 .btn.keepEditingBtn {
-  padding      : .5rem .3rem;
+  /* padding      : .5rem .3rem; */
   border       : 0;
   border-radius: .5rem;
   font-size    : 18px;

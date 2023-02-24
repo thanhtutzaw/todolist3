@@ -7,7 +7,7 @@ export default function ConfirmModal(props) {
       <p style={{ fontWeight: "500", fontSize: "22px" }}>Discard Changes ?</p>
       <div>
         <button className="btn keepEditingBtn" onClick={closeConfirm}>
-          Keep editing
+          Keep Editing
         </button>
         <button
           className="btn discardBtn"

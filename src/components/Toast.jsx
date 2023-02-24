@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { IconContext } from "react-icons";
 import { GrClose } from "react-icons/gr";
 import s from "../styles/Toast.module.css";
-import { deleteTodo } from "../utils/todo";
+import { deleteMultipleTodo } from "../lib/firebase";
 
 function ToastItem(props) {
   const enterDeleteToast = {
@@ -109,12 +109,8 @@ export default function Toast(props) {
         clearTimeout(deleteTime);
       }
       deleteTime = setTimeout(
-        deleteTodo(
-          setToastMounted,
+        deleteMultipleTodo(
           setcanDelete,
-          canDelete,
-          setcounter,
-          counter,
           setopenDeleteToast,
           setloading,
           setisPrevent,
