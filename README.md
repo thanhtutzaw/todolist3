@@ -1,7 +1,8 @@
-## Technologies
+<h1>A To-Do List with React and Firebase</h1>
+
 Project is created with:
-* React with Vite
-* [Firestore](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png) with Google Sign-in
+* React
+* Google Sign-in with [Firestore](https://github.com/thanhtutzaw/todolist3/edit/main/README.md#document-bases-databases)
 * [React-Icons](https://www.npmjs.com/package/react-icons)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 
@@ -10,19 +11,15 @@ Project is created with:
 :ballot_box_with_check:	Google Sign-in\
 :ballot_box_with_check:	Firestore NoSQL\
 :ballot_box_with_check:	Delete Multiple Items\
-:ballot_box_with_check:	Skeleton Loading State\
+:ballot_box_with_check:	Data Loading State\
 :ballot_box_with_check:	Delete Canceling State\
 :ballot_box_with_check:	Refresh Protected\
 :ballot_box_with_check:	Test-User Account
 ## User-Interface
 ![Todo-React-App](https://user-images.githubusercontent.com/71011043/215640512-bc543ec0-bc1e-455e-8dd4-c28f30c6e17a.png)
 
-
-
-
 ## Document-bases databases
 ![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
-
 
 ## Demo
 [Todo React App](https://todolistzee3.netlify.app)
