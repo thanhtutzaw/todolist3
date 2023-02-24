@@ -3,7 +3,13 @@ import { GrClose } from "react-icons/gr";
 import { IconContext } from "react-icons";
 
 export default function SelectModal(props) {
-  const { deleteloading, clearSelect, SelectedID, setisPrevent } = props;
+  const {
+    handleDeleteModal,
+    deleteloading,
+    clearSelect,
+    SelectedID,
+    setisPrevent,
+  } = props;
   function editHandle() {
     document.getElementById("editModal").showModal();
   }
@@ -15,6 +21,7 @@ export default function SelectModal(props) {
         }
       }}
       style={props.selecting ? props.mountStyle : props.unmountStyle}
+      // style={mounted ? props.mountStyle : props.unmountStyle}
       className={`selectModal `}
     >
       <div>
@@ -32,8 +39,11 @@ export default function SelectModal(props) {
       </div>
       <div>
         <button
-          style={{ pointerEvents: deleteloading ? "none" : "initial" }}
-          disabled={deleteloading}
+          style={{
+            pointerEvents:
+              deleteloading || SelectedID.length > 1 ? "none" : "initial",
+          }}
+          disabled={deleteloading || SelectedID.length > 1}
           onClick={editHandle}
           className={`edit ${SelectedID.length > 1 ? "disabled" : ""}`}
         >
@@ -44,18 +54,19 @@ export default function SelectModal(props) {
           style={{ pointerEvents: deleteloading ? "none" : "initial" }}
           disabled={deleteloading}
           onClick={(e) => {
-            e.stopPropagation();
-            if (
-              window.confirm(
-                `Are you sure you wish to delete ${
-                  SelectedID.length > 1 ? "these" : "this"
-                } ${SelectedID.length} ${
-                  SelectedID.length > 1 ? "items" : "item"
-                }?`
-              )
-            ) {
-              props.deleteHandle();
-            }
+            handleDeleteModal();
+            // e.stopPropagation();
+            // if (
+            //   window.confirm(
+            //     `Are you sure you wish to delete ${
+            //       SelectedID.length > 1 ? "these" : "this"
+            //     } ${SelectedID.length} ${
+            //       SelectedID.length > 1 ? "items" : "item"
+            //     }?`
+            //   )
+            // ) {
+            //   props.deleteHandle();
+            // }
           }}
           className="delete"
         >

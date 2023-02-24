@@ -54,6 +54,66 @@ main>a>button {
   justify-content: center;
 }
 
+.button {
+  cursor                           : pointer;
+  user-select                      : none;
+  -webkit-tap-highlight-color      : transparent;
+  /* font-size                     : 100%; */
+  /* font-size                     : 100%; */
+  padding                          : 10px 10px;
+  border-radius                    : 1rem;
+  display                          : flex;
+  align-items                      : center;
+  justify-content                  : center;
+  text-align                       : center;
+  /* flex                          : 1; */
+  border                           : 0;
+  width                            : 100px;
+  font-size                        : 1rem;
+}
+
+.deleteConfirmModal {
+  font-size          : 1rem;
+  /* background-color: rgba(175, 209, 248, 0.596); */
+  background-color   : rgb(221 237 255 / 68%);
+  color              : black;
+  padding            : 1rem;
+  border-radius      : 1rem;
+  display            : flex;
+  flex-direction     : column;
+  justify-content    : center;
+  gap                : 1rem;
+  position           : fixed;
+  inset              : 0;
+  /* top             : 50%; */
+  left               : 50%;
+  right              : 50%;
+  transform          : translate(-50%);
+  top                : 20px;
+  bottom             : unset;
+  width              : 420px;
+  max-width          : 92vw;
+  margin             : 0 auto;
+  border             : 1px solid rgba(236, 236, 236, 0.493);
+  will-change: transform;
+  will-change: opacity;
+
+  z-index         : 2000000000;
+  backdrop-filter : blur(8px);
+  transform-origin: center;
+
+
+}
+
+.deleteConfirmActions {
+  display            : flex;
+  flex               : 1;
+  justify-content    : flex-end;
+  gap                : .5rem;
+  /* background-color: white; */
+
+}
+
 header {
   display        : flex;
   align-items    : center;
@@ -163,6 +223,44 @@ header,
 
   to {
     opacity: 0;
+  }
+}
+
+@keyframes deleteModalMount {
+  from {
+    opacity  : 0;
+    transform: translate(-50%) rotateX(270deg);
+  }
+
+  to {
+    opacity  : 1;
+    transform: translate(-50%) rotateX(360deg);
+  }
+}
+
+@keyframes deleteModalUnmount {
+  from {
+    opacity  : 1;
+    transform: translate(-50%) rotateX(360deg);
+  }
+
+  to {
+    opacity  : 0;
+    transform: translate(-50%) rotateX(270deg);
+  }
+}
+
+@keyframes deleteConfirmStyle {
+
+  40% {
+
+    background-color: transparent;
+  }
+
+  100% {
+    opacity         : 0;
+    transform       : translate(-50%) translateY(585px);
+    background-color: rgba(255, 0, 0, 0.596);
   }
 }
 
@@ -657,32 +755,34 @@ ul li {
 }
 
 .add-btn-parent {
-  right           : 5%;
-  bottom          : 0;
-  background-color: var(--btn-blue);
-  border          : None;
-  padding         : 1rem;
-  cursor          : pointer;
-  width           : 60px;
-  height          : 60px;
-  border-radius   : 50px;
-  font-size       : 2rem;
-  /* font-size: 20px; */
-  display         : flex;
-  justify-content : center;
-  align-items     : center;
-  box-shadow      : 0px 3px 10px rgba(0, 0, 0, 0.4);
-  color           : white;
+  right                      : 5%;
+  bottom                     : 0;
+  background-color           : var(--btn-blue);
+  border                     : None;
+  padding                    : 1rem;
+  cursor                     : pointer;
+  width                      : 60px;
+  height                     : 60px;
+  border-radius              : 50px;
+  font-size                  : 2rem;
+  /* font-size               : 20px; */
+  display                    : flex;
+  justify-content            : center;
+  align-items                : center;
+  box-shadow                 : 0px 3px 10px rgba(0, 0, 0, 0.4);
+  color                      : white;
   -webkit-tap-highlight-color: transparent;
-  transition: scale .1s ease-in-out;
+  transition                 : scale .1s ease-in-out;
 }
-.add-btn-parent:active{
-  scale: 1.1;
+
+.add-btn-parent:active {
+  scale  : 1.1;
   opacity: .8;
 }
+
 .add-btn-parent>svg {
   stroke-width: 1;
-  scale: 1.5;
+  scale       : 1.5;
 }
 
 .input-text {

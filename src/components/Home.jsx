@@ -19,6 +19,7 @@ import Header from "./Header";
 import SelectModal from "./SelectModal";
 import Toast from "./Toast.jsx";
 import Todolist from "./Todolist";
+import DeleteModal from "./DeleteModal.jsx";
 const EditModal = React.lazy(() => import("./EditModal.jsx"));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -47,10 +48,16 @@ export default function Home() {
   );
   const [deleteloading, setloading] = useState(false);
   const [openDeleteToast, setopenDeleteToast] = useState(false);
+  const [openDeleteModal, setopenDeleteModal] = useState(false);
   const [canDelete, setcanDelete] = useState(true);
   const [counter, setcounter] = useState(5);
   const [ToastMounted, setToastMounted] = useState(false);
-
+  function handleDeleteModal() {
+    setopenDeleteModal((prev) => !prev);
+    if (!openDeleteModal) {
+      setDeleteModalMounted(true);
+    }
+  }
   useEffect(() => {
     const interval =
       counter > 1 &&
@@ -70,6 +77,7 @@ export default function Home() {
   }, [deleteloading, openDeleteToast, canDelete]);
 
   const deleteHandle = () => {
+    setopenDeleteModal(false);
     setopenDeleteToast(true);
     setToastMounted(true);
     setloading(true);
@@ -95,7 +103,14 @@ export default function Home() {
   const unmountStyle = {
     animation: "selectUnmount 250ms ease-out",
   };
+  // const mountStyle = {
+  //   animation: "selectMount 200ms ease-in",
+  // };
+  // const unmountStyle = {
+  //   animation: "selectUnmount 250ms ease-out",
+  // };
   const [mounted, setmounted] = useState(false);
+  const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
   useEffect(() => {
     if (selecting) {
       setmounted(true);
@@ -114,7 +129,6 @@ export default function Home() {
   return (
     <main>
       <Toast
-      
         setToastMounted={setToastMounted}
         ToastMounted={ToastMounted}
         SelectedID={SelectedID}
@@ -137,6 +151,7 @@ export default function Home() {
       </a>
       {mounted && (
         <SelectModal
+          handleDeleteModal={handleDeleteModal}
           deleteloading={deleteloading}
           todoRef={todoRef}
           setisPrevent={setisPrevent}
@@ -176,6 +191,18 @@ export default function Home() {
             />
           </Suspense>
         </dialog>
+      )}
+      {DeleteModalMounted && (
+        <DeleteModal
+          setDeleteModalMounted={setDeleteModalMounted}
+          DeleteModalMounted={DeleteModalMounted}
+          openDeleteModal={openDeleteModal}
+          // mountStyle={mountStyle}
+          // unmountStyle={unmountStyle}
+          handleDeleteModal={handleDeleteModal}
+          deleteHandle={deleteHandle}
+          SelectedID={SelectedID}
+        />
       )}
 
       <Header selecting={selecting} todoLength={todos.length} />
