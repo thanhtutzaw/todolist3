@@ -28,10 +28,10 @@ export default function EditModal(props) {
 
       actionButton.style.bottom = isVirtualKeyboardOpen ? "60px" : "0";
     }
-    window.addEventListener("resize", adjustSubmitButtonPosition);
-    return () => {
-      window.removeEventListener("resize", adjustSubmitButtonPosition);
-    };
+    // window.addEventListener("resize", adjustSubmitButtonPosition);
+    // return () => {
+    //   window.removeEventListener("resize", adjustSubmitButtonPosition);
+    // };
   }, [loading]);
 
   const updateHandle = async (id) => {
