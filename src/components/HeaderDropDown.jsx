@@ -6,11 +6,11 @@ export const HeaderDropDown = (props) => {
   const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } =
     props;
   const enterTools = {
-    animation: "enterTools 350ms ease-in",
+    animation: "enterTools 300ms ease-in",
   
   };
   const exitTools = {
-    animation: "exitTools 520ms ease-in",
+    animation: "exitTools 500ms ease-in",
   
   };
   return (

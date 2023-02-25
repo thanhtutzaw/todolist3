@@ -14,13 +14,24 @@ export default function EditModal(props) {
     clearSelect,
     setisPrevent,
   } = props;
+  const actionButtonRef = useRef(null);
   const [loading, setloading] = useState(false);
   useEffect(() => {
+    const actionButton = actionButtonRef.current;
     if (loading) {
       document.getElementById("updating").showModal();
     } else {
       document.getElementById("updating").close();
     }
+    function adjustSubmitButtonPosition() {
+      const isVirtualKeyboardOpen = window.innerHeight < window.outerHeight;
+
+      actionButton.style.bottom = isVirtualKeyboardOpen ? "60px" : "0";
+    }
+    window.addEventListener("resize", adjustSubmitButtonPosition);
+    return () => {
+      window.removeEventListener("resize", adjustSubmitButtonPosition);
+    };
   }, [loading]);
 
   const updateHandle = async (id) => {
@@ -90,7 +101,7 @@ export default function EditModal(props) {
               }}
               className="textarea"
             />
-            <div className="editModalActions">
+            <div ref={actionButtonRef} className="editModalActions">
               <button
                 onClick={() => {
                   if (text !== todo.text) {
