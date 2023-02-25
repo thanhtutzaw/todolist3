@@ -356,6 +356,7 @@ html[theme="dark"] .react-loading-skeleton {
 
 .selectCount {
   font-size  : 30px;
+  font-size  : 35px;
   margin-top : -6px;
   cursor     : default;
   user-select: none;
@@ -872,8 +873,10 @@ ul li {
   border          : 0;
   outline         : 0;
   /* height       : 50dvh; */
-  height          : 25dvh;
+  height          : 34dvh;
+  height          : 34dvh;
   margin-bottom   : 50px;
+  margin-bottom   : 45px;
 }
 
 .nav-icon-parent {
