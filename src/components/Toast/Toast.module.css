@@ -1,8 +1,7 @@
-@import url('var.css');
+@import url('../../styles/var.css');
 
 .toastContainer {
     position           : fixed;
-    /* background-color: rgba(0, 0, 255, 0.363); */
     /* position        : absolute; */
     max-width          : 300px;
     inset              : 0;
@@ -19,12 +18,6 @@
 /* transform       : translateY(0);
     background-color   : rgba(124, 9, 9, 0.514); */
 /* } */
-
-
-
-
-
-
 
 .toast {
     position                          : absolute;

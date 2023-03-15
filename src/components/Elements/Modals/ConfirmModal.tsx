@@ -1,7 +1,10 @@
-import React from "react";
+import { MouseEventHandler } from "react";
 
-export default function ConfirmModal(props) {
-  const { closeHandle, closeConfirm } = props;
+export default function ConfirmModal(props: {
+  closeEditModal: Function;
+  closeConfirm: MouseEventHandler<HTMLButtonElement>;
+}) {
+  const { closeEditModal, closeConfirm } = props;
   return (
     <div className="confirmModal">
       <p style={{ fontWeight: "500", fontSize: "22px" }}>Discard Changes ?</p>
@@ -11,9 +14,9 @@ export default function ConfirmModal(props) {
         </button>
         <button
           className="btn discardBtn"
-          onClick={() => {
-            closeConfirm();
-            closeHandle();
+          onClick={(e) => {
+            closeConfirm(e);
+            closeEditModal();
           }}
         >
           Discard

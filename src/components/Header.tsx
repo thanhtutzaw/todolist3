@@ -1,10 +1,13 @@
 import { getAuth, signOut } from "firebase/auth";
-import React, { Suspense, useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useIndexDB from "../hooks/useIndexDB";
-import useTheme from "../hooks/useTheme";
+import useIndexDB from "@/hooks/useIndexDB";
+import useTheme from "@/hooks/useTheme";
 import { HeaderDropDown } from "./HeaderDropDown";
-export default function Header(props) {
+export default function Header(props: {
+  selecting: boolean;
+  todoLength: number;
+}) {
   const { selecting, todoLength } = props;
   const { userphoto, userName } = useIndexDB();
   const { theme, setTheme } = useTheme();
@@ -23,7 +26,7 @@ export default function Header(props) {
         navigate("/login");
       })
       .catch((err) => {
-        alert("Signout Error ! ", err.message);
+        // alert("Signout Error ! ", err);
         console.error("Signout Error ! ", err.message);
       });
   };

@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { RiCheckboxBlankCircleLine } from "react-icons/ri";
-import { RiCheckboxCircleFill } from "react-icons/ri";
+import { todosProps } from "interface";
+import { useEffect, useState } from "react";
+import {
+  RiCheckboxBlankCircleLine,
+  RiCheckboxCircleFill,
+} from "react-icons/ri";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const Todolist = (props) => {
+const Todolist = (props: {
+  isPrevent: boolean;
+  setisPrevent: Function;
+  setselectCount: Function;
+  todos: todosProps[];
+  todo: todosProps;
+  SelectedID: number[];
+  setSelectedID: Function;
+}) => {
   const {
     isPrevent,
     setisPrevent,
@@ -35,7 +46,7 @@ const Todolist = (props) => {
       {isSelecting ? (
         <RiCheckboxCircleFill
           className="todo-checkbox-fill"
-          onClick={(e) => {
+          onClick={() => {
             setisSelect((prev) => !prev);
             setSelectedID(SelectedID.filter((id) => id !== todo.id));
             setisPrevent(true);
@@ -46,9 +57,9 @@ const Todolist = (props) => {
         />
       ) : (
         <RiCheckboxBlankCircleLine
-          value={todo.id}
+          values={todo?.id?.toString()}
           className="todo-checkbox"
-          onClick={(e) => {
+          onClick={() => {
             setisSelect((prev) => !prev);
             setSelectedID([...SelectedID, todo.id]);
             setisPrevent(true);

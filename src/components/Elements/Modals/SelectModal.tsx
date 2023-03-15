@@ -1,25 +1,40 @@
-import React from "react";
-import { GrClose } from "react-icons/gr";
+import { MouseEventHandler } from "react";
 import { IconContext } from "react-icons";
+import { GrClose } from "react-icons/gr";
 
-export default function SelectModal(props) {
+export default function SelectModal(props: {
+  mountStyle: any;
+  unmountStyle: any;
+
+  SelectedID: number[];
+  deleteloading: boolean;
+  selecting: boolean;
+  // SelectModalMounted: boolean;
+  setmounted: Function;
+  clearSelect: Function;
+  // setSelectModalMounted: Function;
+  setisPrevent: Function;
+  handleDeleteModal: Function;
+  openEditModal: MouseEventHandler<HTMLButtonElement>;
+}) {
   const {
-    handleDeleteModal,
-    deleteloading,
-    clearSelect,
+    // SelectModalMounted,
+    // setSelectModalMounted,
     SelectedID,
+    clearSelect,
     setisPrevent,
+    openEditModal,
+    deleteloading,
+    handleDeleteModal,
   } = props;
-  function editHandle() {
-    document.getElementById("editModal").showModal();
-  }
+
   return (
     <div
-      onAnimationEnd={(e) => {
-        if (!props.selecting) {
-          props.setmounted(false);
-        }
-      }}
+      // onAnimationEnd={() => {
+      //   if (!props.selecting) {
+      //     props.setmounted(false);
+      //   }
+      // }}
       style={props.selecting ? props.mountStyle : props.unmountStyle}
       // style={mounted ? props.mountStyle : props.unmountStyle}
       className={`selectModal `}
@@ -39,12 +54,12 @@ export default function SelectModal(props) {
       </div>
       <div>
         <button
-          style={{
-            pointerEvents:
-              deleteloading || SelectedID.length > 1 ? "none" : "initial",
-          }}
+          // style={{
+          //   pointerEvents:
+          //     deleteloading || SelectedID.length > 1 ? "none" : "initial",
+          // }}
           disabled={deleteloading || SelectedID.length > 1}
-          onClick={editHandle}
+          onClick={openEditModal}
           className={`edit ${SelectedID.length > 1 ? "disabled" : ""}`}
         >
           Edit
@@ -53,7 +68,7 @@ export default function SelectModal(props) {
         <button
           style={{ pointerEvents: deleteloading ? "none" : "initial" }}
           disabled={deleteloading}
-          onClick={(e) => {
+          onClick={() => {
             handleDeleteModal();
             // e.stopPropagation();
             // if (

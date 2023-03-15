@@ -11,12 +11,12 @@
 }
 
 img,
-btn,
+.btn,
 nav {
   user-select: none;
 }
 
-btn,
+.btn,
 .add-btn,
 .todo-checkbox,
 .todo-checkbox-fill,
@@ -47,6 +47,13 @@ main>a>button {
   padding: 2px !important;
 }
 
+.disabled {
+  opacity          : .4;
+  user-select      : none;
+  /* pointer-events: none; */
+  cursor           : not-allowed !important;
+}
+
 .row {
   display        : flex;
   flex-direction : column;
@@ -65,7 +72,7 @@ main>a>button {
   justify-content            : center;
   text-align                 : center;
   border                     : 0;
-  width                      : 100px;
+  min-width                  : 100px;
   font-size                  : 1rem;
 }
 
@@ -197,7 +204,7 @@ header,
   opacity   : 1;
   transition: all .3s ease;
   visibility: visible;
-  border    : 3px solid red;
+  border    : 15px solid rgb(238, 255, 0);
 }
 
 @keyframes selectMount {
@@ -355,12 +362,12 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .selectCount {
-  font-size  : 30px;
+  font-size     : 30px;
   /* font-size  : 35px; */
-  margin-top : -4px;
-  cursor     : default;
-  user-select: none;
-  color      : white;
+  margin-top    : -4px;
+  cursor        : default;
+  user-select   : none;
+  color         : white;
 }
 
 .selectionContainer {
@@ -453,10 +460,7 @@ html[theme="dark"] .react-loading-skeleton {
   background-color: rgba(255 255 255 / .8);
 }
 
-.disabled {
-  opacity       : .4;
-  pointer-events: none;
-}
+
 
 #editModal,
 #confirmModal,
@@ -467,8 +471,9 @@ html[theme="dark"] .react-loading-skeleton {
   min-height: var(--min-height);
 }
 
-.editModal,
-.confirmModal {
+#editModal>.container,
+.confirmModal,
+.updatingModal {
   outline  : 0;
   width    : 420px;
   max-width: 92vw;
@@ -481,22 +486,23 @@ html[theme="dark"] .react-loading-skeleton {
   overflow : auto;
 }
 
-.confirmModal {
-  background         : rgba(255, 255, 255, 0.01);
-  background-color   : var(--background-primary);
-  height             : 200px;
-  padding            : 1rem;
-  width              : 350px;
-  max-width          : 97vw;
-  display            : flex;
-  justify-content    : center;
-  flex-direction     : column;
-  gap                : 1rem;
-  border-radius      : .5rem;
-  backdrop-filter    : blur(6px);
-  border             : 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow         : 0px 4px 20px rgba(102, 102, 102, 0.267);
-  /* box-shadow      : 0 4px 30px rgba(0, 0, 0, 0.1); */
+.confirmModal,
+.updatingModal {
+  background            : rgba(255, 255, 255, 0.01);
+  background-color      : var(--background-primary);
+  /* height             : 200px; */
+  padding               : 1rem;
+  width                 : 350px;
+  max-width             : 97vw;
+  display               : flex;
+  justify-content       : center;
+  flex-direction        : column;
+  gap                   : 1rem;
+  border-radius         : .5rem;
+  backdrop-filter       : blur(6px);
+  border                : 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow            : 0px 4px 20px rgba(102, 102, 102, 0.267);
+  /* box-shadow         : 0 4px 30px rgba(0, 0, 0, 0.1); */
 }
 
 li.todo {
@@ -665,9 +671,9 @@ ul li {
 
 .btn {
   font-size       : 1.4rem;
-  color           : rgb(0, 0, 0);
-  padding         : 0.7rem;
-  background-color: transparent;
+  color           : rgb(0, 0, 0) !important;
+  padding         : 0.7rem !important;
+  background-color: transparent !important;
   border          : none;
 }
 
@@ -761,7 +767,7 @@ ul li {
   right                      : 5%;
   bottom                     : 0;
   background-color           : var(--btn-blue);
-  border                     : None;
+  border                     : none;
   padding                    : 1rem;
   cursor                     : pointer;
   width                      : 60px;
@@ -850,15 +856,12 @@ ul li {
   /* .setting-item */
 }
 
-.editInput {
+#editModal>.container>form {
   width              : 100%;
   position           : relative;
   padding            : 20px;
   /* height          : calc(50% + 20px); */
-  /* padding         : 0 20px; */
-  /* padding         : 20px 20px 0 20px; */
   background-color   : white;
-  /* background-color: rgb(228, 112, 112); */
   overflow           : auto;
   border-radius      : 20px;
   outline            : none;
@@ -900,5 +903,7 @@ ul li {
 }
 
 .dropdown {
-  position: relative;
+  position      : relative;
+  pointer-events: none;
+  user-select   : none;
 }

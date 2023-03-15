@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
-import { CgChevronRightR } from "react-icons/cg";
+import { auth } from "@/lib/firebase";
 import {
-  signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
+import { CSSProperties } from "react";
+import { CgChevronRightR } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../lib/firebase";
+import Button from "./Elements/Button/Button";
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const btn = {
+  const loginStyle: CSSProperties = {
     padding: ".7rem",
     color: "white",
     backgroundColor: "#007af6",
@@ -30,20 +31,27 @@ export default function Login() {
 
   const provider = new GoogleAuthProvider();
 
-  const signinHandle = () => {
-    signInWithPopup(auth, provider)
-      .then((res) => {
-        navigate("/");
-      })
-      .catch((err) => {
-        alert(`Cannot Signin ! ${err.message}`);
-      });
+  const signinHandle = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/");
+    } catch (error: any) {
+      alert(`Cannot Signin ! ${error.message}`);
+    }
+
+    // signInWithPopup(auth, provider)
+    //   .then(() => {
+    //     navigate("/");
+    //   })
+    //   .catch((err) => {
+    //     alert(`Cannot Signin ! ${err.message}`);
+    //   });
   };
   const email = "testuser11@gmail.com";
   const password = "111111";
   const testUserSignInHandle = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+      .then(() => {
         navigate("/");
       })
       .catch((err) => {
@@ -53,13 +61,13 @@ export default function Login() {
   return (
     <main>
       <a className="btnParent" href="https://todolistzee.netlify.app">
-        <button className="btn" type="button">
+        <Button className="btn">
           <CgChevronRightR />
-        </button>
+        </Button>
       </a>
-      <button onClick={signinHandle} style={btn}>
+      <Button onClick={signinHandle} style={loginStyle}>
         Google Sign-in
-      </button>
+      </Button>
       <br></br>
       <div
         style={{

@@ -1,18 +1,38 @@
-import React, { useCallback } from "react";
+import { MouseEventHandler, useCallback } from "react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
-
-export const HeaderDropDown = (props) => {
+type HeaderDropDownProps = {
+  setmounted: Function;
+  theme: string;
+  setTheme: Function;
+  opentools: any;
+  setopentools: Function;
+  logoutHandle: MouseEventHandler<HTMLDivElement>;
+};
+export const HeaderDropDown = (props: HeaderDropDownProps) => {
   const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } =
     props;
-  const enterTools = {
+  interface ToolsAnimate {
+    animation: string;
+    pointerEvents:
+      | "none"
+      | "initial"
+      | "inherit"
+      | "unset"
+      | "visiblePainted"
+      | "visibleFill"
+      | "visibleStroke"
+      | "visible";
+  }
+  const enterTools: ToolsAnimate = {
     animation: "enterTools 300ms ease-in",
-  
+    pointerEvents: "initial",
   };
-  const exitTools = {
+  const exitTools: ToolsAnimate = {
     animation: "exitTools 500ms ease-in",
-  
+    pointerEvents: "initial",
   };
+  const toolsAnimate = opentools ? enterTools : exitTools;
   return (
     <div
       className="dropdown"
@@ -23,11 +43,11 @@ export const HeaderDropDown = (props) => {
         console.log("unmount dropdown");
       }}
     >
-      <div style={opentools ? enterTools : exitTools} className={`tools `}>
+      <div style={toolsAnimate} className={`tools `}>
         <div className="tools-container">
           <div
             onClick={useCallback(() => {
-              setTheme((prev) => (prev === "light" ? "dark" : "light"));
+              setTheme((prev: string) => (prev === "light" ? "dark" : "light"));
               setopentools(false);
               // console.log("callback running");
             }, [theme, opentools])}

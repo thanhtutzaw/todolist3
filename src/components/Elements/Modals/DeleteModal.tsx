@@ -1,7 +1,13 @@
-import React, { useState } from "react";
-import Button from "./Elements/Button/Button";
+import { MouseEventHandler, useState } from "react";
+import Button from "../Button/Button";
 
-export default function DeleteModal(props) {
+export default function DeleteModal(props: {
+  setDeleteModalMounted: Function;
+  handleDeleteModal: MouseEventHandler<HTMLButtonElement>;
+  openDeleteModal: boolean;
+  deleteHandle: Function;
+  SelectedID: number[];
+}) {
   const {
     setDeleteModalMounted,
     handleDeleteModal,
@@ -31,7 +37,7 @@ export default function DeleteModal(props) {
       }
       className="deleteConfirmModal"
       onAnimationEnd={() => {
-        if (!openDeleteModal ) {
+        if (!openDeleteModal) {
           setDeleteModalMounted(false);
         }
       }}
@@ -46,9 +52,13 @@ export default function DeleteModal(props) {
             setdeleteConfirm(true);
           }}
           theme="danger"
-          title="Ok"
-        />
-        <Button onClick={handleDeleteModal} theme="secondary" title="Cancel" />
+        >
+          Ok
+        </Button>
+
+        <Button onClick={handleDeleteModal} theme="secondary">
+          Cancel
+        </Button>
       </div>
     </div>
   );
