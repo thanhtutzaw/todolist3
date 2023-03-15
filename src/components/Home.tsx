@@ -117,6 +117,7 @@ export default function Home() {
       }
     }
     if (selecting) {
+      setmounted(true)
       setSelectModalMounted(true);
       window.addEventListener("keyup", handleEscape);
     } else {
