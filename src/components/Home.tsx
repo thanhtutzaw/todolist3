@@ -32,11 +32,14 @@ export default function Home() {
   const navigate = useNavigate();
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const editModalRef = useRef<HTMLDialogElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
+
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
-  const { DeleteModalMounted } = useContext(AppContext) as AppContextType;
+
+  const { DeleteModalMounted, editModalRef } = useContext(
+    AppContext
+  ) as AppContextType;
   const { todos, settodos, loading } = useFirestoreData();
   const { isPrevent, setisPrevent } = usePrevent();
   const {
@@ -110,12 +113,7 @@ export default function Home() {
   function openEditModal() {
     editModalRef.current?.showModal();
   }
-  const mountStyle = {
-    animation: "selectMount 200ms ease-in",
-  };
-  const unmountStyle = {
-    animation: "selectUnmount 250ms ease-out",
-  };
+
   return (
     <main>
       <Toast
@@ -136,8 +134,6 @@ export default function Home() {
           clearSelect={clearSelect}
           SelectedID={SelectedID}
           selecting={selecting}
-          mountStyle={mountStyle}
-          unmountStyle={unmountStyle}
         />
       )}
 
@@ -159,7 +155,6 @@ export default function Home() {
           <Suspense fallback={renderLoader()}>
             <EditModal
               confirmModalRef={confirmModalRef}
-              editModalRef={editModalRef}
               text={text}
               settext={settext}
               setisPrevent={setisPrevent}

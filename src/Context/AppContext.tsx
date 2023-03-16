@@ -11,6 +11,8 @@ export const AppContext = createContext<AppContextType | null>(null);
 export function AppProvider({ children }: PropsWithChildren) {
   const [canDelete, setcanDelete] = useState(true);
 
+  const editModalRef = useRef<HTMLDialogElement>(null);
+
   const [undoCount, setundoCount] = useState(5);
   const [deleteloading, setloading] = useState(false);
   const [openDeleteToast, setopenDeleteToast] = useState(false);
@@ -66,6 +68,7 @@ export function AppProvider({ children }: PropsWithChildren) {
         openDeleteModal,
         setopenDeleteToast,
         setcanDelete,
+        editModalRef,
       }}
     >
       {children}

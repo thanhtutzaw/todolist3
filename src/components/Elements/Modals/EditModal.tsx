@@ -1,5 +1,14 @@
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { AppContext } from "@/Context/AppContext";
 import { updateTodo } from "@/lib/firestore";
+import { AppContextType } from "@/types";
+import {
+  RefObject,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ConfirmModal from "./ConfirmModal";
 import UpdatingModal from "./UpdatingModal";
 
@@ -11,7 +20,6 @@ export default function EditModal(props: {
   clearSelect: Function;
   setisPrevent: Function;
   confirmModalRef: RefObject<HTMLDialogElement>;
-  editModalRef: RefObject<HTMLDialogElement>;
 }) {
   const {
     confirmModalRef,
@@ -21,9 +29,9 @@ export default function EditModal(props: {
     closeEditModal,
     clearSelect,
     setisPrevent,
-    editModalRef,
   } = props;
   // const actionButtonRef = useRef(null);
+  const { editModalRef } = useContext(AppContext) as AppContextType;
   const [loading, setloading] = useState(false);
   const UpdatingRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {

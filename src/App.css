@@ -43,6 +43,10 @@ main {
   overflow        : hidden;
 }
 
+button {
+  cursor: pointer;
+}
+
 main>a>button {
   padding: 2px !important;
 }

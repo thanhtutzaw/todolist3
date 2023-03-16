@@ -5,21 +5,26 @@ import { IconContext } from "react-icons";
 import { GrClose } from "react-icons/gr";
 
 export default function SelectModal(props: {
-  mountStyle: any;
-  unmountStyle: any;
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
   setisPrevent: Function;
   openEditModal: MouseEventHandler<HTMLButtonElement>;
 }) {
-  const { SelectedID, clearSelect, setisPrevent, openEditModal } = props;
+  const mountStyle = {
+    animation: "selectMount 200ms ease-in",
+  };
+  const unmountStyle = {
+    animation: "selectUnmount 250ms ease-out",
+  };
+  const { selecting, SelectedID, clearSelect, setisPrevent, openEditModal } =
+    props;
   const { deleteloading, handleDeleteModal } = useContext(
     AppContext
   ) as AppContextType;
   return (
     <div
-      style={props.selecting ? props.mountStyle : props.unmountStyle}
+      style={selecting ? mountStyle : unmountStyle}
       className={`selectModal `}
     >
       <div>

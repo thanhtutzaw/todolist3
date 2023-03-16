@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, RefObject } from "react";
 
 export type AppContextType = {
   undoCount: number;
@@ -15,4 +15,5 @@ export type AppContextType = {
   setDeleteModalMounted: Function;
   setDeleteToastMounted: Function;
   handleDeleteModal: MouseEventHandler<HTMLButtonElement>;
+  editModalRef:RefObject<HTMLDialogElement>
 };

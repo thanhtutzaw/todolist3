@@ -68,7 +68,7 @@ export default function DeleteToastItem(props: DeleteToastItemProps) {
         canDelete ? (
           <>
             <p>Deleting {!deleteloading ? `... ` : `in ${undoCount}s`}</p>
-            <Button onClick={handleUndo} className={s.undoBtn}>
+            <Button theme="secondary" onClick={handleUndo} className={s.undoBtn}>
               Undo
             </Button>
           </>

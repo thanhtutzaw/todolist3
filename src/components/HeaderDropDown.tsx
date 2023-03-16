@@ -40,7 +40,6 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
         if (!opentools) {
           setmounted(false);
         }
-        console.log("unmount dropdown");
       }}
     >
       <div style={toolsAnimate} className={`tools `}>

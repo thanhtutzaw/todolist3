@@ -7,7 +7,7 @@ import {
   writeBatch,
 } from "firebase/firestore";
 import { todosProps } from "interface";
-import { FormEventHandler, RefObject, SetStateAction } from "react";
+import { RefObject, SetStateAction } from "react";
 import { auth, db } from "./firebase";
 
 export function addTodo(
