@@ -104,7 +104,6 @@ export default function EditModal(props: {
             <div className="editModalActions">
               <button
                 onClick={() => {
-                  console.log(confirmModalRef);
                   if (text !== todo.text) {
                     confirmModalRef.current?.showModal();
                   } else {

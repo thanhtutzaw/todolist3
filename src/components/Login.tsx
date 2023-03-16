@@ -38,14 +38,6 @@ export default function Login() {
     } catch (error: any) {
       alert(`Cannot Signin ! ${error.message}`);
     }
-
-    // signInWithPopup(auth, provider)
-    //   .then(() => {
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     alert(`Cannot Signin ! ${err.message}`);
-    //   });
   };
   const email = "testuser11@gmail.com";
   const password = "111111";

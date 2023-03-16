@@ -2,28 +2,29 @@ import Button from "@Elements/Button/Button";
 import { IconContext } from "react-icons";
 import { GrClose } from "react-icons/gr";
 import s from "./Toast.module.css";
+import { useContext } from "react";
+import { AppContext } from "@/Context/AppContext";
+import { AppContextType } from "@/types";
 type DeleteToastItemProps = {
-  setDeleteToastMounted: Function;
+  canDelete: boolean;
   setopenDeleteToast: Function;
   setcanDelete: Function;
-  setloading: Function;
-  openDeleteToast: boolean;
-  deleteloading: boolean;
-  canDelete: boolean;
-  counter: number;
 };
 
 export default function DeleteToastItem(props: DeleteToastItemProps) {
   const {
     setcanDelete,
+    canDelete,
+    setopenDeleteToast,
+  } = props;
+
+  const {
+    undoCount,
+    deleteloading,
     setloading,
     openDeleteToast,
     setDeleteToastMounted,
-    deleteloading,
-    canDelete,
-    counter,
-    setopenDeleteToast,
-  } = props;
+  } = useContext(AppContext) as AppContextType;
   const enterDeleteToast = {
     transformStyle: "preserve-3d",
     animation: "enterDeleteToast .4s ease-in-out",
@@ -66,7 +67,7 @@ export default function DeleteToastItem(props: DeleteToastItemProps) {
       {deleteloading ? (
         canDelete ? (
           <>
-            <p>Deleting {!deleteloading ? `... ` : `in ${counter}s`}</p>
+            <p>Deleting {!deleteloading ? `... ` : `in ${undoCount}s`}</p>
             <Button onClick={handleUndo} className={s.undoBtn}>
               Undo
             </Button>

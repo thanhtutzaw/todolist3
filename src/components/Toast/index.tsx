@@ -1,42 +1,25 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useContext, useEffect } from "react";
 import { deleteMultipleTodo } from "../../lib/firestore";
 import s from "./Toast.module.css";
 import DeleteToastItem from "./DeleteToastItem";
-
+import { AppContext } from "@/Context/AppContext";
+import { AppContextType } from "@/types";
 export default function Toast(props: {
   todoRef: RefObject<HTMLUListElement>;
-  DeleteToastMounted: boolean;
   setisPrevent: Function;
   clearSelect: Function;
   SelectedID: number[];
-  counter: number;
-  canDelete: boolean;
-  deleteloading: boolean;
-  openDeleteToast: boolean;
-  setloading: Function;
-  setcanDelete: Function;
-  setopenDeleteToast: Function;
-  setDeleteToastMounted: Function;
 }) {
+  const { SelectedID, todoRef, setisPrevent, clearSelect } = props;
   const {
     DeleteToastMounted,
-    setDeleteToastMounted,
-    SelectedID,
-    todoRef,
-    setloading,
-    setisPrevent,
-    clearSelect,
     canDelete,
     setcanDelete,
-    counter,
-    deleteloading,
-    openDeleteToast,
     setopenDeleteToast,
-  } = props;
-
+    setloading,
+  } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     let deleteTime: NodeJS.Timeout | undefined;
-
     if (DeleteToastMounted === false) {
       setcanDelete(true);
     }
@@ -70,14 +53,9 @@ export default function Toast(props: {
     >
       {DeleteToastMounted && (
         <DeleteToastItem
-          setloading={setloading}
-          setDeleteToastMounted={setDeleteToastMounted}
           canDelete={canDelete}
           setcanDelete={setcanDelete}
-          counter={counter}
           setopenDeleteToast={setopenDeleteToast}
-          openDeleteToast={openDeleteToast}
-          deleteloading={deleteloading}
         />
       )}
     </div>

@@ -1,20 +1,20 @@
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useContext, useState } from "react";
 import Button from "../Button/Button";
+import { AppContext } from "@/Context/AppContext";
+import { AppContextType } from "@/types";
 
 export default function DeleteModal(props: {
-  setDeleteModalMounted: Function;
-  handleDeleteModal: MouseEventHandler<HTMLButtonElement>;
-  openDeleteModal: boolean;
-  deleteHandle: Function;
   SelectedID: number[];
 }) {
+  const {
+    SelectedID,
+  } = props;
   const {
     setDeleteModalMounted,
     handleDeleteModal,
     openDeleteModal,
-    deleteHandle,
-    SelectedID,
-  } = props;
+    deleteHandle
+  } = useContext(AppContext) as AppContextType;
   const [deleteConfirm, setdeleteConfirm] = useState(false);
   const mountStyle = {
     animation: "deleteModalMount 200ms ease-in",

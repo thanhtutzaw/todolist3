@@ -1,16 +1,19 @@
+import { AppContext } from "@/Context/AppContext";
+import SelectModal from "@/components/Elements/Modals/SelectModal";
 import useFirestoreData from "@/hooks/useFirestoreData";
 import usePrevent from "@/hooks/usePrevent";
 import useSelect from "@/hooks/useSelect";
 import { auth } from "@/lib/firebase";
 import { addTodo } from "@/lib/firestore";
+import { AppContextType } from "@/types";
 import Button from "@Elements/Button/Button";
 import DeleteModal from "@Elements/Modals/DeleteModal";
-import SelectModal from "@/components/Elements/Modals/SelectModal";
 import { onAuthStateChanged } from "firebase/auth";
 import React, {
   FormEventHandler,
   Suspense,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -27,10 +30,13 @@ const EditModal = React.lazy(() => import("@Elements/Modals/EditModal"));
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
   const todoRef = useRef<HTMLUListElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const editModalRef = useRef<HTMLDialogElement>(null);
-
+  const confirmModalRef = useRef<HTMLDialogElement>(null);
+  const [EditModalMounted, setEditModalMounted] = useState(false);
+  const [SelectModalMounted, setSelectModalMounted] = useState(false);
+  const { DeleteModalMounted } = useContext(AppContext) as AppContextType;
   const { todos, settodos, loading } = useFirestoreData();
   const { isPrevent, setisPrevent } = usePrevent();
   const {
@@ -44,22 +50,6 @@ export default function Home() {
 
   // const pendingOps = new Set();
 
-  const intervalRef = useRef<NodeJS.Timer | number | undefined>();
-  const [deleteloading, setloading] = useState(false);
-  const [openDeleteToast, setopenDeleteToast] = useState(false);
-  const [openDeleteModal, setopenDeleteModal] = useState(false);
-  // const [openSelectModal, setopenSelectModal] = useState(false);
-  const [SelectModalMounted, setSelectModalMounted] = useState(false);
-  const [canDelete, setcanDelete] = useState(true);
-  const [counter, setcounter] = useState(5);
-  const [DeleteToastMounted, setDeleteToastMounted] = useState(false);
-
-  function handleDeleteModal() {
-    setopenDeleteModal((prev) => !prev);
-    if (!openDeleteModal) {
-      setDeleteModalMounted(true);
-    }
-  }
   const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
       e.preventDefault();
@@ -69,30 +59,7 @@ export default function Home() {
   );
 
   // const intervalRef = useRef<number | undefined>();
-  useEffect(() => {
-    // const interval : string | number | NodeJS.Timeout | undefined | false =
-    if (counter > 1 && deleteloading && openDeleteToast) {
-      intervalRef.current = setInterval(() => {
-        setcounter((counter) => counter - 1);
-      }, 1000);
-    }
-    if (canDelete === false) {
-      clearInterval(intervalRef.current);
-      setcounter(5);
-    }
-    return () => {
-      setcounter(5);
-      clearInterval(intervalRef.current);
-    };
-  }, [deleteloading, openDeleteToast, canDelete]);
 
-  const deleteHandle = () => {
-    setopenDeleteModal(false);
-    setopenDeleteToast(true);
-    setDeleteToastMounted(true);
-    setloading(true);
-    let deleteTime;
-  };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
@@ -106,8 +73,6 @@ export default function Home() {
 
   const selecting = selectCount && SelectedID.length !== 0;
 
-  const [mounted, setmounted] = useState(false);
-  const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
   useEffect(() => {
     const selecting = selectCount && SelectedID.length !== 0;
     function handleEscape(e: KeyboardEvent) {
@@ -117,7 +82,7 @@ export default function Home() {
       }
     }
     if (selecting) {
-      setmounted(true)
+      setEditModalMounted(true);
       setSelectModalMounted(true);
       window.addEventListener("keyup", handleEscape);
     } else {
@@ -131,24 +96,6 @@ export default function Home() {
       }
     };
   }, [selecting, SelectModalMounted]);
-  // useEffect(() => {
-  //   // function handleEscape(e: KeyboardEvent) {
-  //   //   if (e.key === "Escape") {
-  //   //     clearSelect();
-  //   //     setisPrevent(false);
-  //   //   }
-  //   // }
-  //   if (selectCount && SelectedID.length !== 0) {
-  //     setmounted(true);
-
-  //   }
-  //     // window.addEventListener("keyup", handleEscape);
-  //   // return () => {
-  //   //   if (selecting) {
-  //   //     window.removeEventListener("keyup", handleEscape);
-  //   //   }
-  //   // };
-  // }, [selecting ,SelectedID.length, selectCount, mounted]);
 
   const todo = todos.find((t) => t.id === SelectedID.toString());
 
@@ -163,7 +110,6 @@ export default function Home() {
   function openEditModal() {
     editModalRef.current?.showModal();
   }
-  const confirmModalRef = useRef<HTMLDialogElement>(null);
   const mountStyle = {
     animation: "selectMount 200ms ease-in",
   };
@@ -174,18 +120,9 @@ export default function Home() {
     <main>
       <Toast
         todoRef={todoRef}
-        counter={counter}
-        canDelete={canDelete}
         SelectedID={SelectedID}
-        setloading={setloading}
         clearSelect={clearSelect}
         setisPrevent={setisPrevent}
-        setcanDelete={setcanDelete}
-        deleteloading={deleteloading}
-        openDeleteToast={openDeleteToast}
-        DeleteToastMounted={DeleteToastMounted}
-        setopenDeleteToast={setopenDeleteToast}
-        setDeleteToastMounted={setDeleteToastMounted}
       />
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <Button className="btn">
@@ -194,21 +131,17 @@ export default function Home() {
       </a>
       {SelectModalMounted && (
         <SelectModal
-          // setSelectModalMounted={setSelectModalMounted}
           openEditModal={openEditModal}
-          handleDeleteModal={handleDeleteModal}
-          deleteloading={deleteloading}
           setisPrevent={setisPrevent}
           clearSelect={clearSelect}
           SelectedID={SelectedID}
           selecting={selecting}
           mountStyle={mountStyle}
           unmountStyle={unmountStyle}
-          setmounted={setmounted}
         />
       )}
 
-      {mounted && (
+      {EditModalMounted && (
         <dialog
           onClick={(e) => {
             const dialog = document.querySelector("dialog");
@@ -233,21 +166,11 @@ export default function Home() {
               clearSelect={clearSelect}
               closeEditModal={closeEditModal}
               todo={todo}
-              // todo={todos.find((t) => t.id === SelectedID.toString())}
-              // editInput={editInput}
             />
           </Suspense>
         </dialog>
       )}
-      {DeleteModalMounted && (
-        <DeleteModal
-          setDeleteModalMounted={setDeleteModalMounted}
-          openDeleteModal={openDeleteModal}
-          handleDeleteModal={handleDeleteModal}
-          deleteHandle={deleteHandle}
-          SelectedID={SelectedID}
-        />
-      )}
+      {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
       <Header selecting={selecting} todoLength={todos.length} />
 

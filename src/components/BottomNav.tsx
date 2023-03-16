@@ -5,7 +5,6 @@ import { FormEventHandler, RefObject } from "react";
 export default function BottomNav(props: {
   inputRef: RefObject<HTMLInputElement>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
-  // handleSubmit: any
   selectCount: boolean;
 }) {
   const { inputRef, handleSubmit, selectCount } = props;

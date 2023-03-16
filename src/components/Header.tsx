@@ -26,7 +26,6 @@ export default function Header(props: {
         navigate("/login");
       })
       .catch((err) => {
-        // alert("Signout Error ! ", err);
         console.error("Signout Error ! ", err.message);
       });
   };
