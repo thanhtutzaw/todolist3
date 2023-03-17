@@ -19,57 +19,56 @@ export default function DeleteModal(props: { SelectedID: number[] }) {
   };
   const unmountModal = {
     animation: "deleteModalUnmount 300ms ease-out",
-    animationFillMode:'forwards'
+    animationFillMode: "forwards",
   };
-  const confirmAnimation = {
-    animation: "confirmAnimation 300ms ease-out",
-    animationFillMode:'forwards'
+  const DeleteConfirmAnimation = {
+    animation: "DeleteConfirmAnimation 300ms ease-out",
+    animationFillMode: "forwards",
   };
   const length = SelectedID.length;
   const isPlural = length > 1;
   return (
-    DeleteModalMounted &&
-    <div
-      style={
-        openDeleteModal
-          ? mountModal
-          : deleteConfirm
-          ? confirmAnimation
-          : unmountModal
-      }
-      className="deleteConfirmModal"
-      onAnimationEnd={() => {
-        if (!openDeleteModal) {
-          setDeleteModalMounted(false);
-          // setopenDeleteModal(false)
+    DeleteModalMounted && (
+      <div
+        style={
+          openDeleteModal
+            ? mountModal
+            : deleteConfirm
+            ? DeleteConfirmAnimation
+            : unmountModal
         }
-      }}
-    >
-      <p>{`Are you sure you wish to delete ${
-        isPlural ? "these" : "this"
-      } ${length} ${isPlural ? "items" : "item"}?`}</p>
-      <div className="actions">
-        <Button
-          onClick={() => {
-            deleteHandle();
-            setdeleteConfirm(true);
-          }}
-          theme="danger"
-        >
-          Ok
-        </Button>
+        className="deleteConfirmModal"
+        onAnimationEnd={() => {
+          if (!openDeleteModal) {
+            setDeleteModalMounted(false);
+            // setopenDeleteModal(false)
+          }
+        }}
+      >
+        <p>{`Are you sure you wish to delete ${
+          isPlural ? "these" : "this"
+        } ${length} ${isPlural ? "items" : "item"}?`}</p>
+        <div className="actions">
+          <Button
+            onClick={() => {
+              deleteHandle();
+              setdeleteConfirm(true);
+            }}
+            theme="danger"
+          >
+            Ok
+          </Button>
 
-        <Button
-          onClick={() => {
-            setopenDeleteModal(false);
-          }}
-          theme="secondary"
-        >
-          Cancel
-        </Button>
+          <Button
+            onClick={() => {
+              setopenDeleteModal(false);
+            }}
+            theme="secondary"
+          >
+            Cancel
+          </Button>
+        </div>
       </div>
-    </div> 
-        
-        
+    )
   );
 }

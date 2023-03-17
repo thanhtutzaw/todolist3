@@ -260,7 +260,7 @@ header,
   }
 }
 
-@keyframes confirmAnimation {
+@keyframes DeleteConfirmAnimation {
 
   40% {
     background-color: transparent;
