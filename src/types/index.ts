@@ -8,6 +8,7 @@ export type AppContextType = {
   openDeleteToast: boolean;
   DeleteModalMounted: boolean;
   DeleteToastMounted: boolean;
+  setopenDeleteModal: Function;
   setloading: Function;
   deleteHandle: Function;
   setcanDelete: Function;
@@ -15,5 +16,5 @@ export type AppContextType = {
   setDeleteModalMounted: Function;
   setDeleteToastMounted: Function;
   handleDeleteModal: MouseEventHandler<HTMLButtonElement>;
-  editModalRef:RefObject<HTMLDialogElement>
+  editModalRef: RefObject<HTMLDialogElement>;
 };

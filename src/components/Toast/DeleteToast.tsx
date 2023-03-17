@@ -1,22 +1,18 @@
+import { AppContext } from "@/Context/AppContext";
+import { AppContextType } from "@/types";
 import Button from "@Elements/Button/Button";
+import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { GrClose } from "react-icons/gr";
 import s from "./Toast.module.css";
-import { useContext } from "react";
-import { AppContext } from "@/Context/AppContext";
-import { AppContextType } from "@/types";
 type DeleteToastItemProps = {
   canDelete: boolean;
   setopenDeleteToast: Function;
   setcanDelete: Function;
 };
 
-export default function DeleteToastItem(props: DeleteToastItemProps) {
-  const {
-    setcanDelete,
-    canDelete,
-    setopenDeleteToast,
-  } = props;
+export default function DeleteToast(props: DeleteToastItemProps) {
+  const { setcanDelete, canDelete, setopenDeleteToast } = props;
 
   const {
     undoCount,
@@ -58,38 +54,40 @@ export default function DeleteToastItem(props: DeleteToastItemProps) {
           ? deleteloading
             ? enterDeleteToast
             : LoadingToastOpen
-          : deleteloading
+          : !canDelete
           ? cancelDeleteToast
           : exitDeleteToast
       }
-      className={s.toast}
+      className={s.deleteToast}
     >
-      {deleteloading ? (
-        canDelete ? (
-          <>
-            <p>Deleting {!deleteloading ? `... ` : `in ${undoCount}s`}</p>
-            <Button theme="secondary" onClick={handleUndo} className={s.undoBtn}>
-              Undo
-            </Button>
-          </>
-        ) : (
-          <>
-            <p>Canceled</p>
-          </>
-        )
-      ) : (
-        <>
-          <p>Deleted</p>
-          <IconContext.Provider value={{ className: "global-class-name" }}>
-            <GrClose
-              className="closeSelectBtn"
-              onClick={() => {
-                setopenDeleteToast(false);
-              }}
-            />
-          </IconContext.Provider>
-        </>
-      )}
+      {!canDelete && !deleteloading && <p>Canceled</p>}
+      {deleteloading
+        ? canDelete && (
+            <>
+              <p>Deleting {`in ${undoCount}s`}</p>
+              <Button
+                theme="secondary"
+                onClick={handleUndo}
+                className={s.undoBtn}
+              >
+                Undo
+              </Button>
+            </>
+          )
+        : canDelete &&
+          !deleteloading && (
+            <>
+              <p>Deleted</p>
+              <IconContext.Provider value={{ className: "global-class-name" }}>
+                <GrClose
+                  className="closeSelectBtn"
+                  onClick={() => {
+                    setopenDeleteToast(false);
+                  }}
+                />
+              </IconContext.Provider>
+            </>
+          )}
     </div>
   );
 }

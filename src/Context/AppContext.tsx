@@ -9,11 +9,10 @@ import {
 
 export const AppContext = createContext<AppContextType | null>(null);
 export function AppProvider({ children }: PropsWithChildren) {
-  const [canDelete, setcanDelete] = useState(true);
-
   const editModalRef = useRef<HTMLDialogElement>(null);
 
   const [undoCount, setundoCount] = useState(5);
+  const [canDelete, setcanDelete] = useState(true);
   const [deleteloading, setloading] = useState(false);
   const [openDeleteToast, setopenDeleteToast] = useState(false);
   const [DeleteToastMounted, setDeleteToastMounted] = useState(false);
@@ -41,6 +40,7 @@ export function AppProvider({ children }: PropsWithChildren) {
   function handleDeleteModal() {
     setopenDeleteModal((prev) => !prev);
     if (!openDeleteModal) {
+      // setopenDeleteModal(true);
       setDeleteModalMounted(true);
     }
   }
@@ -62,6 +62,7 @@ export function AppProvider({ children }: PropsWithChildren) {
         openDeleteToast,
         handleDeleteModal,
         DeleteToastMounted,
+        setopenDeleteModal,
         setDeleteToastMounted,
         DeleteModalMounted,
         setDeleteModalMounted,

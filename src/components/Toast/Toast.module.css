@@ -13,13 +13,13 @@
     align-items        : center;
 }
 
-/* .toast[open] { */
+/* .deleteToast[open] { */
 /* transform: translateY(0px); */
 /* transform       : translateY(0);
     background-color   : rgba(124, 9, 9, 0.514); */
 /* } */
 
-.toast {
+.deleteToast {
     position                          : absolute;
     /* max-width                      : 300px;
     min-width                         : 200px; */
@@ -86,7 +86,7 @@
     padding: 1rem;
 }
 
-.toast>p {
+.deleteToast>p {
     /* border: 3px solid blue; */
     /* position: relative; */
 }
@@ -102,7 +102,7 @@
 }
 */
 
-.toast {
+.deleteToast {
     display        : flex;
     justify-content: space-between;
     align-items    : center;

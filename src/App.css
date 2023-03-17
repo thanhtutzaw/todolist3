@@ -12,18 +12,19 @@
 
 img,
 .btn,
-nav {
+nav,
+button {
   user-select: none;
 }
 
 .btn,
+button,
 .add-btn,
 .todo-checkbox,
 .todo-checkbox-fill,
 .todo-label {
   cursor: pointer;
 }
-
 
 body {
   height          : 100%;
@@ -43,8 +44,13 @@ main {
   overflow        : hidden;
 }
 
-button {
-  cursor: pointer;
+.empty {
+  opacity    : .3;
+  position   : absolute;
+  top        : 50%;
+  right      : 50%;
+  transform  : translate(50%, -50%);
+  user-select: none;
 }
 
 main>a>button {
@@ -52,10 +58,9 @@ main>a>button {
 }
 
 .disabled {
-  opacity          : .4;
-  user-select      : none;
-  /* pointer-events: none; */
-  cursor           : not-allowed !important;
+  opacity    : .4;
+  user-select: none;
+  cursor     : not-allowed !important;
 }
 
 .row {
@@ -112,7 +117,7 @@ main>a>button {
 
 }
 
-.deleteConfirmActions {
+.deleteConfirmModal>.actions {
   display        : flex;
   flex           : 1;
   justify-content: flex-end;
@@ -255,10 +260,9 @@ header,
   }
 }
 
-@keyframes deleteConfirmStyle {
+@keyframes confirmAnimation {
 
   40% {
-
     background-color: transparent;
   }
 

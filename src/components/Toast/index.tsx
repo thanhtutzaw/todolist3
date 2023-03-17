@@ -1,9 +1,9 @@
+import { AppContext } from "@/Context/AppContext";
+import { AppContextType } from "@/types";
 import { RefObject, useContext, useEffect } from "react";
 import { deleteMultipleTodo } from "../../lib/firestore";
 import s from "./Toast.module.css";
-import DeleteToastItem from "./DeleteToastItem";
-import { AppContext } from "@/Context/AppContext";
-import { AppContextType } from "@/types";
+import DeleteToast from "./DeleteToast";
 export default function Toast(props: {
   todoRef: RefObject<HTMLUListElement>;
   setisPrevent: Function;
@@ -26,9 +26,9 @@ export default function Toast(props: {
     if (DeleteToastMounted) {
       if (canDelete === false) {
         console.log("false and cancel Delect");
-        setopenDeleteToast(false);
         clearSelect();
         setisPrevent(false);
+        setopenDeleteToast(false);
         clearTimeout(deleteTime);
       }
       deleteTime = setTimeout(
@@ -52,7 +52,7 @@ export default function Toast(props: {
       className={s.toastContainer}
     >
       {DeleteToastMounted && (
-        <DeleteToastItem
+        <DeleteToast
           canDelete={canDelete}
           setcanDelete={setcanDelete}
           setopenDeleteToast={setopenDeleteToast}

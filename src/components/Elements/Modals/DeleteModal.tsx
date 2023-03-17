@@ -1,51 +1,54 @@
-import { MouseEventHandler, useContext, useState } from "react";
-import Button from "../Button/Button";
 import { AppContext } from "@/Context/AppContext";
 import { AppContextType } from "@/types";
+import { useContext, useState } from "react";
+import Button from "../Button/Button";
 
-export default function DeleteModal(props: {
-  SelectedID: number[];
-}) {
+export default function DeleteModal(props: { SelectedID: number[] }) {
+  const { SelectedID } = props;
   const {
-    SelectedID,
-  } = props;
-  const {
+    DeleteModalMounted,
     setDeleteModalMounted,
     handleDeleteModal,
+    setopenDeleteModal,
     openDeleteModal,
-    deleteHandle
+    deleteHandle,
   } = useContext(AppContext) as AppContextType;
   const [deleteConfirm, setdeleteConfirm] = useState(false);
-  const mountStyle = {
-    animation: "deleteModalMount 200ms ease-in",
+  const mountModal = {
+    animation: "deleteModalMount 300ms ease-in",
   };
-  const deleteConfirmStyle = {
-    animation: "deleteConfirmStyle 300ms ease-out",
+  const unmountModal = {
+    animation: "deleteModalUnmount 300ms ease-out",
+    animationFillMode:'forwards'
   };
-  const unmountStyle = {
-    animation: "deleteModalUnmount 200ms ease-out",
+  const confirmAnimation = {
+    animation: "confirmAnimation 300ms ease-out",
+    animationFillMode:'forwards'
   };
   const length = SelectedID.length;
+  const isPlural = length > 1;
   return (
+    DeleteModalMounted &&
     <div
       style={
         openDeleteModal
-          ? mountStyle
+          ? mountModal
           : deleteConfirm
-          ? deleteConfirmStyle
-          : unmountStyle
+          ? confirmAnimation
+          : unmountModal
       }
       className="deleteConfirmModal"
       onAnimationEnd={() => {
         if (!openDeleteModal) {
           setDeleteModalMounted(false);
+          // setopenDeleteModal(false)
         }
       }}
     >
       <p>{`Are you sure you wish to delete ${
-        length > 1 ? "these" : "this"
-      } ${length} ${length > 1 ? "items" : "item"}?`}</p>
-      <div className="deleteConfirmActions">
+        isPlural ? "these" : "this"
+      } ${length} ${isPlural ? "items" : "item"}?`}</p>
+      <div className="actions">
         <Button
           onClick={() => {
             deleteHandle();
@@ -56,10 +59,17 @@ export default function DeleteModal(props: {
           Ok
         </Button>
 
-        <Button onClick={handleDeleteModal} theme="secondary">
+        <Button
+          onClick={() => {
+            setopenDeleteModal(false);
+          }}
+          theme="secondary"
+        >
           Cancel
         </Button>
       </div>
-    </div>
+    </div> 
+        
+        
   );
 }

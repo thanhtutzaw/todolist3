@@ -9,8 +9,10 @@ import { AppContextType } from "@/types";
 import Button from "@Elements/Button/Button";
 import DeleteModal from "@Elements/Modals/DeleteModal";
 import { onAuthStateChanged } from "firebase/auth";
+
 import React, {
   FormEventHandler,
+  MouseEvent,
   Suspense,
   useCallback,
   useContext,
@@ -37,7 +39,7 @@ export default function Home() {
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
 
-  const { DeleteModalMounted, editModalRef } = useContext(
+  const { DeleteModalMounted, openDeleteModal, editModalRef } = useContext(
     AppContext
   ) as AppContextType;
   const { todos, settodos, loading } = useFirestoreData();
@@ -138,20 +140,7 @@ export default function Home() {
       )}
 
       {EditModalMounted && (
-        <dialog
-          onClick={(e) => {
-            const dialog = document.querySelector("dialog");
-            if (e.target === dialog) {
-              if (text !== todo?.text) {
-                confirmModalRef.current?.showModal();
-              } else {
-                closeEditModal();
-              }
-            }
-          }}
-          id="editModal"
-          ref={editModalRef}
-        >
+        <dialog onClick={confirmEditModal} id="editModal" ref={editModalRef}>
           <Suspense fallback={renderLoader()}>
             <EditModal
               confirmModalRef={confirmModalRef}
@@ -165,7 +154,8 @@ export default function Home() {
           </Suspense>
         </dialog>
       )}
-      {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
+      {/* {openDeleteModal && <DeleteModal SelectedID={SelectedID} />} */}
+      <DeleteModal SelectedID={SelectedID} />
 
       <Header selecting={selecting} todoLength={todos.length} />
 
@@ -173,7 +163,6 @@ export default function Home() {
         {SelectedID.length === 1 && selectCount && (
           <button onClick={selectAll}>Select All</button>
         )}
-
         {SelectedID.length >= 2 && (
           <button onClick={clearSelect}>Deselect All</button>
         )}
@@ -188,37 +177,22 @@ export default function Home() {
             {loading && <Skeleton className={"loading"} count={10} />}
           </SkeletonTheme>
           {!loading &&
-            todos.map((todo, index) => {
-              if (todos.length !== 0) {
-                return (
-                  <Todolist
-                    isPrevent={isPrevent}
-                    setisPrevent={setisPrevent}
-                    todos={todos}
-                    setselectCount={setselectCount}
-                    SelectedID={SelectedID}
-                    setSelectedID={setSelectedID}
-                    todo={todo}
-                    key={index}
-                  />
-                );
-              } else {
-                return (
-                  <p
-                    style={{
-                      opacity: ".3",
-                      position: "absolute",
-                      top: "50%",
-                      right: "50%",
-                      transform: "translate(50% , -50%)",
-                      userSelect: "none",
-                    }}
-                  >
-                    Empty!
-                  </p>
-                );
-              }
-            })}
+            todos.map((todo, index) =>
+              todos.length !== 0 ? (
+                <Todolist
+                  isPrevent={isPrevent}
+                  setisPrevent={setisPrevent}
+                  todos={todos}
+                  setselectCount={setselectCount}
+                  SelectedID={SelectedID}
+                  setSelectedID={setSelectedID}
+                  todo={todo}
+                  key={index}
+                />
+              ) : (
+                <p className="empty">Empty!</p>
+              )
+            )}
         </ul>
       </section>
 
@@ -229,4 +203,15 @@ export default function Home() {
       />
     </main>
   );
+
+  function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
+    const dialog = document.querySelector("dialog");
+    if (e.target === dialog) {
+      if (text !== todo?.text) {
+        confirmModalRef.current?.showModal();
+      } else {
+        closeEditModal();
+      }
+    }
+  }
 }
