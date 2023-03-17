@@ -7,8 +7,7 @@ export default function ConfirmModal(props: {
   const { closeEditModal, closeConfirm } = props;
   return (
     <div className="confirmModal">
-      <p style={{ fontWeight: "500", fontSize: "22px" }}>Discard Changes ?</p>
-      <div>
+      <p>Discard Changes ?</p>
         <button className="btn keepEditingBtn" onClick={closeConfirm}>
           Keep Editing
         </button>
@@ -21,7 +20,6 @@ export default function ConfirmModal(props: {
         >
           Discard
         </button>
-      </div>
     </div>
   );
 }

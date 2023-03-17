@@ -273,7 +273,7 @@ header,
   }
 }
 
-@keyframes exitDeleteToast {
+@keyframes unmountDeleteToast {
   from {}
 
   to {
@@ -281,7 +281,7 @@ header,
   }
 }
 
-@keyframes cancelDeleteToast {
+@keyframes undoDeleteAnimation {
   from {
     transform: translateY(0px);
     max-width: 300px;
@@ -298,7 +298,7 @@ header,
 }
 
 
-@keyframes LoadingToastOpen {
+@keyframes deletingAnimation {
   from {
     max-width    : 300px;
     border-radius: .5rem;
@@ -312,7 +312,7 @@ header,
   }
 }
 
-@keyframes enterDeleteToast {
+@keyframes mountDeleteToast {
   from {
     transform: translateY(164px);
     max-width: 0px;
@@ -511,6 +511,13 @@ html[theme="dark"] .react-loading-skeleton {
   border                : 1px solid rgba(255, 255, 255, 0.3);
   box-shadow            : 0px 4px 20px rgba(102, 102, 102, 0.267);
   /* box-shadow         : 0 4px 30px rgba(0, 0, 0, 0.1); */
+}
+
+.confirmModal>p {
+  font-weight: 500;
+  font-size  : 1rem;
+  text-align : center;
+  user-select: none;
 }
 
 li.todo {

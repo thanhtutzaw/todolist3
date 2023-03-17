@@ -13,19 +13,19 @@ export default function Toast(props: {
   const { SelectedID, todoRef, setisPrevent, clearSelect } = props;
   const {
     DeleteToastMounted,
-    canDelete,
-    setcanDelete,
+    cancelDelete,
+    setcancelDelete,
     setopenDeleteToast,
     setloading,
   } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     let deleteTime: NodeJS.Timeout | undefined;
     if (DeleteToastMounted === false) {
-      setcanDelete(true);
+      setcancelDelete(true);
     }
     if (DeleteToastMounted) {
-      if (canDelete === false) {
-        console.log("false and cancel Delect");
+      if (cancelDelete === false) {
+        console.info("%cUndo Delete ✔️", "color:grey");
         clearSelect();
         setisPrevent(false);
         setopenDeleteToast(false);
@@ -33,7 +33,7 @@ export default function Toast(props: {
       }
       deleteTime = setTimeout(
         deleteMultipleTodo(
-          setcanDelete,
+          setcancelDelete,
           setopenDeleteToast,
           setloading,
           setisPrevent,
@@ -45,19 +45,13 @@ export default function Toast(props: {
       );
     }
     return () => clearTimeout(deleteTime);
-  }, [canDelete, DeleteToastMounted]);
+  }, [cancelDelete, DeleteToastMounted]);
   return (
     <div
       style={{ visibility: DeleteToastMounted ? "visible" : "hidden" }}
       className={s.toastContainer}
     >
-      {DeleteToastMounted && (
-        <DeleteToast
-          canDelete={canDelete}
-          setcanDelete={setcanDelete}
-          setopenDeleteToast={setopenDeleteToast}
-        />
-      )}
+      {DeleteToastMounted && <DeleteToast />}
     </div>
   );
 }

@@ -5,14 +5,15 @@ import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { GrClose } from "react-icons/gr";
 import s from "./Toast.module.css";
-type DeleteToastItemProps = {
-  canDelete: boolean;
-  setopenDeleteToast: Function;
-  setcanDelete: Function;
-};
-
-export default function DeleteToast(props: DeleteToastItemProps) {
-  const { setcanDelete, canDelete, setopenDeleteToast } = props;
+// type DeleteToastItemProps = {
+//   canDelete: boolean;
+//   setopenDeleteToast: Function;
+//   setcanDelete: Function;
+// };
+export default function DeleteToast() {
+  const { setcancelDelete, cancelDelete, setopenDeleteToast } = useContext(
+    AppContext
+  ) as AppContextType;
 
   const {
     undoCount,
@@ -21,27 +22,35 @@ export default function DeleteToast(props: DeleteToastItemProps) {
     openDeleteToast,
     setDeleteToastMounted,
   } = useContext(AppContext) as AppContextType;
-  const enterDeleteToast = {
+
+  const mountDeleteToast = {
     transformStyle: "preserve-3d",
-    animation: "enterDeleteToast .4s ease-in-out",
+    animation: "mountDeleteToast .4s ease-in-out",
   };
-  const cancelDeleteToast = {
-    animation: "cancelDeleteToast .4s ease-in-out",
+  const undoDeleteAnimation = {
+    animation: "undoDeleteAnimation .4s ease-in-out forwards",
   };
-  const LoadingToastOpen = {
+  const deletingAnimation = {
     borderRadius: "1rem",
     maxWidth: "200px",
-    animation: "LoadingToastOpen .2s ease",
+    animation: "deletingAnimation .2s ease forwards",
   };
-  const exitDeleteToast = {
+  const unmountDeleteToast = {
     maxWidth: "200px",
     borderRadius: "1rem",
-    animation: "exitDeleteToast .2s ease-out",
+    animation: "unmountDeleteToast .2s ease-out forwards",
   };
   function handleUndo() {
-    setcanDelete(false);
+    setcancelDelete(false);
     setloading(false);
   }
+  const animationState = openDeleteToast
+    ? deleteloading
+      ? mountDeleteToast
+      : deletingAnimation
+    : deleteloading
+    ? undoDeleteAnimation
+    : unmountDeleteToast;
   return (
     <div
       onAnimationEnd={() => {
@@ -49,20 +58,12 @@ export default function DeleteToast(props: DeleteToastItemProps) {
           setDeleteToastMounted(false);
         }
       }}
-      style={
-        openDeleteToast
-          ? deleteloading
-            ? enterDeleteToast
-            : LoadingToastOpen
-          : !canDelete
-          ? cancelDeleteToast
-          : exitDeleteToast
-      }
+      style={animationState}
       className={s.deleteToast}
     >
-      {!canDelete && !deleteloading && <p>Canceled</p>}
+      {!cancelDelete && !deleteloading && <p>Canceled</p>}
       {deleteloading
-        ? canDelete && (
+        ? cancelDelete && (
             <>
               <p>Deleting {`in ${undoCount}s`}</p>
               <Button
@@ -74,7 +75,7 @@ export default function DeleteToast(props: DeleteToastItemProps) {
               </Button>
             </>
           )
-        : canDelete &&
+        : cancelDelete &&
           !deleteloading && (
             <>
               <p>Deleted</p>

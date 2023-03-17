@@ -41,7 +41,6 @@ export default function DeleteModal(props: { SelectedID: number[] }) {
         onAnimationEnd={() => {
           if (!openDeleteModal) {
             setDeleteModalMounted(false);
-            // setopenDeleteModal(false)
           }
         }}
       >
@@ -62,6 +61,7 @@ export default function DeleteModal(props: { SelectedID: number[] }) {
           <Button
             onClick={() => {
               setopenDeleteModal(false);
+              setdeleteConfirm(false)
             }}
             theme="secondary"
           >

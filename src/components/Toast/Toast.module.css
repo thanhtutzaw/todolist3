@@ -91,7 +91,7 @@
     /* position: relative; */
 }
 
-/* @keyframes exitDeleteToast {
+/* @keyframes unmountDeleteToast {
     from {
         transform: translateY(0px);
     }

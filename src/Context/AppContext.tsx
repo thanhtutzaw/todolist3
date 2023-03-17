@@ -12,7 +12,7 @@ export function AppProvider({ children }: PropsWithChildren) {
   const editModalRef = useRef<HTMLDialogElement>(null);
 
   const [undoCount, setundoCount] = useState(5);
-  const [canDelete, setcanDelete] = useState(true);
+  const [cancelDelete, setcancelDelete] = useState(true);
   const [deleteloading, setloading] = useState(false);
   const [openDeleteToast, setopenDeleteToast] = useState(false);
   const [DeleteToastMounted, setDeleteToastMounted] = useState(false);
@@ -28,7 +28,7 @@ export function AppProvider({ children }: PropsWithChildren) {
         setundoCount((undoCount) => undoCount - 1);
       }, 1000);
     }
-    if (canDelete === false) {
+    if (cancelDelete === false) {
       clearInterval(intervalRef.current);
       setundoCount(5);
     }
@@ -36,7 +36,7 @@ export function AppProvider({ children }: PropsWithChildren) {
       setundoCount(5);
       clearInterval(intervalRef.current);
     };
-  }, [deleteloading, openDeleteToast, canDelete]);
+  }, [deleteloading, openDeleteToast, cancelDelete]);
   function handleDeleteModal() {
     setopenDeleteModal((prev) => !prev);
     if (!openDeleteModal) {
@@ -55,7 +55,7 @@ export function AppProvider({ children }: PropsWithChildren) {
     <AppContext.Provider
       value={{
         undoCount,
-        canDelete,
+        cancelDelete,
         setloading,
         deleteHandle,
         deleteloading,
@@ -68,7 +68,7 @@ export function AppProvider({ children }: PropsWithChildren) {
         setDeleteModalMounted,
         openDeleteModal,
         setopenDeleteToast,
-        setcanDelete,
+        setcancelDelete,
         editModalRef,
       }}
     >

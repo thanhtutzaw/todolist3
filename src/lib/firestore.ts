@@ -66,7 +66,7 @@ export function addTodo(
   });
 }
 export function deleteMultipleTodo(
-  setcanDelete: Function,
+  setcancelDelete: Function,
   setopenDeleteToast: Function,
   setloading: Function,
   setisPrevent: Function,
@@ -77,7 +77,7 @@ export function deleteMultipleTodo(
   return async () => {
     console.info("%cDeleting...", "color:grey");
     setloading(true);
-    setcanDelete(true);
+    setcancelDelete(true);
     setisPrevent(true);
     clearSelect();
     if (!db) {
@@ -112,8 +112,8 @@ export function deleteMultipleTodo(
       console.info("%cDeleted !", "color: green");
       setTimeout(async () => {
         setopenDeleteToast(false);
-        console.log("close Toast");
-        setcanDelete(true);
+        console.log("close Delete Toast");
+        setcancelDelete(true);
         setisPrevent(false);
       }, 1500);
     } catch (error: any) {
