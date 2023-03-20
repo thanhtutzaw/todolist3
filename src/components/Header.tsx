@@ -1,12 +1,12 @@
+import useIndexDB from "@/hooks/useIndexDB";
+import useTheme from "@/hooks/useTheme";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useIndexDB from "@/hooks/useIndexDB";
-import useTheme from "@/hooks/useTheme";
 import { HeaderDropDown } from "./HeaderDropDown";
 export default function Header(props: {
   selecting: boolean;
-  todoLength: number;
+  todoLength?: number;
 }) {
   const { selecting, todoLength } = props;
   const { userphoto, userName } = useIndexDB();
@@ -29,7 +29,7 @@ export default function Header(props: {
         console.error("Signout Error ! ", err.message);
       });
   };
-  const handleTools = () => {
+  const handleTools = () => {``
     if (!mounted) setmounted(true);
     setopentools((prevstate) => !prevstate);
   };

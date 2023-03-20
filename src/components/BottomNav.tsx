@@ -1,6 +1,6 @@
-import { VscAdd } from "react-icons/vsc";
-import Button from "./Elements/Button/Button";
-import { FormEventHandler, RefObject } from "react";
+import { VscAdd } from 'react-icons/vsc';
+import Button from './Elements/Button/Button';
+import { FormEventHandler, RefObject } from 'react';
 
 export default function BottomNav(props: {
   inputRef: RefObject<HTMLInputElement>;
@@ -9,10 +9,7 @@ export default function BottomNav(props: {
 }) {
   const { inputRef, handleSubmit, selectCount } = props;
   return (
-    <nav
-      className="nav"
-      style={{ pointerEvents: selectCount ? "none" : "initial" }}
-    >
+    <nav className="nav" style={{ pointerEvents: selectCount ? 'none' : 'initial' }}>
       <form onSubmit={handleSubmit}>
         <input ref={inputRef} className="input-text" type="text" />
 

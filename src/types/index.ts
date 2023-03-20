@@ -1,4 +1,4 @@
-import { MouseEventHandler, RefObject } from "react";
+import { MouseEventHandler, RefObject } from 'react';
 
 export type AppContextType = {
   undoCount: number;
@@ -9,6 +9,8 @@ export type AppContextType = {
   DeleteModalMounted: boolean;
   DeleteToastMounted: boolean;
   setopenDeleteModal: Function;
+  isPrevent: boolean;
+  setisPrevent: Function;
   setloading: Function;
   deleteHandle: Function;
   setcancelDelete: Function;
@@ -18,3 +20,7 @@ export type AppContextType = {
   handleDeleteModal: MouseEventHandler<HTMLButtonElement>;
   editModalRef: RefObject<HTMLDialogElement>;
 };
+export interface todosProps {
+  id: string | number;
+  text?: string;
+}

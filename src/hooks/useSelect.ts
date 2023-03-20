@@ -1,6 +1,7 @@
+import { todosProps } from "@/types";
 import { useState } from "react";
 
-export default function useSelect(todos: string | any[]) {
+export default function useSelect(todos?: todosProps[] | null[]) {
   const [SelectedID, setSelectedID] = useState<any[]>([]);
   const [selectCount, setselectCount] = useState(false);
 
@@ -10,8 +11,10 @@ export default function useSelect(todos: string | any[]) {
   }
   function selectAll() {
     const items = [];
+    if(todos?.length === 0 || !todos) return;
+    // if(!todos || todos.length === 0 || todos === null) return;
     for (let i = 0; i < todos.length; i++) {
-      const id = todos[i].id;
+      const id = todos[i]?.id;
       items.push(id);
     }
     setSelectedID(items);

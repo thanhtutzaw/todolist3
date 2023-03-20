@@ -1,23 +1,20 @@
-import { AppContext } from "@/Context/AppContext";
-import { AppContextType } from "@/types";
-import { RefObject, useContext, useEffect } from "react";
-import { deleteMultipleTodo } from "../../lib/firestore";
-import s from "./Toast.module.css";
-import DeleteToast from "./DeleteToast";
+import { AppContext } from '@/Context/AppContext';
+import { AppContextType } from '@/types';
+import { RefObject, useContext, useEffect } from 'react';
+import { deleteMultipleTodo } from '../../lib/firestore';
+import DeleteToast from './DeleteToast';
+import s from './Toast.module.css';
+// import usePrevent from '@/hooks/usePrevent';
 export default function Toast(props: {
   todoRef: RefObject<HTMLUListElement>;
-  setisPrevent: Function;
+  // setisPrevent: Function;
   clearSelect: Function;
   SelectedID: number[];
 }) {
-  const { SelectedID, todoRef, setisPrevent, clearSelect } = props;
-  const {
-    DeleteToastMounted,
-    cancelDelete,
-    setcancelDelete,
-    setopenDeleteToast,
-    setloading,
-  } = useContext(AppContext) as AppContextType;
+  // const { SelectedID, todoRef, setisPrevent, clearSelect } = props;
+  const { SelectedID, todoRef,  clearSelect } = props;
+  const {setisPrevent, DeleteToastMounted, cancelDelete, setcancelDelete, setopenDeleteToast, setloading } =
+    useContext(AppContext) as AppContextType;
   useEffect(() => {
     let deleteTime: NodeJS.Timeout | undefined;
     if (DeleteToastMounted === false) {
@@ -25,7 +22,7 @@ export default function Toast(props: {
     }
     if (DeleteToastMounted) {
       if (cancelDelete === false) {
-        console.info("%cUndo Delete ✔️", "color:grey");
+        console.info('%cDelete Canceled ✔️', 'color:grey');
         clearSelect();
         setisPrevent(false);
         setopenDeleteToast(false);
@@ -48,7 +45,7 @@ export default function Toast(props: {
   }, [cancelDelete, DeleteToastMounted]);
   return (
     <div
-      style={{ visibility: DeleteToastMounted ? "visible" : "hidden" }}
+      style={{ visibility: DeleteToastMounted ? 'visible' : 'hidden' }}
       className={s.toastContainer}
     >
       {DeleteToastMounted && <DeleteToast />}

@@ -1,16 +1,9 @@
-import { AppContext } from "@/Context/AppContext";
-import { updateTodo } from "@/lib/firestore";
-import { AppContextType } from "@/types";
-import {
-  RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import ConfirmModal from "./ConfirmModal";
-import UpdatingModal from "./UpdatingModal";
+import { AppContext } from '@/Context/AppContext';
+import { updateTodo } from '@/lib/firestore';
+import { AppContextType } from '@/types';
+import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import ConfirmModal from './ConfirmModal';
+import UpdatingModal from './UpdatingModal';
 
 export default function EditModal(props: {
   todo: any;
@@ -18,27 +11,20 @@ export default function EditModal(props: {
   settext: Function;
   closeEditModal: Function;
   clearSelect: Function;
-  setisPrevent: Function;
+  // setisPrevent: Function;
   confirmModalRef: RefObject<HTMLDialogElement>;
 }) {
-  const {
-    confirmModalRef,
-    text,
-    settext,
-    todo,
-    closeEditModal,
-    clearSelect,
-    setisPrevent,
-  } = props;
+  const { confirmModalRef, text, settext, todo, closeEditModal, clearSelect } = props;
+
   // const actionButtonRef = useRef(null);
-  const { editModalRef } = useContext(AppContext) as AppContextType;
+  const { setisPrevent ,editModalRef } = useContext(AppContext) as AppContextType;
   const [loading, setloading] = useState(false);
   const UpdatingRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    const Updating = UpdatingRef.current;
+    const UpdateRef = UpdatingRef.current;
     // const actionButton = actionButtonRef.current;
-    if (Updating) {
-      loading ? Updating.showModal() : Updating.close();
+    if (UpdateRef) {
+      loading ? UpdateRef.showModal() : UpdateRef.close();
     }
 
     // function adjustSubmitButtonPosition() {
@@ -78,10 +64,7 @@ export default function EditModal(props: {
   return (
     <>
       <dialog id="confirmModal" ref={confirmModalRef}>
-        <ConfirmModal
-          closeConfirm={closeConfirm}
-          closeEditModal={closeEditModal}
-        />
+        <ConfirmModal closeConfirm={closeConfirm} closeEditModal={closeEditModal} />
       </dialog>
       <dialog ref={UpdatingRef} id="updating">
         <UpdatingModal />
@@ -89,8 +72,8 @@ export default function EditModal(props: {
       {todo && (
         <div
           style={{
-            pointerEvents: loading ? "none" : "auto",
-            userSelect: loading ? "none" : "unset",
+            pointerEvents: loading ? 'none' : 'auto',
+            userSelect: loading ? 'none' : 'unset',
           }}
           className="container"
           onClick={(e) => {
@@ -101,7 +84,7 @@ export default function EditModal(props: {
         >
           <form>
             <textarea
-              style={{ userSelect: loading ? "none" : "unset" }}
+              style={{ userSelect: loading ? 'none' : 'unset' }}
               value={text}
               ref={inputRef}
               onChange={(e) => {
@@ -125,7 +108,7 @@ export default function EditModal(props: {
 
               <button
                 onClick={() => {
-                  if (todo.id !== "undefined") {
+                  if (todo.id !== 'undefined') {
                     updateHandle();
                   }
                 }}

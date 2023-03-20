@@ -1,6 +1,6 @@
-import { MouseEventHandler, useCallback } from "react";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { RiLogoutBoxFill } from "react-icons/ri";
+import { MouseEventHandler, useCallback } from 'react';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { RiLogoutBoxFill } from 'react-icons/ri';
 type HeaderDropDownProps = {
   setmounted: Function;
   theme: string;
@@ -10,27 +10,26 @@ type HeaderDropDownProps = {
   logoutHandle: MouseEventHandler<HTMLDivElement>;
 };
 export const HeaderDropDown = (props: HeaderDropDownProps) => {
-  const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } =
-    props;
+  const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
   interface ToolsAnimate {
     animation: string;
     pointerEvents:
-      | "none"
-      | "initial"
-      | "inherit"
-      | "unset"
-      | "visiblePainted"
-      | "visibleFill"
-      | "visibleStroke"
-      | "visible";
+      | 'none'
+      | 'initial'
+      | 'inherit'
+      | 'unset'
+      | 'visiblePainted'
+      | 'visibleFill'
+      | 'visibleStroke'
+      | 'visible';
   }
   const enterTools: ToolsAnimate = {
-    animation: "enterTools 300ms ease-in",
-    pointerEvents: "initial",
+    animation: 'enterTools 300ms ease-in',
+    pointerEvents: 'initial',
   };
   const exitTools: ToolsAnimate = {
-    animation: "exitTools 500ms ease-in",
-    pointerEvents: "initial",
+    animation: 'exitTools 500ms ease-in',
+    pointerEvents: 'initial',
   };
   const toolsAnimate = opentools ? enterTools : exitTools;
   return (
@@ -46,13 +45,13 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
         <div className="tools-container">
           <div
             onClick={useCallback(() => {
-              setTheme((prev: string) => (prev === "light" ? "dark" : "light"));
+              setTheme((prev: string) => (prev === 'light' ? 'dark' : 'light'));
               setopentools(false);
               // console.log("callback running");
             }, [theme, opentools])}
             className="setting-item"
           >
-            {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+            {theme === 'light' ? <MdDarkMode /> : <MdLightMode />}
             <span>Theme</span>
           </div>
           <div className="setting-item" onClick={logoutHandle}>

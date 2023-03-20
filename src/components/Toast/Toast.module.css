@@ -41,15 +41,7 @@
     bottom                            : -647px; */
     height                            : 66px;
     font-size                         : 1rem;
-    /* transform                      : translateY(164px); */
-    /* transition                     : all .3s ease-in-out; */
-
-    /* transition         : all .4s ease-in-out; */
-    /* transition            : all .5s cubic-bezier(1, 0.05, 0.2, 0.71); */
-    padding: 1rem;
-
-    /* transform: translateY(164px); */
-
+    padding                           : .5rem;
 }
 
 .loading {
@@ -58,7 +50,6 @@
     align-items    : center;
     margin         : auto 0;
     margin         : auto;
-
     position                        : absolute;
     max-width                       : 100px;
     min-width                       : 200px;
@@ -87,6 +78,8 @@
 }
 
 .deleteToast>p {
+    /* margin-block: 1rem; */
+    /* margin:0 5px; */
     /* border: 3px solid blue; */
     /* position: relative; */
 }

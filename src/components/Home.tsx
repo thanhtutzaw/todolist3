@@ -1,14 +1,13 @@
-import { AppContext } from "@/Context/AppContext";
-import SelectModal from "@/components/Elements/Modals/SelectModal";
-import useFirestoreData from "@/hooks/useFirestoreData";
-import usePrevent from "@/hooks/usePrevent";
-import useSelect from "@/hooks/useSelect";
-import { auth } from "@/lib/firebase";
-import { addTodo } from "@/lib/firestore";
-import { AppContextType } from "@/types";
-import Button from "@Elements/Button/Button";
-import DeleteModal from "@Elements/Modals/DeleteModal";
-import { onAuthStateChanged } from "firebase/auth";
+import { AppContext } from '@/Context/AppContext';
+import DeleteModal from '@/components/Elements/Modal/DeleteModal';
+import SelectModal from '@/components/Elements/Modal/SelectModal';
+import useFirestoreData from '@/hooks/useFirestoreData';
+import useSelect from '@/hooks/useSelect';
+import { auth } from '@/lib/firebase';
+import { addTodo } from '@/lib/firestore';
+import { AppContextType } from '@/types';
+import Button from '@Elements/Button/Button';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import React, {
   FormEventHandler,
@@ -19,15 +18,14 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { CgChevronRightR } from "react-icons/cg";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
-import BottomNav from "./BottomNav";
-import Header from "./Header";
-import Toast from "./Toast";
-import Todolist from "./Todolist";
-const EditModal = React.lazy(() => import("@Elements/Modals/EditModal"));
+} from 'react';
+import { CgChevronRightR } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
+import BottomNav from './BottomNav';
+import Header from './Header';
+import { RenderTodoList } from './RenderTodoList';
+import Toast from './Toast';
+const EditModal = React.lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
@@ -39,19 +37,13 @@ export default function Home() {
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
 
-  const { DeleteModalMounted, openDeleteModal, editModalRef } = useContext(
+  const { DeleteModalMounted, editModalRef, setisPrevent} = useContext(
     AppContext
   ) as AppContextType;
-  const { todos, settodos, loading } = useFirestoreData();
-  const { isPrevent, setisPrevent } = usePrevent();
-  const {
-    SelectedID,
-    setSelectedID,
-    selectCount,
-    setselectCount,
-    clearSelect,
-    selectAll,
-  } = useSelect(todos);
+  const { todos, settodos } = useFirestoreData();
+  // const { isPrevent, setisPrevent } = usePrevent();
+  const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
+    useSelect(todos);
 
   // const pendingOps = new Set();
 
@@ -68,9 +60,9 @@ export default function Home() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/login");
+        navigate('/login');
       } else {
-        navigate("/");
+        navigate('/');
       }
     });
     return () => unsubscribe();
@@ -81,7 +73,7 @@ export default function Home() {
   useEffect(() => {
     const selecting = selectCount && SelectedID.length !== 0;
     function handleEscape(e: KeyboardEvent) {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         clearSelect();
         setisPrevent(false);
       }
@@ -89,7 +81,7 @@ export default function Home() {
     if (selecting) {
       setEditModalMounted(true);
       setSelectModalMounted(true);
-      window.addEventListener("keyup", handleEscape);
+      window.addEventListener('keyup', handleEscape);
     } else {
       setTimeout(() => {
         setSelectModalMounted(false);
@@ -97,12 +89,12 @@ export default function Home() {
     }
     return () => {
       if (selecting) {
-        window.removeEventListener("keyup", handleEscape);
+        window.removeEventListener('keyup', handleEscape);
       }
     };
   }, [selecting, SelectModalMounted]);
 
-  const todo = todos.find((t) => t.id === SelectedID.toString());
+  const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
 
   const [text, settext] = useState(todo?.text);
 
@@ -115,15 +107,20 @@ export default function Home() {
   function openEditModal() {
     editModalRef.current?.showModal();
   }
+  function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
+    const dialog = document.querySelector('dialog');
+    if (e.target === dialog) {
+      if (text !== todo?.text) {
+        confirmModalRef.current?.showModal();
+      } else {
+        closeEditModal();
+      }
+    }
+  }
 
   return (
     <main>
-      <Toast
-        todoRef={todoRef}
-        SelectedID={SelectedID}
-        clearSelect={clearSelect}
-        setisPrevent={setisPrevent}
-      />
+      <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
       <a className="btnParent" href="https://todolistzee.netlify.app">
         <Button className="btn">
           <CgChevronRightR />
@@ -132,7 +129,6 @@ export default function Home() {
       {SelectModalMounted && (
         <SelectModal
           openEditModal={openEditModal}
-          setisPrevent={setisPrevent}
           clearSelect={clearSelect}
           SelectedID={SelectedID}
           selecting={selecting}
@@ -146,7 +142,6 @@ export default function Home() {
               confirmModalRef={confirmModalRef}
               text={text}
               settext={settext}
-              setisPrevent={setisPrevent}
               clearSelect={clearSelect}
               closeEditModal={closeEditModal}
               todo={todo}
@@ -154,64 +149,26 @@ export default function Home() {
           </Suspense>
         </dialog>
       )}
-      {/* {openDeleteModal && <DeleteModal SelectedID={SelectedID} />} */}
-      <DeleteModal SelectedID={SelectedID} />
+      {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
-      <Header selecting={selecting} todoLength={todos.length} />
+      <Header selecting={selecting} todoLength={todos?.length} />
 
       <div className="selectionContainer">
-        {SelectedID.length === 1 && selectCount && (
-          <button onClick={selectAll}>Select All</button>
-        )}
-        {SelectedID.length >= 2 && (
-          <button onClick={clearSelect}>Deselect All</button>
-        )}
+        {SelectedID.length === 1 && selectCount && <button onClick={selectAll}>Select All</button>}
+        {SelectedID.length >= 2 && <button onClick={clearSelect}>Deselect All</button>}
       </div>
 
       <section className={`todo-parent row`}>
-        <ul
-          ref={todoRef}
-          style={{ userSelect: selectCount ? "none" : "initial" }}
-        >
-          <SkeletonTheme height="55px">
-            {loading && <Skeleton className={"loading"} count={10} />}
-          </SkeletonTheme>
-          {!loading &&
-            todos.map((todo, index) =>
-              todos.length !== 0 ? (
-                <Todolist
-                  isPrevent={isPrevent}
-                  setisPrevent={setisPrevent}
-                  todos={todos}
-                  setselectCount={setselectCount}
-                  SelectedID={SelectedID}
-                  setSelectedID={setSelectedID}
-                  todo={todo}
-                  key={index}
-                />
-              ) : (
-                <p className="empty">Empty!</p>
-              )
-            )}
-        </ul>
+        <RenderTodoList
+          todoRef={todoRef}
+          selectCount={selectCount}
+          setselectCount={setselectCount}
+          SelectedID={SelectedID}
+          setSelectedID={setSelectedID}
+        />
       </section>
 
-      <BottomNav
-        selectCount={selectCount}
-        inputRef={inputRef}
-        handleSubmit={handleSubmit}
-      />
+      <BottomNav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </main>
   );
-
-  function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
-    const dialog = document.querySelector("dialog");
-    if (e.target === dialog) {
-      if (text !== todo?.text) {
-        confirmModalRef.current?.showModal();
-      } else {
-        closeEditModal();
-      }
-    }
-  }
 }
