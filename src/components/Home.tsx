@@ -121,11 +121,7 @@ export default function Home() {
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
-      <a className="btnParent" href="https://todolistzee.netlify.app">
-        <Button className="btn">
-          <CgChevronRightR />
-        </Button>
-      </a>
+      
       {SelectModalMounted && (
         <SelectModal
           openEditModal={openEditModal}

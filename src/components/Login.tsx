@@ -47,12 +47,7 @@ export default function Login() {
       });
   };
   return (
-    <main>
-      <a className="btnParent" href="https://todolistzee.netlify.app">
-        <Button className="btn">
-          <CgChevronRightR />
-        </Button>
-      </a>
+    <main>      
       <Button onClick={signinHandle} style={loginStyle}>
         Google Sign-in
       </Button>

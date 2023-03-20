@@ -1,17 +1,16 @@
 :root {
-    --min-height           : 100dvh;
-    --background-primary   : white;
-    --background-gray      : rgb(236, 236, 236);
-    --text-primary         : rgb(28, 28, 65);
-    --main-color           : rgb(0, 158, 255);
-    --btn-text-primary     : rgb(255, 255, 255);
-    --btn-text-secondary   : rgb(5 140 192);
-    /* --btn-text-primary  : rgb(192, 74, 5); */
-    --shadow-primary       : 0 2px 10px 0px rgb(0 0 1 / 30%);
-    --shadow-secondary     : 0 2px 10px 0px rgba(48, 48, 48, 0.75);
-    --btn-blue             : rgb(51, 153, 255);
-    --modal-blur           : 6px;
-    --image-size           : 60px;
+    --min-height        : 100dvh;
+    --background-primary: white;
+    --background-gray   : rgb(236, 236, 236);
+    --text-primary      : rgb(28, 28, 65);
+    --main-color        : rgb(0, 158, 255);
+    --btn-text-primary  : rgb(255, 255, 255);
+    --btn-text-secondary: rgb(5 140 192);
+    --shadow-primary    : 0 2px 10px 0px rgb(0 0 1 / 30%);
+    --shadow-secondary  : 0 2px 10px 0px rgba(48, 48, 48, 0.75);
+    --btn-blue          : rgb(51, 153, 255);
+    --modal-blur        : 6px;
+    --image-size        : 60px;
 }
 
 html[theme="dark"] body {
@@ -35,7 +34,6 @@ html[theme="dark"] .setting-item:hover {
 }
 
 html[theme="dark"] .input-text {
-    /* background-color: rgb(12, 12, 12); */
     background-color: rgb(17 17 17);
     color           : white;
     box-shadow      : var(--shadow-secondary);

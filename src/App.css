@@ -678,18 +678,18 @@ ul li {
   opacity: .5;
 }
 
-.btnParent {
-  position: absolute;
-  top     : 0;
-  right   : 6px;
-}
-
 .btn {
   font-size       : 1.4rem;
   color           : rgb(0, 0, 0) !important;
   padding         : 0.7rem !important;
   background-color: transparent !important;
   border          : none;
+}
+
+.btn:hover {
+  /* opacity: .6; */
+  background-color: rgb(235, 235, 235) !important;
+  transition      : all .1s ease-out;
 }
 
 .btn:focus {
@@ -779,8 +779,6 @@ ul li {
 }
 
 .add-btn-parent {
-  right                      : 5%;
-  bottom                     : 0;
   background-color           : var(--btn-blue);
   border                     : none;
   padding                    : 1rem;

@@ -12,7 +12,7 @@ export default function ConfirmModal(props: {
           Keep Editing
         </button>
         <button
-          className="btn discardBtn"
+          className="btn discardBtn"  
           onClick={(e) => {
             closeConfirm(e);
             closeEditModal();

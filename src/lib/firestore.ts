@@ -6,10 +6,10 @@ import {
   updateDoc,
   writeBatch,
 } from 'firebase/firestore';
-import { RefObject, SetStateAction } from 'react';
+import { RefObject, SetStateAction, useContext } from 'react';
 import { auth, db } from './firebase';
-import { todosProps } from '@/types';
-
+import { AppContextType, todosProps } from '@/types';
+import { AppContext } from '@/Context/AppContext';
 export function addTodo(
   todoRef: RefObject<HTMLUListElement>,
   inputRef: RefObject<HTMLInputElement>,
