@@ -4,11 +4,8 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HeaderDropDown } from './HeaderDropDown';
-import { todosProps } from '@/types';
-import useFirestoreData from '@/hooks/useFirestoreData';
-export default function Header(props: { selecting: boolean }) {
-  const { selecting } = props;
-  const { todos } = useFirestoreData();
+export default function Header(props: { todoCount: number; selecting: boolean }) {
+  const { todoCount, selecting } = props;
   const { userphoto, userName } = useIndexDB();
   const { theme, setTheme } = useTheme();
 
@@ -30,14 +27,9 @@ export default function Header(props: { selecting: boolean }) {
       });
   };
   const handleTools = () => {
-    ``;
     if (!mounted) setmounted(true);
-    setopentools((prevstate) => !prevstate);
+    setopentools((prev) => !prev);
   };
-  // if(todos.length === 0) return;
-  // const todoCount = todos.completed === true && todos.length
-  // const todoCount = todos && todos.find((todo :todosProps) => todo.completed === true) 
-  const todoCount = todos.filter((todo) => todo.completed !== true);
 
   return (
     <>
@@ -45,7 +37,7 @@ export default function Header(props: { selecting: boolean }) {
         <div className="header-text">
           <h1>My tasks</h1>
           <p className="header-nobold">
-            {todoCount.length} tasks for <span>Today</span>
+            {todoCount} tasks for <span>Today</span>
           </p>
         </div>
         <div className="profile" onClick={handleTools}>

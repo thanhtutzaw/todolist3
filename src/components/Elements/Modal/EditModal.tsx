@@ -61,6 +61,7 @@ export default function EditModal(props: {
   function closeConfirm() {
     confirmModalRef.current?.close();
   }
+  const [eloading, setLoading] = useState(false)
   return (
     <>
       <dialog id="confirmModal" ref={confirmModalRef}>
@@ -83,41 +84,43 @@ export default function EditModal(props: {
           key={todo.id}
         >
           <form>
-            <textarea
-              style={{ userSelect: loading ? 'none' : 'unset' }}
-              value={text}
-              ref={inputRef}
-              onChange={(e) => {
-                settext(e.target.value);
-              }}
-              className="textarea"
-            />
-            <div className="editModalActions">
-              <button
-                onClick={() => {
-                  if (text !== todo.text) {
-                    confirmModalRef.current?.showModal();
-                  } else {
-                    closeEditModal();
-                  }
+            {/* {eloading&&<> */}
+              <textarea
+                style={{ userSelect: loading ? 'none' : 'unset' }}
+                value={text}
+                ref={inputRef}
+                onChange={(e) => {
+                  settext(e.target.value);
                 }}
-                className={`editCloseBtn`}
-              >
-                Close
-              </button>
+                className="textarea"
+              />
+              <div className="editModalActions">
+                <button
+                  onClick={() => {
+                    if (text !== todo.text) {
+                      confirmModalRef.current?.showModal();
+                    } else {
+                      closeEditModal();
+                    }
+                  }}
+                  className={`editCloseBtn`}
+                >
+                  Close
+                </button>
 
-              <button
-                onClick={() => {
-                  if (todo.id !== 'undefined') {
-                    updateHandle();
-                  }
-                }}
-                type="submit"
-                className="updateBtn"
-              >
-                Save
-              </button>
-            </div>
+                <button
+                  onClick={() => {
+                    if (todo.id !== 'undefined') {
+                      updateHandle();
+                    }
+                  }}
+                  type="submit"
+                  className="updateBtn"
+                >
+                  Save
+                </button>
+              </div>
+            {/* </>} */}
           </form>
         </div>
       )}

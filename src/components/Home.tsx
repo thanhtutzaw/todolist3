@@ -37,7 +37,7 @@ export default function Home() {
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
 
-  const { DeleteModalMounted, editModalRef, setisPrevent} = useContext(
+  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { todos, settodos } = useFirestoreData();
@@ -117,11 +117,12 @@ export default function Home() {
       }
     }
   }
-
+  const NotCompleteTodo = todos.filter((todo) => todo.completed !== true);
+  const todoCount = NotCompleteTodo.length;
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
-      
+
       {SelectModalMounted && (
         <SelectModal
           openEditModal={openEditModal}
@@ -143,11 +144,11 @@ export default function Home() {
               todo={todo}
             />
           </Suspense>
-        </dialog>
+        </dialog> 
       )}
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
-      <Header selecting={selecting} />
+      <Header todoCount={todoCount} selecting={selecting} />
 
       <div className="selectionContainer">
         {SelectedID.length === 1 && selectCount && <button onClick={selectAll}>Select All</button>}
