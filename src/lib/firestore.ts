@@ -57,6 +57,7 @@ export function addTodo(
     }
   });
 }
+
 export function deleteMultipleTodo(
   setcancelDelete: Function,
   setopenDeleteToast: Function,
@@ -127,7 +128,7 @@ export function updateTodo(
       throw new Error('User is not authenticated');
     }
     const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id);
-    const data = {
+    const newData = {
       ...todo,
       text,
     };
@@ -137,12 +138,12 @@ export function updateTodo(
 
       setisPrevent(true);
       try {
-        await updateDoc(collectionRef, data);
+        await updateDoc(collectionRef, newData);
         editModalRef.current?.close();
         console.info('%cUpdated ✔️', 'color:green');
         setloading(false);
-        clearSelect();
         setisPrevent(false);
+        clearSelect();
       } catch (error: any) {
         alert('Update Error ! ' + error.message);
       }

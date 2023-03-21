@@ -1,14 +1,14 @@
-import useIndexDB from "@/hooks/useIndexDB";
-import useTheme from "@/hooks/useTheme";
-import { getAuth, signOut } from "firebase/auth";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { HeaderDropDown } from "./HeaderDropDown";
-export default function Header(props: {
-  selecting: boolean;
-  todoLength?: number;
-}) {
-  const { selecting, todoLength } = props;
+import useIndexDB from '@/hooks/useIndexDB';
+import useTheme from '@/hooks/useTheme';
+import { getAuth, signOut } from 'firebase/auth';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HeaderDropDown } from './HeaderDropDown';
+import { todosProps } from '@/types';
+import useFirestoreData from '@/hooks/useFirestoreData';
+export default function Header(props: { selecting: boolean }) {
+  const { selecting } = props;
+  const { todos } = useFirestoreData();
   const { userphoto, userName } = useIndexDB();
   const { theme, setTheme } = useTheme();
 
@@ -23,23 +23,29 @@ export default function Header(props: {
   const logoutHandle = () => {
     signOut(auth)
       .then(() => {
-        navigate("/login");
+        navigate('/login');
       })
       .catch((err) => {
-        console.error("Signout Error ! ", err.message);
+        console.error('Signout Error ! ', err.message);
       });
   };
-  const handleTools = () => {``
+  const handleTools = () => {
+    ``;
     if (!mounted) setmounted(true);
     setopentools((prevstate) => !prevstate);
   };
+  // if(todos.length === 0) return;
+  // const todoCount = todos.completed === true && todos.length
+  // const todoCount = todos && todos.find((todo :todosProps) => todo.completed === true) 
+  const todoCount = todos.filter((todo) => todo.completed !== true);
+
   return (
     <>
-      <header style={{ paddingTop: selecting ? "2rem" : "" }}>
+      <header style={{ paddingTop: selecting ? '2rem' : '' }}>
         <div className="header-text">
           <h1>My tasks</h1>
           <p className="header-nobold">
-            {todoLength} tasks for <span>Today</span>
+            {todoCount.length} tasks for <span>Today</span>
           </p>
         </div>
         <div className="profile" onClick={handleTools}>
@@ -47,10 +53,10 @@ export default function Header(props: {
             <img
               className="header-image"
               src={userphoto && userphoto}
-              alt={userName ? `${userName}'s Profile` : ""}
+              alt={userName ? `${userName}'s Profile` : ''}
             />
           )}
-          {user && user.email === "testuser11@gmail.com" && (
+          {user && user.email === 'testuser11@gmail.com' && (
             <img
               alt="testUser Profile"
               className="header-image"

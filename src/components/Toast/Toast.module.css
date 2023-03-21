@@ -2,7 +2,6 @@
 
 .toastContainer {
     position           : fixed;
-    /* position        : absolute; */
     max-width          : 300px;
     inset              : 0;
     margin             : 0 auto;
@@ -12,89 +11,23 @@
     justify-content    : center;
     align-items        : center;
 }
-
-/* .deleteToast[open] { */
-/* transform: translateY(0px); */
-/* transform       : translateY(0);
-    background-color   : rgba(124, 9, 9, 0.514); */
-/* } */
-
 .deleteToast {
-    position                          : absolute;
-    /* max-width                      : 300px;
-    min-width                         : 200px; */
-    inset                             : 0;
-    margin                            : 0 auto;
-    top                               : 85%;
-    /* top                            :65%; */
-    background-color                  : red;
-    background-color                  : rgba(223, 16, 16, 0.884);
-    /* background-color               : rgba(231, 36, 36, 0.63); */
-    backdrop-filter                   : blur(20px);
-    color                             : white;
-    /* padding                        : 0.5rem; */
-    border-radius                     : .5rem;
-    display                           : flex;
-    flex                              : 1;
-    align-items                       : center;
-    /* position                       : relative;
-    bottom                            : -647px; */
-    height                            : 66px;
-    font-size                         : 1rem;
-    padding                           : .5rem;
+    position                             : absolute;
+    inset                                : 0;
+    margin                               : 0 auto;
+    top                                  : 85%;
+    background-color                     : red;
+    background-color                     : rgba(223, 16, 16, 0.884);
+    color                                : white;
+    backdrop-filter                      : blur(20px);
+    border-radius                        : .5rem;
+    display                              : flex;
+    flex                                 : 1;
+    align-items                          : center;
+    height                               : 66px;
+    font-size                            : 1rem;
+    padding                              : .5rem;
 }
-
-.loading {
-    display        : flex;
-    justify-content: space-between;
-    align-items    : center;
-    margin         : auto 0;
-    margin         : auto;
-    position                        : absolute;
-    max-width                       : 100px;
-    min-width                       : 200px;
-    inset                           : 0;
-    margin                          : 0 auto;
-    top                             : 85%;
-    /* top                          :65%; */
-    background-color                : red;
-    color                           : white;
-    padding                         : 0.5rem;
-    border-radius                   : 0.5rem;
-    display                         : flex;
-    flex                            : 1;
-    align-items                     : center;
-    /* position                     : relative;
-    bottom                          : -647px; */
-    height                          : 66px;
-    font-size                       : 1rem;
-
-    /* transform                    : translateY(164px); */
-    /* transition                   : all .3s ease-in-out; */
-
-    /* transition         : all .4s ease-in-out; */
-    /* transition            : all .5s cubic-bezier(1, 0.05, 0.2, 0.71); */
-    padding: 1rem;
-}
-
-.deleteToast>p {
-    /* margin-block: 1rem; */
-    /* margin:0 5px; */
-    /* border: 3px solid blue; */
-    /* position: relative; */
-}
-
-/* @keyframes unmountDeleteToast {
-    from {
-        transform: translateY(0px);
-    }
-
-    to {
-        transform: translateY(164px);
-    }
-}
-*/
-
 .deleteToast {
     display        : flex;
     justify-content: space-between;
@@ -115,7 +48,4 @@
 
 .undoBtn:hover {
     text-decoration    : underline;
-    /* background-color: rgb(180, 180, 180); */
-
-    /* color           : black; */
 }

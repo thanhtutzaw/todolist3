@@ -6,7 +6,7 @@ import useSelect from '@/hooks/useSelect';
 import { auth } from '@/lib/firebase';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
-import Button from '@Elements/Button/Button';
+// import Button from '@Elements/Button/Button';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import React, {
@@ -147,7 +147,7 @@ export default function Home() {
       )}
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
-      <Header selecting={selecting} todoLength={todos?.length} />
+      <Header selecting={selecting} />
 
       <div className="selectionContainer">
         {SelectedID.length === 1 && selectCount && <button onClick={selectAll}>Select All</button>}

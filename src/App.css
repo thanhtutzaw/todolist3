@@ -618,13 +618,29 @@ ul li {
   gap            : 0.8rem;
   max-width      : 700px;
   margin-right   : 1rem;
-  margin-bottom  : 30px;
+  margin-bottom  : 5px;
   justify-content: space-between;
   transition     : all .2s ease-in;
-  padding        : 10px;
+  padding     : 0 8px;
   padding-bottom : 0;
 }
 
+.todo.checked {
+  text-decoration: line-through;
+  /* opacity        : .5; */
+  transition     : all .2s ease-out;
+}
+.todo.checked label{
+  opacity: .4;
+}
+
+/* .todo.checked .todoActions {
+  display   : none;
+  visibility: hidden;
+} */
+.todoActions{
+      margin-top: 1rem;
+}
 .selected {
   background-color: var(--main-color);
   border-radius   : 13px;
@@ -634,21 +650,24 @@ ul li {
 
 .todo-label {
   flex-wrap    : wrap;
+  width        : 100%;
   max-width    : 85%;
   text-align   : left;
   overflow-wrap: break-word;
+  /* border    : 1px solid green; */
+  padding      : 20px 0;
 }
 
 .todo:not(:last-child)::after {
-  content         : "";
-  position        : absolute;
-  left            : 0;
-  right           : 0;
-  bottom          : -35%;
-  bottom          : -15px;
-  height          : 1px;
-  background-color: rgb(128, 128, 128);
-  opacity         : 0.2;
+  content            : "";
+  position           : absolute;
+  left               : 0;
+  right              : 0;
+  /* bottom          : -35%; */
+  bottom             : 0px;
+  height             : 1px;
+  background-color   : rgb(128, 128, 128);
+  opacity            : 0.2;
 }
 
 .todo-parent {

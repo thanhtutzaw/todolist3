@@ -23,4 +23,5 @@ export type AppContextType = {
 export interface todosProps {
   id: string | number;
   text?: string;
+  completed?: boolean;
 }
