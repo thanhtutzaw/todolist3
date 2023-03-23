@@ -60,7 +60,7 @@ export default function DeleteToast() {
       {deleteloading
         ? cancelDelete && (
             <>
-              <img width={50} src="cat-spinner.gif" alt="deleting" />
+              {deleteloading &&<img width={50} src="cat-spinner.gif" alt="deleting" /> }
               <p>Deleting {`in ${undoCount}s`}</p>
               <Button theme="secondary" onClick={handleUndo} className={s.undoBtn}>
                 Undo

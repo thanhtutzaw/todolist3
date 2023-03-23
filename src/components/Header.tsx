@@ -11,20 +11,24 @@ export default function Header(props: { todoCount: number; selecting: boolean })
 
   const [opentools, setopentools] = useState(false);
   const [mounted, setmounted] = useState(false);
+  const [loading, setloading] = useState(false);
 
   const auth = getAuth();
   const user = auth.currentUser;
 
   const navigate = useNavigate();
 
-  const logoutHandle = () => {
-    signOut(auth)
-      .then(() => {
-        navigate('/login');
-      })
-      .catch((err) => {
-        console.error('Signout Error ! ', err.message);
-      });
+  const logoutHandle = async () => {
+    setloading(true)
+    try {
+     setTimeout(async() => {
+       await signOut(auth);
+       navigate('/login');
+     }, 800);
+    } catch (error) {
+      setloading(false)
+      console.error('Signout Error ! ', error);
+    }
   };
   const handleTools = () => {
     if (!mounted) setmounted(true);
@@ -59,6 +63,7 @@ export default function Header(props: { todoCount: number; selecting: boolean })
       </header>
       {mounted && (
         <HeaderDropDown
+        loading={loading}
           setmounted={setmounted}
           theme={theme}
           setTheme={setTheme}

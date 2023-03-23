@@ -1,13 +1,14 @@
 import { auth } from '@/lib/firebase';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { CgChevronRightR } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import Button from './Elements/Button/Button';
 
 export default function Login() {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
+  const [EmailLoading, setEmailLoading] = useState(false);
   const loginStyle: CSSProperties = {
     padding: '.7rem',
     color: 'white',
@@ -28,28 +29,47 @@ export default function Login() {
   const provider = new GoogleAuthProvider();
 
   const signinHandle = async () => {
+    setLoading(true);
     try {
-      await signInWithPopup(auth, provider);
-      navigate('/');
+      setTimeout(async () => {
+        try {
+          await signInWithPopup(auth, provider);
+          navigate('/');
+        } catch (error: any) {
+          console.error(error.message);
+          setLoading(false);
+        }
+      }, 700);
     } catch (error: any) {
-      alert(`Cannot Signin ! ${error.message}`);
+      console.error(error.message);
+      alert(error.message);
+      setLoading(false);
     }
   };
   const email = 'testuser11@gmail.com';
   const password = '111111';
   const testUserSignInHandle = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate('/');
-      })
-      .catch((err) => {
-        alert(`Cannot Signin ! ${err.message}`);
-      });
+    setEmailLoading(true);
+    try {
+      setTimeout(async () => {
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          navigate('/');
+        } catch (error: any) {
+          console.error(error.message);
+          setLoading(false);
+        }
+      }, 700);
+    } catch (error: any) {
+      setEmailLoading(false);
+      console.error(error);
+      alert(`Cannot Signin ! ${error.message}`);
+    }
   };
   return (
-    <main>      
-      <Button onClick={signinHandle} style={loginStyle}>
-        Google Sign-in
+    <main>
+      <Button disabled={loading} onClick={signinHandle} style={loginStyle}>
+        {loading ? 'Signing in' : 'Google Sign-in'}
       </Button>
       <br></br>
       <div
@@ -60,7 +80,7 @@ export default function Login() {
         }}
         onClick={testUserSignInHandle}
       >
-        <p>Sign in as testUser</p>
+        <p>{EmailLoading ? 'Signing in' : 'Sign in as testUser'}</p>
       </div>
     </main>
   );

@@ -1,16 +1,17 @@
-import { MouseEventHandler, useCallback } from 'react';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 type HeaderDropDownProps = {
   setmounted: Function;
   theme: string;
+  loading: boolean;
   setTheme: Function;
   opentools: any;
   setopentools: Function;
   logoutHandle: MouseEventHandler<HTMLDivElement>;
 };
 export const HeaderDropDown = (props: HeaderDropDownProps) => {
-  const { setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
+  const { loading,setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
   interface ToolsAnimate {
     animation: string;
     pointerEvents:
@@ -56,7 +57,7 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
           </div>
           <div className="setting-item" onClick={logoutHandle}>
             <RiLogoutBoxFill />
-            <span>Logout</span>
+            <span>{loading ? 'Logging out' : 'Logout'}</span>
           </div>
         </div>
       </div>
