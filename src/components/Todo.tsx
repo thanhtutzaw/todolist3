@@ -17,6 +17,7 @@ const Todolist = (props: {
   const { isPrevent, setisPrevent, setselectCount, todos, todo, SelectedID, setSelectedID } = props;
 
   const [isSelect, setisSelect] = useState(false);
+  const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed);
   useEffect(() => {
     if (SelectedID.length === 0) {
@@ -71,8 +72,17 @@ const Todolist = (props: {
       alert('Update Error ! ' + error.message);
     }
   }
-  return (
-    <li className={`todo ${isSelect ? 'selected' : ''} ${todo?.completed ? 'checked' : ''}`}>
+  return mounted ? (
+    <li
+      // style={{scale:todo?.completed ? 0 : 1}}
+      // style={{ transform: todo?.completed ? 'translateX(500px)' : '' }}
+      onTransitionEnd={(e) => {
+        if (todo?.completed === true) {
+          // setmounted(false)
+        }
+      }}
+      className={`todo ${isSelect ? 'selected' : ''} ${todo?.completed === true ? 'checked' : ''}`}
+    >
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
         {/* {JSON.stringify(todo?.completed)} */}
@@ -85,6 +95,8 @@ const Todolist = (props: {
         )}
       </div>
     </li>
+  ) : (
+    <></>
   );
 };
 export default Todolist;

@@ -24,11 +24,11 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
       | 'visible';
   }
   const enterTools: ToolsAnimate = {
-    animation: 'enterTools 300ms ease-in',
+    animation: 'enterTools forwards 300ms ease-in',
     pointerEvents: 'initial',
   };
   const exitTools: ToolsAnimate = {
-    animation: 'exitTools 500ms ease-in',
+    animation: 'exitTools forwards 500ms ease-in',
     pointerEvents: 'initial',
   };
   const toolsAnimate = opentools ? enterTools : exitTools;
