@@ -1,3 +1,4 @@
+import { todosProps } from '@/types';
 import {
   addDoc,
   collection,
@@ -6,10 +7,8 @@ import {
   updateDoc,
   writeBatch,
 } from 'firebase/firestore';
-import { RefObject, SetStateAction, useContext } from 'react';
+import { RefObject, SetStateAction } from 'react';
 import { auth, db } from './firebase';
-import { AppContextType, todosProps } from '@/types';
-import { AppContext } from '@/Context/AppContext';
 export function addTodo(
   todoRef: RefObject<HTMLUListElement>,
   inputRef: RefObject<HTMLInputElement>,
@@ -57,7 +56,6 @@ export function addTodo(
     }
   });
 }
-
 export function deleteMultipleTodo(
   setcancelDelete: Function,
   setopenDeleteToast: Function,
@@ -151,4 +149,36 @@ export function updateTodo(
       closeEditModal();
     }
   };
+}
+export function checkStatus(
+  todo: todosProps | null ,checked:boolean , setchecked:Function , setisPrevent:Function
+){
+  return async () => {
+    if (!db) {
+      alert('Firestore database is not available');
+      throw new Error('Firestore database is not available');
+    }
+    if (!auth.currentUser) {
+      alert('User is not authenticated');
+      throw new Error('User is not authenticated');
+    }
+    const id = todo?.id;
+    if (id === undefined) return;
+    const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id?.toString());
+    console.log(collectionRef);
+    setchecked(!checked);
+    const newData = {
+      ...todo,
+      // completed: checked,
+      completed: !todo?.completed,
+    };
+    setisPrevent(true);
+    try {
+      await updateDoc(collectionRef, newData);
+      setisPrevent(false);
+    } catch (error: any) {
+      setisPrevent(false);
+      alert('Update Error ! ' + error.message);
+    }
+  }
 }

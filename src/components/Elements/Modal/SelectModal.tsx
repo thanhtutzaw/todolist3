@@ -1,7 +1,7 @@
 import { AppContext } from '@/Context/AppContext';
 // import usePrevent from '@/hooks/usePrevent';
 import { AppContextType } from '@/types';
-import { MouseEventHandler, useContext } from 'react';
+import { MouseEventHandler, useContext, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 
@@ -9,7 +9,6 @@ export default function SelectModal(props: {
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
-  // setisPrevent: Function;
   openEditModal: MouseEventHandler<HTMLButtonElement>;
 }) {
   const mountStyle = {
@@ -24,6 +23,19 @@ export default function SelectModal(props: {
   const { setisPrevent, deleteloading, handleDeleteModal } = useContext(
     AppContext
   ) as AppContextType;
+  useEffect(() => {
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        console.log(e.key, '(closing selectModal)');
+        clearSelect();
+        setisPrevent(false);
+      }
+    }
+    window.addEventListener('keyup', handleEscape);
+    return () => {
+      window.removeEventListener('keyup', handleEscape);
+    };
+  }, []);
   return (
     <div style={selecting ? mountStyle : unmountStyle} className={`selectModal `}>
       <div>

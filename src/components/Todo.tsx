@@ -1,21 +1,19 @@
-import { auth, db } from '@/lib/firebase';
-import { todosProps } from '@/types';
-import { doc, updateDoc } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import { AppContext } from '@/Context/AppContext';
+import { checkStatus } from '@/lib/firestore';
+import { AppContextType, todosProps } from '@/types';
+import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Todolist = (props: {
-  isPrevent: boolean;
-  setisPrevent: Function;
   setselectCount: Function;
   todos: todosProps[] | null[];
   todo: todosProps | null;
   SelectedID: number[];
   setSelectedID: Function;
 }) => {
-  const { isPrevent, setisPrevent, setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-
+  const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
+  const { isPrevent, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed);
@@ -32,7 +30,9 @@ const Todolist = (props: {
       setisPrevent(true);
     }
   }, [SelectedID, isPrevent]);
+
   const isSelecting = isSelect && SelectedID.length !== 0;
+
   function handleSelect() {
     setisSelect((prev) => !prev);
     if (isSelecting) {
@@ -45,34 +45,13 @@ const Todolist = (props: {
       setselectCount(true);
     }
   }
-  async function checkStatusHandle() {
-    if (!db) {
-      alert('Firestore database is not available');
-      throw new Error('Firestore database is not available');
-    }
-    if (!auth.currentUser) {
-      alert('User is not authenticated');
-      throw new Error('User is not authenticated');
-    }
-    const id = todo?.id;
-    if (id === undefined) return;
-    const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id?.toString());
-    console.log(collectionRef);
-    setchecked(!checked);
-    const newData = {
-      ...todo,
-      // completed: checked,
-      completed: !todo?.completed,
-    };
-    setisPrevent(true);
-    try {
-      await updateDoc(collectionRef, newData);
-      setisPrevent(false);
-    } catch (error: any) {
-      alert('Update Error ! ' + error.message);
-    }
-  }
-  return mounted ? (
+  // async function checkStatusHandle()
+  const checkStatusHandle = checkStatus(todo, checked, setchecked, setisPrevent);
+  const todoClass = `todo
+  ${isSelect ? 'selected' : ''} 
+  ${todo?.completed === true ? 'checked' : ''}`;
+  if (!mounted) return <></>;
+  return (
     <li
       // style={{scale:todo?.completed ? 0 : 1}}
       // style={{ transform: todo?.completed ? 'translateX(500px)' : '' }}
@@ -81,7 +60,7 @@ const Todolist = (props: {
           // setmounted(false)
         }
       }}
-      className={`todo ${isSelect ? 'selected' : ''} ${todo?.completed === true ? 'checked' : ''}`}
+      className={todoClass}
     >
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
@@ -95,8 +74,6 @@ const Todolist = (props: {
         )}
       </div>
     </li>
-  ) : (
-    <></>
   );
 };
 export default Todolist;

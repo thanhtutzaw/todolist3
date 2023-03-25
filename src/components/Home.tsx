@@ -6,7 +6,6 @@ import useSelect from '@/hooks/useSelect';
 import { auth } from '@/lib/firebase';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
-// import Button from '@Elements/Button/Button';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import React, {
@@ -19,7 +18,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { CgChevronRightR } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import BottomNav from './BottomNav';
 import Header from './Header';
@@ -71,28 +69,15 @@ export default function Home() {
   const selecting = selectCount && SelectedID.length !== 0;
 
   useEffect(() => {
-    const selecting = selectCount && SelectedID.length !== 0;
-    function handleEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        clearSelect();
-        setisPrevent(false);
-      }
-    }
     if (selecting) {
       setEditModalMounted(true);
       setSelectModalMounted(true);
-      window.addEventListener('keyup', handleEscape);
     } else {
       setTimeout(() => {
         setSelectModalMounted(false);
       }, 200);
     }
-    return () => {
-      if (selecting) {
-        window.removeEventListener('keyup', handleEscape);
-      }
-    };
-  }, [selecting, SelectModalMounted]);
+  }, [selecting]);
 
   const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
 
@@ -144,7 +129,7 @@ export default function Home() {
               todo={todo}
             />
           </Suspense>
-        </dialog> 
+        </dialog>
       )}
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 

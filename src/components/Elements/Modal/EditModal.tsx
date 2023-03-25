@@ -11,7 +11,6 @@ export default function EditModal(props: {
   settext: Function;
   closeEditModal: Function;
   clearSelect: Function;
-  // setisPrevent: Function;
   confirmModalRef: RefObject<HTMLDialogElement>;
 }) {
   const { confirmModalRef, text, settext, todo, closeEditModal, clearSelect } = props;
