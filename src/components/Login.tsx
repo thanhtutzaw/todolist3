@@ -80,7 +80,7 @@ export default function Login() {
         }}
         onClick={testUserSignInHandle}
       >
-        <p>{EmailLoading ? 'Signing in' : 'Sign in as testUser'}</p>
+        <p>{EmailLoading ? 'Signing in ...' : 'Sign in as testUser'}</p>
       </div>
     </main>
   );
