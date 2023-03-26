@@ -13,10 +13,10 @@ const Todolist = (props: {
   setSelectedID: Function;
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { isPrevent, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
-  const [checked, setchecked] = useState(todo?.completed);
+  const [checked, setchecked] = useState(todo?.completed ?? false);
   useEffect(() => {
     if (SelectedID.length === 0) {
       setisSelect(false);
@@ -29,7 +29,7 @@ const Todolist = (props: {
     if (SelectedID.length > 0) {
       setisPrevent(true);
     }
-  }, [SelectedID, isPrevent]);
+  }, [SelectedID]);
 
   const isSelecting = isSelect && SelectedID.length !== 0;
 

@@ -25,9 +25,11 @@ export function AppProvider({ children }: PropsWithChildren) {
       window.addEventListener('beforeunload', preventRefresh);
     }
     return () => {
-      window.removeEventListener('beforeunload', preventRefresh);
+      if (isPrevent) {
+        window.removeEventListener('beforeunload', preventRefresh);
+      }
     };
-  }, [isPrevent, setisPrevent]);
+  }, [isPrevent]);
   useEffect(() => {
     // const interval : string | number | NodeJS.Timeout | undefined | false =
     if (undoCount > 1 && deleteloading) {

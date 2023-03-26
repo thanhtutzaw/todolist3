@@ -151,7 +151,7 @@ export function updateTodo(
   };
 }
 export function checkStatus(
-  todo: todosProps | null ,checked:boolean , setchecked:Function , setisPrevent:Function
+  todo: todosProps | null ,checked:boolean, setchecked:Function , setisPrevent:Function
 ){
   return async () => {
     if (!db) {
