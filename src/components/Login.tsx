@@ -74,13 +74,13 @@ export default function Login() {
       <br></br>
       <div
         style={{
-          color: 'blue',
-          textDecoration: 'underline',
-          cursor: 'pointer',
+          color: EmailLoading ? 'grey' : 'blue',
+          textDecoration: EmailLoading ? 'initial' : 'underline',
+          cursor: EmailLoading ? 'progress' : 'pointer',
         }}
         onClick={testUserSignInHandle}
       >
-        <p>{EmailLoading ? 'Signing in ...' : 'Sign in as testUser'}</p>
+        <p>{EmailLoading ? 'Signing in as TestUser ...' : 'Sign in as TestUser'}</p>
       </div>
     </main>
   );
