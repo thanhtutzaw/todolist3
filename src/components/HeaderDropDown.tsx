@@ -1,4 +1,4 @@
-import { MouseEventHandler, useCallback, useState } from 'react';
+import { MouseEventHandler } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 type HeaderDropDownProps = {
@@ -11,7 +11,7 @@ type HeaderDropDownProps = {
   logoutHandle: MouseEventHandler<HTMLDivElement>;
 };
 export const HeaderDropDown = (props: HeaderDropDownProps) => {
-  const { loading,setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
+  const { loading, setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
   interface ToolsAnimate {
     animation: string;
     pointerEvents:
@@ -45,11 +45,10 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
       <div style={toolsAnimate} className={`tools `}>
         <div className="tools-container">
           <div
-            onClick={useCallback(() => {
+            onClick={() => {
               setTheme((prev: string) => (prev === 'light' ? 'dark' : 'light'));
               setopentools(false);
-              // console.log("callback running");
-            }, [theme, opentools])}
+            }}
             className="setting-item"
           >
             {theme === 'light' ? <MdDarkMode /> : <MdLightMode />}
