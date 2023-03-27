@@ -1,17 +1,17 @@
 import { AppContext } from '@/Context/AppContext';
 import { AppContextType } from '@/types';
 import Button from '@Elements/Button/Button';
-import { useContext } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import s from './Toast.module.css';
 
-export default function DeleteToast() {
-  const { deleting, setcancelDelete, cancelDelete, setopenDeleteToast } = useContext(
-    AppContext
-  ) as AppContextType;
+export default function DeleteToast(props: { setcancelDelete: Function; cancelDelete: boolean }) {
+  const { setcancelDelete, cancelDelete } = props;
+  const { deleting } = useContext(AppContext) as AppContextType;
+  const [undoCounter, setundoCounter] = useState(5);
 
-  const { undoCount, deleteloading, setloading, openDeleteToast, setDeleteToastMounted } =
+  const { deleteloading, setloading, openDeleteToast, setopenDeleteToast, setDeleteToastMounted } =
     useContext(AppContext) as AppContextType;
 
   const mountDeleteToast = {
@@ -31,10 +31,10 @@ export default function DeleteToast() {
     borderRadius: '1rem',
     animation: 'unmountDeleteToast .2s ease-out forwards',
   };
-  function handleUndo() {
+  const handleUndo = useCallback(() => {
     setcancelDelete(false);
     setloading(false);
-  }
+  }, []);
   const animationState = openDeleteToast
     ? deleteloading
       ? mountDeleteToast
@@ -42,6 +42,23 @@ export default function DeleteToast() {
     : deleteloading
     ? undoDeleteAnimation
     : unmountDeleteToast;
+  const intervalRef = useRef<NodeJS.Timer | number | undefined>();
+  useEffect(() => {
+    if (undoCounter > 1 && deleteloading) {
+      console.log('undo counting');
+      intervalRef.current = setInterval(() => {
+        setundoCounter((prev) => prev - 1);
+      }, 1000);
+    }
+    if (!cancelDelete) {
+      clearInterval(intervalRef.current);
+      setundoCounter(5);
+    }
+    return () => {
+      setundoCounter(5);
+      clearInterval(intervalRef.current);
+    };
+  }, [deleteloading, cancelDelete]);
   return (
     <div
       onAnimationEnd={() => {
@@ -57,7 +74,10 @@ export default function DeleteToast() {
         ? cancelDelete && (
             <>
               {deleteloading && <img width={50} src="cat-spinner.gif" alt="deleting" />}
-              <p>Deleting {`in ${undoCount}s`}</p>
+              <p>Deleting {`in ${undoCounter}s`}</p>
+              {/* <button onClick={handleUndo} className={s.undoBtn}>
+                Undo
+              </button> */}
               <Button theme="secondary" onClick={handleUndo} className={s.undoBtn}>
                 Undo
               </Button>

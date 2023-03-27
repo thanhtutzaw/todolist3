@@ -2,22 +2,19 @@ import { AppContextType } from '@/types';
 import { PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
 
 export const AppContext = createContext<AppContextType | null>(null);
-export function AppProvider({ children }: PropsWithChildren) {
+export default function AppProvider({ children }: PropsWithChildren) {
   const editModalRef = useRef<HTMLDialogElement>(null);
   const [isPrevent, setisPrevent] = useState(false);
+  const [openDeleteToast, setopenDeleteToast] = useState(false);
 
-  const [undoCount, setundoCount] = useState(5);
-  const [cancelDelete, setcancelDelete] = useState(true);
   const [deleteloading, setloading] = useState(false);
 
-  const [openDeleteToast, setopenDeleteToast] = useState(false);
   const [DeleteToastMounted, setDeleteToastMounted] = useState(false);
-    const [deleting, setdeleting] = useState(false);
+  const [deleting, setdeleting] = useState(false);
 
   const [openDeleteModal, setopenDeleteModal] = useState(false);
   const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
 
-  const intervalRef = useRef<NodeJS.Timer | number | undefined>();
   useEffect(() => {
     function preventRefresh(event: BeforeUnloadEvent) {
       event.returnValue = 'You have unfinished changes!';
@@ -31,23 +28,7 @@ export function AppProvider({ children }: PropsWithChildren) {
       }
     };
   }, [isPrevent]);
-  useEffect(() => {
-    // const interval : string | number | NodeJS.Timeout | undefined | false =
-    if (undoCount > 1 && deleteloading) {
-      console.log('undo counting');
-      intervalRef.current = setInterval(() => {
-        setundoCount((undoCount) => undoCount - 1);
-      }, 1000);
-    }
-    if (!cancelDelete) {
-      clearInterval(intervalRef.current);
-      setundoCount(5);
-    }
-    return () => {
-      setundoCount(5);
-      clearInterval(intervalRef.current);
-    };
-  }, [deleteloading, cancelDelete]);
+
   function handleDeleteModal() {
     setopenDeleteModal((prev) => !prev);
     if (!openDeleteModal) {
@@ -64,12 +45,11 @@ export function AppProvider({ children }: PropsWithChildren) {
   return (
     <AppContext.Provider
       value={{
-        undoCount,
-        cancelDelete,
         setloading,
         deleteHandle,
         deleteloading,
         openDeleteToast,
+        setopenDeleteToast,
         handleDeleteModal,
         DeleteToastMounted,
         setopenDeleteModal,
@@ -77,8 +57,6 @@ export function AppProvider({ children }: PropsWithChildren) {
         DeleteModalMounted,
         setDeleteModalMounted,
         openDeleteModal,
-        setopenDeleteToast,
-        setcancelDelete,
         editModalRef,
         isPrevent,
         setisPrevent,

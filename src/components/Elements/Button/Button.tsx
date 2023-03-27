@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, memo } from 'react';
 
 interface Theme {
   color: string;
@@ -11,28 +11,24 @@ interface ThemeProps {
 }
 const themes: ThemeProps = {
   primary: {
-    color: "white",
+    color: 'white',
     // color: "black",
-    backgroundColor: "var(--btn-blue)",
+    backgroundColor: 'var(--btn-blue)',
     // backgroundColor: "transparent",
   },
   danger: {
-    color: "white",
-    backgroundColor: "#eb3e3e",
+    color: 'white',
+    backgroundColor: '#eb3e3e',
   },
   secondary: {
-    color: "black",
-    backgroundColor: "transparent",
+    color: 'black',
+    backgroundColor: 'transparent',
   },
 };
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   theme?: keyof typeof themes;
 };
-export default function Button({
-  type = "button",
-  theme = "primary",
-  ...props
-}: ButtonProps) {
+function Button({ type = 'button', theme = 'primary', ...props }: ButtonProps) {
   const style = {
     backgroundColor: themes[theme].backgroundColor,
     color: themes[theme].color,
@@ -43,3 +39,4 @@ export default function Button({
     </button>
   );
 }
+export default memo(Button);

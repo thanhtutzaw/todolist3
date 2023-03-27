@@ -39,7 +39,6 @@ export default function Home() {
     AppContext
   ) as AppContextType;
   const { todos, settodos } = useFirestoreData();
-  // const { isPrevent, setisPrevent } = usePrevent();
   const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
     useSelect(todos);
 
@@ -52,8 +51,6 @@ export default function Home() {
     },
     [todos]
   );
-
-  // const intervalRef = useRef<number | undefined>();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -106,7 +103,11 @@ export default function Home() {
   const todoCount = NotCompleteTodo.length;
   return (
     <main>
-      <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
+      <Toast
+        todoRef={todoRef}
+        SelectedID={SelectedID}
+        clearSelect={clearSelect}
+      />
 
       {SelectModalMounted && (
         <SelectModal
@@ -131,7 +132,9 @@ export default function Home() {
           </Suspense>
         </dialog>
       )}
-      {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
+      {DeleteModalMounted && (
+        <DeleteModal SelectedID={SelectedID} />
+      )}
 
       <Header todoCount={todoCount} selecting={selecting} />
 

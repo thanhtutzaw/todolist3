@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import { AppProvider } from "./Context/AppContext";
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './App.css';
+import  AppProvider  from './Context/AppContext';
+import Home from './components/Home';
+import Login from './components/Login';
 export default function App() {
   return (
     <AppProvider>
