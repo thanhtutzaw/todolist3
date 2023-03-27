@@ -625,22 +625,20 @@ ul li {
   padding-bottom : 0;
 }
 
-.todo label {
-  /* transition: opacity .2s ease-in; */
-}
-
 .todo.checked label {
   text-decoration: line-through;
   opacity        : .4;
-  /* transition     : all .3s ease-out; */
-}
-.todo.checked {
-      /* transform: translateY(-406px); */
-      /* position: absolute; */
-      /* top:0; */
-
-       /* transform: translateX(500px); */
   transition     : all .3s ease-out;
+}
+
+.todo.checked {
+  /* transform: translateY(-406px); */
+  /* position: absolute; */
+  /* top:0; */
+
+  /* transform: translateX(500px); */
+  /* opacity: .4; */
+  transition      : all .3s ease-out;
   transform-origin: center;
 }
 
@@ -661,20 +659,18 @@ ul li {
   max-width    : 85%;
   text-align   : left;
   overflow-wrap: break-word;
-  /* border    : 1px solid green; */
   padding      : 20px 0;
 }
 
 .todo:not(:last-child)::after {
-  content            : "";
-  position           : absolute;
-  left               : 0;
-  right              : 0;
-  /* bottom          : -35%; */
-  bottom             : 0px;
-  height             : 1px;
-  background-color   : rgb(128, 128, 128);
-  opacity            : 0.2;
+  content         : "";
+  position        : absolute;
+  left            : 0;
+  right           : 0;
+  bottom          : 0px;
+  height          : 1px;
+  background-color: rgb(128, 128, 128);
+  opacity         : 0.2;
 }
 
 .todo-parent {
@@ -904,7 +900,7 @@ ul li {
   overflow           : auto;
   border-radius      : 20px;
   outline            : none;
-  height:42dvh;
+  height             : 42dvh;
 }
 
 .textarea {

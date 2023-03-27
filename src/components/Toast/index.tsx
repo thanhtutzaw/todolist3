@@ -4,22 +4,23 @@ import { RefObject, useContext, useEffect } from 'react';
 import { deleteMultipleTodo } from '../../lib/firestore';
 import DeleteToast from './DeleteToast';
 import s from './Toast.module.css';
-// import usePrevent from '@/hooks/usePrevent';
 export default function Toast(props: {
   todoRef: RefObject<HTMLUListElement>;
-  // setisPrevent: Function;
   clearSelect: Function;
   SelectedID: number[];
 }) {
-  // const { SelectedID, todoRef, setisPrevent, clearSelect } = props;
-  const { SelectedID, todoRef,  clearSelect } = props;
-  const {setisPrevent, DeleteToastMounted, cancelDelete, setcancelDelete, setopenDeleteToast, setloading } =
-    useContext(AppContext) as AppContextType;
+  const { SelectedID, todoRef, clearSelect } = props;
+  const {
+    setdeleting,
+    setisPrevent,
+    DeleteToastMounted,
+    cancelDelete,
+    setcancelDelete,
+    setopenDeleteToast,
+    setloading,
+  } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     let deleteTime: NodeJS.Timeout | undefined;
-    if (DeleteToastMounted === false) {
-      setcancelDelete(true);
-    }
     if (DeleteToastMounted) {
       if (cancelDelete === false) {
         console.info('%cDelete Canceled ✔️', 'color:grey');
@@ -30,6 +31,7 @@ export default function Toast(props: {
       }
       deleteTime = setTimeout(
         deleteMultipleTodo(
+          setdeleting,
           setcancelDelete,
           setopenDeleteToast,
           setloading,
@@ -40,6 +42,8 @@ export default function Toast(props: {
         ),
         5000
       );
+    } else {
+      setcancelDelete(true);
     }
     return () => clearTimeout(deleteTime);
   }, [cancelDelete, DeleteToastMounted]);

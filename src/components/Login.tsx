@@ -1,7 +1,6 @@
 import { auth } from '@/lib/firebase';
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { CSSProperties, useState } from 'react';
-import { CgChevronRightR } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import Button from './Elements/Button/Button';
 

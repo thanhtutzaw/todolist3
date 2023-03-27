@@ -50,13 +50,15 @@ export function addTodo(
         await addDoc(collectionRef, data);
         setisPrevent(false);
         console.info('%cAdded ✔️ ', 'color: green');
-      } catch (err: any) {
-        alert(err.message);
+      } catch (error: any) {
+        alert('Error in Creating new data !' + error.message);
+        console.error('Error in Creating new data !' + error);
       }
     }
   });
 }
 export function deleteMultipleTodo(
+  setdeleting: Function,
   setcancelDelete: Function,
   setopenDeleteToast: Function,
   setloading: Function,
@@ -91,18 +93,20 @@ export function deleteMultipleTodo(
         batch.delete(TodoRef);
       }
     }
+    setdeleting(true);
     try {
       setloading(false);
       await batch.commit();
+      setdeleting(false);
       console.info('%cDeleted !', 'color: green');
       setTimeout(async () => {
+        setisPrevent(false);
+        setcancelDelete(true);
         setopenDeleteToast(false);
         console.log('close Delete Toast');
-        setcancelDelete(true);
-        setisPrevent(false);
       }, 1500);
     } catch (error: any) {
-      alert('Delete Error !' + error.message);
+      alert('Delete Error ! \n' + error.code.toUpperCase());
     }
   };
 }
@@ -133,8 +137,6 @@ export function updateTodo(
     if (text !== todo.text) {
       console.info('%cUpdating...', 'color:grey');
       setloading(true);
-
-      setisPrevent(true);
       try {
         await updateDoc(collectionRef, newData);
         editModalRef.current?.close();
@@ -143,7 +145,8 @@ export function updateTodo(
         setisPrevent(false);
         clearSelect();
       } catch (error: any) {
-        alert('Update Error ! ' + error.message);
+        alert('Update Error ! \n' + error.code.toUpperCase());
+        console.error('Update Error ! ' + error);
       }
     } else {
       closeEditModal();
@@ -151,8 +154,11 @@ export function updateTodo(
   };
 }
 export function checkStatus(
-  todo: todosProps | null ,checked:boolean, setchecked:Function , setisPrevent:Function
-){
+  todo: todosProps | null,
+  checked: boolean,
+  setchecked: Function,
+  setisPrevent: Function
+) {
   return async () => {
     if (!db) {
       alert('Firestore database is not available');
@@ -165,7 +171,6 @@ export function checkStatus(
     const id = todo?.id;
     if (id === undefined) return;
     const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id?.toString());
-    console.log(collectionRef);
     setchecked(!checked);
     const newData = {
       ...todo,
@@ -178,7 +183,8 @@ export function checkStatus(
       setisPrevent(false);
     } catch (error: any) {
       setisPrevent(false);
-      alert('Update Error ! ' + error.message);
+      alert('Update Error ! \n' + error.code.toUpperCase());
+      console.error('Update Error ! ' + error);
     }
-  }
+  };
 }

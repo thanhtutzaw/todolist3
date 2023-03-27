@@ -5,13 +5,9 @@ import { useContext } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import s from './Toast.module.css';
-// type DeleteToastItemProps = {
-//   canDelete: boolean;
-//   setopenDeleteToast: Function;
-//   setcanDelete: Function;
-// };
+
 export default function DeleteToast() {
-  const { setcancelDelete, cancelDelete, setopenDeleteToast } = useContext(
+  const { deleting, setcancelDelete, cancelDelete, setopenDeleteToast } = useContext(
     AppContext
   ) as AppContextType;
 
@@ -26,8 +22,8 @@ export default function DeleteToast() {
     animation: 'undoDeleteAnimation .4s ease-in-out forwards',
   };
   const deletingAnimation = {
-    borderRadius: '1rem',
     maxWidth: '200px',
+    borderRadius: '1rem',
     animation: 'deletingAnimation .2s ease forwards',
   };
   const unmountDeleteToast = {
@@ -60,7 +56,7 @@ export default function DeleteToast() {
       {deleteloading
         ? cancelDelete && (
             <>
-              {deleteloading &&<img width={50} src="cat-spinner.gif" alt="deleting" /> }
+              {deleteloading && <img width={50} src="cat-spinner.gif" alt="deleting" />}
               <p>Deleting {`in ${undoCount}s`}</p>
               <Button theme="secondary" onClick={handleUndo} className={s.undoBtn}>
                 Undo
@@ -70,8 +66,12 @@ export default function DeleteToast() {
         : cancelDelete &&
           !deleteloading && (
             <>
-              <img width={50} src="checked.gif" alt="delete successful" />
-              <p>Deleted</p>
+              {!deleting ? (
+                <img width={50} src="checked.gif" alt="delete successful" />
+              ) : (
+                <img width={50} src="cat-spinner.gif" alt="deleting" />
+              )}
+              <p>{deleting ? 'Deleting' : 'Deleted'}</p>
               <IconContext.Provider value={{ className: 'global-class-name' }}>
                 <GrClose
                   className="closeSelectBtn"

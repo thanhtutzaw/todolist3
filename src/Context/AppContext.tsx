@@ -12,6 +12,7 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   const [openDeleteToast, setopenDeleteToast] = useState(false);
   const [DeleteToastMounted, setDeleteToastMounted] = useState(false);
+    const [deleting, setdeleting] = useState(false);
 
   const [openDeleteModal, setopenDeleteModal] = useState(false);
   const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
@@ -33,12 +34,12 @@ export function AppProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     // const interval : string | number | NodeJS.Timeout | undefined | false =
     if (undoCount > 1 && deleteloading) {
-      console.log('counting');
+      console.log('undo counting');
       intervalRef.current = setInterval(() => {
         setundoCount((undoCount) => undoCount - 1);
       }, 1000);
     }
-    if (cancelDelete === false) {
+    if (!cancelDelete) {
       clearInterval(intervalRef.current);
       setundoCount(5);
     }
@@ -46,7 +47,7 @@ export function AppProvider({ children }: PropsWithChildren) {
       setundoCount(5);
       clearInterval(intervalRef.current);
     };
-  }, [deleteloading, openDeleteToast, cancelDelete]);
+  }, [deleteloading, cancelDelete]);
   function handleDeleteModal() {
     setopenDeleteModal((prev) => !prev);
     if (!openDeleteModal) {
@@ -81,6 +82,8 @@ export function AppProvider({ children }: PropsWithChildren) {
         editModalRef,
         isPrevent,
         setisPrevent,
+        deleting,
+        setdeleting,
       }}
     >
       {children}

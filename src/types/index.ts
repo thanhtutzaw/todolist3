@@ -2,6 +2,7 @@ import { MouseEventHandler, RefObject } from 'react';
 
 export type AppContextType = {
   undoCount: number;
+  deleting: boolean;
   cancelDelete: boolean;
   deleteloading: boolean;
   openDeleteModal: boolean;
@@ -10,6 +11,7 @@ export type AppContextType = {
   DeleteToastMounted: boolean;
   setopenDeleteModal: Function;
   isPrevent: boolean;
+  setdeleting: Function;
   setisPrevent: Function;
   setloading: Function;
   deleteHandle: Function;

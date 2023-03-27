@@ -6,11 +6,11 @@ import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri'
 import 'react-loading-skeleton/dist/skeleton.css';
 
 const Todolist = (props: {
-  setselectCount: Function;
-  todos: todosProps[] | null[];
-  todo: todosProps | null;
   SelectedID: number[];
+  setselectCount: Function;
+  todo: todosProps | null;
   setSelectedID: Function;
+  todos: todosProps[] | null[];
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
   const { setisPrevent } = useContext(AppContext) as AppContextType;
@@ -45,17 +45,14 @@ const Todolist = (props: {
       setselectCount(true);
     }
   }
-  // async function checkStatusHandle()
   const checkStatusHandle = checkStatus(todo, checked, setchecked, setisPrevent);
-  const todoClass = `todo
-  ${isSelect ? 'selected' : ''} 
-  ${todo?.completed === true ? 'checked' : ''}`;
+  const todoClass = `todo ${isSelect ? 'selected' : ''} ${todo?.completed ? 'checked' : ''} `;
   if (!mounted) return <></>;
   return (
     <li
       // style={{scale:todo?.completed ? 0 : 1}}
       // style={{ transform: todo?.completed ? 'translateX(500px)' : '' }}
-      onTransitionEnd={(e) => {
+      onTransitionEnd={() => {
         if (todo?.completed === true) {
           // setmounted(false)
         }
