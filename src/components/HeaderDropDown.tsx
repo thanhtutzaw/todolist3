@@ -2,15 +2,15 @@ import { MouseEventHandler } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiLogoutBoxFill } from 'react-icons/ri';
 type HeaderDropDownProps = {
-  setmounted: Function;
   theme: string;
   loading: boolean;
+  opentools: boolean;
   setTheme: Function;
-  opentools: any;
+  setmounted: Function;
   setopentools: Function;
   logoutHandle: MouseEventHandler<HTMLButtonElement>;
 };
-export const HeaderDropDown = (props: HeaderDropDownProps) => {
+export default function HeaderDropDown(props: HeaderDropDownProps) {
   const { loading, setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
   interface ToolsAnimate {
     animation: string;
@@ -61,4 +61,4 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
       </div>
     </div>
   );
-};
+}

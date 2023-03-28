@@ -19,7 +19,7 @@ import React, {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BottomNav from './BottomNav';
+import Footer from './Footer';
 import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
 import Toast from './Toast';
@@ -153,7 +153,7 @@ export default function Home() {
         />
       </section>
 
-      <BottomNav selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <Footer selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
     </main>
   );
 }

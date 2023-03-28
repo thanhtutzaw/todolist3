@@ -716,7 +716,7 @@ ul li {
 
 .btn:focus {
   /* outline: none; */
-  
+
 }
 
 ::-webkit-scrollbar {
@@ -841,21 +841,22 @@ ul li {
 }
 
 .tools {
-  min-width          : 160px;
-  position           : absolute;
-  top                : -19px;
-  right              : 3px;
-  background-color   : var(--background-primary);
-  z-index            : 100;
-  gap                : 0.5em;
-  border-radius      : 8px;
-  box-shadow         : var(--shadow-primary);
-  font-size          : 1rem;
-  transform-origin   : top right;
-  will-change        : opacity;
-  will-change        : transform;
-  will-change        : scale;
-  animation-fill-mode: forwards;
+  min-width             : 160px;
+  position              : absolute;
+  /* top                : -19px; */
+  top                   : 41px;
+  right                 : 3px;
+  background-color      : var(--background-primary);
+  z-index               : 100;
+  gap                   : 0.5em;
+  border-radius         : 8px;
+  box-shadow            : var(--shadow-primary);
+  font-size             : 1rem;
+  transform-origin      : top right;
+  will-change           : opacity;
+  will-change           : transform;
+  will-change           : scale;
+  animation-fill-mode   : forwards;
 }
 
 button:disabled {
