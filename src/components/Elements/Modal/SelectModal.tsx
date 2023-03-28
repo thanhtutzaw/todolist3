@@ -4,6 +4,7 @@ import { AppContextType } from '@/types';
 import { MouseEventHandler, useContext, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
+import Button from '../Button/Button';
 
 export default function SelectModal(props: {
   SelectedID: number[];
@@ -52,22 +53,23 @@ export default function SelectModal(props: {
         <p className="selectCount">{SelectedID.length}</p>
       </div>
       <div>
-        <button
+        <Button
           disabled={deleteloading || SelectedID.length > 1}
           onClick={openEditModal}
-          className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}
+          // className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}
+          className="edit"
         >
           Edit
-        </button>
+        </Button>
 
-        <button
+        <Button
           style={{ pointerEvents: deleteloading ? 'none' : 'initial' }}
           disabled={deleteloading}
           onClick={handleDeleteModal}
           className="delete"
         >
           Delete
-        </button>
+        </Button>
       </div>
     </div>
   );

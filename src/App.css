@@ -420,11 +420,18 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .edit {
-  color: var(--btn-text-secondary);
+  color           : var(--btn-text-secondary) !important;
+  background-color: white !important;
 }
 
 .delete {
   color: rgb(255, 0, 0);
+}
+
+:is(.edit, .delete):focus-visible {
+  outline   : 2px solid black !important;
+  scale     : 1.1 !important;
+  transition: scale .1s ease-in-out;
 }
 
 .btn.discardBtn,
