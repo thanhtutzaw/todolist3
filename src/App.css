@@ -715,7 +715,8 @@ ul li {
 }
 
 .btn:focus {
-  outline: none;
+  /* outline: none; */
+  
 }
 
 ::-webkit-scrollbar {
@@ -857,32 +858,44 @@ ul li {
   animation-fill-mode: forwards;
 }
 
+button:disabled {
+  opacity: .5;
+}
+
+/* button:focus-visible{
+  outline:1px solid green !important;
+  background-color: red !important;
+} */
 .tools-container {
   margin  : 10px 0;
   display : block;
   overflow: hidden;
 }
 
-.tools-container>div {
+/* .tools-container>button {
   cursor     : pointer;
   user-select: none;
   text-align : left;
+} */
+.tools-container>button {
+  color           : black;
+  background-color: white;
+  border          : none;
+  width           : 100%;
+  height          : 50px;
 }
 
-.setting-item,
+.tools-container>button,
 .delete-parent {
-  display                    : flex;
-  justify-content            : center;
-  align-items                : center;
-  padding                    : 9px 13px;
   display                    : flex;
   justify-content            : flex-start;
   align-items                : center;
+  padding                    : 9px 13px;
   gap                        : 6px;
   -webkit-tap-highlight-color: transparent;
 }
 
-.setting-item:hover,
+.tools-container>button:hover,
 .delete-parent:hover {
   background-color: rgb(232 232 232 / 92%);
 }

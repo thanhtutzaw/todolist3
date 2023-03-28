@@ -8,7 +8,7 @@ type HeaderDropDownProps = {
   setTheme: Function;
   opentools: any;
   setopentools: Function;
-  logoutHandle: MouseEventHandler<HTMLDivElement>;
+  logoutHandle: MouseEventHandler<HTMLButtonElement>;
 };
 export const HeaderDropDown = (props: HeaderDropDownProps) => {
   const { loading, setmounted, theme, setTheme, opentools, setopentools, logoutHandle } = props;
@@ -44,20 +44,19 @@ export const HeaderDropDown = (props: HeaderDropDownProps) => {
     >
       <div style={toolsAnimate} className={`tools `}>
         <div className="tools-container">
-          <div
+          <button
             onClick={() => {
               setTheme((prev: string) => (prev === 'light' ? 'dark' : 'light'));
               setopentools(false);
             }}
-            className="setting-item"
           >
             {theme === 'light' ? <MdDarkMode /> : <MdLightMode />}
             <span>Theme</span>
-          </div>
-          <div className="setting-item" onClick={logoutHandle}>
+          </button>
+          <button disabled={loading} onClick={logoutHandle}>
             <RiLogoutBoxFill />
             <span>{loading ? 'Logging out' : 'Logout'}</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>

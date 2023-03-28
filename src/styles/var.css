@@ -18,29 +18,35 @@ html[theme="dark"] body {
 }
 
 html[theme="dark"] main {
-    background-color: rgb(33 33 33);
     color           : white;
+    background-color: rgb(33 33 33);
 }
 
-html[theme="dark"] .tools {
-    background-color: rgb(12, 12, 12);
+html[theme="dark"] .tools,
+html[theme="dark"] .tools-container>button {
     color           : white;
+    background-color: rgb(12, 12, 12);
     box-shadow      : var(--shadow-secondary);
 }
 
-html[theme="dark"] .setting-item:hover {
-    background-color: rgb(63, 63, 63);
+html[theme="dark"] .tools-container>button:hover {
     color           : white;
+    background-color: rgb(63, 63, 63);
 }
 
 html[theme="dark"] .input-text {
-    background-color: rgb(17 17 17);
     color           : white;
+    background-color: rgb(17 17 17);
     box-shadow      : var(--shadow-secondary);
 }
 
 html[theme="dark"] .input-text:focus-visible {
     outline: 1px solid rgb(54, 54, 54);
+}
+
+html[theme="dark"] button:focus-visible {
+    outline: 1px solid rgb(255, 255, 255);
+    border : 1px solid rgb(255, 255, 255);
 }
 
 html[theme="dark"] .closeSelectBtn>path {
