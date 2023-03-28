@@ -1,17 +1,17 @@
-import { todosProps } from "@/types";
-import { useState } from "react";
+import { todosProps } from '@/types';
+import { useCallback, useState } from 'react';
 
 export default function useSelect(todos?: todosProps[] | null[]) {
   const [SelectedID, setSelectedID] = useState<any[]>([]);
   const [selectCount, setselectCount] = useState(false);
 
-  function clearSelect() {
+  const clearSelect = useCallback(() => {
     setSelectedID([]);
     setselectCount(false);
-  }
+  }, []);
   function selectAll() {
     const items = [];
-    if(todos?.length === 0 || !todos) return;
+    if (todos?.length === 0 || !todos) return;
     // if(!todos || todos.length === 0 || todos === null) return;
     for (let i = 0; i < todos.length; i++) {
       const id = todos[i]?.id;

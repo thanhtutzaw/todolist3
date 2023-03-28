@@ -1,7 +1,7 @@
 import useIndexDB from '@/hooks/useIndexDB';
 import useTheme from '@/hooks/useTheme';
 import { getAuth, signOut } from 'firebase/auth';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderDropDown from './HeaderDropDown';
 export default function Header(props: { todoCount: number; selecting: boolean }) {
@@ -18,7 +18,7 @@ export default function Header(props: { todoCount: number; selecting: boolean })
 
   const navigate = useNavigate();
 
-  const logoutHandle = async () => {
+  const logoutHandle = useCallback(async () => {
     setloading(true);
     try {
       setTimeout(async () => {
@@ -29,7 +29,7 @@ export default function Header(props: { todoCount: number; selecting: boolean })
       setloading(false);
       console.error('Signout Error ! ', error);
     }
-  };
+  }, []);
   const handleTools = () => {
     if (!mounted) setmounted(true);
     setopentools((prev) => !prev);

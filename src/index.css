@@ -11,7 +11,7 @@ body {
 }
 button:disabled{
   cursor:progress !important;
-  opacity:.8 !important;
+  opacity:.5 !important;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

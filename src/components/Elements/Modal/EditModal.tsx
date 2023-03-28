@@ -16,7 +16,7 @@ export default function EditModal(props: {
   const { confirmModalRef, text, settext, todo, closeEditModal, clearSelect } = props;
 
   // const actionButtonRef = useRef(null);
-  const { setisPrevent ,editModalRef } = useContext(AppContext) as AppContextType;
+  const { setisPrevent, editModalRef } = useContext(AppContext) as AppContextType;
   const [loading, setloading] = useState(false);
   const UpdatingRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -57,10 +57,10 @@ export default function EditModal(props: {
       settext(todo.text);
     }
   }, [todo]);
-  function closeConfirm() {
+  const closeConfirm = useCallback(() => {
     confirmModalRef.current?.close();
-  }
-  const [eloading, setLoading] = useState(false)
+  }, []);
+  const [eloading, setLoading] = useState(false);
   return (
     <>
       <dialog id="confirmModal" ref={confirmModalRef}>
@@ -84,41 +84,41 @@ export default function EditModal(props: {
         >
           <form>
             {/* {eloading&&<> */}
-              <textarea
-                style={{ userSelect: loading ? 'none' : 'unset' }}
-                value={text}
-                ref={inputRef}
-                onChange={(e) => {
-                  settext(e.target.value);
+            <textarea
+              style={{ userSelect: loading ? 'none' : 'unset' }}
+              value={text}
+              ref={inputRef}
+              onChange={(e) => {
+                settext(e.target.value);
+              }}
+              className="textarea"
+            />
+            <div className="editModalActions">
+              <button
+                onClick={() => {
+                  if (text !== todo.text) {
+                    confirmModalRef.current?.showModal();
+                  } else {
+                    closeEditModal();
+                  }
                 }}
-                className="textarea"
-              />
-              <div className="editModalActions">
-                <button
-                  onClick={() => {
-                    if (text !== todo.text) {
-                      confirmModalRef.current?.showModal();
-                    } else {
-                      closeEditModal();
-                    }
-                  }}
-                  className={`editCloseBtn`}
-                >
-                  Close
-                </button>
+                className={`editCloseBtn`}
+              >
+                Close
+              </button>
 
-                <button
-                  onClick={() => {
-                    if (todo.id !== 'undefined') {
-                      updateHandle();
-                    }
-                  }}
-                  type="submit"
-                  className="updateBtn"
-                >
-                  Save
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  if (todo.id !== 'undefined') {
+                    updateHandle();
+                  }
+                }}
+                type="submit"
+                className="updateBtn"
+              >
+                Save
+              </button>
+            </div>
             {/* </>} */}
           </form>
         </div>

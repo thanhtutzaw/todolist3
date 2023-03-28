@@ -35,7 +35,7 @@ export default function Home() {
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
 
-  const {deleteloading, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const { deleteloading, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { todos, settodos } = useFirestoreData();
@@ -80,12 +80,12 @@ export default function Home() {
 
   const [text, settext] = useState(todo?.text);
 
-  function closeEditModal() {
+  const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
     if (todo) {
       settext(todo.text);
     }
-  }
+  }, [todo]);
   function openEditModal() {
     editModalRef.current?.showModal();
   }
@@ -134,7 +134,6 @@ export default function Home() {
 
       <div className="selectionContainer">
         {SelectedID.length === 1 && selectCount && (
-          // <button tabIndex={!deleteloading ? 1 : 2} onClick={selectAll}>
           <button tabIndex={-1} onClick={selectAll}>
             Select All
           </button>

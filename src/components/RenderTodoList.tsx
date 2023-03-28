@@ -5,10 +5,10 @@ import Todo from './Todo';
 
 export function RenderTodoList(props: {
   todoRef: any;
-  SelectedID: any;
-  selectCount: any;
-  setSelectedID: any;
-  setselectCount: any;
+  SelectedID: number[];
+  selectCount: boolean;
+  setSelectedID: Function;
+  setselectCount: Function;
 }) {
   const { todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
   const { todos, loading } = useFirestoreData();
@@ -28,8 +28,8 @@ export function RenderTodoList(props: {
       {!loading &&
         todos.map((todo: todosProps, index: number) => (
           <Todo
-            todos={todos}
             todo={todo}
+            todos={todos}
             setselectCount={setselectCount}
             SelectedID={SelectedID}
             setSelectedID={setSelectedID}
