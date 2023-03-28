@@ -35,7 +35,7 @@ export default function Home() {
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
 
-  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const {deleteloading, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { todos, settodos } = useFirestoreData();
@@ -103,11 +103,7 @@ export default function Home() {
   const todoCount = NotCompleteTodo.length;
   return (
     <main>
-      <Toast
-        todoRef={todoRef}
-        SelectedID={SelectedID}
-        clearSelect={clearSelect}
-      />
+      <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
 
       {SelectModalMounted && (
         <SelectModal
@@ -132,14 +128,17 @@ export default function Home() {
           </Suspense>
         </dialog>
       )}
-      {DeleteModalMounted && (
-        <DeleteModal SelectedID={SelectedID} />
-      )}
+      {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
       <Header todoCount={todoCount} selecting={selecting} />
 
       <div className="selectionContainer">
-        {SelectedID.length === 1 && selectCount && <button onClick={selectAll}>Select All</button>}
+        {SelectedID.length === 1 && selectCount && (
+          // <button tabIndex={!deleteloading ? 1 : 2} onClick={selectAll}>
+          <button tabIndex={-1} onClick={selectAll}>
+            Select All
+          </button>
+        )}
         {SelectedID.length >= 2 && <button onClick={clearSelect}>Deselect All</button>}
       </div>
 
@@ -153,7 +152,12 @@ export default function Home() {
         />
       </section>
 
-      <Footer selectCount={selectCount} inputRef={inputRef} handleSubmit={handleSubmit} />
+      <Footer
+        SelectModalMounted={SelectModalMounted}
+        selectCount={selectCount}
+        inputRef={inputRef}
+        handleSubmit={handleSubmit}
+      />
     </main>
   );
 }

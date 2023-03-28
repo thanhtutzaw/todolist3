@@ -6,17 +6,18 @@
     inset              : 0;
     margin             : 0 auto;
     overflow           : hidden;
-    z-index            : 200000;
+    /* z-index            : 200000; */
+      z-index : 3000000000;
     display            : flex;
     justify-content    : center;
     align-items        : center;
 }
 .deleteToast {
     position                             : absolute;
+    z-index : 3000000000;
     inset                                : 0;
     margin                               : 0 auto;
     top                                  : 85%;
-    background-color                     : red;
     background-color                     : rgba(223, 16, 16, 0.884);
     color                                : white;
     backdrop-filter                      : blur(20px);

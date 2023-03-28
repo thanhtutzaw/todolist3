@@ -3,17 +3,23 @@ import Button from './Elements/Button/Button';
 import { FormEventHandler, RefObject } from 'react';
 
 export default function Footer(props: {
+  SelectModalMounted: boolean;
   inputRef: RefObject<HTMLInputElement>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
   selectCount: boolean;
 }) {
-  const { inputRef, handleSubmit, selectCount } = props;
+  const { SelectModalMounted, inputRef, handleSubmit, selectCount } = props;
   return (
     <footer className="nav" style={{ pointerEvents: selectCount ? 'none' : 'initial' }}>
       <form onSubmit={handleSubmit}>
-        <input ref={inputRef} className="input-text" type="text" />
+        <input
+          tabIndex={!SelectModalMounted ? 1 : -1}
+          ref={inputRef}
+          className="input-text"
+          type="text"
+        />
 
-        <Button type="submit" className="add-btn-parent">
+        <Button tabIndex={!SelectModalMounted ? 1 : -1} type="submit" className="add-btn-parent">
           <VscAdd className="add-btn" />
         </Button>
       </form>

@@ -21,15 +21,22 @@ export default function SelectModal(props: {
   // const { selecting, SelectedID, clearSelect, setisPrevent, openEditModal } =
   //   props;
   const { selecting, SelectedID, clearSelect, openEditModal } = props;
-  const { setisPrevent, deleteloading, handleDeleteModal } = useContext(
-    AppContext
-  ) as AppContextType;
+  const {
+    openDeleteModal,
+    setopenDeleteModal,
+    setDeleteModalMounted,
+    setisPrevent,
+    deleteloading,
+    handleDeleteModal,
+  } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         console.log(e.key, '(closing selectModal)');
         clearSelect();
         setisPrevent(false);
+        setDeleteModalMounted(false);
+        setopenDeleteModal(false);
       }
     }
     window.addEventListener('keyup', handleEscape);
@@ -54,6 +61,8 @@ export default function SelectModal(props: {
       </div>
       <div>
         <Button
+          // tabIndex={0}
+          tabIndex={!openDeleteModal ? 1 : -1}
           disabled={deleteloading || SelectedID.length > 1}
           onClick={openEditModal}
           // className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}
@@ -63,6 +72,7 @@ export default function SelectModal(props: {
         </Button>
 
         <Button
+        tabIndex={!openDeleteModal ? 1 : -1}
           style={{ pointerEvents: deleteloading ? 'none' : 'initial' }}
           disabled={deleteloading}
           onClick={handleDeleteModal}
