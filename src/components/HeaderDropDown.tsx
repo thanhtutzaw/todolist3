@@ -1,6 +1,7 @@
+import useFirestoreData from '@/hooks/useFirestoreData';
 import { MouseEventHandler } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { RiLogoutBoxFill } from 'react-icons/ri';
+import { RiLogoutBoxFill, RiFileCopy2Fill } from 'react-icons/ri';
 type HeaderDropDownProps = {
   theme: string;
   loading: boolean;
@@ -33,6 +34,16 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     pointerEvents: 'initial',
   };
   const toolsAnimate = opentools ? enterTools : exitTools;
+  const { todos } = useFirestoreData();
+  function exportHandle() {
+    const dataStr = JSON.stringify(todos);
+    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    let fileName = 'data.json';
+    let linkElement = document.createElement('a') as HTMLAnchorElement;
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', fileName);
+    linkElement.click();
+  }
   return (
     <div
       className="dropdown"
@@ -52,6 +63,10 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
           >
             {theme === 'light' ? <MdDarkMode /> : <MdLightMode />}
             <span>Theme</span>
+          </button>
+          <button disabled={loading} onClick={exportHandle}>
+            <RiFileCopy2Fill />
+            <span>Export Data</span>
           </button>
           <button disabled={loading} onClick={logoutHandle}>
             <RiLogoutBoxFill />
