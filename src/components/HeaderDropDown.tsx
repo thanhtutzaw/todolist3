@@ -2,7 +2,7 @@ import { AppContext } from '@/Context/AppContext';
 import { auth, db } from '@/lib/firebase';
 import { AppContextType, todosProps } from '@/types';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-import { MouseEventHandler, useContext } from 'react';
+import { MouseEventHandler, useContext, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiLogoutBoxFill, RiFileCopy2Fill } from 'react-icons/ri';
 import { VscAdd } from 'react-icons/vsc';
@@ -51,6 +51,10 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     pointerEvents: 'initial',
   };
   const toolsAnimate = opentools ? enterTools : exitTools;
+  useEffect(() => {
+    opentools ? setisPrevent(true) : setisPrevent(false);
+  }, [opentools]);
+
   function exportHandle() {
     const length = todos.length;
     const isPlural = length > 1 ? 'items' : 'item';
@@ -64,16 +68,12 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     alert(`Exported ${length} ${isPlural} to this Device ✨`);
   }
   function importHandle() {
-    console.log('importing');
-    setisPrevent(true);
-
     let fileInput = document.createElement('input');
     fileInput.setAttribute('type', 'file');
     fileInput.click();
     fileInput.addEventListener(
       'change',
       () => {
-        setisPrevent(true);
         if (!fileInput.files) return;
         const uploadFile = fileInput.files[0];
         //limit to 57 KB
@@ -86,10 +86,8 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
           throw new Error('Invalid File Type. JSON Required !');
         }
         const fileReader = new FileReader();
-        fileReader.onload = async(e) => {
-          console.log('on load');
-          // setisPrevent(false);
-
+        fileReader.onload = async (e) => {
+          setisPrevent(true);
           // const jsonObj = JSON.parse(JSON.stringify(e.target?.result));
           const dataStr = e.target?.result as string;
           // const data = JSON.parse(dataStr) as object[];
@@ -119,7 +117,10 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
               });
             });
             console.log('finish import');
-            setisPrevent(false)
+            setisPrevent(false);
+            setTimeout(() => {
+              setopentools(false);
+            }, 2000);
           } catch (error) {
             console.error(error);
           }
