@@ -19,21 +19,25 @@ export default function useFirestoreData() {
         const q = query(
           collection(db, 'users/' + user.uid + '/todos'),
           orderBy('timeStamp', 'desc')
+        );
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          // if (snapshot.size) {
+          setloading(true);
+          snapshot.docs.map((doc) => {
+            // console.log(doc.data().timeStamp);
+            // console.log(...doc.data());
+          });
+          console.log();
+          settodos(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }))
           );
-          unsubscribe = onSnapshot(q, (snapshot) => {            
-              // if (snapshot.size) {
-                setloading(true);
-                settodos(
-                  snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                  }))
-                );
-                setloading(false)
-              // }else{
-                // setloading(false);
-              // }
-          
+          setloading(false);
+          // }else{
+          // setloading(false);
+          // }
         });
       } else if ((window.location.href = '/login')) {
         unsubscribe();

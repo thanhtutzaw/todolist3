@@ -4,8 +4,14 @@ import { getAuth, signOut } from 'firebase/auth';
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderDropDown from './HeaderDropDown';
-export default function Header(props: { todoCount: number; selecting: boolean }) {
-  const { todoCount, selecting } = props;
+import { todosProps } from '@/types';
+export default function Header(props: {
+  settodos: Function;
+  todos: todosProps[] | null[];
+  todoCount: number;
+  selecting: boolean;
+}) {
+  const {todos, settodos, todoCount, selecting } = props;
   const { userphoto, userName } = useIndexDB();
   const { theme, setTheme } = useTheme();
 
@@ -61,6 +67,8 @@ export default function Header(props: { todoCount: number; selecting: boolean })
       </div>
       {mounted && (
         <HeaderDropDown
+          todos={todos}
+          settodos={settodos}
           loading={loading}
           setmounted={setmounted}
           theme={theme}

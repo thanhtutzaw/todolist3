@@ -5,13 +5,14 @@ import Todo from './Todo';
 
 export function RenderTodoList(props: {
   todoRef: any;
+  todos: todosProps[] | null[];
   SelectedID: number[];
   selectCount: boolean;
   setSelectedID: Function;
   setselectCount: Function;
 }) {
-  const { todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
-  const { todos, loading } = useFirestoreData();
+  const {todos, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
+  const { loading } = useFirestoreData();
 
   if (todos.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
 
@@ -26,7 +27,7 @@ export function RenderTodoList(props: {
         {loading && <Skeleton className={'loading'} count={10} />}
       </SkeletonTheme>
       {!loading &&
-        todos.map((todo: todosProps, index: number) => (
+        todos.map((todo, index: number) => (
           <Todo
             todo={todo}
             todos={todos}

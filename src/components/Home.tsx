@@ -130,7 +130,7 @@ export default function Home() {
       )}
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
-      <Header todoCount={todoCount} selecting={selecting} />
+      <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
 
       <div className="selectionContainer">
         {SelectedID.length === 1 && selectCount && (
@@ -143,6 +143,7 @@ export default function Home() {
 
       <section className={`todo-parent row`}>
         <RenderTodoList
+        todos={todos}
           todoRef={todoRef}
           selectCount={selectCount}
           setselectCount={setselectCount}

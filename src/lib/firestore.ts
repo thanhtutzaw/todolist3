@@ -81,7 +81,6 @@ export function deleteMultipleTodo(
       alert('User is not authenticated');
       throw new Error('User is not authenticated');
     }
-
     todoRef.current?.scrollIntoView({ behavior: 'smooth' });
     const batch = writeBatch(db!);
     const chunkSize = 10;
