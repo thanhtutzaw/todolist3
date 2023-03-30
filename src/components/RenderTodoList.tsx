@@ -2,16 +2,17 @@ import useFirestoreData from '@/hooks/useFirestoreData';
 import { todosProps } from '@/types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
+import { RefObject } from 'react';
 
 export function RenderTodoList(props: {
-  todoRef: any;
+  todoRef: RefObject<HTMLUListElement>;
   todos: todosProps[] | null[];
   SelectedID: number[];
   selectCount: boolean;
   setSelectedID: Function;
   setselectCount: Function;
 }) {
-  const {todos, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
+  const { todos, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
   const { loading } = useFirestoreData();
 
   if (todos.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;

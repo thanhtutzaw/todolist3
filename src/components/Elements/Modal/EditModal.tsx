@@ -1,31 +1,45 @@
 import { AppContext } from '@/Context/AppContext';
 import { updateTodo } from '@/lib/firestore';
-import { AppContextType } from '@/types';
+import { AppContextType, todosProps } from '@/types';
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ConfirmModal from './ConfirmModal';
 import UpdatingModal from './UpdatingModal';
 
 export default function EditModal(props: {
-  todo: any;
-  text: any;
+  todo: todosProps | null;
+  text: string | null;
   settext: Function;
-  closeEditModal: Function;
+  exitWithoutSaving: boolean;
   clearSelect: Function;
+  closeEditModal: Function;
   confirmModalRef: RefObject<HTMLDialogElement>;
 }) {
-  const { confirmModalRef, text, settext, todo, closeEditModal, clearSelect } = props;
+  const [loading, setloading] = useState(false);
+  const [eloading, setLoading] = useState(false);
+  const UpdatingRef = useRef<HTMLDialogElement>(null);
+  const { exitWithoutSaving, confirmModalRef, text, settext, todo, closeEditModal, clearSelect } =
+    props;
 
   // const actionButtonRef = useRef(null);
   const { setisPrevent, editModalRef } = useContext(AppContext) as AppContextType;
-  const [loading, setloading] = useState(false);
-  const UpdatingRef = useRef<HTMLDialogElement>(null);
+  // useEffect(() => {
+  //   function handleEscape(e: KeyboardEvent) {
+  //     if (e.key === 'Escape' && exitWithoutSaving) {
+  //       // editModalRef.current?.showModal();
+  //       // confirmModalRef.current?.showModal();
+  //     }
+  //   }
+  //   window.addEventListener('keyup', handleEscape);
+  //   return () => {
+  //     window.removeEventListener('keyup', handleEscape);
+  //   };
+  // }, [exitWithoutSaving]);
   useEffect(() => {
     const UpdateRef = UpdatingRef.current;
     // const actionButton = actionButtonRef.current;
     if (UpdateRef) {
       loading ? UpdateRef.showModal() : UpdateRef.close();
     }
-
     // function adjustSubmitButtonPosition() {
     //   const isVirtualKeyboardOpen = window.innerHeight < window.outerHeight;
 
@@ -39,10 +53,10 @@ export default function EditModal(props: {
 
   const updateHandle = useCallback(
     updateTodo(
-      todo?.id,
+      todo?.id!,
       editModalRef,
-      text,
-      todo,
+      text!,
+      todo!,
       closeEditModal,
       setloading,
       setisPrevent,
@@ -60,7 +74,6 @@ export default function EditModal(props: {
   const closeConfirm = useCallback(() => {
     confirmModalRef.current?.close();
   }, []);
-  const [eloading, setLoading] = useState(false);
   return (
     <>
       <dialog id="confirmModal" ref={confirmModalRef}>
@@ -86,7 +99,7 @@ export default function EditModal(props: {
             {/* {eloading&&<> */}
             <textarea
               style={{ userSelect: loading ? 'none' : 'unset' }}
-              value={text}
+              value={text || ''}
               ref={inputRef}
               onChange={(e) => {
                 settext(e.target.value);
@@ -109,7 +122,7 @@ export default function EditModal(props: {
 
               <button
                 onClick={() => {
-                  if (todo.id !== 'undefined') {
+                  if (todo) {
                     updateHandle();
                   }
                 }}

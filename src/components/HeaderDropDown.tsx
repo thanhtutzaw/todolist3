@@ -1,8 +1,9 @@
 import { AppContext } from '@/Context/AppContext';
+import { exportTodo, importTodo } from '@/ExportImport';
 import { auth, db } from '@/lib/firebase';
 import { AppContextType, todosProps } from '@/types';
 import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
-import { MouseEventHandler, useContext, useEffect } from 'react';
+import { MouseEventHandler, useCallback, useContext, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiLogoutBoxFill, RiFileCopy2Fill } from 'react-icons/ri';
 import { VscAdd } from 'react-icons/vsc';
@@ -55,110 +56,17 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     opentools ? setisPrevent(true) : setisPrevent(false);
   }, [opentools]);
 
-  function exportHandle() {
-    const length = todos.length;
-    const isPlural = length > 1 ? 'items' : 'item';
-    const dataStr = JSON.stringify(todos);
-    let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-    let fileName = 'data.json';
-    let linkElement = document.createElement('a') as HTMLAnchorElement;
-    linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', fileName);
-    linkElement.click();
-    alert(`Exported ${length} ${isPlural} to this Device ✨`);
-  }
+  const exportHandle = useCallback(function () {
+    exportTodo(todos);
+  }, []);
   function importHandle() {
     let fileInput = document.createElement('input');
     fileInput.setAttribute('type', 'file');
     fileInput.click();
-    fileInput.addEventListener(
-      'change',
-      () => {
-        if (!fileInput.files) return;
-        const uploadFile = fileInput.files[0];
-        //limit to 57 KB
-        if (uploadFile.size >= 58769) {
-          alert('File Size Limited to 50 kb ! Try Again');
-          throw new Error('File Size Limited to 50 kb !');
-        }
-        if (uploadFile.type !== 'application/json') {
-          alert('Invalid File Type. JSON Required ! Try Again');
-          throw new Error('Invalid File Type. JSON Required !');
-        }
-        const fileReader = new FileReader();
-        fileReader.onload = async (e) => {
-          setisPrevent(true);
-          // const jsonObj = JSON.parse(JSON.stringify(e.target?.result));
-          const dataStr = e.target?.result as string;
-          // const data = JSON.parse(dataStr) as object[];
-          const newDatas = JSON.parse(dataStr);
-          // const importTodo = { ...newDatas };
-          settodos([
-            ...todos,
-            ...newDatas,
-            // newDatas.map((d: any) => {
-            //   return { ...d };
-            // }),
-          ]);
-          if (!db) {
-            alert('Firestore database is not available');
-            throw new Error('Firestore database is not available');
-          }
-          if (!auth.currentUser) {
-            alert('User is not authenticated');
-            throw new Error('User is not authenticated');
-          }
-          const collectionRef = collection(db, 'users', auth.currentUser.uid, 'todos');
-          // await setDoc(doc(collectionRef, 'new-city-id'), importTodo);
-          try {
-            newDatas.map(async (d: any) => {
-              await setDoc(doc(collectionRef, d.id), {
-                ...d,
-              });
-            });
-            console.log('finish import');
-            setisPrevent(false);
-            setTimeout(() => {
-              setopentools(false);
-            }, 2000);
-          } catch (error) {
-            console.error(error);
-          }
-          // alert(`Imported ✨`);
-          // await addDoc(collectionRef, importTodo);
-
-          // settodos([
-          //   ...todos,
-          //   newDatas.map((d: any) => {
-          //     return { ...todos, ...d };
-          //   }),
-          // ]);
-
-          // settodos({...todos})
-          // settodos([...todos ,data ])
-          // settodos([data]);
-          // todos.push(data);
-          // settodos([ ...todos, data ]);
-        };
-        fileReader.readAsText(fileInput.files[0]);
-
-        // fileReader.readAsText(fileInput.files[0]);
-        // console.log(fileInput.files[0]);
-        // for (const file of fileInput.files) {
-        //   console.log(file);
-        // }
-      },
-      false
-    );
-    // const length = todos.length;
-    // const isPlural = length > 1 ? 'items' : 'item';
-    // const dataStr = JSON.stringify(todos);
-    // let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-    // let fileName = 'data.json';
-    // let linkElement = document.createElement('a') as HTMLAnchorElement;
-    // linkElement.setAttribute('href', dataUri);
-    // linkElement.setAttribute('download', fileName);
-    // linkElement.click();
+    fileInput.addEventListener('change', fileChangeHandle, false);
+    function fileChangeHandle() {
+      importTodo(fileInput, setisPrevent, todos, settodos, setopentools );
+    }
   }
   return (
     <div

@@ -7,11 +7,11 @@ import { auth } from '@/lib/firebase';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
 import { onAuthStateChanged } from 'firebase/auth';
-
-import React, {
+import {
   FormEventHandler,
   MouseEvent,
   Suspense,
+  lazy,
   useCallback,
   useContext,
   useEffect,
@@ -23,22 +23,20 @@ import Footer from './Footer';
 import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
 import Toast from './Toast';
-const EditModal = React.lazy(() => import('@/components/Elements/Modal/EditModal'));
+const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
+  const { todos, settodos } = useFirestoreData();
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
-
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
-
-  const { deleteloading, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
-  const { todos, settodos } = useFirestoreData();
   const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
     useSelect(todos);
 
@@ -78,22 +76,25 @@ export default function Home() {
 
   const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
 
-  const [text, settext] = useState(todo?.text);
+  const [text, settext] = useState(todo?.text || null);
 
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
     if (todo) {
-      settext(todo.text);
+      settext(todo.text!);
+    } else {
     }
   }, [todo]);
   function openEditModal() {
     editModalRef.current?.showModal();
   }
+  const exitWithoutSaving = text !== todo?.text;
   function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
     const dialog = document.querySelector('dialog');
     if (e.target === dialog) {
-      if (text !== todo?.text) {
+      if (exitWithoutSaving) {
         confirmModalRef.current?.showModal();
+        console.log('show confirm');
       } else {
         closeEditModal();
       }
@@ -107,6 +108,8 @@ export default function Home() {
 
       {SelectModalMounted && (
         <SelectModal
+          exitWithoutSaving={exitWithoutSaving}
+          confirmModalRef={confirmModalRef}
           openEditModal={openEditModal}
           clearSelect={clearSelect}
           SelectedID={SelectedID}
@@ -114,10 +117,11 @@ export default function Home() {
         />
       )}
 
-      {EditModalMounted && (
+      {EditModalMounted && todo && (
         <dialog onClick={confirmEditModal} id="editModal" ref={editModalRef}>
           <Suspense fallback={renderLoader()}>
             <EditModal
+              exitWithoutSaving={exitWithoutSaving}
               confirmModalRef={confirmModalRef}
               text={text}
               settext={settext}
@@ -143,7 +147,7 @@ export default function Home() {
 
       <section className={`todo-parent row`}>
         <RenderTodoList
-        todos={todos}
+          todos={todos}
           todoRef={todoRef}
           selectCount={selectCount}
           setselectCount={setselectCount}

@@ -486,6 +486,12 @@ html[theme="dark"] .react-loading-skeleton {
   min-height: var(--min-height);
 }
 
+.updatingModal {
+  text-align    : center;
+  display       : flex;
+  flex-direction: column;
+}
+
 #editModal>.container,
 .confirmModal,
 .updatingModal {
@@ -860,6 +866,7 @@ ul li {
   will-change           : scale;
   animation-fill-mode   : forwards;
 }
+
 /* button:focus-visible{
   outline:1px solid green !important;
   background-color: red !important;

@@ -1,12 +1,13 @@
 import { AppContext } from '@/Context/AppContext';
-// import usePrevent from '@/hooks/usePrevent';
 import { AppContextType } from '@/types';
-import { MouseEventHandler, useContext, useEffect } from 'react';
+import { MouseEventHandler, RefObject, useContext, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import Button from '../Button/Button';
 
 export default function SelectModal(props: {
+  exitWithoutSaving: boolean;
+  confirmModalRef: RefObject<HTMLDialogElement>;
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
@@ -18,10 +19,10 @@ export default function SelectModal(props: {
   const unmountStyle = {
     animation: 'selectUnmount 250ms ease-out',
   };
-  // const { selecting, SelectedID, clearSelect, setisPrevent, openEditModal } =
-  //   props;
-  const { selecting, SelectedID, clearSelect, openEditModal } = props;
+  const { exitWithoutSaving, confirmModalRef, selecting, SelectedID, clearSelect, openEditModal } =
+    props;
   const {
+    editModalRef,
     openDeleteModal,
     setopenDeleteModal,
     setDeleteModalMounted,
@@ -31,7 +32,11 @@ export default function SelectModal(props: {
   } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && exitWithoutSaving) {
+        editModalRef.current?.showModal();
+        confirmModalRef.current?.showModal();
+      }
+      if (e.key === 'Escape' && !exitWithoutSaving) {
         console.log(e.key, '(closing selectModal)');
         clearSelect();
         setisPrevent(false);
@@ -43,7 +48,8 @@ export default function SelectModal(props: {
     return () => {
       window.removeEventListener('keyup', handleEscape);
     };
-  }, []);
+  }, [exitWithoutSaving]);
+  const tabIndex = !openDeleteModal ? 1 : -1;
   return (
     <div style={selecting ? mountStyle : unmountStyle} className={`selectModal `}>
       <div>
@@ -56,23 +62,20 @@ export default function SelectModal(props: {
             }}
           />
         </IconContext.Provider>
-
         <p className="selectCount">{SelectedID.length}</p>
       </div>
       <div>
         <Button
-          // tabIndex={0}
-          tabIndex={!openDeleteModal ? 1 : -1}
+          tabIndex={tabIndex}
           disabled={deleteloading || SelectedID.length > 1}
           onClick={openEditModal}
-          // className={`edit ${SelectedID.length > 1 ? 'disabled' : ''}`}
           className="edit"
         >
           Edit
         </Button>
 
         <Button
-        tabIndex={!openDeleteModal ? 1 : -1}
+          tabIndex={tabIndex}
           style={{ pointerEvents: deleteloading ? 'none' : 'initial' }}
           disabled={deleteloading}
           onClick={handleDeleteModal}

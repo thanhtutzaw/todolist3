@@ -5,22 +5,15 @@ import { deleteMultipleTodo } from '../../lib/firestore';
 import DeleteToast from './DeleteToast';
 import s from './Toast.module.css';
 export default function Toast(props: {
-  todoRef: RefObject<HTMLUListElement>;
-  clearSelect: Function;
   SelectedID: number[];
+  clearSelect: Function;
+  todoRef: RefObject<HTMLUListElement>;
 }) {
   const { SelectedID, todoRef, clearSelect } = props;
   const [cancelDelete, setcancelDelete] = useState(true);
 
-  const {
-    setdeleting,
-    setisPrevent,
-    DeleteToastMounted,
-    setopenDeleteToast,
-    setloading,
-  } = useContext(
-    AppContext
-  ) as AppContextType;
+  const { setdeleting, setisPrevent, DeleteToastMounted, setopenDeleteToast, setloading } =
+    useContext(AppContext) as AppContextType;
   useEffect(() => {
     let deleteTime: NodeJS.Timeout | undefined;
     if (DeleteToastMounted) {
@@ -55,10 +48,7 @@ export default function Toast(props: {
       className={s.toastContainer}
     >
       {DeleteToastMounted && (
-        <DeleteToast          
-          cancelDelete={cancelDelete}
-          setcancelDelete={setcancelDelete}
-        />
+        <DeleteToast cancelDelete={cancelDelete} setcancelDelete={setcancelDelete} />
       )}
     </div>
   );

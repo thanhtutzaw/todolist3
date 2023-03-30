@@ -82,7 +82,7 @@ export function deleteMultipleTodo(
       throw new Error('User is not authenticated');
     }
     todoRef.current?.scrollIntoView({ behavior: 'smooth' });
-    const batch = writeBatch(db!);
+    const batch = writeBatch(db);
     const chunkSize = 10;
     for (let i = 0; i < SelectedID.length; i += chunkSize) {
       const chunk = SelectedID.slice(i, i + chunkSize);
@@ -110,10 +110,10 @@ export function deleteMultipleTodo(
   };
 }
 export function updateTodo(
-  id: string,
+  id: string | number,
   editModalRef: RefObject<HTMLDialogElement>,
-  text: any,
-  todo: { text: any },
+  text: string,
+  todo: todosProps,
   closeEditModal: Function,
   setloading: { (value: SetStateAction<boolean>): void; (arg0: boolean): void },
   setisPrevent: Function,
@@ -128,7 +128,7 @@ export function updateTodo(
       alert('User is not authenticated');
       throw new Error('User is not authenticated');
     }
-    const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id);
+    const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id.toString());
     const newData = {
       ...todo,
       text,

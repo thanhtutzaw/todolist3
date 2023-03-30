@@ -7,12 +7,16 @@ import { GrClose } from 'react-icons/gr';
 import s from './Toast.module.css';
 
 export default function DeleteToast(props: { setcancelDelete: Function; cancelDelete: boolean }) {
-  const { setcancelDelete, cancelDelete } = props;
-  const { deleting } = useContext(AppContext) as AppContextType;
   const [undoCounter, setundoCounter] = useState(5);
-
-  const { deleteloading, setloading, openDeleteToast, setopenDeleteToast, setDeleteToastMounted } =
-    useContext(AppContext) as AppContextType;
+  const { setcancelDelete, cancelDelete } = props;
+  const {
+    deleting,
+    deleteloading,
+    setloading,
+    openDeleteToast,
+    setopenDeleteToast,
+    setDeleteToastMounted,
+  } = useContext(AppContext) as AppContextType;
 
   const mountDeleteToast = {
     transformStyle: 'preserve-3d',
