@@ -50,16 +50,16 @@ const Todolist = (props: {
   // const date = Timestamp.({todo?.timeStamp?.seconds, todo?.timeStamp?.nanoseconds}).toDate()
   // Timestamp.
 
-  // const date = new Date(todo?.timeStamp?.toDate()!);
-  // console.log(todo?.timeStamp?.toDate());
-  // const createdAt = date
-  //   ? date?.toLocaleDateString('en-US', {
-  //       day: 'numeric',
-  //       month: 'short',
-  //       year: 'numeric',
-  //     })
-  //   : '';
-  // const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
+  const date = new Date(todo?.timeStamp?.toDate()!);
+  console.log(todo?.timeStamp?.toDate());
+  const createdAt = date
+    ? date?.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      })
+    : '';
+  const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
 
   useEffect(() => {
     console
@@ -92,7 +92,7 @@ const Todolist = (props: {
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
         {/* <p className="date">{finalTimeStamp}</p> */}
-        {/* <p className="date">{addLoading ? 'Adding' : createdAt}</p> */}
+        <p className="date">{finalTimeStamp}</p>
         {/* {fireTime!.toDate().toDateString()} */}
         {/* {JSON.stringify(todo?.completed)} */}
       </label>
