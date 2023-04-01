@@ -1,11 +1,24 @@
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { Timestamp, collection, doc, setDoc } from 'firebase/firestore';
 import { auth, db } from './lib/firebase';
 import { todosProps } from './types';
 
 export function exportTodo(todos: todosProps[] | null[]) {
   const length = todos.length;
   const isPlural = length > 1 ? 'items' : 'item';
-  const dataStr = JSON.stringify(todos);
+  const dataStr = JSON.stringify(
+    todos.map((t) => {
+      return {
+        ...t,
+        // timeStamp: t?.timeStamp?.toJSON(),
+
+        // date: new Date(t?.timeStamp?.toDate()!).toLocaleDateString('en-US', {
+        //   day: 'numeric',
+        //   month: 'short',
+        //   year: 'numeric',
+        // }),
+      };
+    })
+  );
   let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
   let fileName = 'data.json';
   let linkElement = document.createElement('a') as HTMLAnchorElement;
@@ -16,11 +29,11 @@ export function exportTodo(todos: todosProps[] | null[]) {
 }
 
 export function importTodo(
-  fileInput: any,
-  setisPrevent: Function,
-  todos: todosProps[] | null[],
   settodos: Function,
-  setopentools: Function
+  setisPrevent: Function,
+  setopentools: Function,
+  fileInput: HTMLInputElement,
+  todos: todosProps[] | null[]
 ) {
   if (!fileInput.files) return;
   const uploadFile = fileInput.files[0];
@@ -37,11 +50,31 @@ export function importTodo(
   fileReader.onload = async (e) => {
     setisPrevent(true);
     const dataStr = e.target?.result as string;
-    const newDatas = JSON.parse(dataStr);
-    // const importTodo = { ...newDatas };
+    const newDatas = JSON.parse(dataStr) as todosProps[];
+    console.log(newDatas);
+    // console.log(newDatas);
+    // newDatas.map((d) => {
+    // console.log(d.timeStamp);
+    // });
+
     settodos([
       ...todos,
-      ...newDatas,
+      // ...newDatas,
+      newDatas.map((d) => {
+        return {
+          ...d,
+          // timeStamp: new Timestamp(d.timeStamp?.nanoseconds!, d.timeStamp?.seconds!),
+        };
+      }),
+      // newDatas.map((d) => {
+      //   return {
+      //     ...d,
+      //     newTimeStamp: d.timeStamp?.toDate(),
+      //   };
+      // }),
+      // newDatas.map((d) => {
+      //   return { ...d, timeStamp: d.timeStamp?.toJSON() };
+      // }),
       // newDatas.map((d: any) => {
       //   return { ...d };
       // }),
@@ -55,11 +88,11 @@ export function importTodo(
       throw new Error('User is not authenticated');
     }
     const collectionRef = collection(db, 'users', auth.currentUser.uid, 'todos');
-    // await setDoc(doc(collectionRef, 'new-city-id'), importTodo);
     try {
-      newDatas.map(async (d: any) => {
-        await setDoc(doc(collectionRef, d.id), {
+      newDatas.map(async (d) => {
+        await setDoc(doc(collectionRef, d.id.toString()), {
           ...d,
+          timeStamp: new Timestamp(d.timeStamp?.seconds!, d.timeStamp?.nanoseconds!),
         });
       });
       console.log('finish import');
@@ -70,6 +103,7 @@ export function importTodo(
     } catch (error) {
       console.error(error);
     }
+
     // alert(`Imported ✨`);
     // await addDoc(collectionRef, importTodo);
     // settodos([

@@ -1,5 +1,6 @@
 import { todosProps } from '@/types';
 import {
+  Timestamp,
   addDoc,
   collection,
   doc,
@@ -17,7 +18,7 @@ export function addTodo(
     (arg0: any[]): void;
   },
   todos: todosProps[] | null[],
-  setisPrevent: Function
+  setisPrevent: Function,
 ): Promise<void> {
   return new Promise<void>(async () => {
     // return async (e: FormEventHandler<HTMLFormElement>) => {
@@ -25,10 +26,16 @@ export function addTodo(
     console.info('%cAdding...', 'color:grey');
     todoRef.current?.scrollIntoView({ behavior: 'smooth' });
     const inputText = inputRef.current?.value;
+
     const data = {
       text: inputText,
-      timeStamp: serverTimestamp(),
       completed: false,
+      timeStamp: serverTimestamp(),
+      // date: new Date(.toDate()).toLocaleDateString('en-US', {
+      //   day: 'numeric',
+      //   month: 'short',
+      //   year: 'numeric',
+      // }),
     };
     if (!db) {
       alert('Firestore database is not available');
@@ -45,10 +52,12 @@ export function addTodo(
       settodos([...todos, inputText]);
 
       setisPrevent(true);
+      // setAddLoading(true);
       try {
         // await addDoc(collectionRef, data, { merge: true });
         await addDoc(collectionRef, data);
         setisPrevent(false);
+        // setAddLoading(false);
         console.info('%cAdded ✔️ ', 'color: green');
       } catch (error: any) {
         alert('Error in Creating new data !' + error.message);

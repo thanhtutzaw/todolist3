@@ -537,6 +537,12 @@ li.todo {
   animation: fadeIn .35s ease-in;
 }
 
+.date {
+  color     : rgba(104, 104, 104, 0.726);
+  font-size : calc(8px + 1.5vmin);
+  margin-top: 10px;
+}
+
 #editModal::backdrop,
 .deleteModal::backdrop,
 #confirmModal::backdrop {
@@ -645,12 +651,6 @@ ul li {
 }
 
 .todo.checked {
-  /* transform: translateY(-406px); */
-  /* position: absolute; */
-  /* top:0; */
-
-  /* transform: translateX(500px); */
-  /* opacity: .4; */
   transition      : all .3s ease-out;
   transform-origin: center;
 }

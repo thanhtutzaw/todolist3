@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebase';
 import { todosProps } from '@/types';
@@ -7,12 +7,9 @@ import { todosProps } from '@/types';
 export default function useFirestoreData() {
   const [loading, setloading] = useState(true);
   const [todos, settodos] = useState<todosProps[]>([]);
+  const sortedTodo = todos.sort((todo) => todo.timeStamp?.nanoseconds! - todo.timeStamp?.nanoseconds!);
   useEffect(() => {
     let unsubscribe: Function;
-    // if (todos.length === 0) {
-    //   setloading(false);
-    // }
-    // setloading(true);
 
     onAuthStateChanged(auth, (user) => {
       if (user && db) {
@@ -21,23 +18,19 @@ export default function useFirestoreData() {
           orderBy('timeStamp', 'desc')
         );
         unsubscribe = onSnapshot(q, (snapshot) => {
-          // if (snapshot.size) {
           setloading(true);
-          snapshot.docs.map((doc) => {
-            // console.log(doc.data().timeStamp);
-            // console.log(...doc.data());
-          });
-          console.log();
           settodos(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
+              // date: new Date(doc.data().timeStamp.toDate()).toLocaleDateString('en-US', {
+              //   day: 'numeric',
+              //   month: 'short',
+              //   year: 'numeric',
+              // }),
             }))
           );
           setloading(false);
-          // }else{
-          // setloading(false);
-          // }
         });
       } else if ((window.location.href = '/login')) {
         unsubscribe();
@@ -45,5 +38,5 @@ export default function useFirestoreData() {
     });
     return () => unsubscribe();
   }, []);
-  return { todos, settodos, loading };
+  return {sortedTodo, todos, settodos, loading };
 }

@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import { MouseEventHandler, RefObject } from 'react';
 
 export type AppContextType = {
@@ -23,4 +24,6 @@ export interface todosProps {
   id: string | number;
   text?: string;
   completed?: boolean;
+  timeStamp?: Timestamp;
+  date?: string;
 }

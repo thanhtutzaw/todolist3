@@ -28,7 +28,7 @@ const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
-  const { todos, settodos } = useFirestoreData();
+  const { sortedTodo, todos, settodos } = useFirestoreData();
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
@@ -41,7 +41,7 @@ export default function Home() {
     useSelect(todos);
 
   // const pendingOps = new Set();
-
+  const [addLoading, setAddLoading] = useState(false);
   const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     async (e) => {
       e.preventDefault();
@@ -147,6 +147,8 @@ export default function Home() {
 
       <section className={`todo-parent row`}>
         <RenderTodoList
+          sortedTodo={sortedTodo}
+          addLoading={addLoading}
           todos={todos}
           todoRef={todoRef}
           selectCount={selectCount}

@@ -65,7 +65,7 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     fileInput.click();
     fileInput.addEventListener('change', fileChangeHandle, false);
     function fileChangeHandle() {
-      importTodo(fileInput, setisPrevent, todos, settodos, setopentools );
+      importTodo(settodos, setisPrevent, setopentools, fileInput, todos);
     }
   }
   return (

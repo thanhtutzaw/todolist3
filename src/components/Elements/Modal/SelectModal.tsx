@@ -6,11 +6,11 @@ import { GrClose } from 'react-icons/gr';
 import Button from '../Button/Button';
 
 export default function SelectModal(props: {
-  exitWithoutSaving: boolean;
-  confirmModalRef: RefObject<HTMLDialogElement>;
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
+  exitWithoutSaving: boolean;
+  confirmModalRef: RefObject<HTMLDialogElement>;
   openEditModal: MouseEventHandler<HTMLButtonElement>;
 }) {
   const mountStyle = {
@@ -50,8 +50,9 @@ export default function SelectModal(props: {
     };
   }, [exitWithoutSaving]);
   const tabIndex = !openDeleteModal ? 1 : -1;
+  const mountAnimation = selecting ? mountStyle : unmountStyle;
   return (
-    <div style={selecting ? mountStyle : unmountStyle} className={`selectModal `}>
+    <div style={mountAnimation} className={`selectModal `}>
       <div>
         <IconContext.Provider value={{ className: 'global-class-name' }}>
           <GrClose
