@@ -22,18 +22,6 @@ export default function EditModal(props: {
 
   // const actionButtonRef = useRef(null);
   const { setisPrevent, editModalRef } = useContext(AppContext) as AppContextType;
-  // useEffect(() => {
-  //   function handleEscape(e: KeyboardEvent) {
-  //     if (e.key === 'Escape' && exitWithoutSaving) {
-  //       // editModalRef.current?.showModal();
-  //       // confirmModalRef.current?.showModal();
-  //     }
-  //   }
-  //   window.addEventListener('keyup', handleEscape);
-  //   return () => {
-  //     window.removeEventListener('keyup', handleEscape);
-  //   };
-  // }, [exitWithoutSaving]);
   useEffect(() => {
     const UpdateRef = UpdatingRef.current;
     // const actionButton = actionButtonRef.current;

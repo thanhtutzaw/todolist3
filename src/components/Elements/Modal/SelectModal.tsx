@@ -32,16 +32,17 @@ export default function SelectModal(props: {
   } = useContext(AppContext) as AppContextType;
   useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
-      if (e.key === 'Escape' && exitWithoutSaving) {
-        editModalRef.current?.showModal();
-        confirmModalRef.current?.showModal();
-      }
-      if (e.key === 'Escape' && !exitWithoutSaving) {
-        console.log(e.key, '(closing selectModal)');
-        clearSelect();
-        setisPrevent(false);
-        setDeleteModalMounted(false);
-        setopenDeleteModal(false);
+      if (e.key === 'Escape') {
+        if (exitWithoutSaving) {
+          editModalRef.current?.showModal();
+          confirmModalRef.current?.showModal();
+        } else {
+          console.log(e.key, '(closing selectModal)');
+          clearSelect();
+          setisPrevent(false);
+          setDeleteModalMounted(false);
+          setopenDeleteModal(false);
+        }
       }
     }
     window.addEventListener('keyup', handleEscape);
@@ -49,7 +50,7 @@ export default function SelectModal(props: {
       window.removeEventListener('keyup', handleEscape);
     };
   }, [exitWithoutSaving]);
-  const tabIndex = !openDeleteModal ? 1 : -1;
+  const controlTabkey = !openDeleteModal ? 1 : -1;
   const mountAnimation = selecting ? mountStyle : unmountStyle;
   return (
     <div style={mountAnimation} className={`selectModal `}>
@@ -67,7 +68,7 @@ export default function SelectModal(props: {
       </div>
       <div>
         <Button
-          tabIndex={tabIndex}
+          tabIndex={controlTabkey}
           disabled={deleteloading || SelectedID.length > 1}
           onClick={openEditModal}
           className="edit"
@@ -76,7 +77,7 @@ export default function SelectModal(props: {
         </Button>
 
         <Button
-          tabIndex={tabIndex}
+          tabIndex={controlTabkey}
           style={{ pointerEvents: deleteloading ? 'none' : 'initial' }}
           disabled={deleteloading}
           onClick={handleDeleteModal}

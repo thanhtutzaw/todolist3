@@ -1,8 +1,6 @@
 import { AppContext } from '@/Context/AppContext';
-import useFirestoreData from '@/hooks/useFirestoreData';
 import { checkStatus } from '@/lib/firestore';
 import { AppContextType, todosProps } from '@/types';
-import { Timestamp } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -51,7 +49,6 @@ const Todolist = (props: {
   // Timestamp.
 
   const date = new Date(todo?.timeStamp?.toDate()!);
-  console.log(todo?.timeStamp?.toDate());
   const createdAt = date
     ? date?.toLocaleDateString('en-US', {
         day: 'numeric',
@@ -60,22 +57,48 @@ const Todolist = (props: {
       })
     : '';
   const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
-
-  useEffect(() => {
-    console
-      .log
-      // date?.toLocaleDateString('en-US', { day: 'numeric' }) +
-      //   ' ' +
-      //   date?.toLocaleDateString('en-US', { month: 'short' }) +
-      //   ' ' +
-      //   date?.toLocaleDateString('en-US', { year: 'numeric' })
-      // todo?.timeStamp?.toDate()
-      // todo
-      ();
-    // console.log(todo?.timeStamp?.toDate().toISOString(), todo?.text);
-    // console.log(todo?.timeStamp, todo?.text);
-    // console.log('myTime is working', todo?.timeStamp?.toDate(), todo?.text);
-  }, []);
+  function timeAgo(input: string | Date) {
+    const date = input instanceof Date ? input : new Date(input);
+    const formatter = new Intl.RelativeTimeFormat('en', { style: 'narrow' });
+    const ranges = {
+      years: 3600 * 24 * 365,
+      months: 3600 * 24 * 30,
+      weeks: 3600 * 24 * 7,
+      days: 3600 * 24,
+      hours: 3600,
+      minutes: 60,
+      seconds: 1,
+    };
+    const secondsElapsed = (date.getTime() - Date.now()) / 1000;
+    let key: keyof typeof ranges;
+    for (key in ranges) {
+      if (ranges[key] < Math.abs(secondsElapsed)) {
+        const delta = secondsElapsed / ranges[key];
+        const date = formatter.format(Math.round(delta), key);
+        const ago = 'က';
+        const d = 'ရက်နေ့';
+        const w = 'ပတ်';
+        const mo = 'လ';
+        const y = 'နှစ်';
+        const h = 'နာရီ';
+        const minute = 'မိနစ်';
+        const s = 'စက္ကန့်';
+        return (
+          'လွန်ခဲ့သော ' +
+          date
+            .replace('ago', ago)
+            .replace('in', '')
+            .replace('d', d)
+            .replace('mo', mo)
+            .replace('w', w)
+            .replace('y', y)
+            .replace('h', h)
+            .replace('m', minute)
+            .replace('s', s)
+        );
+      }
+    }
+  }
 
   if (!mounted) return <></>;
   return (
@@ -91,9 +114,9 @@ const Todolist = (props: {
     >
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
+        <p className="date">{timeAgo(todo?.timeStamp?.toDate()!)}</p>
         {/* <p className="date">{finalTimeStamp}</p> */}
-        <p className="date">{finalTimeStamp}</p>
-        {/* {fireTime!.toDate().toDateString()} */}
+        {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}
       </label>
       <div onClick={handleSelect} className="todoActions">

@@ -961,3 +961,6 @@ ul li {
   pointer-events: none;
   user-select   : none;
 }
+.exportBtn.disabled{
+color:red;
+}

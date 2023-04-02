@@ -3,6 +3,7 @@ import { auth, db } from './lib/firebase';
 import { todosProps } from './types';
 
 export function exportTodo(todos: todosProps[] | null[]) {
+
   const length = todos.length;
   const isPlural = length > 1 ? 'items' : 'item';
   const dataStr = JSON.stringify(

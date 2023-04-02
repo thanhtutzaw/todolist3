@@ -1,15 +1,14 @@
 import { AppContext } from '@/Context/AppContext';
 import { exportTodo, importTodo } from '@/ExportImport';
-import { auth, db } from '@/lib/firebase';
+import useFirestoreData from '@/hooks/useFirestoreData';
 import { AppContextType, todosProps } from '@/types';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { MouseEventHandler, useCallback, useContext, useEffect } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { RiLogoutBoxFill, RiFileCopy2Fill } from 'react-icons/ri';
+import { RiFileCopy2Fill, RiLogoutBoxFill } from 'react-icons/ri';
 import { VscAdd } from 'react-icons/vsc';
 type HeaderDropDownProps = {
   theme: string;
-  loading: boolean;
+  isLoggingOut: boolean;
   opentools: boolean;
   settodos: Function;
   setTheme: Function;
@@ -22,7 +21,7 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
   const {
     todos,
     settodos,
-    loading,
+    isLoggingOut,
     setmounted,
     theme,
     setTheme,
@@ -52,13 +51,17 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     pointerEvents: 'initial',
   };
   const toolsAnimate = opentools ? enterTools : exitTools;
+  const { loading } = useFirestoreData();
   useEffect(() => {
     opentools ? setisPrevent(true) : setisPrevent(false);
   }, [opentools]);
 
-  const exportHandle = useCallback(function () {
-    exportTodo(todos);
-  }, []);
+  const exportHandle = useCallback(
+    function () {
+      exportTodo(todos);
+    },
+    [todos]
+  );
   function importHandle() {
     let fileInput = document.createElement('input');
     fileInput.setAttribute('type', 'file');
@@ -88,17 +91,21 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
             {theme === 'light' ? <MdDarkMode /> : <MdLightMode />}
             <span>Theme</span>
           </button>
-          <button disabled={loading} onClick={exportHandle}>
+          <button
+            className={loading ? 'disabled' : 'exportBtn'}
+            disabled={loading}
+            onClick={exportHandle}
+          >
             <RiFileCopy2Fill />
             <span>Export Data</span>
           </button>
-          <button disabled={loading} onClick={importHandle}>
+          <button onClick={importHandle}>
             <VscAdd />
             <span>Import Data</span>
           </button>
-          <button disabled={loading} onClick={logoutHandle}>
+          <button disabled={isLoggingOut} onClick={logoutHandle}>
             <RiLogoutBoxFill />
-            <span>{loading ? 'Logging out' : 'Logout'}</span>
+            <span>{isLoggingOut ? 'Logging out' : 'Logout'}</span>
           </button>
         </div>
       </div>
