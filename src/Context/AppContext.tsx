@@ -42,9 +42,13 @@ export default function AppProvider({ children }: PropsWithChildren) {
     setloading(true);
     // let deleteTime;
   };
+  const [dateLocale, setDateLocale] = useState(localStorage.getItem('dateLocale') ?? 'Myanmar');
+
   return (
     <AppContext.Provider
       value={{
+        dateLocale,
+        setDateLocale,
         setloading,
         deleteHandle,
         deleteloading,

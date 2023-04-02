@@ -13,7 +13,7 @@ const Todolist = (props: {
   todos: todosProps[] | null[];
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { setisPrevent } = useContext(AppContext) as AppContextType;
+  const { dateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed ?? false);
@@ -76,27 +76,27 @@ const Todolist = (props: {
         const delta = secondsElapsed / ranges[key];
         const date = formatter.format(Math.round(delta), key);
         const ago = 'က';
-        const d = 'ရက်နေ့';
-        const w = 'ပတ်';
-        const mo = 'လ';
-        const y = 'နှစ်';
-        const h = 'နာရီ';
+        const day = 'ရက်နေ့';
+        const week = 'ပတ်';
+        const month = 'လ';
+        const year = 'နှစ်';
+        const hour = 'နာရီ';
         const minute = 'မိနစ်';
-        const s = 'စက္ကန့်';
-        return (
+        const second = 'စက္ကန့်';
+        const myanmarDate =
           'လွန်ခဲ့သော ' +
           date
             .replace('ago', ago)
             .replace('in', '')
-            .replace('d', d)
-            .replace('mo', mo)
-            .replace('w', w)
-            .replace('y', y)
-            .replace('h', h)
+            .replace('d', day)
+            .replace('mo', month)
+            .replace('w', week)
+            .replace('y', year)
+            .replace('h', hour)
             .replace('m', minute)
-            .replace('s', s)
-        );
-      }
+            .replace('s', second);
+        return dateLocale === 'Myanmar' ? myanmarDate : date;
+      } 
     }
   }
 

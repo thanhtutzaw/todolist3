@@ -5,6 +5,8 @@ export type AppContextType = {
   deleting: boolean;
   openDeleteToast: boolean;
   setopenDeleteToast: Function;
+  dateLocale: string;
+  setDateLocale: Function;
   deleteloading: boolean;
   openDeleteModal: boolean;
   DeleteModalMounted: boolean;

@@ -2,9 +2,23 @@ import { AppContext } from '@/Context/AppContext';
 import { exportTodo, importTodo } from '@/ExportImport';
 import useFirestoreData from '@/hooks/useFirestoreData';
 import { AppContextType, todosProps } from '@/types';
-import { MouseEventHandler, useCallback, useContext, useEffect } from 'react';
+import {
+  ChangeEvent,
+  MouseEventHandler,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { GrClock } from 'react-icons/gr';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import { RiFileCopy2Fill, RiLogoutBoxFill } from 'react-icons/ri';
+import {
+  RiEarthFill,
+  RiFileCopy2Fill,
+  RiLogoutBoxFill,
+  RiTimeFill,
+  RiTimerFill,
+} from 'react-icons/ri';
 import { VscAdd } from 'react-icons/vsc';
 type HeaderDropDownProps = {
   theme: string;
@@ -29,7 +43,7 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     setopentools,
     logoutHandle,
   } = props;
-  const { setisPrevent } = useContext(AppContext) as AppContextType;
+  const { setDateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
   interface ToolsAnimate {
     animation: string;
     pointerEvents:
@@ -82,6 +96,7 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     >
       <div style={toolsAnimate} className={`tools `}>
         <div className="tools-container">
+          {/* {dateLocale} */}
           <button
             onClick={() => {
               setTheme((prev: string) => (prev === 'light' ? 'dark' : 'light'));
@@ -102,6 +117,19 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
           <button onClick={importHandle}>
             <VscAdd />
             <span>Import Data</span>
+          </button>
+          <button>
+            <RiTimeFill />
+            <select
+              defaultValue={'Myanmar'}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                localStorage.setItem('dateLocale', e.target.value);
+                setDateLocale(e.target.value);
+              }}
+            >
+              <option value={'Myanmar'}>Myanmar</option>
+              <option value={'English'}>English</option>
+            </select>
           </button>
           <button disabled={isLoggingOut} onClick={logoutHandle}>
             <RiLogoutBoxFill />
