@@ -1,6 +1,7 @@
 import { AppContext } from '@/Context/AppContext';
 import { checkStatus } from '@/lib/firestore';
 import { AppContextType, todosProps } from '@/types';
+import { Timestamp } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -45,18 +46,16 @@ const Todolist = (props: {
   const isSelecting = isSelect && SelectedID.length !== 0;
   const checkStatusHandle = checkStatus(todo, checked, setchecked, setisPrevent);
   const todoClass = `todo ${isSelect ? 'selected' : ''} ${todo?.completed ? 'checked' : ''} `;
-  // const date = Timestamp.({todo?.timeStamp?.seconds, todo?.timeStamp?.nanoseconds}).toDate()
-  // Timestamp.
-
-  const date = new Date(todo?.timeStamp?.toDate()!);
-  const createdAt = date
-    ? date?.toLocaleDateString('en-US', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      })
-    : '';
-  const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
+  const timeStamp = new Timestamp(todo?.timeStamp?.seconds!, todo?.timeStamp?.nanoseconds!);
+  const date = new Date(timeStamp.toDate()!);
+  // const createdAt = date
+  //   ? date?.toLocaleDateString('en-US', {
+  //       day: 'numeric',
+  //       month: 'short',
+  //       year: 'numeric',
+  //     })
+  //   : '';
+  // const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
   function timeAgo(input: string | Date) {
     const date = input instanceof Date ? input : new Date(input);
     const formatter = new Intl.RelativeTimeFormat('en', { style: 'narrow' });
@@ -96,7 +95,7 @@ const Todolist = (props: {
             .replace('m', minute)
             .replace('s', second);
         return dateLocale === 'Myanmar' ? myanmarDate : date;
-      } 
+      }
     }
   }
 
@@ -114,7 +113,7 @@ const Todolist = (props: {
     >
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
-        <p className="date">{timeAgo(todo?.timeStamp?.toDate()!)}</p>
+        <p className="date">{timeAgo(date)}</p>
         {/* <p className="date">{finalTimeStamp}</p> */}
         {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}

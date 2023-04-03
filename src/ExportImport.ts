@@ -3,7 +3,6 @@ import { auth, db } from './lib/firebase';
 import { todosProps } from './types';
 
 export function exportTodo(todos: todosProps[] | null[]) {
-
   const length = todos.length;
   const isPlural = length > 1 ? 'items' : 'item';
   const dataStr = JSON.stringify(
@@ -60,13 +59,8 @@ export function importTodo(
 
     settodos([
       ...todos,
-      // ...newDatas,
-      newDatas.map((d) => {
-        return {
-          ...d,
-          // timeStamp: new Timestamp(d.timeStamp?.nanoseconds!, d.timeStamp?.seconds!),
-        };
-      }),
+      ...newDatas,
+
       // newDatas.map((d) => {
       //   return {
       //     ...d,
