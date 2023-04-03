@@ -963,7 +963,7 @@ ul li {
 }
 
 .tools select {
-  color           : white;
+  color           : initial;
   background-color: transparent;
   border          : 0;
   outline         : 0;

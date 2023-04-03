@@ -114,7 +114,6 @@ const Todolist = (props: {
       <label onClick={checkStatusHandle} className={`todo-label`}>
         {todo?.text}
         <p className="date">{timeAgo(date)}</p>
-        {/* <p className="date">{finalTimeStamp}</p> */}
         {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}
       </label>

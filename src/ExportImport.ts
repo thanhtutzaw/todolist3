@@ -5,20 +5,7 @@ import { todosProps } from './types';
 export function exportTodo(todos: todosProps[] | null[]) {
   const length = todos.length;
   const isPlural = length > 1 ? 'items' : 'item';
-  const dataStr = JSON.stringify(
-    todos.map((t) => {
-      return {
-        ...t,
-        // timeStamp: t?.timeStamp?.toJSON(),
-
-        // date: new Date(t?.timeStamp?.toDate()!).toLocaleDateString('en-US', {
-        //   day: 'numeric',
-        //   month: 'short',
-        //   year: 'numeric',
-        // }),
-      };
-    })
-  );
+  const dataStr = JSON.stringify(todos);
   let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
   let fileName = 'data.json';
   let linkElement = document.createElement('a') as HTMLAnchorElement;
@@ -51,29 +38,8 @@ export function importTodo(
     setisPrevent(true);
     const dataStr = e.target?.result as string;
     const newDatas = JSON.parse(dataStr) as todosProps[];
-    console.log(newDatas);
-    // console.log(newDatas);
-    // newDatas.map((d) => {
-    // console.log(d.timeStamp);
-    // });
 
-    settodos([
-      ...todos,
-      ...newDatas,
-
-      // newDatas.map((d) => {
-      //   return {
-      //     ...d,
-      //     newTimeStamp: d.timeStamp?.toDate(),
-      //   };
-      // }),
-      // newDatas.map((d) => {
-      //   return { ...d, timeStamp: d.timeStamp?.toJSON() };
-      // }),
-      // newDatas.map((d: any) => {
-      //   return { ...d };
-      // }),
-    ]);
+    settodos([...todos, ...newDatas]);
     if (!db) {
       alert('Firestore database is not available');
       throw new Error('Firestore database is not available');
@@ -98,20 +64,6 @@ export function importTodo(
     } catch (error) {
       console.error(error);
     }
-
-    // alert(`Imported ✨`);
-    // await addDoc(collectionRef, importTodo);
-    // settodos([
-    //   ...todos,
-    //   newDatas.map((d: any) => {
-    //     return { ...todos, ...d };
-    //   }),
-    // ]);
-    // settodos({...todos})
-    // settodos([...todos ,data ])
-    // settodos([data]);
-    // todos.push(data);
-    // settodos([ ...todos, data ]);
   };
   fileReader.readAsText(fileInput.files[0]);
 }

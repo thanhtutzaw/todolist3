@@ -21,6 +21,10 @@ html[theme="dark"] main {
     color           : white;
     background-color: rgb(33 33 33);
 }
+html[theme="dark"] .tools select {
+    color           : white;
+    /* background-color: rgb(33 33 33); */
+}
 
 html[theme="dark"] .tools,
 html[theme="dark"] .tools-container>button {
