@@ -43,7 +43,7 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     setopentools,
     logoutHandle,
   } = props;
-  const { setDateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { dateLocale, setDateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
   interface ToolsAnimate {
     animation: string;
     pointerEvents:
@@ -121,14 +121,17 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
           <button>
             <RiTimeFill />
             <select
-              defaultValue={'Myanmar'}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                 localStorage.setItem('dateLocale', e.target.value);
                 setDateLocale(e.target.value);
               }}
             >
-              <option value={'Myanmar'}>Myanmar</option>
-              <option value={'English'}>English</option>
+              <option selected={dateLocale === 'Myanmar'} value={'Myanmar'}>
+                Myanmar
+              </option>
+              <option selected={dateLocale === 'English'} value={'English'}>
+                English
+              </option>
             </select>
           </button>
           <button disabled={isLoggingOut} onClick={logoutHandle}>

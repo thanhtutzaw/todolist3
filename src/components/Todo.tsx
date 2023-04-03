@@ -14,7 +14,7 @@ const Todolist = (props: {
   todos: todosProps[] | null[];
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { dateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { timeAgo, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed ?? false);
@@ -46,58 +46,9 @@ const Todolist = (props: {
   const isSelecting = isSelect && SelectedID.length !== 0;
   const checkStatusHandle = checkStatus(todo, checked, setchecked, setisPrevent);
   const todoClass = `todo ${isSelect ? 'selected' : ''} ${todo?.completed ? 'checked' : ''} `;
+
   const timeStamp = new Timestamp(todo?.timeStamp?.seconds!, todo?.timeStamp?.nanoseconds!);
   const date = new Date(timeStamp.toDate()!);
-  // const createdAt = date
-  //   ? date?.toLocaleDateString('en-US', {
-  //       day: 'numeric',
-  //       month: 'short',
-  //       year: 'numeric',
-  //     })
-  //   : '';
-  // const finalTimeStamp = createdAt === 'Invalid Date' ? 'Adding' : createdAt;
-  function timeAgo(input: string | Date) {
-    const date = input instanceof Date ? input : new Date(input);
-    const formatter = new Intl.RelativeTimeFormat('en', { style: 'narrow' });
-    const ranges = {
-      years: 3600 * 24 * 365,
-      months: 3600 * 24 * 30,
-      weeks: 3600 * 24 * 7,
-      days: 3600 * 24,
-      hours: 3600,
-      minutes: 60,
-      seconds: 1,
-    };
-    const secondsElapsed = (date.getTime() - Date.now()) / 1000;
-    let key: keyof typeof ranges;
-    for (key in ranges) {
-      if (ranges[key] < Math.abs(secondsElapsed)) {
-        const delta = secondsElapsed / ranges[key];
-        const date = formatter.format(Math.round(delta), key);
-        const ago = 'က';
-        const day = 'ရက်နေ့';
-        const week = 'ပတ်';
-        const month = 'လ';
-        const year = 'နှစ်';
-        const hour = 'နာရီ';
-        const minute = 'မိနစ်';
-        const second = 'စက္ကန့်';
-        const myanmarDate =
-          'လွန်ခဲ့သော ' +
-          date
-            .replace('ago', ago)
-            .replace('in', '')
-            .replace('d', day)
-            .replace('mo', month)
-            .replace('w', week)
-            .replace('y', year)
-            .replace('h', hour)
-            .replace('m', minute)
-            .replace('s', second);
-        return dateLocale === 'Myanmar' ? myanmarDate : date;
-      }
-    }
-  }
 
   if (!mounted) return <></>;
   return (

@@ -4,6 +4,7 @@ import { MouseEventHandler, RefObject } from 'react';
 export type AppContextType = {
   deleting: boolean;
   openDeleteToast: boolean;
+  timeAgo: Function;
   setopenDeleteToast: Function;
   dateLocale: string;
   setDateLocale: Function;
