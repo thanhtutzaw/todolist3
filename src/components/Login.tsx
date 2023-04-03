@@ -3,7 +3,7 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import { CSSProperties, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Elements/Button/Button';
-import GoogleLogo from './Elements/GoogleLogo';
+import GoogleLogo from './GoogleLogo';
 export default function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

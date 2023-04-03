@@ -4,6 +4,7 @@ import { AppContextType, todosProps } from '@/types';
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ConfirmModal from './ConfirmModal';
 import UpdatingModal from './UpdatingModal';
+import Dialog from './Dialog';
 
 export default function EditModal(props: {
   todo: todosProps | null;
@@ -15,7 +16,6 @@ export default function EditModal(props: {
   confirmModalRef: RefObject<HTMLDialogElement>;
 }) {
   const [loading, setloading] = useState(false);
-  const [eloading, setLoading] = useState(false);
   const UpdatingRef = useRef<HTMLDialogElement>(null);
   const { exitWithoutSaving, confirmModalRef, text, settext, todo, closeEditModal, clearSelect } =
     props;
@@ -62,14 +62,24 @@ export default function EditModal(props: {
   const closeConfirm = useCallback(() => {
     confirmModalRef.current?.close();
   }, []);
+  function close() {
+    return () => {
+      if (exitWithoutSaving) {
+        confirmModalRef.current?.showModal();
+      } else {
+        closeEditModal();
+      }
+    };
+  }
+
   return (
     <>
-      <dialog id="confirmModal" ref={confirmModalRef}>
+      <Dialog id="confirmModal" ref={confirmModalRef}>
         <ConfirmModal closeConfirm={closeConfirm} closeEditModal={closeEditModal} />
-      </dialog>
-      <dialog ref={UpdatingRef} id="updating">
+      </Dialog>
+      <Dialog id="updating" ref={UpdatingRef}>
         <UpdatingModal />
-      </dialog>
+      </Dialog>
       {todo && (
         <div
           style={{
@@ -84,7 +94,6 @@ export default function EditModal(props: {
           key={todo.id}
         >
           <form>
-            {/* {eloading&&<> */}
             <textarea
               style={{ userSelect: loading ? 'none' : 'unset' }}
               value={text || ''}
@@ -95,20 +104,12 @@ export default function EditModal(props: {
               className="textarea"
             />
             <div className="editModalActions">
-              <button
-                onClick={() => {
-                  if (text !== todo.text) {
-                    confirmModalRef.current?.showModal();
-                  } else {
-                    closeEditModal();
-                  }
-                }}
-                className={`editCloseBtn`}
-              >
+              <button onClick={close} className="editCloseBtn">
                 Close
               </button>
 
               <button
+                disabled={loading}
                 onClick={() => {
                   if (todo) {
                     updateHandle();
@@ -120,7 +121,6 @@ export default function EditModal(props: {
                 Save
               </button>
             </div>
-            {/* </>} */}
           </form>
         </div>
       )}

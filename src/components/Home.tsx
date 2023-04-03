@@ -23,6 +23,7 @@ import Footer from './Footer';
 import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
 import Toast from './Toast';
+import Dialog from './Elements/Modal/Dialog';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -118,7 +119,7 @@ export default function Home() {
       )}
 
       {EditModalMounted && todo && (
-        <dialog onClick={confirmEditModal} id="editModal" ref={editModalRef}>
+        <Dialog id="editModal" onClick={confirmEditModal} ref={editModalRef}>
           <Suspense fallback={renderLoader()}>
             <EditModal
               exitWithoutSaving={exitWithoutSaving}
@@ -130,7 +131,7 @@ export default function Home() {
               todo={todo}
             />
           </Suspense>
-        </dialog>
+        </Dialog>
       )}
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
