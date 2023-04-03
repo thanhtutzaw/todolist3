@@ -3,12 +3,13 @@ import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 
 import { CSSProperties, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Elements/Button/Button';
-
+import GoogleLogo from './Elements/GoogleLogo';
 export default function Login() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [EmailLoading, setEmailLoading] = useState(false);
   const loginStyle: CSSProperties = {
+    gap: '10px',
     padding: '.7rem',
     color: 'white',
     backgroundColor: '#007af6',
@@ -68,8 +69,16 @@ export default function Login() {
   return (
     <main>
       <Button disabled={loading} onClick={signinHandle} style={loginStyle}>
-        {loading ? 'Signing in' : 'Google Sign-in'}
+        <GoogleLogo />
+        <p className="loginLabel">{loading ? 'Signing in' : 'Continue with Google'}</p>
       </Button>
+      {/* <button className="AppLoginButton AppLoginButton--full AppLoginButton--google" type="button">
+        <div className="AppLoginButton__icon"></div>
+        <div className="AppLoginButton__textContainer">
+          <div className="AppLoginButton__titleContainer">Continue with Google</div>
+          <div className="AppLoginButton__subtitleContainer">Secured log-in</div>
+        </div>
+      </button> */}
       <br></br>
       <div
         style={{

@@ -979,3 +979,16 @@ select>option {
   padding         : 15px;
   border          : 1px solid rgb(41, 18, 18);
 }
+
+.loginIcon {
+  padding         : 6px;
+  background-color: white;
+  border-radius   : 50%;
+  display         : flex;
+}
+
+.loginLabel {
+  font-weight   : 500;
+  font-size     : 18px;
+  letter-spacing: .3px;
+}
