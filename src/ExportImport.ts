@@ -38,8 +38,8 @@ export function importTodo(
     setisPrevent(true);
     const dataStr = e.target?.result as string;
     const newDatas = JSON.parse(dataStr) as todosProps[];
-
-    settodos([...todos, ...newDatas]);
+    // settodos([...todos]);
+    // const filter = newDatas.filter(t => t.id !== )
     if (!db) {
       alert('Firestore database is not available');
       throw new Error('Firestore database is not available');
@@ -51,10 +51,14 @@ export function importTodo(
     const collectionRef = collection(db, 'users', auth.currentUser.uid, 'todos');
     try {
       newDatas.map(async (d) => {
-        await setDoc(doc(collectionRef, d.id.toString()), {
-          ...d,
-          timeStamp: new Timestamp(d.timeStamp?.seconds!, d.timeStamp?.nanoseconds!),
-        });
+        await setDoc(
+          doc(collectionRef, d.id.toString()),
+          {
+            ...d,
+            timeStamp: new Timestamp(d.timeStamp?.seconds!, d.timeStamp?.nanoseconds!),
+          },
+          { merge: true }
+        );
       });
       console.log('finish import');
       setisPrevent(false);

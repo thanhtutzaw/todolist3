@@ -60,16 +60,17 @@ export default function EditModal(props: {
     }
   }, [todo]);
   const closeConfirm = useCallback(() => {
+    console.log('keep editing');
     confirmModalRef.current?.close();
   }, []);
   function close() {
-    return () => {
-      if (exitWithoutSaving) {
-        confirmModalRef.current?.showModal();
-      } else {
-        closeEditModal();
-      }
-    };
+    if (exitWithoutSaving) {
+      confirmModalRef.current?.showModal();
+      // console.log('confirm update');
+    } else {
+      closeEditModal();
+      console.log("close edit");
+    }
   }
 
   return (

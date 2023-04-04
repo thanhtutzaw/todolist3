@@ -33,6 +33,7 @@ export default function AppProvider({ children }: PropsWithChildren) {
     setopenDeleteModal((prev) => !prev);
     if (!openDeleteModal) {
       setDeleteModalMounted(true);
+      console.log('delete confirm?');
     }
   }
   const deleteHandle = () => {

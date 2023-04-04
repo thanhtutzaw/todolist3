@@ -1,12 +1,11 @@
 import { todosProps } from '@/types';
 import {
-  Timestamp,
   addDoc,
   collection,
   doc,
   serverTimestamp,
   updateDoc,
-  writeBatch,
+  writeBatch
 } from 'firebase/firestore';
 import { RefObject, SetStateAction } from 'react';
 import { auth, db } from './firebase';

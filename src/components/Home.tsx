@@ -29,10 +29,12 @@ const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
-  const { sortedTodo, todos, settodos } = useFirestoreData();
+  const [message, setMessage] = useState<string[]>([]);
+  const dummyRef = useRef<HTMLDivElement>(null);
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
+  const { sortedTodo, todos, settodos } = useFirestoreData();
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
   const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
@@ -61,7 +63,27 @@ export default function Home() {
     });
     return () => unsubscribe();
   }, []);
-
+  useEffect(() => {
+    if (typeof console !== 'undefined') {
+      if (typeof console.log !== 'undefined') {
+        console.log = (function (old_function) {
+          return function (text) {
+            old_function(text);
+            const newMessage = text.replace('%c', '');
+            setMessage([...message, newMessage]);
+          };
+        })(console.log.bind(console));
+      } else {
+        console.log = function () {};
+      }
+      // console.log = function (m) {
+      //   const newMessage = m.replace('%c', '');
+      //   setMessage([...message, newMessage]);
+      // };
+      dummyRef.current?.scrollIntoView({ behavior: 'smooth' });
+      console.info = console.log;
+    }
+  }, [message]);
   const selecting = selectCount && SelectedID.length !== 0;
 
   useEffect(() => {
@@ -80,10 +102,10 @@ export default function Home() {
   const [text, settext] = useState(todo?.text || null);
 
   const closeEditModal = useCallback(() => {
+    
     editModalRef.current?.close();
     if (todo) {
       settext(todo.text!);
-    } else {
     }
   }, [todo]);
   function openEditModal() {
@@ -95,7 +117,7 @@ export default function Home() {
     if (e.target === dialog) {
       if (exitWithoutSaving) {
         confirmModalRef.current?.showModal();
-        console.log('show confirm');
+        console.log('confirm edit');
       } else {
         closeEditModal();
       }
@@ -106,7 +128,15 @@ export default function Home() {
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
-
+      <div title="custom console" className="messageBox">
+        {message.map((m) => (
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div>✨</div>
+            <p className="messages"> {m}</p>
+          </div>
+        ))}
+        <div ref={dummyRef} />
+      </div>
       {SelectModalMounted && (
         <SelectModal
           exitWithoutSaving={exitWithoutSaving}

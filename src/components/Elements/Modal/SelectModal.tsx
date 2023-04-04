@@ -34,10 +34,12 @@ export default function SelectModal(props: {
     function handleEscape(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         if (exitWithoutSaving) {
+          console.log("confirm update");
           editModalRef.current?.showModal();
           confirmModalRef.current?.showModal();
-        } else {
-          console.log(e.key, '(closing selectModal)');
+        }
+        if (SelectedID.length > 1 || !exitWithoutSaving) {
+          console.log(e.key + ' (closing selectModal)');
           clearSelect();
           setisPrevent(false);
           setDeleteModalMounted(false);
@@ -75,7 +77,6 @@ export default function SelectModal(props: {
         >
           Edit
         </Button>
-
         <Button
           tabIndex={controlTabkey}
           style={{ pointerEvents: deleteloading ? 'none' : 'initial' }}

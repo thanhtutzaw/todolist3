@@ -475,7 +475,32 @@ html[theme="dark"] .react-loading-skeleton {
   background-color: rgba(255 255 255 / .8);
 }
 
+.messageBox {
+  position  : fixed;
+  right     : 0;
+  border    : 1px solid rgba(128, 128, 128, 0.466);
+  padding   : 0 .5rem;
+  margin    : 1rem;
+  width     : 205px;
+  height    : 250px;
+  overflow-y: scroll;
+  opacity   : .8;
+}
 
+@media only screen and (max-width: 840px) {
+  .messageBox,
+  .messages {
+    display    : none;
+    visibility : hidden;
+    user-select: none;
+  }
+}
+
+.messages {
+  font-size: 16px;
+  margin   : 10px 0;
+
+}
 
 #editModal,
 #confirmModal,

@@ -16,11 +16,11 @@ const Header = memo(
     const { todos, settodos, todoCount, selecting } = props;
     const { userphoto, userName } = useIndexDB();
     const { theme, setTheme } = useTheme();
-    const { setisPrevent } = useContext(AppContext) as AppContextType;
     const [mounted, setmounted] = useState(false);
     const [opentools, setopentools] = useState(false);
     const [isLoggingOut, setisLoggingOut] = useState(false);
-
+    const { setisPrevent } = useContext(AppContext) as AppContextType;
+    const dropdownRef = useRef(null);
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -39,25 +39,10 @@ const Header = memo(
         console.error('Signout Error ! ', error);
       }
     }, []);
-    const dropdownRef = useRef(null);
-    // useEffect(() => {
-    //   if (!opentools) return;
-    //   function handleClose(e: any) {
-    //     // setopentools(false);
-    //     console.log('closing');
-    //   }
-    //   document.addEventListener('click', handleClose);
-    //   return () => {
-    //     document.removeEventListener('click', handleClose);
-    //   };
-    // }, [opentools]);
-
     const handleTools = () => {
       if (!mounted) setmounted(true);
-      // setopentools(true)
       setopentools((prev) => !prev);
     };
-
     return (
       <header style={{ paddingTop: selecting ? '2rem' : '' }}>
         <div className="header-text">
