@@ -5,20 +5,14 @@ import { AppContextType, todosProps } from '@/types';
 import {
   ChangeEvent,
   MouseEventHandler,
+  RefObject,
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useRef,
 } from 'react';
-import { GrClock } from 'react-icons/gr';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-import {
-  RiEarthFill,
-  RiFileCopy2Fill,
-  RiLogoutBoxFill,
-  RiTimeFill,
-  RiTimerFill,
-} from 'react-icons/ri';
+import { RiFileCopy2Fill, RiLogoutBoxFill, RiTimeFill } from 'react-icons/ri';
 import { VscAdd } from 'react-icons/vsc';
 type HeaderDropDownProps = {
   theme: string;
@@ -29,18 +23,20 @@ type HeaderDropDownProps = {
   setmounted: Function;
   setopentools: Function;
   todos: todosProps[] | null[];
+  dropdownRef: RefObject<HTMLDivElement>;
   logoutHandle: MouseEventHandler<HTMLButtonElement>;
 };
 export default function HeaderDropDown(props: HeaderDropDownProps) {
   const {
+    dropdownRef,
     todos,
-    settodos,
-    isLoggingOut,
-    setmounted,
     theme,
+    settodos,
     setTheme,
     opentools,
+    setmounted,
     setopentools,
+    isLoggingOut,
     logoutHandle,
   } = props;
   const { dateLocale, setDateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
@@ -85,8 +81,25 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
       importTodo(settodos, setisPrevent, setopentools, fileInput, todos);
     }
   }
+  useEffect(() => {
+    // function handleClose(e: MouseEvent) {
+    //   if (e.target?.className === 'header-image' || dropdownRef.current?.contains(e.target)) return;
+    //   setopentools(false);
+    // }
+    function handleClose(e: MouseEvent) {
+      const target = e.target as HTMLDivElement;
+      if (target?.className === 'header-image' || dropdownRef.current?.contains(target)) return;
+      setopentools(false);
+    }
+    window.addEventListener('mousedown', handleClose);
+    return () => {
+      window.removeEventListener('mousedown', handleClose);
+    };
+  }, []);
+
   return (
     <div
+      ref={dropdownRef}
       className="dropdown"
       onAnimationEnd={() => {
         if (!opentools) {
@@ -96,7 +109,6 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     >
       <div style={toolsAnimate} className={`tools `}>
         <div className="tools-container">
-          {/* {dateLocale} */}
           <button
             onClick={() => {
               setTheme((prev: string) => (prev === 'light' ? 'dark' : 'light'));
@@ -121,17 +133,14 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
           <button>
             <RiTimeFill />
             <select
+              defaultValue={dateLocale}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                 localStorage.setItem('dateLocale', e.target.value);
                 setDateLocale(e.target.value);
               }}
             >
-              <option selected={dateLocale === 'Myanmar'} value={'Myanmar'}>
-                Myanmar
-              </option>
-              <option selected={dateLocale === 'English'} value={'English'}>
-                English
-              </option>
+              <option value={'Myanmar'}>Myanmar</option>
+              <option value={'English'}>English</option>
             </select>
           </button>
           <button disabled={isLoggingOut} onClick={logoutHandle}>

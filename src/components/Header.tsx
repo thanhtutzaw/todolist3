@@ -3,7 +3,7 @@ import useIndexDB from '@/hooks/useIndexDB';
 import useTheme from '@/hooks/useTheme';
 import { AppContextType, todosProps } from '@/types';
 import { getAuth, signOut } from 'firebase/auth';
-import { memo, useCallback, useContext, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeaderDropDown from './HeaderDropDown';
 const Header = memo(
@@ -39,8 +39,22 @@ const Header = memo(
         console.error('Signout Error ! ', error);
       }
     }, []);
+    const dropdownRef = useRef(null);
+    // useEffect(() => {
+    //   if (!opentools) return;
+    //   function handleClose(e: any) {
+    //     // setopentools(false);
+    //     console.log('closing');
+    //   }
+    //   document.addEventListener('click', handleClose);
+    //   return () => {
+    //     document.removeEventListener('click', handleClose);
+    //   };
+    // }, [opentools]);
+
     const handleTools = () => {
       if (!mounted) setmounted(true);
+      // setopentools(true)
       setopentools((prev) => !prev);
     };
 
@@ -57,7 +71,7 @@ const Header = memo(
             <img
               className="header-image"
               src={userphoto && userphoto}
-              alt={userName ? `${userName}'s Profile` : ''}
+              alt={`${userName ? userName : 'Unknown user'}'s Profile`}
             />
           )}
           {user && user.email === 'testuser11@gmail.com' && (
@@ -70,6 +84,7 @@ const Header = memo(
         </div>
         {mounted && (
           <HeaderDropDown
+            dropdownRef={dropdownRef}
             todos={todos}
             settodos={settodos}
             isLoggingOut={isLoggingOut}
