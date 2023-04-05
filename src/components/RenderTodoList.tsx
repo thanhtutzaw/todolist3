@@ -7,23 +7,14 @@ import Todo from './Todo';
 export function RenderTodoList(props: {
   todoRef: RefObject<HTMLUListElement>;
   todos: todosProps[] | null[];
-  sortedTodo: todosProps[];
   SelectedID: number[];
   selectCount: boolean;
   addLoading: boolean;
   setSelectedID: Function;
   setselectCount: Function;
 }) {
-  const {
-    sortedTodo,
-    addLoading,
-    todos,
-    todoRef,
-    selectCount,
-    setselectCount,
-    SelectedID,
-    setSelectedID,
-  } = props;
+  const { addLoading, todos, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } =
+    props;
   const { loading } = useFirestoreData();
 
   if (todos.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
@@ -50,7 +41,7 @@ export function RenderTodoList(props: {
         {loading && <Skeleton className={'loading'} count={10} />}
       </SkeletonTheme>
       {!loading &&
-        sortedTodo.map((todo) => (
+        todos.map((todo) => (
           <Todo
             addLoading={addLoading}
             todo={todo}

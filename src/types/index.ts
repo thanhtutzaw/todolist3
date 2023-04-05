@@ -28,5 +28,5 @@ export interface todosProps {
   text?: string;
   completed?: boolean;
   timeStamp?: Timestamp;
-  date?: string;
+  label?: string[];
 }

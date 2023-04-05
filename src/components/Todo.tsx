@@ -63,8 +63,13 @@ const Todolist = (props: {
       className={todoClass}
     >
       <label onClick={checkStatusHandle} className={`todo-label`}>
-        {todo?.text}
+        <p>{todo?.text}</p>
         <p className="date">{timeAgo(date)}</p>
+        {todo?.label?.map((l) => (
+          <div className="label">{l}</div>
+        ))}
+        {/* <span className="label">Foo</span>
+        <span className="label">barrrrrrrrrrrrrrrrrrrrrr</span> */}
         {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}
       </label>

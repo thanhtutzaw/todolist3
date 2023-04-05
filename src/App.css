@@ -34,14 +34,96 @@ body {
 }
 
 main {
-  min-height      : var(--min-height);
-  max-width       : 500px;
-  width           : 100vw;
-  background-color: var(--background-primary);
-  color           : var(--text-primary);
-  font-size       : calc(10px + 2vmin);
-  padding         : 0 1.4rem;
-  overflow        : hidden;
+  min-height         : var(--min-height);
+  max-width          : 500px;
+  width              : 100vw;
+  background-color   : var(--background-primary);
+  color              : var(--text-primary);
+  font-size          : calc(10px + 2vmin);
+  /* padding         : 0 1.4rem; */
+  overflow           : hidden;
+}
+
+header,
+section:not(.tabSection),
+.selectionContainer {
+  padding-left : 1.4rem;
+  padding-right: 1.4rem;
+}
+
+.tabSection {
+  height: 50px;
+}
+
+.tabContainer {
+  height      : 50px;
+  padding-left: 1.4rem !important;
+  touch-action: none;
+}
+
+.tabContainer .tabItem:last-child {
+  margin-right: 1.4rem !important;
+
+}
+
+@keyframes tabMount {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tabUnmount {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes selectAllmount {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes selectAllUnmount {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes deselectAllmount {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes deselectAllUnmount {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 .empty {
@@ -128,7 +210,7 @@ header {
   display        : flex;
   align-items    : center;
   justify-content: space-between;
-  padding-top    : 1.5rem;
+  padding        : 1rem 1.4rem;
   transition     : all .3s ease;
 }
 
@@ -378,6 +460,34 @@ html[theme="dark"] .react-loading-skeleton {
   color         : white;
 }
 
+.tabContainer {
+  display           : flex;
+  align-items       : center;
+  gap               : 10px;
+  flex              : 1;
+  overflow          : auto;
+  overflow-y        : hidden;
+  padding           : 0;
+  margin            : 0;
+  /* flex-wrap      : nowrap; */
+}
+
+.tabItem {
+  background-color      : rgb(238, 238, 238);
+  color                 : rgb(121, 121, 121);
+  text-align            : center;
+  font-size             : 18px;
+  min-width             : 100px;
+  padding               : 10px;
+  overflow              : hidden;
+  word-wrap             : break-word;
+  white-space           : nowrap;
+  text-overflow         : ellipsis;
+  border-radius         : 100px;
+  cursor                : pointer;
+  /* border-right       : 1px solid rgba(146, 146, 146, 0.747); */
+}
+
 .selectionContainer {
   position       : relative;
   height         : 50px;
@@ -385,7 +495,9 @@ html[theme="dark"] .react-loading-skeleton {
   display        : flex;
   justify-content: flex-end;
   align-items    : center;
+  transition     : all .3 ease-in-out;
 }
+
 
 .selectionContainer>button {
   position        : absolute;
@@ -488,6 +600,7 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 @media only screen and (max-width: 840px) {
+
   .messageBox,
   .messages {
     display    : none;
@@ -563,16 +676,33 @@ li.todo {
 }
 
 .date {
-  color     : rgba(104, 104, 104, 0.726);
-  font-size : calc(8px + 1.5vmin);
-  margin-top: 10px;
+  color    : rgba(104, 104, 104, 0.726);
+  font-size: calc(8px + 1.5vmin);
+}
+
+.label {
+  background-color: var(--main-color);
+  font-size       : 14px;
+  color           : var(--btn-text-primary);
+  padding         : 6px 10px;
+  border-radius   : 100px;
+  user-select     : none;
+  letter-spacing  : .5px;
+  max-width       : 100px;
+  word-wrap       : break-word;
+  white-space     : nowrap;
+  text-overflow   : ellipsis;
+  overflow        : hidden;
 }
 
 #editModal::backdrop,
 .deleteModal::backdrop,
 #confirmModal::backdrop {
   animation: fadeIn .2s ease-in;
+}
 
+.fadeIn {
+  animation: fadeIn .2s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -670,9 +800,17 @@ ul li {
 }
 
 .todo.checked label {
+  opacity   : .4;
+  transition: all .3s ease-out;
+}
+
+.todo.checked label>p:not(.date) {
   text-decoration: line-through;
-  opacity        : .4;
-  transition     : all .3s ease-out;
+}
+
+.todo.checked label>.label {
+  opacity         : .5;
+  background-color: gray;
 }
 
 .todo.checked {
@@ -692,12 +830,16 @@ ul li {
 }
 
 .todo-label {
-  flex-wrap    : wrap;
-  width        : 100%;
-  max-width    : 85%;
-  text-align   : left;
-  overflow-wrap: break-word;
-  padding      : 20px 0;
+  flex-wrap        : wrap;
+  width            : 100%;
+  max-width        : 85%;
+  text-align       : left;
+  /* overflow-wrap : break-word; */
+  padding          : 20px 0;
+  display          : flex;
+  gap              : 10px;
+  align-items      : center;
+  overflow-wrap    : anywhere;
 }
 
 .todo:not(:last-child)::after {
@@ -719,6 +861,12 @@ ul li {
   overflow-y    : auto;
   display       : block;
 }
+
+section.todo-parent.row>ul>span>span:nth-child(1) {
+  margin-top: 20px !important;
+}
+
+;
 
 .todo-checkbox {
   display: none;
@@ -755,6 +903,10 @@ ul li {
 ::-webkit-scrollbar {
   width : 10px;
   margin: 0 10rem;
+}
+
+.tabContainer::-webkit-scrollbar {
+  display: none !important;
 }
 
 @media (max-width: 991px) {

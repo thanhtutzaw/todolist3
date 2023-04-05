@@ -44,7 +44,8 @@ const Header = memo(
       setopentools((prev) => !prev);
     };
     return (
-      <header style={{ paddingTop: selecting ? '2rem' : '' }}>
+      <header>
+        {/* <header style={{ paddingTop: selecting ? '1.5rem' : '' }}> */}
         <div className="header-text">
           <h1>My tasks</h1>
           <p className="header-nobold">

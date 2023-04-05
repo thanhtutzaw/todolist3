@@ -1,13 +1,15 @@
-import { onAuthStateChanged } from 'firebase/auth';
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
 import { auth, db } from '@/lib/firebase';
 import { todosProps } from '@/types';
+import { onAuthStateChanged } from 'firebase/auth';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 
 export default function useFirestoreData() {
   const [loading, setloading] = useState(true);
   const [todos, settodos] = useState<todosProps[]>([]);
-  const sortedTodo = todos.sort((todo) => todo.timeStamp?.nanoseconds! - todo.timeStamp?.nanoseconds!);
+  // const sortedTodo = todos.sort(
+  //   (todo) => todo.timeStamp?.nanoseconds! - todo.timeStamp?.nanoseconds!
+  // );
   useEffect(() => {
     let unsubscribe: Function;
 
@@ -23,6 +25,7 @@ export default function useFirestoreData() {
             snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
+              label: ['Foo', 'Bar'],
               // date: new Date(doc.data().timeStamp.toDate()).toLocaleDateString('en-US', {
               //   day: 'numeric',
               //   month: 'short',
@@ -38,5 +41,5 @@ export default function useFirestoreData() {
     });
     return () => unsubscribe();
   }, []);
-  return {sortedTodo, todos, settodos, loading };
+  return { todos, settodos, loading };
 }

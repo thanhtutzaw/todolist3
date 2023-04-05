@@ -24,6 +24,8 @@ import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
 import Toast from './Toast';
 import Dialog from './Elements/Modal/Dialog';
+import Tabs from './Tabs';
+import { SelectAllBtn } from './SelectAllBtn';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -34,7 +36,7 @@ export default function Home() {
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
-  const { sortedTodo, todos, settodos } = useFirestoreData();
+  const { todos, settodos } = useFirestoreData();
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
   const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
@@ -102,7 +104,6 @@ export default function Home() {
   const [text, settext] = useState(todo?.text || null);
 
   const closeEditModal = useCallback(() => {
-    
     editModalRef.current?.close();
     if (todo) {
       settext(todo.text!);
@@ -167,18 +168,18 @@ export default function Home() {
 
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
 
-      <div className="selectionContainer">
-        {SelectedID.length === 1 && selectCount && (
-          <button tabIndex={-1} onClick={selectAll}>
-            Select All
-          </button>
-        )}
-        {SelectedID.length >= 2 && <button onClick={clearSelect}>Deselect All</button>}
-      </div>
+      <section className="tabSection">
+        <Tabs SelectedID={SelectedID} />
+        <SelectAllBtn
+          selectCount={selectCount}
+          SelectedID={SelectedID}
+          selectAll={selectAll}
+          clearSelect={clearSelect}
+        />
+      </section>
 
       <section className={`todo-parent row`}>
         <RenderTodoList
-          sortedTodo={sortedTodo}
           addLoading={addLoading}
           todos={todos}
           todoRef={todoRef}

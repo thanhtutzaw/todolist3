@@ -21,8 +21,9 @@ html[theme="dark"] main {
     color           : white;
     background-color: rgb(33 33 33);
 }
+
 html[theme="dark"] .tools select {
-    color           : white;
+    color              : white;
     /* background-color: rgb(33 33 33); */
 }
 
@@ -42,6 +43,11 @@ html[theme="dark"] .input-text {
     color           : white;
     background-color: rgb(17 17 17);
     box-shadow      : var(--shadow-secondary);
+}
+
+html[theme="dark"] .tabItem {
+    color: var(--btn-text-primary);
+    background-color: rgba(49, 49, 49, 0.63);
 }
 
 html[theme="dark"] .input-text:focus-visible {
