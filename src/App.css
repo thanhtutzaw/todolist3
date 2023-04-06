@@ -454,15 +454,18 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .tabContainer {
-  display           : flex;
-  align-items       : center;
-  gap               : 10px;
-  flex              : 1;
-  overflow          : auto;
-  overflow-y        : hidden;
-  padding           : 0;
-  margin            : 0;
-  /* flex-wrap      : nowrap; */
+  display                 : flex;
+  align-items             : center;
+  gap                     : 10px;
+  flex                    : 1;
+  overflow                : auto;
+  overflow-y              : hidden;
+  padding                 : 0;
+  margin                  : 0;
+  /* scroll-padding       : 0 8.5rem; */
+  /* scroll-padding       : 0 100px; */
+  /* flex-wrap            : nowrap; */
+  scroll-padding          : 200px;
 }
 
 .tabItem {
@@ -480,6 +483,23 @@ html[theme="dark"] .react-loading-skeleton {
   cursor                : pointer;
   height                : 44px;
   /* border-right       : 1px solid rgba(146, 146, 146, 0.747); */
+}
+
+.tabItem.active {
+  background-color: var(--main-color) !important;
+  color           : white !important;
+  transition      : all .3s ease-in-out;
+}
+
+
+@keyframes activeFadein {
+  from {
+    background-color: initial !important;
+  }
+
+  to {
+    background-color: var(--main-color) !important;
+  }
 }
 
 .selectionContainer {
@@ -603,6 +623,10 @@ html[theme="dark"] .react-loading-skeleton {
     visibility : hidden;
     user-select: none;
   }
+
+  .tabContainer {
+    scroll-padding: 150px;
+  }
 }
 
 .messages {
@@ -672,8 +696,8 @@ li.todo {
 }
 
 .date {
-  color    : rgba(104, 104, 104, 0.726);
-  font-size: calc(8px + 1.5vmin);
+  color         : rgba(104, 104, 104, 0.726);
+  font-size     : calc(8px + 1.5vmin);
   /* line-height: 1; */
 }
 
