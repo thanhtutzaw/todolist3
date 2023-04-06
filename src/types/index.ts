@@ -30,3 +30,8 @@ export interface todosProps {
   timeStamp?: Timestamp;
   label?: string[];
 }
+export interface labelProps {
+  id: string | number;
+  text?: string;
+  timeStamp?: Timestamp;
+}

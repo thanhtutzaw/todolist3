@@ -169,7 +169,7 @@ export default function Home() {
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
 
       <section className="tabSection">
-        <Tabs SelectedID={SelectedID} />
+        <Tabs todos={todos} SelectedID={SelectedID} />
         <SelectAllBtn
           selectCount={selectCount}
           SelectedID={SelectedID}

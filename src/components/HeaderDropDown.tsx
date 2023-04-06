@@ -8,8 +8,7 @@ import {
   RefObject,
   useCallback,
   useContext,
-  useEffect,
-  useRef,
+  useEffect
 } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiFileCopy2Fill, RiLogoutBoxFill, RiTimeFill } from 'react-icons/ri';

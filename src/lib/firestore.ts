@@ -5,7 +5,7 @@ import {
   doc,
   serverTimestamp,
   updateDoc,
-  writeBatch
+  writeBatch,
 } from 'firebase/firestore';
 import { RefObject, SetStateAction } from 'react';
 import { auth, db } from './firebase';
@@ -17,7 +17,7 @@ export function addTodo(
     (arg0: any[]): void;
   },
   todos: todosProps[] | null[],
-  setisPrevent: Function,
+  setisPrevent: Function
 ): Promise<void> {
   return new Promise<void>(async () => {
     // return async (e: FormEventHandler<HTMLFormElement>) => {

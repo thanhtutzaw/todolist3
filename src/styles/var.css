@@ -51,6 +51,12 @@ html[theme="dark"] .tabItem {
     background-color: rgba(49, 49, 49, 0.63);
 }
 
+/* html[theme="dark"] .tabItem {
+    color           : white !important;
+    background-color: rgb(12, 12, 12);
+    box-shadow      : var(--shadow-secondary);
+} */
+
 html[theme="dark"] .input-text:focus-visible {
     outline: 1px solid rgb(54, 54, 54);
 }
@@ -71,4 +77,9 @@ html[theme="dark"] .nav {
 
 .closeSelectBtn>path {
     stroke: white;
+}
+
+html[theme="dark"] .tabSection,
+html[theme="dark"] .tabContainer>button {
+    color: white !important;
 }
