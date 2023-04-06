@@ -40,7 +40,9 @@ export default function Draggable({ length, className, children }: DraggableProp
         }
       }}
       style={{
-        animation: length ? 'tabMount .2s ease-in-out' : 'tabUnmount .2s forwards ease-in-out ',
+        animation: length
+          ? 'mountFadeIn .2s ease-in-out'
+          : 'unMountFadeOut .2s forwards ease-in-out ',
       }}
       onPointerDown={dragStart}
       onPointerMove={dragging}

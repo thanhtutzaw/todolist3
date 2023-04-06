@@ -63,10 +63,23 @@ section:not(.tabSection),
 
 .tabContainer .tabItem:last-child {
   margin-right: 1.4rem !important;
-
 }
 
-@keyframes tabMount {
+@keyframes tabLoading {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes mountFadeIn {
   from {
     opacity: 0;
   }
@@ -76,7 +89,7 @@ section:not(.tabSection),
   }
 }
 
-@keyframes tabUnmount {
+@keyframes unMountFadeOut {
   from {
     opacity: 1;
   }
@@ -86,27 +99,7 @@ section:not(.tabSection),
   }
 }
 
-@keyframes selectAllmount {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes selectAllUnmount {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes deselectAllmount {
+/* @keyframes deselectAllmount {
   from {
     opacity: 0;
   }
@@ -124,7 +117,7 @@ section:not(.tabSection),
   to {
     opacity: 0;
   }
-}
+} */
 
 .empty {
   opacity    : .3;
@@ -485,6 +478,7 @@ html[theme="dark"] .react-loading-skeleton {
   text-overflow         : ellipsis;
   border-radius         : 100px;
   cursor                : pointer;
+  height                : 44px;
   /* border-right       : 1px solid rgba(146, 146, 146, 0.747); */
 }
 
@@ -588,15 +582,17 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .messageBox {
-  position  : fixed;
-  right     : 0;
-  border    : 1px solid rgba(128, 128, 128, 0.466);
-  padding   : 0 .5rem;
-  margin    : 1rem;
-  width     : 205px;
-  height    : 250px;
-  overflow-y: scroll;
-  opacity   : .8;
+  position     : fixed;
+  right        : 0;
+  border       : 1px solid rgba(128, 128, 128, 0.466);
+  padding      : 0 .5rem;
+  margin       : 1rem;
+  width        : 205px;
+  height       : 250px;
+  overflow-y   : scroll;
+  opacity      : .8;
+  border       : 1px solid rgba(0, 0, 0, .2);
+  border-radius: 5px;
 }
 
 @media only screen and (max-width: 840px) {
@@ -678,7 +674,9 @@ li.todo {
 .date {
   color    : rgba(104, 104, 104, 0.726);
   font-size: calc(8px + 1.5vmin);
+  /* line-height: 1; */
 }
+
 
 .label {
   background-color: var(--main-color);

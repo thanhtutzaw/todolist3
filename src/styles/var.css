@@ -46,7 +46,8 @@ html[theme="dark"] .input-text {
 }
 
 html[theme="dark"] .tabItem {
-    color: var(--btn-text-primary);
+    /* color: var(--btn-text-primary); */
+    color           : #d0d0d0;
     background-color: rgba(49, 49, 49, 0.63);
 }
 

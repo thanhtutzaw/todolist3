@@ -51,8 +51,8 @@ export function SelectAllBtn(props: {
           }}
           style={{
             animation: selectOneItem
-              ? 'selectAllmount .2s ease-in-out'
-              : 'selectAllUnmount .2s forwards ease-in-out ',
+              ? 'mountFadeIn .2s ease-in-out'
+              : 'unMountFadeOut .2s forwards ease-in-out ',
           }}
           className="selectionContainer"
         >
@@ -71,8 +71,8 @@ export function SelectAllBtn(props: {
           // }}
           style={{
             animation: selectMoreThanOne
-              ? 'deselectAllmount .2s ease-in'
-              : 'deselectAllUnmount .2s forwards ease-in-out ',
+              ? 'mountFadeIn .2s ease-in'
+              : 'unMountFadeOut .2s forwards ease-in-out ',
           }}
           className="selectionContainer"
         >

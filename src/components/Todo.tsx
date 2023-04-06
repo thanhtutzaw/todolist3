@@ -14,7 +14,7 @@ const Todolist = (props: {
   todos: todosProps[] | null[];
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { timeAgo, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { dateLocale, timeAgo, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed ?? false);
@@ -64,7 +64,9 @@ const Todolist = (props: {
     >
       <label onClick={checkStatusHandle} className={`todo-label`}>
         <p>{todo?.text}</p>
-        <p className="date">{timeAgo(date)}</p>
+        <p style={{ lineHeight: dateLocale === 'Myanmar' ? '1' : 'initial' }} className="date">
+          {timeAgo(date)}
+        </p>
         {todo?.label?.map((l) => (
           <div className="label">{l}</div>
         ))}
