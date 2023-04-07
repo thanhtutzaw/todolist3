@@ -191,7 +191,6 @@ export default function Home() {
       <section className={`todo-parent row`}>
         <RenderTodoList
           addLoading={addLoading}
-          todos={todos}
           todoRef={todoRef}
           selectCount={selectCount}
           setselectCount={setselectCount}

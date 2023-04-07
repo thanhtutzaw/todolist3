@@ -7,7 +7,6 @@ import { AppContext } from '@/Context/AppContext';
 
 export function RenderTodoList(props: {
   todoRef: RefObject<HTMLUListElement>;
-  // todos: todosProps[] | null[];
   SelectedID: number[];
   selectCount: boolean;
   addLoading: boolean;
