@@ -63,6 +63,7 @@ section:not(.tabSection),
 
 .tabContainer .tabItem:last-child {
   margin-right: 1.4rem !important;
+  line-height : initial !important;
 }
 
 @keyframes tabLoading {
@@ -146,18 +147,18 @@ main>a>button {
 }
 
 .button {
-  cursor                     : pointer;
-  user-select                : none;
-  -webkit-tap-highlight-color: transparent;
-  padding                    : 10px 10px;
-  border-radius              : 1rem;
-  display                    : flex;
-  align-items                : center;
-  justify-content            : center;
-  text-align                 : center;
-  border                     : 0;
-  min-width                  : 100px;
-  font-size                  : 1rem;
+  cursor     : pointer;
+  user-select: none;
+
+  padding        : 10px 10px;
+  border-radius  : 1rem;
+  display        : flex;
+  align-items    : center;
+  justify-content: center;
+  text-align     : center;
+  border         : 0;
+  min-width      : 100px;
+  font-size      : 1rem;
 }
 
 .deleteConfirmModal {
@@ -212,18 +213,22 @@ header {
   flex       : 1;
 }
 
-header,
-.editModalActions,
-.closeSelectBtn,
 .edit,
-.delete {
+header,
+.delete,
+.tabItem,
+.button,
+.delete-parent,
+.closeSelectBtn,
+.add-btn-parent,
+.editModalActions,
+.tools-container>button {
   -webkit-tap-highlight-color: transparent;
 }
 
 .profile {
   object-fit: cover;
   display   : flex;
-
 }
 
 .header-image {
@@ -257,10 +262,9 @@ header,
   justify-content : space-between;
   box-shadow      : 0 1px 2px 0 rgb(60 64 67 / 30%),
     0 2px 6px 2px rgb(60 64 67 / 15%);
-  z-index  : 10000;
-  font-size: 1rem;
-  font-size: 24px;
-
+  z-index    : 10000;
+  font-size  : 1rem;
+  font-size  : 24px;
   will-change: opacity;
   will-change: scale;
   will-change: height;
@@ -482,9 +486,8 @@ html[theme="dark"] .react-loading-skeleton {
   border-radius   : 100px;
   cursor          : pointer;
   height          : 50px;
-  display         : flex;
-  justify-content : center;
-  align-items     : center;
+  line-height     : 30px;
+
 }
 
 button.tabItem {
@@ -778,6 +781,18 @@ li.todo {
 
 }
 
+.editModalActions select {
+  border-radius: .5rem;
+  border       : 0;
+}
+
+.editModalActions select:focus-visible {
+  /* outline               : 1px solid var(--main-color) !important; */
+  outline               : 0;
+  /* background-color   : var(--btn-blue) !important; */
+  /* color              : white; */
+}
+
 .editModalActions>button {
   padding      : .5rem .3rem;
   border       : 0;
@@ -1013,22 +1028,21 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .add-btn-parent {
-  background-color           : var(--btn-blue);
-  border                     : none;
-  padding                    : 1rem;
-  cursor                     : pointer;
-  width                      : 60px;
-  height                     : 60px;
-  border-radius              : 50px;
-  font-size                  : 1.2rem;
-  /* font-size               : 20px; */
-  display                    : flex;
-  justify-content            : center;
-  align-items                : center;
-  box-shadow                 : 0px 3px 10px rgba(0, 0, 0, 0.4);
-  color                      : white;
-  -webkit-tap-highlight-color: transparent;
-  transition                 : scale .1s ease-in-out;
+  background-color              : var(--btn-blue);
+  border                        : none;
+  padding                       : 1rem;
+  cursor                        : pointer;
+  width                         : 60px;
+  height                        : 60px;
+  border-radius                 : 50px;
+  font-size                     : 1.2rem;
+  /* font-size                  : 20px; */
+  display                       : flex;
+  justify-content               : center;
+  align-items                   : center;
+  box-shadow                    : 0px 3px 10px rgba(0, 0, 0, 0.4);
+  color                         : white;
+  transition                    : scale .1s ease-in-out;
 }
 
 .add-btn-parent:active {
@@ -1095,12 +1109,11 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 
 .tools-container>button,
 .delete-parent {
-  display                    : flex;
-  justify-content            : flex-start;
-  align-items                : center;
-  padding                    : 9px 13px;
-  gap                        : 6px;
-  -webkit-tap-highlight-color: transparent;
+  display        : flex;
+  justify-content: flex-start;
+  align-items    : center;
+  padding        : 9px 13px;
+  gap            : 6px;
 }
 
 .tools-container>button:hover,

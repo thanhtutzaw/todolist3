@@ -3,8 +3,7 @@ import { auth, db } from './firebase';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 export function addLabel(
-  //   todoRef: RefObject<HTMLUListElement>,
-  //   inputRef: RefObject<HTMLInputElement>,
+  labelTextBox: string | null,
   setlabels: Function,
   labels: labelProps[] | null[],
   setisPrevent: Function
@@ -15,9 +14,9 @@ export function addLabel(
     console.info('%cAdding...', 'color:grey');
     // todoRef.current?.scrollIntoView({ behavior: 'smooth' });
     // const inputText = inputRef.current?.value;
-    const inputText = 'foo';
+    // const inputText = 'foo';
     const data = {
-      text: inputText,
+      text: labelTextBox,
       timeStamp: serverTimestamp(),
       // date: new Date(.toDate()).toLocaleDateString('en-US', {
       //   day: 'numeric',
@@ -33,11 +32,11 @@ export function addLabel(
       alert('User is not authenticated');
       throw new Error('User is not authenticated');
     }
-    if (inputText) {
+    if (labelTextBox) {
       const collectionRef = collection(db, 'users', auth.currentUser.uid, 'labels');
       //   inputRef.current.value = '';
 
-      setlabels([...labels, inputText]);
+      setlabels([...labels, labelTextBox]);
 
       setisPrevent(true);
       try {

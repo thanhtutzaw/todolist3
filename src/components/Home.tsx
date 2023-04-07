@@ -36,7 +36,7 @@ export default function Home() {
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
-  const { todos, settodos } = useFirestoreData();
+  const { todos, labels, settodos } = useFirestoreData();
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
   const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
@@ -100,8 +100,9 @@ export default function Home() {
   }, [selecting]);
 
   const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
-
   const [text, settext] = useState(todo?.text || null);
+  const [label, setlabel] = useState(todo?.label || null);
+  // const labelArray = labels.find((l) => l.id.toString() === todo?.label);
 
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
@@ -155,6 +156,8 @@ export default function Home() {
             <EditModal
               exitWithoutSaving={exitWithoutSaving}
               confirmModalRef={confirmModalRef}
+              label={label}
+              setlabel={setlabel}
               text={text}
               settext={settext}
               clearSelect={clearSelect}

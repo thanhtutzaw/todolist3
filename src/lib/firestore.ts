@@ -120,6 +120,7 @@ export function deleteMultipleTodo(
 export function updateTodo(
   id: string | number,
   editModalRef: RefObject<HTMLDialogElement>,
+  label: string,
   text: string,
   todo: todosProps,
   closeEditModal: Function,
@@ -139,9 +140,10 @@ export function updateTodo(
     const collectionRef = doc(db, 'users', auth.currentUser.uid, 'todos', id.toString());
     const newData = {
       ...todo,
+      label,
       text,
     };
-    if (text !== todo.text) {
+    if (text !== todo.text || label !== todo.label) {
       console.info('%cUpdating...', 'color:grey');
       setloading(true);
       try {

@@ -22,8 +22,8 @@ export default function useFirestoreData() {
           orderBy('timeStamp', 'desc')
         );
         const queryLabel = query(
-          collection(db, 'users/' + user.uid + '/labels')
-          // orderBy('timeStamp', 'desc')
+          collection(db, 'users/' + user.uid + '/labels'),
+          orderBy('timeStamp', 'desc')
         );
         unsubscribeLabel = onSnapshot(queryLabel, (snapshot) => {
           setlabels(
@@ -39,7 +39,8 @@ export default function useFirestoreData() {
             snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
-              label: ['Foo', 'Bar'],
+              // label: ['Foo', 'Bar'],
+
               // date: new Date(doc.data().timeStamp.toDate()).toLocaleDateString('en-US', {
               //   day: 'numeric',
               //   month: 'short',

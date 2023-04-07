@@ -5,9 +5,12 @@ import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 
 import ConfirmModal from './ConfirmModal';
 import UpdatingModal from './UpdatingModal';
 import Dialog from './Dialog';
+import useFirestoreData from '@/hooks/useFirestoreData';
 
 export default function EditModal(props: {
   todo: todosProps | null;
+  label: string | null;
+  setlabel: Function;
   text: string | null;
   settext: Function;
   exitWithoutSaving: boolean;
@@ -17,8 +20,17 @@ export default function EditModal(props: {
 }) {
   const [loading, setloading] = useState(false);
   const UpdatingRef = useRef<HTMLDialogElement>(null);
-  const { exitWithoutSaving, confirmModalRef, text, settext, todo, closeEditModal, clearSelect } =
-    props;
+  const {
+    label,
+    setlabel,
+    exitWithoutSaving,
+    confirmModalRef,
+    text,
+    settext,
+    todo,
+    closeEditModal,
+    clearSelect,
+  } = props;
 
   // const actionButtonRef = useRef(null);
   const { setisPrevent, editModalRef } = useContext(AppContext) as AppContextType;
@@ -43,6 +55,7 @@ export default function EditModal(props: {
     updateTodo(
       todo?.id!,
       editModalRef,
+      label!,
       text!,
       todo!,
       closeEditModal,
@@ -50,7 +63,7 @@ export default function EditModal(props: {
       setisPrevent,
       clearSelect
     ),
-    [todo, text]
+    [todo, text, label]
   );
 
   const inputRef = useRef(null);
@@ -69,10 +82,10 @@ export default function EditModal(props: {
       // console.log('confirm update');
     } else {
       closeEditModal();
-      console.log("close edit");
+      console.log('close edit');
     }
   }
-
+  const { labels } = useFirestoreData();
   return (
     <>
       <Dialog id="confirmModal" ref={confirmModalRef}>
@@ -105,10 +118,26 @@ export default function EditModal(props: {
               className="textarea"
             />
             <div className="editModalActions">
+              <select
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value !== '') {
+                    setlabel(e.target.value);
+                    console.log(label);
+                  }
+                }}
+              >
+                <option value="">Change Label</option>
+
+                {labels.map((l) => (
+                  <>
+                    <option value={l.id.toString()}>{l.text}</option>
+                  </>
+                ))}
+              </select>
               <button onClick={close} className="editCloseBtn">
                 Close
               </button>
-
               <button
                 disabled={loading}
                 onClick={() => {

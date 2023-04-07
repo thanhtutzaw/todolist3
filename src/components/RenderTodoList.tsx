@@ -1,5 +1,5 @@
 import useFirestoreData from '@/hooks/useFirestoreData';
-import { todosProps } from '@/types';
+import { labelProps, todosProps } from '@/types';
 import { RefObject } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';

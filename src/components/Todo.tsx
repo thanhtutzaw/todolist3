@@ -1,6 +1,7 @@
 import { AppContext } from '@/Context/AppContext';
+import useFirestoreData from '@/hooks/useFirestoreData';
 import { checkStatus } from '@/lib/firestore';
-import { AppContextType, todosProps } from '@/types';
+import { AppContextType, labelProps, todosProps } from '@/types';
 import { Timestamp } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
@@ -8,13 +9,16 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const Todolist = (props: {
   addLoading: boolean;
   SelectedID: number[];
+  todos: todosProps[] | null[];
   todo: todosProps | null;
   setSelectedID: Function;
   setselectCount: Function;
-  todos: todosProps[] | null[];
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { dateLocale, timeAgo, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { labels } = useFirestoreData();
+  const { active, setactive, dateLocale, timeAgo, setisPrevent } = useContext(
+    AppContext
+  ) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
   const [checked, setchecked] = useState(todo?.completed ?? false);
@@ -24,7 +28,6 @@ const Todolist = (props: {
       setselectCount(false);
     }
     if (SelectedID.length === todos.length) {
-      // console.log(SelectedID.length, todos.length);
       setisSelect(true);
     }
     if (SelectedID.length > 0) {
@@ -49,6 +52,7 @@ const Todolist = (props: {
 
   const timeStamp = new Timestamp(todo?.timeStamp?.seconds!, todo?.timeStamp?.nanoseconds!);
   const date = new Date(timeStamp.toDate()!);
+  const label = labels.find((l) => l.id === todo?.label);
 
   if (!mounted) return <></>;
   return (
@@ -67,11 +71,18 @@ const Todolist = (props: {
         <p style={{ lineHeight: dateLocale === 'Myanmar' ? '1' : 'initial' }} className="date">
           {timeAgo(date)}
         </p>
-        {todo?.label?.map((l) => (
-          <div className="label">{l}</div>
-        ))}
-        {/* <span className="label">Foo</span>
-        <span className="label">barrrrrrrrrrrrrrrrrrrrrr</span> */}
+        {todo?.label !== null && todo?.label && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation()
+              setactive(label?.text);
+            }}
+            className="label"
+          >
+            {label?.text}
+          </div>
+        )}
+
         {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}
       </label>

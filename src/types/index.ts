@@ -2,6 +2,9 @@ import { Timestamp } from 'firebase/firestore';
 import { MouseEventHandler, RefObject } from 'react';
 
 export type AppContextType = {
+  active: string;
+  setactive: Function;
+
   deleting: boolean;
   openDeleteToast: boolean;
   timeAgo: Function;
@@ -28,7 +31,7 @@ export interface todosProps {
   text?: string;
   completed?: boolean;
   timeStamp?: Timestamp;
-  label?: string[];
+  label?: string;
 }
 export interface labelProps {
   id: string | number;
