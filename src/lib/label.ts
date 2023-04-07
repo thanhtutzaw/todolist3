@@ -12,9 +12,6 @@ export function addLabel(
     // return async (e: FormEventHandler<HTMLFormElement>) => {
     // e.preventDefault()
     console.info('%cAdding...', 'color:grey');
-    // todoRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // const inputText = inputRef.current?.value;
-    // const inputText = 'foo';
     const data = {
       text: labelTextBox,
       timeStamp: serverTimestamp(),

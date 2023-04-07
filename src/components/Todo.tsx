@@ -74,7 +74,7 @@ const Todolist = (props: {
         {todo?.label !== null && todo?.label && (
           <div
             onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               setactive(label?.text);
             }}
             className="label"

@@ -14,9 +14,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
   const { loading, labels, setlabels } = useFirestoreData();
   const { active, setactive, setisPrevent } = useContext(AppContext) as AppContextType;
   useEffect(() => {
-    
     window.location.hash = active;
-    // console.log(tabRef.current);
     tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [active]);
   // const label = todos.map((t) => {
@@ -41,87 +39,58 @@ export default function Tabs({ SelectedID }: TabsProps) {
   const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
   const activeFadein = 'activeFadein .2s ease-in-out forwards';
   const tabRef = useRef<HTMLDivElement>(null);
+  const tabItemLoading = loading ? tabLoading : '';
+  const homeTab = active === '';
+  const firstItemLoading = homeTab && !loading ? activeFadein : '';
+  function LabelLoader() {
+    return (
+      <>
+        <div
+          aria-label="label loading"
+          style={{
+            animation: tabItemLoading,
+          }}
+          className={`tabItem`}
+        ></div>
+      </>
+    );
+  }
   return (
     <Draggable loading={loading} length={length} className="tabContainer">
       <>
         <div
-          onClick={(e) => {
+          ref={homeTab ? tabRef : null}
+          onClick={() => {
             setactive('');
-            e.currentTarget.scrollIntoView({
-              behavior: 'smooth',
-              block: 'center',
-            });
           }}
           style={{
-            animation: active == '' && !loading ? activeFadein : '',
+            animation: firstItemLoading,
           }}
-          className={`tabItem ${active == '' && !loading ? 'active' : ''}`}
+          className={`tabItem ${homeTab && !loading ? 'active' : ''}`}
         >
           All
         </div>
-        {loading && (
-          <>
-            {Array.from(
-              [1, 2, 3, 4, 5, 6].map(() => (
-                <>
-                  <div
-                    aria-label="label loading"
-                    style={{
-                      animation: loading ? tabLoading : '',
-                    }}
-                    className={`tabItem`}
-                  ></div>
-                </>
-              ))
-            )}
-          </>
-        )}
-        {labels.map((l) => (
-          <div
-            ref={active === l.text ? tabRef : null}
-            onClick={(e) => {
-              setactive(l.text!);
-              e.currentTarget.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-              });
-            }}
-            style={{
-              animation: loading ? tabLoading : '',
-            }}
-            className={`tabItem ${active === l.text ? 'active' : ''}`}
-          >
-            <TabItem l={l} />
-          </div>
-        ))}
-
-        {/* {labels.length === 0 && ( */}
+        {loading && <>{Array.from([1, 2, 3, 4, 5, 6].map(() => <LabelLoader />))}</>}
+        {labels.map((l) => {
+          const otherTab = active === l.text;
+          return (
+            <div
+              ref={otherTab ? tabRef : null}
+              onClick={() => {
+                setactive(l.text!);
+              }}
+              style={{
+                animation: tabItemLoading,
+              }}
+              className={`tabItem ${otherTab ? 'active' : ''}`}
+            >
+              <TabItem l={l} />
+            </div>
+          );
+        })}
         <button onClick={handleSubmit} className="tabItem">
           <VscAdd />
         </button>
-
-        {/* {label.map((t, index) => (
-          <div
-            ref={tabRef}
-            onClick={(e): void => {
-              // setactive(t);
-              e?.currentTarget?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-              });
-            }}
-            style={{
-              animation: loading ? tabLoading : '',
-            }}
-          >
-            {t?.map((l) => (
-              <TabItem l={l} />
-            ))}
-          </div>
-        ))} */}
-
-        {/* {label.map((t , index) => (
-        <TabItem active={active} key={index} t={t} setactive={setactive} />)} */}
       </>
     </Draggable>
   );

@@ -123,12 +123,11 @@ export default function EditModal(props: {
                   const value = e.target.value;
                   if (value !== '') {
                     setlabel(e.target.value);
-                    console.log(label);
+                    // console.log(label);
                   }
                 }}
               >
                 <option value="">Change Label</option>
-
                 {labels.map((l) => (
                   <>
                     <option value={l.id.toString()}>{l.text}</option>
