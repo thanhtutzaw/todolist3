@@ -14,6 +14,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
   const { loading, labels, setlabels } = useFirestoreData();
   const { active, setactive, setisPrevent } = useContext(AppContext) as AppContextType;
   useEffect(() => {
+    
     window.location.hash = active;
     // console.log(tabRef.current);
     tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -31,10 +32,10 @@ export default function Tabs({ SelectedID }: TabsProps) {
         .substring(2, len + 2);
     };
     const labelTextBox = prompt('Please enter new Label', genRand(6));
-    if (labelTextBox == null || labelTextBox == '') {
-    } else {
-      console.log(labelTextBox);
-    }
+    // if (labelTextBox == null || labelTextBox == '') {
+    // } else {
+    //   console.log(labelTextBox);
+    // }
     await addLabel(labelTextBox, setlabels, labels, setisPrevent);
   };
   const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';

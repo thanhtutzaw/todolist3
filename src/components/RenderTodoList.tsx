@@ -1,22 +1,23 @@
 import useFirestoreData from '@/hooks/useFirestoreData';
-import { labelProps, todosProps } from '@/types';
-import { RefObject } from 'react';
+import { AppContextType, labelProps, todosProps } from '@/types';
+import { RefObject, useContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
+import { AppContext } from '@/Context/AppContext';
 
 export function RenderTodoList(props: {
   todoRef: RefObject<HTMLUListElement>;
-  todos: todosProps[] | null[];
+  // todos: todosProps[] | null[];
   SelectedID: number[];
   selectCount: boolean;
   addLoading: boolean;
   setSelectedID: Function;
   setselectCount: Function;
 }) {
-  const { addLoading, todos, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } =
-    props;
-  const { loading } = useFirestoreData();
+  const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
+  const { loading, todos, labels } = useFirestoreData();
 
+  const { active } = useContext(AppContext) as AppContextType;
   if (todos.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
   // useEffect(() => {
   //   const dataStr = todos.map((t) => {
@@ -30,6 +31,20 @@ export function RenderTodoList(props: {
 
   // }, [todos]);
 
+  const activeTab = labels.find((l) => l.text === active);
+  const [filter, setfilter] = useState<todosProps[] | null[]>([]);
+  useEffect(() => {
+    setfilter(
+      todos.filter((t) => {
+        if (active === '') {
+          return todos;
+        } else {
+          return t.label === activeTab?.id;
+        }
+      })
+    );
+  }, [todos, activeTab]);
+
   return (
     <ul
       ref={todoRef}
@@ -41,7 +56,7 @@ export function RenderTodoList(props: {
         {loading && <Skeleton className={'loading'} count={10} />}
       </SkeletonTheme>
       {!loading &&
-        todos.map((todo) => (
+        filter.map((todo) => (
           <Todo
             addLoading={addLoading}
             todo={todo}

@@ -19,13 +19,13 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Dialog from './Elements/Modal/Dialog';
 import Footer from './Footer';
 import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
-import Toast from './Toast';
-import Dialog from './Elements/Modal/Dialog';
-import Tabs from './Tabs';
 import { SelectAllBtn } from './SelectAllBtn';
+import Tabs from './Tabs';
+import Toast from './Toast';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -39,7 +39,7 @@ export default function Home() {
   const { todos, labels, settodos } = useFirestoreData();
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
-  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const { active, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
@@ -127,6 +127,13 @@ export default function Home() {
   }
   const NotCompleteTodo = todos.filter((todo) => todo.completed !== true);
   const todoCount = NotCompleteTodo.length;
+  // const [filteredTodos, setFilteredTodos] = useState<todosProps[] | null[]>(todos);
+  // let filteredTodos: todosProps[] | null[];
+
+  // useEffect(() => {
+  //   filteredTodos = todos;
+  // }, [todos]);
+
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
