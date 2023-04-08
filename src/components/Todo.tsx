@@ -71,7 +71,7 @@ const Todolist = (props: {
         <p style={{ lineHeight: dateLocale === 'Myanmar' ? '1' : 'initial' }} className="date">
           {timeAgo(date)}
         </p>
-        {todo?.label !== null && todo?.label && (
+        {todo?.label !== null && todo?.label && active === '' && (
           <div
             onClick={(e) => {
               e.stopPropagation();

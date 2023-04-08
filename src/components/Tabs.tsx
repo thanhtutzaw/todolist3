@@ -36,25 +36,23 @@ export default function Tabs({ SelectedID }: TabsProps) {
     // }
     await addLabel(labelTextBox, setlabels, labels, setisPrevent);
   };
-  const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
-  const activeFadein = 'activeFadein .2s ease-in-out forwards';
   const tabRef = useRef<HTMLDivElement>(null);
-  const tabItemLoading = loading ? tabLoading : '';
   const homeTab = active === '';
+  const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
+  const tabItemLoading = loading ? tabLoading : '';
+
+  const activeFadein = 'activeFadein .2s ease-in-out forwards';
   const firstItemLoading = homeTab && !loading ? activeFadein : '';
-  function LabelLoader() {
-    return (
-      <>
-        <div
-          aria-label="label loading"
-          style={{
-            animation: tabItemLoading,
-          }}
-          className={`tabItem`}
-        ></div>
-      </>
-    );
-  }
+  const LabelLoader = () => (
+    <div
+      aria-label="tabs loading"
+      style={{
+        animation: tabItemLoading,
+      }}
+      className="tabItem"
+    ></div>
+  );
+
   return (
     <Draggable loading={loading} length={length} className="tabContainer">
       <>
