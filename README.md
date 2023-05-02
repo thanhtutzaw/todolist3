@@ -20,7 +20,7 @@ Project is created with:
 :ballot_box_with_check:	Task Complete Status
 
 ## User-Interface
-![Todo-React-App](https://user-images.githubusercontent.com/71011043/229389546-5c6ed307-75b1-431f-a425-d11031566d38.png)
+![Todo-React-App](https://user-images.githubusercontent.com/71011043/235667990-ea94ea1b-30d0-4c8f-8cd6-448c16d8b1ff.png)
 
 ## NoSQL document database
 ![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
