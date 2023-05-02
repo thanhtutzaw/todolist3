@@ -1,7 +1,7 @@
 import { AppContext } from '@/Context/AppContext';
 import useFirestoreData from '@/hooks/useFirestoreData';
 import { checkStatus } from '@/lib/firestore';
-import { AppContextType, labelProps, todosProps } from '@/types';
+import { AppContextType, todosProps } from '@/types';
 import { Timestamp } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
@@ -71,7 +71,7 @@ const Todolist = (props: {
         <p style={{ lineHeight: dateLocale === 'Myanmar' ? '1' : 'initial' }} className="date">
           {timeAgo(date)}
         </p>
-        {todo?.label !== null && todo?.label && active === '' && (
+        {todo?.label && active === '' && (
           <div
             onClick={(e) => {
               e.stopPropagation();

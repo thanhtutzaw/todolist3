@@ -2,9 +2,9 @@ import { AppContext } from '@/Context/AppContext';
 import useFirestoreData from '@/hooks/useFirestoreData';
 import { addLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
-import { MouseEventHandler, useContext, useEffect, useRef, useState } from 'react';
-import Draggable from './Elements/Draggable';
+import { MouseEventHandler, useContext, useEffect, useRef } from 'react';
 import { VscAdd } from 'react-icons/vsc';
+import Draggable from './Elements/Draggable';
 interface TabsProps {
   SelectedID: number[];
   todos: todosProps[];
@@ -12,15 +12,7 @@ interface TabsProps {
 export default function Tabs({ SelectedID }: TabsProps) {
   const length = SelectedID.length === 0;
   const { loading, labels, setlabels } = useFirestoreData();
-  const { active, setactive, setisPrevent } = useContext(AppContext) as AppContextType;
-  useEffect(() => {
-    window.location.hash = active;
-    tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, [active]);
-  // const label = todos.map((t) => {
-  //   console.log(t.label);
-  //   return t.label;
-  // });
+  const { tabRef, active, setactive, setisPrevent } = useContext(AppContext) as AppContextType;
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
@@ -30,13 +22,8 @@ export default function Tabs({ SelectedID }: TabsProps) {
         .substring(2, len + 2);
     };
     const labelTextBox = prompt('Please enter new Label', genRand(6));
-    // if (labelTextBox == null || labelTextBox == '') {
-    // } else {
-    //   console.log(labelTextBox);
-    // }
     await addLabel(labelTextBox, setlabels, labels, setisPrevent);
   };
-  const tabRef = useRef<HTMLDivElement>(null);
   const homeTab = active === '';
   const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
   const tabItemLoading = loading ? tabLoading : '';
@@ -57,10 +44,10 @@ export default function Tabs({ SelectedID }: TabsProps) {
     <Draggable loading={loading} length={length} className="tabContainer">
       <>
         <div
+          aria-selected={homeTab}
+          role="tab"
           ref={homeTab ? tabRef : null}
-          onClick={() => {
-            setactive('');
-          }}
+          onClick={(e) => setactive('')}
           style={{
             animation: firstItemLoading,
           }}
@@ -73,10 +60,10 @@ export default function Tabs({ SelectedID }: TabsProps) {
           const otherTab = active === l.text;
           return (
             <div
+              aria-selected={otherTab}
+              role="tab"
               ref={otherTab ? tabRef : null}
-              onClick={() => {
-                setactive(l.text!);
-              }}
+              onClick={() => setactive(l.text!)}
               style={{
                 animation: tabItemLoading,
               }}

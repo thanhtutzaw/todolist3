@@ -1,6 +1,6 @@
 import { MouseEventHandler, useEffect, useState } from 'react';
 
-export function SelectAllBtn(props: {
+export default function SelectAllBtn(props: {
   selectAll: MouseEventHandler<HTMLButtonElement>;
   clearSelect: MouseEventHandler<HTMLButtonElement>;
   SelectedID: number[];
@@ -9,6 +9,12 @@ export function SelectAllBtn(props: {
   const { clearSelect, selectAll, SelectedID, selectCount } = props;
   const selectOneItem = SelectedID.length === 1 && selectCount;
   const selectMoreThanOne = SelectedID.length >= 2;
+  const selectAllAnimation = selectOneItem
+    ? 'mountFadeIn .2s ease-in-out'
+    : 'unMountFadeOut .2s forwards ease-in-out ';
+  const deSelectAnimation = selectMoreThanOne
+    ? 'mountFadeIn .2s ease-in'
+    : 'unMountFadeOut .2s forwards ease-in-out ';
   const [selectAllmounted, setselectAllMounted] = useState(false);
   const [deselectAllmounted, setdeselectAllMounted] = useState(false);
   useEffect(() => {
@@ -33,26 +39,15 @@ export function SelectAllBtn(props: {
       clearTimeout(mount);
     };
   }, [selectMoreThanOne]);
-
-  // useEffect(() => {
-  //   if (selectMoreThanOne && !deselectAllmounted) {
-  //     setdeselectAllMounted(true);
-  //   }
-  // }, [deselectAllmounted]);
+  const handleUnmount = () => !selectOneItem && selectAllmounted && setselectAllMounted(false);
 
   return (
     <>
       {selectAllmounted && (
         <div
-          onAnimationEnd={() => {
-            if (!selectOneItem && selectAllmounted) {
-              setselectAllMounted(false);
-            }
-          }}
+          onAnimationEnd={handleUnmount}
           style={{
-            animation: selectOneItem
-              ? 'mountFadeIn .2s ease-in-out'
-              : 'unMountFadeOut .2s forwards ease-in-out ',
+            animation: selectAllAnimation,
           }}
           className="selectionContainer"
         >
@@ -64,19 +59,14 @@ export function SelectAllBtn(props: {
 
       {!selectAllmounted && selectMoreThanOne && (
         <div
-          // onAnimationEnd={() => {
-          //   if (!selectMoreThanOne && deselectAllmounted) {
-          //     setdeselectAllMounted(false);
-          //   }
-          // }}
           style={{
-            animation: selectMoreThanOne
-              ? 'mountFadeIn .2s ease-in'
-              : 'unMountFadeOut .2s forwards ease-in-out ',
+            animation: deSelectAnimation,
           }}
           className="selectionContainer"
         >
-          <button onClick={clearSelect}>Deselect All</button>
+          <button tabIndex={-1} onClick={clearSelect}>
+            Deselect All
+          </button>
         </div>
       )}
     </>

@@ -1,6 +1,7 @@
 :root {
     --min-height        : 100dvh;
     --background-primary: white;
+    --light-bg          : white;
     --background-gray   : rgb(236, 236, 236);
     --text-primary      : rgb(28, 28, 65);
     --main-color        : rgb(0, 158, 255);
@@ -11,6 +12,11 @@
     --btn-blue          : rgb(51, 153, 255);
     --modal-blur        : 6px;
     --image-size        : 60px;
+}
+
+html[theme="dark"] {
+    --light-bg: rgb(33 33 33);
+
 }
 
 html[theme="dark"] body {

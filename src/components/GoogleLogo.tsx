@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GoogleLogo() {
+export default function GoogleLogo() {
   return (
     <div className="loginIcon">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -50,5 +50,3 @@ function GoogleLogo() {
     </div>
   );
 }
-
-export default GoogleLogo;

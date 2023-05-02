@@ -1,4 +1,11 @@
-import { PointerEvent, ReactElement, useEffect, useState } from 'react';
+import {
+  PointerEvent,
+  ReactElement,
+  WheelEvent,
+  WheelEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 interface DraggableProps {
   loading: boolean;
   length: boolean;
@@ -33,8 +40,16 @@ export default function Draggable({ loading, length, className, children }: Drag
     };
   }, [length]);
 
+  function zoom(e: WheelEvent<HTMLDivElement>) {
+    console.log((e.deltaY * -0.01).toString());
+  }
+
   return mounted ? (
     <div
+      onWheel={(e) => {
+        zoom(e);
+      }}
+      // role="tablist"
       onAnimationEnd={() => {
         if (!length) {
           setMounted(false);
@@ -56,4 +71,8 @@ export default function Draggable({ loading, length, className, children }: Drag
   ) : (
     <></>
   );
+
+  function newFunction(): WheelEventHandler<HTMLDivElement> | undefined {
+    return (e) => zoom(e);
+  }
 }

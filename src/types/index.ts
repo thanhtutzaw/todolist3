@@ -4,7 +4,7 @@ import { MouseEventHandler, RefObject } from 'react';
 export type AppContextType = {
   active: string;
   setactive: Function;
-
+  tabRef: RefObject<HTMLDivElement>;
   deleting: boolean;
   openDeleteToast: boolean;
   timeAgo: Function;

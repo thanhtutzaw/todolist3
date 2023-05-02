@@ -23,7 +23,7 @@ import Dialog from './Elements/Modal/Dialog';
 import Footer from './Footer';
 import Header from './Header';
 import { RenderTodoList } from './RenderTodoList';
-import { SelectAllBtn } from './SelectAllBtn';
+import SelectAllBtn from './SelectAllBtn';
 import Tabs from './Tabs';
 import Toast from './Toast';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));

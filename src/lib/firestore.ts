@@ -51,7 +51,6 @@ export function addTodo(
       settodos([...todos, inputText]);
 
       setisPrevent(true);
-      // setAddLoading(true);
       try {
         // await addDoc(collectionRef, data, { merge: true });
         await addDoc(collectionRef, data);
