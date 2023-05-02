@@ -1,4 +1,5 @@
 :root {
+    --max-width         : 500px;
     --min-height        : 100dvh;
     --background-primary: white;
     --light-bg          : white;
@@ -13,7 +14,11 @@
     --modal-blur        : 6px;
     --image-size        : 60px;
 }
-
+@media screen and (min-width: 850px) {
+    :root {
+        --max-width: 60vw;
+    }
+}
 html[theme="dark"] {
     --light-bg: rgb(33 33 33);
 

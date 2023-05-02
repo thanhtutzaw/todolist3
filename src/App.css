@@ -35,7 +35,7 @@ body {
 
 main {
   min-height         : var(--min-height);
-  max-width          : 500px;
+  max-width          : var(--max-width);
   width              : 100vw;
   background-color   : var(--background-primary);
   color              : var(--text-primary);
@@ -52,14 +52,10 @@ section:not(.tabSection),
 }
 
 .tabSection {
-  /* height    : 50px;
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0) 13.94%, #ffffff 54.73%);
-  position  : fixed;
-  z-index   : 100; */
   background: linear-gradient(0deg, transparent 13.94%, var(--light-bg) 54.73%);
   position  : absolute;
   width     : 100%;
-  max-width : 500px;
+  max-width : var(--max-width);
   z-index   : 2;
   height    : 50px
 }
@@ -262,7 +258,7 @@ header,
   padding         : 0 1.4rem;
   position        : absolute;
   inset           : 0;
-  max-width       : 500px;
+  max-width       : var(--max-width);
   height          : 7%;
   min-height      : 75px;
   margin          : 0 auto;
@@ -281,7 +277,7 @@ header,
 }
 
 .loading {
-  max-width       : 440px;
+  /* max-width       : 440px; */
   margin-bottom   : 1.3rem;
   padding         : .5rem 0;
   background-color: rgb(230, 134, 8);
@@ -296,7 +292,7 @@ header,
 }
 
 .selecting {
-  max-width : 500px;
+  max-width : var(--max-width);
   height    : 70px;
   opacity   : 1;
   transition: all .3s ease;
@@ -767,13 +763,13 @@ li.todo {
   background-color: rgba(0, 0, 1, 0.281);
   backdrop-filter : blur(6px);
   margin          : 0 auto;
-  max-width       : 500px;
+  max-width       : var(--max-width);
 }
 
 #confirmModal::backdrop {
   background-color: rgba(0, 0, 1, 0.589);
   margin          : 0 auto;
-  max-width       : 500px;
+  max-width       : var(--max-width);
   transition      : all .3s ease-in-out;
 }
 
@@ -841,16 +837,16 @@ ul li {
 }
 
 .todo {
-  display        : flex;
-  position       : relative;
-  gap            : 0.8rem;
-  max-width      : 700px;
-  margin-right   : 1rem;
-  margin-bottom  : 5px;
-  justify-content: space-between;
-  transition     : all .2s ease-in;
-  padding        : 0 8px;
-  padding-bottom : 0;
+  display           : flex;
+  position          : relative;
+  gap               : 0.8rem;
+  /* max-width      : 700px; */
+  margin-right      : 1rem;
+  margin-bottom     : 5px;
+  justify-content   : space-between;
+  transition        : all .2s ease-in;
+  padding           : 0 8px;
+  padding-bottom    : 0;
 }
 
 .todo.checked label {
@@ -1019,7 +1015,7 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   justify-content : center;
   align-items     : center;
   gap             : 3em;
-  max-width       : 500px;
+  max-width       : var(--max-width);
   height          : 14vh;
   position        : fixed;
   bottom          : 5%;
