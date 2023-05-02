@@ -1,27 +1,28 @@
-<h1>A To-Do List with React and Firebase</h1>
+<h1>A To-Do List Web Application with React and Firebase 🔥</h1>
 
 Project is created with:
-* Vite , React and Typescript
-* Google Sign-in with [Cloud Firestore](https://github.com/thanhtutzaw/todolist3/blob/main/README.md#document-bases-databases)
-* [React-Icons](https://www.npmjs.com/package/react-icons)
+* React, Vite and Typescript
+* Google Sign-in and [Cloud Firestore](https://github.com/thanhtutzaw/todolist3/blob/main/README.md#nosql-document-database)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
+* [React-Icons](https://www.npmjs.com/package/react-icons)
 
 ## Features
 :ballot_box_with_check:	Items Selector\
+:ballot_box_with_check:	Organize with Tags\
 :ballot_box_with_check:	Google Sign-in and Test-User Account\
 :ballot_box_with_check:	Cloud Firestore NoSQL\
 :ballot_box_with_check:	Delete Multiple Items\
 :ballot_box_with_check:	Export and Import data\
-:ballot_box_with_check:	Date Correct Order After Imported\
+:ballot_box_with_check:	Order by Date and also After Imported\
 :ballot_box_with_check:	Data Loading State\
 :ballot_box_with_check:	Delete Canceling State\
-:ballot_box_with_check:	Refresh Protected\
-:ballot_box_with_check:	Task Complete Status\
-:ballot_box_with_check:	Control TabIndex
-## User-Interface
-![Todo-React-App](https://user-images.githubusercontent.com/71011043/229389546-5c6ed307-75b1-431f-a425-d11031566d38.png)
+:ballot_box_with_check:	Refresh Prevented\
+:ballot_box_with_check:	Task Complete Status
 
-## Document-bases databases
+## User-Interface
+![Todo-React-App](https://user-images.githubusercontent.com/71011043/235667990-ea94ea1b-30d0-4c8f-8cd6-448c16d8b1ff.png)
+
+## NoSQL document database
 ![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
 
 ## Demo
