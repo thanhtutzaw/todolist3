@@ -1,6 +1,11 @@
 import { auth } from '@/lib/firebase';
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { CSSProperties, useState } from 'react';
+import {
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { CSSProperties, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Elements/Button/Button';
 import GoogleLogo from './GoogleLogo';
@@ -66,6 +71,7 @@ export default function Login() {
       alert(`Cannot Signin ! ${error.message}`);
     }
   };
+  
   return (
     <main>
       <Button disabled={loading} onClick={signinHandle} style={loginStyle}>
@@ -81,6 +87,7 @@ export default function Login() {
       </button> */}
       <br></br>
       <div
+        className="testUserLogin"
         style={{
           color: EmailLoading ? 'grey' : 'blue',
           textDecoration: EmailLoading ? 'initial' : 'underline',

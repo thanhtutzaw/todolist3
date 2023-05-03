@@ -2,7 +2,7 @@ import { AppContext } from '@/Context/AppContext';
 import useFirestoreData from '@/hooks/useFirestoreData';
 import { addLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
-import { MouseEventHandler, useContext, useEffect, useRef } from 'react';
+import { MouseEventHandler, useContext } from 'react';
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
 interface TabsProps {
@@ -47,7 +47,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
           aria-selected={homeTab}
           role="tab"
           ref={homeTab ? tabRef : null}
-          onClick={(e) => setactive('')}
+          onClick={() => setactive('all')}
           style={{
             animation: firstItemLoading,
           }}

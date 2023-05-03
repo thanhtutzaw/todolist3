@@ -35,7 +35,7 @@ export function RenderTodoList(props: {
   useEffect(() => {
     setfilter(
       todos.filter((t) => {
-        if (active === '') {
+        if (active === '' || active === 'all') {
           return todos;
         } else {
           return t.label === activeTab?.id;

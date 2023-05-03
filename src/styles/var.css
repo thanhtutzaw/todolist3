@@ -3,6 +3,7 @@
     --min-height        : 100dvh;
     --background-primary: white;
     --light-bg          : white;
+    --light-text        : rgb(28, 28, 65);
     --background-gray   : rgb(236, 236, 236);
     --text-primary      : rgb(28, 28, 65);
     --main-color        : rgb(0, 158, 255);
@@ -14,14 +15,16 @@
     --modal-blur        : 6px;
     --image-size        : 60px;
 }
+
 @media screen and (min-width: 850px) {
     :root {
         --max-width: 60vw;
     }
 }
-html[theme="dark"] {
-    --light-bg: rgb(33 33 33);
 
+html[theme="dark"] {
+    --light-bg  : rgb(33 33 33);
+    --light-text: white;
 }
 
 html[theme="dark"] body {
@@ -29,8 +32,8 @@ html[theme="dark"] body {
 }
 
 html[theme="dark"] main {
-    color           : white;
-    background-color: rgb(33 33 33);
+    /* color           : white; */
+    /* background-color: rgb(33 33 33); */
 }
 
 html[theme="dark"] .tools select {

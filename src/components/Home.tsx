@@ -6,7 +6,7 @@ import useSelect from '@/hooks/useSelect';
 import { auth } from '@/lib/firebase';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
-import { onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {
   FormEventHandler,
   MouseEvent,
@@ -26,6 +26,8 @@ import { RenderTodoList } from './RenderTodoList';
 import SelectAllBtn from './SelectAllBtn';
 import Tabs from './Tabs';
 import Toast from './Toast';
+import useIndexDB from '@/hooks/useIndexDB';
+import { CustomConsole } from './CustomConsole';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 
 const renderLoader = () => <p>Loading...</p>;
@@ -39,7 +41,7 @@ export default function Home() {
   const { todos, labels, settodos } = useFirestoreData();
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
-  const { active, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
@@ -133,19 +135,13 @@ export default function Home() {
   // useEffect(() => {
   //   filteredTodos = todos;
   // }, [todos]);
-
+  const auth = getAuth();
+  // const user = auth.currentUser;
+  // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
-      <div title="custom console" className="messageBox">
-        {message.map((m) => (
-          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <div>✨</div>
-            <p className="messages"> {m}</p>
-          </div>
-        ))}
-        <div ref={dummyRef} />
-      </div>
+      <CustomConsole message={message} dummyRef={dummyRef} />
       {SelectModalMounted && (
         <SelectModal
           exitWithoutSaving={exitWithoutSaving}

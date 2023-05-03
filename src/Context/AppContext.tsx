@@ -1,3 +1,4 @@
+import useTheme from '@/hooks/useTheme';
 import { AppContextType } from '@/types';
 import { PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
 
@@ -16,9 +17,10 @@ export default function AppProvider({ children }: PropsWithChildren) {
   const [openDeleteModal, setopenDeleteModal] = useState(false);
   const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
-
+  const { theme, setTheme } = useTheme();
   useEffect(() => {
-    window.location.hash = active !== '' ? active : 'all';
+    window.location.hash = active;
+    // window.location.hash = active !== '' ? active : 'all';
     tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [active]);
   useEffect(() => {
@@ -95,6 +97,8 @@ export default function AppProvider({ children }: PropsWithChildren) {
   return (
     <AppContext.Provider
       value={{
+        theme,
+        setTheme,
         tabRef,
         active,
         setactive,

@@ -13,13 +13,13 @@ const Header = memo(
     todoCount: number;
     selecting: boolean;
   }) => {
-    const { todos, settodos, todoCount, selecting } = props;
+    const { todos, settodos, todoCount } = props;
     const { userphoto, userName } = useIndexDB();
-    const { theme, setTheme } = useTheme();
+
     const [mounted, setmounted] = useState(false);
     const [opentools, setopentools] = useState(false);
     const [isLoggingOut, setisLoggingOut] = useState(false);
-    const { setisPrevent } = useContext(AppContext) as AppContextType;
+    const { theme, setTheme, setisPrevent } = useContext(AppContext) as AppContextType;
     const dropdownRef = useRef(null);
     const auth = getAuth();
     const user = auth.currentUser;

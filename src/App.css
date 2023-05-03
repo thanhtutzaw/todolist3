@@ -33,15 +33,20 @@ body {
   background-color: var(--background-gray);
 }
 
+.testUserLogin {
+  margin-left: 1rem;
+}
+
 main {
-  min-height         : var(--min-height);
-  max-width          : var(--max-width);
-  width              : 100vw;
-  background-color   : var(--background-primary);
-  color              : var(--text-primary);
-  font-size          : calc(10px + 2vmin);
-  /* padding         : 0 1.4rem; */
-  overflow           : hidden;
+  min-height            : var(--min-height);
+  max-width             : var(--max-width);
+  width                 : 100vw;
+  background-color      : var(--light-bg);
+  /* background-color   : var(--background-primary); */
+  color                 : var(--light-text);
+  font-size             : calc(10px + 2vmin);
+  /* padding            : 0 1.4rem; */
+  overflow              : hidden;
 }
 
 header,
@@ -1215,4 +1220,5 @@ select>option {
   font-weight   : 500;
   font-size     : 18px;
   letter-spacing: .3px;
+  line-height   : 10px;
 }
