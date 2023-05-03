@@ -24,7 +24,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
     const labelTextBox = prompt('Please enter new Label', genRand(6));
     await addLabel(labelTextBox, setlabels, labels, setisPrevent);
   };
-  const homeTab = active === '';
+  const homeTab = active === '' || active === 'all';
   const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
   const tabItemLoading = loading ? tabLoading : '';
 
