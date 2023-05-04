@@ -73,7 +73,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
             </div>
           );
         })}
-        <button onClick={handleSubmit} className="tabItem">
+        <button aria-label="create new label" onClick={handleSubmit} className="tabItem">
           <VscAdd />
         </button>
       </>

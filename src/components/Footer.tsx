@@ -14,13 +14,19 @@ const Footer = memo(
       <footer className="nav" style={{ pointerEvents: selectCount ? 'none' : 'initial' }}>
         <form onSubmit={handleSubmit}>
           <input
-            tabIndex={!SelectModalMounted ? 1 : -1}
+            aria-label="type todo"
+            tabIndex={!SelectModalMounted ? 0 : -1}
             ref={inputRef}
             className="input-text"
             type="text"
           />
 
-          <Button tabIndex={!SelectModalMounted ? 1 : -1} type="submit" className="add-btn-parent">
+          <Button
+            aria-label="create new todo"
+            tabIndex={!SelectModalMounted ? 0 : -1}
+            type="submit"
+            className="add-btn-parent"
+          >
             <VscAdd className="add-btn" />
           </Button>
         </form>
