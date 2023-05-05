@@ -4,12 +4,12 @@ import { MouseEventHandler, RefObject } from 'react';
 export type AppContextType = {
   theme: string;
   setTheme: Function;
-  active: string;
-  setactive: Function;
+  tab: string;
+  settab: Function;
   tabRef: RefObject<HTMLDivElement>;
   deleting: boolean;
   openDeleteToast: boolean;
-  timeAgo: Function;
+  // timeAgo: Function;
   setopenDeleteToast: Function;
   dateLocale: string;
   setDateLocale: Function;

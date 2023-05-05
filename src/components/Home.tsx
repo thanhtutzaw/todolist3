@@ -3,7 +3,6 @@ import DeleteModal from '@/components/Elements/Modal/DeleteModal';
 import SelectModal from '@/components/Elements/Modal/SelectModal';
 import useFirestoreData from '@/hooks/useFirestoreData';
 import useSelect from '@/hooks/useSelect';
-import { auth } from '@/lib/firebase';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -26,7 +25,6 @@ import { RenderTodoList } from './RenderTodoList';
 import SelectAllBtn from './SelectAllBtn';
 import Tabs from './Tabs';
 import Toast from './Toast';
-import useIndexDB from '@/hooks/useIndexDB';
 import { CustomConsole } from './CustomConsole';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 

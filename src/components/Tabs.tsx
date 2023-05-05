@@ -12,7 +12,7 @@ interface TabsProps {
 export default function Tabs({ SelectedID }: TabsProps) {
   const length = SelectedID.length === 0;
   const { loading, labels, setlabels } = useFirestoreData();
-  const { tabRef, active, setactive, setisPrevent } = useContext(AppContext) as AppContextType;
+  const { tabRef, tab, settab, setisPrevent } = useContext(AppContext) as AppContextType;
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
     const labelTextBox = prompt('Please enter new Label', genRand(6));
     await addLabel(labelTextBox, setlabels, labels, setisPrevent);
   };
-  const homeTab = active === '' || active === 'all';
+  const homeTab = tab === '' || tab === 'all';
   const tabLoading = 'tabLoading 1s .3s ease-in-out infinite';
   const tabItemLoading = loading ? tabLoading : '';
 
@@ -47,7 +47,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
           aria-selected={homeTab}
           role="tab"
           ref={homeTab ? tabRef : null}
-          onClick={() => setactive('all')}
+          onClick={() => settab('all')}
           style={{
             animation: firstItemLoading,
           }}
@@ -57,13 +57,13 @@ export default function Tabs({ SelectedID }: TabsProps) {
         </div>
         {loading && <>{Array.from([1, 2, 3, 4, 5, 6].map(() => <LabelLoader />))}</>}
         {labels.map((l) => {
-          const otherTab = active === l.text;
+          const otherTab = tab === l.text;
           return (
             <div
               aria-selected={otherTab}
               role="tab"
               ref={otherTab ? tabRef : null}
-              onClick={() => setactive(l.text!)}
+              onClick={() => settab(l.text!)}
               style={{
                 animation: tabItemLoading,
               }}

@@ -608,14 +608,15 @@ button.tabItem {
 }
 
 .selectModal button {
-  border          : none;
-  padding         : 12px 11px;
-  background-color: var(--background-primary);
-  border-radius   : 15px;
-  cursor          : pointer;
-  user-select     : none;
-  font-size       : 1rem;
-  margin          : 0 5px;
+  border             : none;
+  padding            : 12px 11px;
+  background-color   : var(--background-primary);
+  border-radius      : 15px;
+  cursor             : pointer;
+  user-select        : none;
+  /* font-size       : 1rem; */
+  font-size          : calc(10px + 1vmin);
+  margin             : 0 5px;
 }
 
 .selectModal button:active {
@@ -718,7 +719,7 @@ li.todo {
 
 .date {
   color         : rgba(104, 104, 104, 0.726);
-  font-size     : calc(8px + 1.5vmin);
+  font-size     : calc(6px + 1.5vmin);
   /* line-height: 1; */
 }
 
@@ -852,6 +853,7 @@ ul li {
   transition        : all .2s ease-in;
   padding           : 0 8px;
   padding-bottom    : 0;
+  align-items       : center;
 }
 
 .todo.checked label {
@@ -893,7 +895,7 @@ ul li {
   padding          : 20px 0;
   display          : flex;
   gap              : 10px;
-  align-items      : center;
+  align-items      : baseline;
   overflow-wrap    : anywhere;
 }
 
@@ -909,13 +911,14 @@ ul li {
 }
 
 .todo-parent {
-  text-align    : center;
-  height        : 70vh;
-  min-height    : 400px;
-  padding-bottom: 3rem;
-  overflow-y    : auto;
-  display       : block;
-  padding-top   : 50px;
+  text-align        : center;
+  height            : 70vh;
+  min-height        : 400px;
+  padding-bottom    : 3rem;
+  overflow-y        : auto;
+  display           : block;
+  padding-top       : 50px;
+  scroll-padding-top: 50px;
 }
 
 section.todo-parent.row>ul>span>span:nth-child(1) {
@@ -1118,6 +1121,7 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   border          : none;
   width           : 100%;
   height          : 50px;
+  font-size       : calc(10px + 1vmin);
 }
 
 .tools-container>button,
@@ -1192,10 +1196,12 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .tools select {
-  color           : initial;
-  background-color: transparent;
-  border          : 0;
-  outline         : 0;
+  color              : initial;
+  background-color   : transparent;
+  border             : 0;
+  outline            : 0;
+  /* font-size       : 1rem; */
+  font-size          : calc(10px + 1vmin);
 }
 
 select>option {

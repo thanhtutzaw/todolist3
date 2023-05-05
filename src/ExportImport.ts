@@ -6,6 +6,7 @@ export function exportTodo(todos: todosProps[] | null[]) {
   const length = todos.length;
   const isPlural = length > 1 ? 'items' : 'item';
   const dataStr = JSON.stringify(todos);
+  // const dataStr = structuredClone(todos);
   let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
   let fileName = 'data.json';
   let linkElement = document.createElement('a') as HTMLAnchorElement;
@@ -55,7 +56,7 @@ export function importTodo(
           doc(collectionRef, d.id.toString()),
           {
             ...d,
-            timeStamp: new Timestamp(d.timeStamp?.seconds!, d.timeStamp?.nanoseconds!),
+            // timeStamp: new Timestamp(d.timeStamp?.seconds!, d.timeStamp?.nanoseconds!),
           },
           { merge: true }
         );

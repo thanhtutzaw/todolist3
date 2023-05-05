@@ -1,5 +1,5 @@
 import useFirestoreData from '@/hooks/useFirestoreData';
-import { AppContextType, labelProps, todosProps } from '@/types';
+import { AppContextType, todosProps } from '@/types';
 import { RefObject, useContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
@@ -16,8 +16,10 @@ export function RenderTodoList(props: {
   const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
   const { loading, todos, labels } = useFirestoreData();
 
-  const { active } = useContext(AppContext) as AppContextType;
-  if (todos.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
+  const { tab } = useContext(AppContext) as AppContextType;
+  // if (todos?.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
+  // if (todos.length === 0) return <>empty</>;
+
   // useEffect(() => {
   //   const dataStr = todos.map((t) => {
   //     return {
@@ -30,12 +32,13 @@ export function RenderTodoList(props: {
 
   // }, [todos]);
 
-  const activeTab = labels.find((l) => l.text === active);
+  const activeTab = labels.find((l) => l.text === tab);
   const [filter, setfilter] = useState<todosProps[] | null[]>([]);
   useEffect(() => {
+    // if (todos.length === 0) return;
     setfilter(
-      todos.filter((t) => {
-        if (active === '' || active === 'all') {
+      todos?.filter((t) => {
+        if (tab === '' || tab === 'all') {
           return todos;
         } else {
           return t.label === activeTab?.id;
@@ -43,7 +46,8 @@ export function RenderTodoList(props: {
       })
     );
   }, [todos, activeTab]);
-
+  if (filter.length === 0 && todos.length === 0 && (tab === '' || tab === 'all') && !loading)
+    return <p className="empty">Create Some Todo !</p>;
   return (
     <ul
       ref={todoRef}
