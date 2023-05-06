@@ -31,14 +31,9 @@ html[theme="dark"] body {
     background-color: rgb(44, 44, 44);
 }
 
-html[theme="dark"] main {
-    /* color           : white; */
-    /* background-color: rgb(33 33 33); */
-}
 
 html[theme="dark"] .tools select {
-    color              : white;
-    /* background-color: rgb(33 33 33); */
+    color: white;
 }
 
 html[theme="dark"] .tools,
@@ -64,12 +59,6 @@ html[theme="dark"] .tabItem {
     color           : #d0d0d0;
     background-color: rgba(49, 49, 49, 0.63);
 }
-
-/* html[theme="dark"] .tabItem {
-    color           : white !important;
-    background-color: rgb(12, 12, 12);
-    box-shadow      : var(--shadow-secondary);
-} */
 
 html[theme="dark"] .input-text:focus-visible {
     outline: 1px solid rgb(54, 54, 54);

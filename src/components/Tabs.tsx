@@ -1,5 +1,4 @@
 import { AppContext } from '@/Context/AppContext';
-import useFirestoreData from '@/hooks/useFirestoreData';
 import { addLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
 import { MouseEventHandler, useContext } from 'react';
@@ -11,7 +10,7 @@ interface TabsProps {
 }
 export default function Tabs({ SelectedID }: TabsProps) {
   const length = SelectedID.length === 0;
-  const { loading, labels, setlabels } = useFirestoreData();
+  const { loading, labels, setlabels }= useContext(AppContext) as AppContextType;
   const { tabRef, tab, settab, setisPrevent } = useContext(AppContext) as AppContextType;
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -83,6 +82,6 @@ export default function Tabs({ SelectedID }: TabsProps) {
 
 function TabItem(props: { l: labelProps }) {
   const { l } = props;
-  const { loading } = useFirestoreData();
+  const { loading } = useContext(AppContext) as AppContextType;
   return <>{!loading && l.text}</>;
 }

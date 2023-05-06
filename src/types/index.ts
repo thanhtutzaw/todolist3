@@ -2,6 +2,11 @@ import { Timestamp } from 'firebase/firestore';
 import { MouseEventHandler, RefObject } from 'react';
 
 export type AppContextType = {
+  labels: labelProps[];
+  setlabels: Function;
+  todos: todosProps[];
+  settodos: Function;
+  loading: boolean;
   theme: string;
   setTheme: Function;
   tab: string;

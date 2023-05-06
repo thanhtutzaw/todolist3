@@ -12,10 +12,11 @@ import { auth, db } from './firebase';
 export function addTodo(
   todoRef: RefObject<HTMLUListElement>,
   inputRef: RefObject<HTMLInputElement>,
-  settodos: {
-    (value: SetStateAction<todosProps[]>): void;
-    (arg0: any[]): void;
-  },
+  settodos: Function,
+  // settodos: {
+  //   (value: SetStateAction<todosProps[]>): void;
+  //   (arg0: any[]): void;
+  // },
   todos: todosProps[] | null[],
   setisPrevent: Function
 ): Promise<void> {

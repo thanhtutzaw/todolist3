@@ -1,5 +1,6 @@
+import useFirestoreData from '@/hooks/useFirestoreData';
 import useTheme from '@/hooks/useTheme';
-import { AppContextType } from '@/types';
+import { AppContextType, labelProps, todosProps } from '@/types';
 import { PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -52,10 +53,15 @@ export default function AppProvider({ children }: PropsWithChildren) {
     // let deleteTime;
   };
   const [dateLocale, setDateLocale] = useState(localStorage.getItem('dateLocale') ?? 'Myanmar');
-
+  const { labels, setlabels, todos, settodos, loading } = useFirestoreData();
   return (
     <AppContext.Provider
       value={{
+        labels,
+        setlabels,
+        todos,
+        settodos,
+        loading,
         theme,
         setTheme,
         tabRef,

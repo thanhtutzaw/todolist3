@@ -5,7 +5,6 @@ import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 
 import ConfirmModal from './ConfirmModal';
 import UpdatingModal from './UpdatingModal';
 import Dialog from './Dialog';
-import useFirestoreData from '@/hooks/useFirestoreData';
 
 export default function EditModal(props: {
   todo: todosProps | null;
@@ -85,7 +84,7 @@ export default function EditModal(props: {
       console.log('close edit');
     }
   }
-  const { labels } = useFirestoreData();
+  const { labels } = useContext(AppContext) as AppContextType;
   return (
     <>
       <Dialog id="confirmModal" ref={confirmModalRef}>

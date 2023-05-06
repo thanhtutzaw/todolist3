@@ -10,7 +10,6 @@ export function addLabel(
 ): Promise<void> {
   return new Promise<void>(async () => {
     // return async (e: FormEventHandler<HTMLFormElement>) => {
-    // e.preventDefault()
     console.info('%cAdding...', 'color:grey');
     const data = {
       text: labelTextBox,

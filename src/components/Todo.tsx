@@ -1,9 +1,8 @@
 import { AppContext } from '@/Context/AppContext';
-import useFirestoreData from '@/hooks/useFirestoreData';
 import { checkStatus } from '@/lib/firestore';
 import { AppContextType, todosProps } from '@/types';
 import { Timestamp } from 'firebase/firestore';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
 import 'react-loading-skeleton/dist/skeleton.css';
 const Todolist = (props: {
@@ -15,7 +14,7 @@ const Todolist = (props: {
   setselectCount: Function;
 }) => {
   const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { loading, labels } = useFirestoreData();
+  const { labels } = useContext(AppContext) as AppContextType;
   const { tab, settab, dateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);

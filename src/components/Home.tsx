@@ -1,7 +1,6 @@
 import { AppContext } from '@/Context/AppContext';
 import DeleteModal from '@/components/Elements/Modal/DeleteModal';
 import SelectModal from '@/components/Elements/Modal/SelectModal';
-import useFirestoreData from '@/hooks/useFirestoreData';
 import useSelect from '@/hooks/useSelect';
 import { addTodo } from '@/lib/firestore';
 import { AppContextType } from '@/types';
@@ -36,7 +35,7 @@ export default function Home() {
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
-  const { todos, labels, settodos } = useFirestoreData();
+  const { todos, settodos } = useContext(AppContext) as AppContextType;
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
   const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(

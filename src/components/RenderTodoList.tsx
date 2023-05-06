@@ -1,4 +1,3 @@
-import useFirestoreData from '@/hooks/useFirestoreData';
 import { AppContextType, todosProps } from '@/types';
 import { RefObject, useContext, useEffect, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
@@ -14,7 +13,7 @@ export function RenderTodoList(props: {
   setselectCount: Function;
 }) {
   const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
-  const { loading, todos, labels } = useFirestoreData();
+  const { loading, todos, labels } = useContext(AppContext) as AppContextType;
 
   const { tab } = useContext(AppContext) as AppContextType;
   // if (todos?.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;

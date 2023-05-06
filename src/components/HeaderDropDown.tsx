@@ -1,6 +1,5 @@
 import { AppContext } from '@/Context/AppContext';
 import { exportTodo, importTodo } from '@/ExportImport';
-import useFirestoreData from '@/hooks/useFirestoreData';
 import { AppContextType, todosProps } from '@/types';
 import {
   ChangeEvent,
@@ -8,7 +7,7 @@ import {
   RefObject,
   useCallback,
   useContext,
-  useEffect
+  useEffect,
 } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { RiFileCopy2Fill, RiLogoutBoxFill, RiTimeFill } from 'react-icons/ri';
@@ -59,8 +58,8 @@ export default function HeaderDropDown(props: HeaderDropDownProps) {
     animation: 'exitTools forwards 500ms ease-in',
     pointerEvents: 'initial',
   };
+  const { loading } = useContext(AppContext) as AppContextType;
   const toolsAnimate = opentools ? enterTools : exitTools;
-  const { loading } = useFirestoreData();
   useEffect(() => {
     opentools ? setisPrevent(true) : setisPrevent(false);
   }, [opentools]);
