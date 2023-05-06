@@ -1,16 +1,17 @@
 import { AppContext } from '@/Context/AppContext';
 import { addLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
-import { MouseEventHandler, useContext } from 'react';
+import { MouseEventHandler, RefObject, useContext, useState } from 'react';
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
 interface TabsProps {
+  constraintsRef: RefObject<HTMLDivElement>;
   SelectedID: number[];
   todos: todosProps[];
 }
-export default function Tabs({ SelectedID }: TabsProps) {
-  const length = SelectedID.length === 0;
-  const { loading, labels, setlabels }= useContext(AppContext) as AppContextType;
+export default function Tabs({ constraintsRef, SelectedID }: TabsProps) {
+  const isSelect = SelectedID.length === 0;
+  const { loading, labels, setlabels } = useContext(AppContext) as AppContextType;
   const { tabRef, tab, settab, setisPrevent } = useContext(AppContext) as AppContextType;
 
   const handleSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -38,9 +39,15 @@ export default function Tabs({ SelectedID }: TabsProps) {
       className="tabItem"
     ></div>
   );
-
+  const [ignoreClick, setIgnoreClick] = useState(false);
   return (
-    <Draggable loading={loading} length={length} className="tabContainer">
+    <Draggable
+      constraintsRef={constraintsRef}
+      loading={loading}
+      isSelect={isSelect}
+      setIgnoreClick={setIgnoreClick}
+      className="tabContainer"
+    >
       <>
         <div
           aria-selected={homeTab}
@@ -49,6 +56,7 @@ export default function Tabs({ SelectedID }: TabsProps) {
           onClick={() => settab('all')}
           style={{
             animation: firstItemLoading,
+            pointerEvents: ignoreClick ? 'none' : 'initial',
           }}
           className={`tabItem ${homeTab && !loading ? 'active' : ''}`}
         >
@@ -62,9 +70,14 @@ export default function Tabs({ SelectedID }: TabsProps) {
               aria-selected={otherTab}
               role="tab"
               ref={otherTab ? tabRef : null}
-              onClick={() => settab(l.text!)}
+              onClick={(e) => {
+                // e.stopPropagation();
+                // e.preventDefault();
+                settab(l.text!);
+              }}
               style={{
                 animation: tabItemLoading,
+                pointerEvents: ignoreClick ? 'none' : 'initial',
               }}
               className={`tabItem ${otherTab ? 'active' : ''}`}
             >

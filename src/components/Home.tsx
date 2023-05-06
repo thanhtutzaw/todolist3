@@ -133,6 +133,8 @@ export default function Home() {
   //   filteredTodos = todos;
   // }, [todos]);
   const auth = getAuth();
+  const constraintsRef = useRef(null);
+
   // const user = auth.currentUser;
   // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
   return (
@@ -172,7 +174,7 @@ export default function Home() {
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
 
       <section className="tabSection">
-        <Tabs todos={todos} SelectedID={SelectedID} />
+        <Tabs constraintsRef={constraintsRef} todos={todos} SelectedID={SelectedID} />
         <SelectAllBtn
           selectCount={selectCount}
           SelectedID={SelectedID}
