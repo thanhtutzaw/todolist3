@@ -62,7 +62,6 @@ export function RenderTodoList(props: {
           <Todo
             addLoading={addLoading}
             todo={todo}
-            todos={todos}
             setselectCount={setselectCount}
             SelectedID={SelectedID}
             setSelectedID={setSelectedID}
