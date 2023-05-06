@@ -19,6 +19,7 @@ export default function AppProvider({ children }: PropsWithChildren) {
   const [DeleteModalMounted, setDeleteModalMounted] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme } = useTheme();
+  const [filter, setfilter] = useState<todosProps[] | null[]>([]);
   useEffect(() => {
     window.location.hash = tab;
     // window.location.hash = tab !== '' ? tab : 'all';
@@ -57,6 +58,7 @@ export default function AppProvider({ children }: PropsWithChildren) {
   return (
     <AppContext.Provider
       value={{
+        filter, setfilter,
         labels,
         setlabels,
         todos,

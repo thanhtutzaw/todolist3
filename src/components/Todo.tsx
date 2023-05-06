@@ -8,13 +8,12 @@ import 'react-loading-skeleton/dist/skeleton.css';
 const Todolist = (props: {
   addLoading: boolean;
   SelectedID: number[];
-  todos: todosProps[] | null[];
   todo: todosProps | null;
   setSelectedID: Function;
   setselectCount: Function;
 }) => {
-  const { setselectCount, todos, todo, SelectedID, setSelectedID } = props;
-  const { labels } = useContext(AppContext) as AppContextType;
+  const { setselectCount, todo, SelectedID, setSelectedID } = props;
+  const { labels, filter } = useContext(AppContext) as AppContextType;
   const { tab, settab, dateLocale, setisPrevent } = useContext(AppContext) as AppContextType;
   const [isSelect, setisSelect] = useState(false);
   const [mounted, setmounted] = useState(true);
@@ -24,7 +23,7 @@ const Todolist = (props: {
       setisSelect(false);
       setselectCount(false);
     }
-    if (SelectedID.length === todos.length) {
+    if (SelectedID.length === filter.length) {
       setisSelect(true);
     }
     if (SelectedID.length > 0) {

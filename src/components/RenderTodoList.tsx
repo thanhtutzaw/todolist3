@@ -15,7 +15,7 @@ export function RenderTodoList(props: {
   const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
   const { loading, todos, labels } = useContext(AppContext) as AppContextType;
 
-  const { tab } = useContext(AppContext) as AppContextType;
+  const { tab, filter, setfilter } = useContext(AppContext) as AppContextType;
   // if (todos?.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
   // if (todos.length === 0) return <>empty</>;
 
@@ -32,7 +32,7 @@ export function RenderTodoList(props: {
   // }, [todos]);
 
   const activeTab = labels.find((l) => l.text === tab);
-  const [filter, setfilter] = useState<todosProps[] | null[]>([]);
+
   useEffect(() => {
     // if (todos.length === 0) return;
     setfilter(

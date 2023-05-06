@@ -64,20 +64,18 @@ export default function Draggable({
       //   zoom(e);
       // }}
       // role="tablist"
-      // onAnimationEnd={() => {
-      //   if (!isSelect) {
-      //     setMounted(false);
-      //   }
-      // }}
-      style={
-        {
-          // overflow: loading ? 'hidden' : 'auto',
-          // animation: isSelect
-          //   ? 'mountFadeIn .2s ease-in-out'
-          //   : 'unMountFadeOut .2s forwards ease-in-out ',
-          // x: mouseX,
+      onAnimationEnd={() => {
+        if (!isSelect) {
+          setMounted(false);
         }
-      }
+      }}
+      style={{
+        // overflow: loading && !draggable ? 'hidden' : 'auto',
+        animation: isSelect
+          ? 'mountFadeIn .2s ease-in-out'
+          : 'unMountFadeOut .2s forwards ease-in-out ',
+        // x: mouseX,
+      }}
       // onPointerDown={dragStart}
       // // onMouseMove={dragging}
       // onMouseMove={(e) => {
@@ -95,6 +93,7 @@ export default function Draggable({
       // dragConstraints={{ right: 20, left: -20, top: 5, bottom: 5 }}
       dragConstraints={{ right: 0, left: -380 }}
       dragElastic={0.2}
+      // dragMomentum={false}
       dragDirectionLock={true}
       onMouseMove={(e) => {
         if (draggable) {
@@ -111,17 +110,11 @@ export default function Draggable({
           // });
         }
       }}
-      // onDragEnd={}
       onPointerDown={(e) => {
         setDraggable(true);
       }}
       onPointerUp={(e) => {
         setDraggable(false);
-      }}
-      onDrag={(e) => {
-        // e.stopPropagation();
-        // e.preventDefault();
-        // e.stopImmediatePropagation();
       }}
       // whileHover={{ scale: 1.1 }}
       // whileTap={{ scale: 0.9 }}

@@ -6,6 +6,8 @@ export type AppContextType = {
   setlabels: Function;
   todos: todosProps[];
   settodos: Function;
+  filter: todosProps[] | null[];
+  setfilter: Function;
   loading: boolean;
   theme: string;
   setTheme: Function;
