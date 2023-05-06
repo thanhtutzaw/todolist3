@@ -101,7 +101,6 @@ export default function Home() {
   const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
   const [text, settext] = useState(todo?.text || null);
   const [label, setlabel] = useState(todo?.label || null);
-  // const labelArray = labels.find((l) => l.id.toString() === todo?.label);
 
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();

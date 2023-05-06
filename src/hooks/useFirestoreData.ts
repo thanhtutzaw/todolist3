@@ -62,8 +62,22 @@ export default function useFirestoreData() {
   useEffect(() => {
     let unsubscribe: Function;
     let unsubscribeLabel: Function;
+    // let unsubscribe: undefined | (() => void);
+    // let unsubscribeLabel: undefined | (() => void);
 
-    onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      // if (!user || !db) return;
+      if (!user || !db) {
+        // If user is not logged in or db is not initialized, unsubscribe from the listeners if they were previously set
+        if (unsubscribe) {
+          unsubscribe();
+        }
+        if (unsubscribeLabel) {
+          unsubscribeLabel();
+        }
+        return;
+      }
+
       if (user && db) {
         const q = query(
           collection(db, 'users/' + user.uid + '/todos'),
@@ -93,14 +107,25 @@ export default function useFirestoreData() {
 
           setloading(false);
         });
-      } else if ((window.location.href = '/login')) {
+      }
+      // else if ((window.location.href = '/login')) {
+      //   unsubscribe();
+      //   unsubscribeLabel();
+      // }
+    });
+    // return () => {
+    //   unsubscribe();
+    //   unsubscribeLabel();
+    //   unsub();
+    // };
+    return () => {
+      if (unsubscribe) {
         unsubscribe();
+      }
+      if (unsubscribeLabel) {
         unsubscribeLabel();
       }
-    });
-    return () => {
-      unsubscribe();
-      unsubscribeLabel();
+      unsub();
     };
   }, []);
   return { labels, setlabels, todos, settodos, loading };

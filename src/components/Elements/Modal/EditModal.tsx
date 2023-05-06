@@ -71,6 +71,7 @@ export default function EditModal(props: {
       settext(todo.text);
     }
   }, [todo]);
+
   const closeConfirm = useCallback(() => {
     console.log('keep editing');
     confirmModalRef.current?.close();
@@ -85,6 +86,15 @@ export default function EditModal(props: {
     }
   }
   const { labels } = useContext(AppContext) as AppContextType;
+  // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
+  // console.log(typeof getLabel);
+  const getLabel = labels.find((l) => l.id === todo?.label);
+  useEffect(() => {
+    if (todo?.label) {
+      setlabel(getLabel?.id);
+    }
+  }, [todo]);
+
   return (
     <>
       <Dialog id="confirmModal" ref={confirmModalRef}>
@@ -116,20 +126,27 @@ export default function EditModal(props: {
               }}
               className="textarea"
             />
+
             <div className="editModalActions">
               <select
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value !== '') {
                     setlabel(e.target.value);
-                    // console.log(label);
                   }
                 }}
               >
                 <option value="">Change Label</option>
                 {labels.map((l) => (
                   <>
-                    <option value={l.id.toString()}>{l.text}</option>
+                    <option
+                      selected={l.id.toString() === getLabel?.id}
+                      // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
+                      value={l.id.toString()}
+                    >
+                      {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
+                      {l.text}
+                    </option>
                   </>
                 ))}
               </select>
