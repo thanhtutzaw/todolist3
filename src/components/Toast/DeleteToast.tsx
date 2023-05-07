@@ -77,7 +77,9 @@ export default function DeleteToast(props: { setcancelDelete: Function; cancelDe
       {deleteloading
         ? cancelDelete && (
             <>
-              {deleteloading && <img width={50} src="cat-spinner.gif" alt="deleting" />}
+              {deleteloading && (
+                <img width={50} src="public/assets/cat-spinner.gif" alt="deleting" />
+              )}
               <p>Deleting {`in ${undoCounter}s`}</p>
               <Button tabIndex={0} theme="secondary" onClick={handleUndo} className={s.undoBtn}>
                 Undo
@@ -88,9 +90,9 @@ export default function DeleteToast(props: { setcancelDelete: Function; cancelDe
           !deleteloading && (
             <>
               {!deleting ? (
-                <img width={50} src="checked.gif" alt="delete successful" />
+                <img width={50} src="public/assets/checked.gif" alt="delete successful" />
               ) : (
-                <img width={50} src="cat-spinner.gif" alt="deleting" />
+                <img width={50} src="public/assets/cat-spinner.gif" alt="deleting" />
               )}
               <p>{deleting ? 'Deleting' : 'Deleted'}</p>
               <IconContext.Provider value={{ className: 'global-class-name' }}>

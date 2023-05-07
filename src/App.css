@@ -509,8 +509,8 @@ button.tabItem {
 }
 
 .tabItem.active {
-  background-color: var(--main-color) !important;
-  color           : white !important;
+  background-color   : var(--main-color) !important;
+  color              : white !important;
   /* transition      : all .3s ease-in-out; */
 }
 
@@ -1045,6 +1045,15 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   gap            : 0.5rem;
 }
 
+.nav select {
+  position  : absolute;
+  top       : 0;
+  left      : 35px;
+  opacity   : 0;
+  visibility: hidden;
+}
+
+
 .add-btn-parent {
   background-color              : var(--btn-blue);
   border                        : none;
@@ -1082,6 +1091,12 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   flex            : 1;
   width           : 100%;
 }
+
+/* .input-text:focus-within select {
+  opacity   : 1 !important;
+  visibility: visible !important;
+
+} */
 
 .tools {
   min-width             : 160px;

@@ -16,12 +16,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
+    // "include": ["src"],
     "paths": {
       "@/*": ["./src/*"],
-      "@assets/*": ["./src/assets/*"],
+      "@assets/*": ["/assets*"],
       "@Elements/*": ["./src/components/Elements/*"]
     }
   },
-  "include": ["src", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["src", "public", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

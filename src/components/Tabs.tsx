@@ -5,11 +5,12 @@ import { MouseEventHandler, RefObject, useContext, useState } from 'react';
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
 interface TabsProps {
+  addLabelRef: RefObject<HTMLButtonElement>;
   constraintsRef: RefObject<HTMLDivElement>;
   SelectedID: number[];
   todos: todosProps[];
 }
-export default function Tabs({ constraintsRef, SelectedID }: TabsProps) {
+export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsProps) {
   const isSelect = SelectedID.length === 0;
   const { loading, labels, setlabels } = useContext(AppContext) as AppContextType;
   const { tabRef, tab, settab, setisPrevent } = useContext(AppContext) as AppContextType;
@@ -85,7 +86,12 @@ export default function Tabs({ constraintsRef, SelectedID }: TabsProps) {
             </div>
           );
         })}
-        <button aria-label="create new label" onClick={handleSubmit} className="tabItem">
+        <button
+          ref={addLabelRef}
+          aria-label="create new label"
+          onClick={handleSubmit}
+          className="tabItem"
+        >
           <VscAdd />
         </button>
       </>

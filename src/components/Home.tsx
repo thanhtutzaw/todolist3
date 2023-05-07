@@ -133,7 +133,7 @@ export default function Home() {
   // }, [todos]);
   const auth = getAuth();
   const constraintsRef = useRef(null);
-
+  const addLabelRef = useRef(null);
   // const user = auth.currentUser;
   // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
   return (
@@ -173,7 +173,12 @@ export default function Home() {
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
 
       <section className="tabSection">
-        <Tabs constraintsRef={constraintsRef} todos={todos} SelectedID={SelectedID} />
+        <Tabs
+          addLabelRef={addLabelRef}
+          constraintsRef={constraintsRef}
+          todos={todos}
+          SelectedID={SelectedID}
+        />
         <SelectAllBtn
           selectCount={selectCount}
           SelectedID={SelectedID}
@@ -194,6 +199,8 @@ export default function Home() {
       </section>
 
       <Footer
+        addLabelRef={addLabelRef}
+        setlabel={setlabel}
         SelectModalMounted={SelectModalMounted}
         selectCount={selectCount}
         inputRef={inputRef}
