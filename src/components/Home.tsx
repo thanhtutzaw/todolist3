@@ -171,21 +171,22 @@ export default function Home() {
       {DeleteModalMounted && <DeleteModal SelectedID={SelectedID} />}
 
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
-
-      <section className="tabSection">
-        <Tabs
-          addLabelRef={addLabelRef}
-          constraintsRef={constraintsRef}
-          todos={todos}
-          SelectedID={SelectedID}
-        />
-        <SelectAllBtn
-          selectCount={selectCount}
-          SelectedID={SelectedID}
-          selectAll={selectAll}
-          clearSelect={clearSelect}
-        />
-      </section>
+      <div style={{ position: 'relative' }}>
+        <section ref={constraintsRef} className="tabSection">
+          <Tabs
+            addLabelRef={addLabelRef}
+            constraintsRef={constraintsRef}
+            todos={todos}
+            SelectedID={SelectedID}
+          />
+          <SelectAllBtn
+            selectCount={selectCount}
+            SelectedID={SelectedID}
+            selectAll={selectAll}
+            clearSelect={clearSelect}
+          />
+        </section>
+      </div>
 
       <section className={`todo-parent row`}>
         <RenderTodoList

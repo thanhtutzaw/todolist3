@@ -53,20 +53,7 @@ const Footer = memo(
                 </option>
               </>
             ))}
-            <option value={'add'}>
-              <div
-                onChange={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setcreateNew(true);
-                  // addLabelRef?.current?.click();
-                  alert('hey');
-                }}
-              >
-                {createNew ? 'input' : '+ Create New'}
-              </div>
-            </option>
-            <p>hi</p>
+            <option value={'add'}>{createNew ? 'input' : '+ Create New'}</option>
           </select>
           <input
             // onFocus={() => {

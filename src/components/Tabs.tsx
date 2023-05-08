@@ -1,9 +1,11 @@
 import { AppContext } from '@/Context/AppContext';
 import { addLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
-import { MouseEventHandler, RefObject, useContext, useState } from 'react';
+import { MouseEventHandler, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
+import { BiDotsVerticalRounded, BiEdit, BiTrash, BiX } from 'react-icons/bi';
+
 interface TabsProps {
   addLabelRef: RefObject<HTMLButtonElement>;
   constraintsRef: RefObject<HTMLDivElement>;
@@ -40,16 +42,17 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
       className="tabItem"
     ></div>
   );
+  const tabWidth = useRef(null);
   const [ignoreClick, setIgnoreClick] = useState(false);
   return (
     <Draggable
+      tabWidth={tabWidth}
       constraintsRef={constraintsRef}
-      loading={loading}
       isSelect={isSelect}
       setIgnoreClick={setIgnoreClick}
       className="tabContainer"
     >
-      <>
+      <div ref={tabWidth} className="tabs">
         <div
           aria-selected={homeTab}
           role="tab"
@@ -67,23 +70,15 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
         {labels.map((l) => {
           const otherTab = tab === l.text;
           return (
-            <div
-              aria-selected={otherTab}
-              role="tab"
-              ref={otherTab ? tabRef : null}
-              onClick={(e) => {
-                // e.stopPropagation();
-                // e.preventDefault();
-                settab(l.text!);
-              }}
-              style={{
-                animation: tabItemLoading,
-                pointerEvents: ignoreClick ? 'none' : 'initial',
-              }}
-              className={`tabItem ${otherTab ? 'active' : ''}`}
-            >
-              <TabItem l={l} />
-            </div>
+            <TabItem
+              l={l}
+              tabItemLoading={tabItemLoading}
+              otherTab={otherTab}
+              tabRef={tabRef}
+              settab={settab}
+              ignoreClick={ignoreClick}
+              loading={loading}
+            />
           );
         })}
         <button
@@ -94,13 +89,96 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
         >
           <VscAdd />
         </button>
-      </>
+      </div>
     </Draggable>
   );
 }
 
-function TabItem(props: { l: labelProps }) {
-  const { l } = props;
-  const { loading } = useContext(AppContext) as AppContextType;
-  return <>{!loading && l.text}</>;
+// function TabItem2(props: { l: labelProps; otherTab: boolean; tabRef: RefObject<HTMLDivElement> }) {
+//   const { l, otherTab, tabRef } = props;
+//   // const { loading } = useContext(AppContext) as AppContextType;
+//   const [mounted, setMounted] = useState(false);
+//   useEffect(() => {
+//     if (!tabRef.current) return;
+//     tabRef.current.style.height = '50px';
+
+//     if (!otherTab) {
+//       setMounted(false);
+//       tabRef.current.style.color = 'red';
+//     }
+//   }, [otherTab]);
+//   useEffect(() => {
+//     if (!tabRef.current) return;
+//     if (mounted) {
+//       tabRef.current.style.height = '100px';
+//       tabRef.current.style.color = 'green';
+//     }
+//   }, [mounted]);
+
+//   return <></>;
+// }
+
+function TabItem(props: {
+  l: labelProps;
+  tabItemLoading: string;
+  otherTab: boolean;
+  tabRef: RefObject<HTMLDivElement>;
+  settab: Function;
+  ignoreClick: boolean;
+  loading: boolean;
+}) {
+  const { l, tabItemLoading, otherTab, tabRef, settab, ignoreClick, loading } = props;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    if (!otherTab) {
+      setMounted(false);
+    }
+  }, [otherTab]);
+
+  return (
+    <div
+      aria-selected={otherTab}
+      role="tab"
+      ref={otherTab ? tabRef : null}
+      onClick={() => {
+        settab(l.text!);
+      }}
+      style={{
+        height: !mounted ? '50px' : '100px',
+        animation: tabItemLoading,
+        pointerEvents: ignoreClick ? 'none' : 'initial',
+      }}
+      className={`tabItem ${otherTab ? 'active' : ''}`}
+    >
+      {!loading && l.text}
+      <button
+        style={{ pointerEvents: mounted ? 'none' : 'initial' }}
+        onClick={(e) => {
+          setMounted(true);
+          // if (!e.currentTarget || !e.currentTarget.parentElement) return;
+          // e.currentTarget.parentElement.style.height = '100px';
+        }}
+        className="dot"
+      >
+        <BiDotsVerticalRounded />
+      </button>
+      <div className={`labelActions ${mounted ? 'mounted' : ''}`}>
+        <div>
+          <button>
+            <BiEdit />
+          </button>
+          <button>
+            <BiTrash />
+          </button>
+        </div>
+        <button
+          onClick={() => {
+            setMounted(false);
+          }}
+        >
+          <BiX />
+        </button>
+      </div>
+    </div>
+  );
 }

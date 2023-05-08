@@ -1,27 +1,19 @@
 import { AppContext } from '@/Context/AppContext';
 import { AppContextType } from '@/types';
 import { useMotionValue, motion } from 'framer-motion';
-import {
-  MouseEventHandler,
-  PointerEvent,
-  ReactElement,
-  RefObject,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { PointerEvent, ReactElement, RefObject, useContext, useEffect, useState } from 'react';
 interface DraggableProps {
+  tabWidth: RefObject<HTMLDivElement>;
   constraintsRef: RefObject<HTMLDivElement>;
   setIgnoreClick: Function;
-  loading: boolean;
   isSelect: boolean;
   className: string;
   children: ReactElement;
 }
 export default function Draggable({
+  tabWidth,
   constraintsRef,
   setIgnoreClick,
-  loading,
   isSelect,
   className,
   children,
@@ -84,18 +76,14 @@ export default function Draggable({
       //   }
       // }}
       drag="x"
-      // drag
-      // dragConstraints={{ right: 0, left: 0 }}
-      // dragConstraints={{ right: 0, left: -20, top: 0, bottom: 0 }}
-      // dragConstraints={{ top: 0, bottom: 0 }}
-      // dragConstraints={constraintsRef}
-      // dragConstraints={{ right: 20, left: -20, top: 5, bottom: 5 }}
-      // dragConstraints={{ right: 20, left: -20, top: 5, bottom: 5 }}
-      dragConstraints={{ right: 0, left: -380 }}
+      dragConstraints={{
+        right: 0,
+        left: constraintsRef.current?.clientWidth! - tabWidth.current?.clientWidth! - 20,
+      }}
       dragElastic={0.2}
-      // dragMomentum={false}
       dragDirectionLock={true}
       onMouseMove={(e) => {
+        // console.log();
         if (draggable) {
           setIgnoreClick(true);
           // const childElements = Array.from(e.currentTarget.childNodes) as HTMLElement[];
