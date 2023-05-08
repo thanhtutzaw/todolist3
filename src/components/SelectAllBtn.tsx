@@ -64,7 +64,7 @@ export default function SelectAllBtn(props: {
         </div>
       )}
 
-      {!selectAllmounted && selectMoreThanOne && (
+      {!selectAllmounted && selectMoreThanOne && SelectedID.length !== 0 && (
         <div
           style={{
             animation: deSelectAnimation,

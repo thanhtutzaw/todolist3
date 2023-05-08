@@ -71,6 +71,7 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
           const otherTab = tab === l.text;
           return (
             <TabItem
+              constraintsRef={constraintsRef}
               l={l}
               tabItemLoading={tabItemLoading}
               otherTab={otherTab}
@@ -122,18 +123,36 @@ function TabItem(props: {
   l: labelProps;
   tabItemLoading: string;
   otherTab: boolean;
+  constraintsRef: RefObject<HTMLDivElement>;
   tabRef: RefObject<HTMLDivElement>;
   settab: Function;
   ignoreClick: boolean;
   loading: boolean;
 }) {
-  const { l, tabItemLoading, otherTab, tabRef, settab, ignoreClick, loading } = props;
+  const { constraintsRef, l, tabItemLoading, otherTab, tabRef, settab, ignoreClick, loading } =
+    props;
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     if (!otherTab) {
       setMounted(false);
+      // if (!constraintsRef.current) return;
+      // constraintsRef.current.style.height = '50px';
+    } else {
+      if (!constraintsRef.current) return;
+      constraintsRef.current.style.height = '100px';
     }
   }, [otherTab]);
+  useEffect(() => {
+    if (!constraintsRef.current) return;
+    if (mounted) {
+      constraintsRef.current.style.height = '100px';
+    } else {
+      setTimeout(() => {
+        if (!constraintsRef.current) return;
+        constraintsRef.current.style.height = '50px';
+      }, 300);
+    }
+  }, [mounted]);
 
   return (
     <div

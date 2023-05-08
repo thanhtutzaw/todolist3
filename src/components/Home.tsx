@@ -172,7 +172,11 @@ export default function Home() {
 
       <Header todos={todos} settodos={settodos} todoCount={todoCount} selecting={selecting} />
       <div style={{ position: 'relative' }}>
-        <section ref={constraintsRef} className="tabSection">
+        <section
+          style={{ height: SelectedID.length !== 0 ? '50px' : '100px' }}
+          ref={constraintsRef}
+          className="tabSection"
+        >
           <Tabs
             addLabelRef={addLabelRef}
             constraintsRef={constraintsRef}
