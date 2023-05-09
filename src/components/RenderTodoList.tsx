@@ -44,7 +44,7 @@ export function RenderTodoList(props: {
         }
       })
     );
-  }, [todos, activeTab]);
+  }, [todos, activeTab, tab]);
   if (filter.length === 0 && todos.length === 0 && (tab === '' || tab === 'all') && !loading)
     return <p className="empty">Create Some Todo !</p>;
   return (

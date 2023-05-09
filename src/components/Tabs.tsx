@@ -5,6 +5,7 @@ import { MouseEventHandler, RefObject, useContext, useEffect, useRef, useState }
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
 import { BiDotsVerticalRounded, BiEdit, BiTrash, BiX } from 'react-icons/bi';
+import { deletLabel } from '@/lib/firestore';
 
 interface TabsProps {
   addLabelRef: RefObject<HTMLButtonElement>;
@@ -153,6 +154,18 @@ function TabItem(props: {
       }, 300);
     }
   }, [mounted]);
+  function editHandle(id: string) {
+    alert(id);
+  }
+  // function deleteHandle(id: string) {
+  //   // alert(id);
+  //   deletLabel(id);
+  // }
+  const { tab } = useContext(AppContext) as AppContextType;
+  // function deletLabel(id: string) {
+  //   console.log(id);
+  //   throw new Error('Function not implemented.');
+  // }
 
   return (
     <div
@@ -183,10 +196,21 @@ function TabItem(props: {
       </button>
       <div className={`labelActions ${mounted ? 'mounted' : ''}`}>
         <div>
-          <button>
+          <button
+            onClick={() => {
+              editHandle(l.id?.toString());
+            }}
+          >
             <BiEdit />
           </button>
-          <button>
+          <button
+            onClick={(e) => {
+              // if (tab === l.text) {
+              deletLabel(l.id?.toString() , settab);
+            
+              // }
+            }}
+          >
             <BiTrash />
           </button>
         </div>

@@ -2,6 +2,7 @@ import { todosProps } from '@/types';
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   serverTimestamp,
   updateDoc,
@@ -13,6 +14,7 @@ export function addTodo(
   todoRef: RefObject<HTMLUListElement>,
   inputRef: RefObject<HTMLInputElement>,
   settodos: Function,
+  label: string | null,
   // settodos: {
   //   (value: SetStateAction<todosProps[]>): void;
   //   (arg0: any[]): void;
@@ -31,6 +33,7 @@ export function addTodo(
       text: inputText,
       completed: false,
       timeStamp: serverTimestamp(),
+      label: label,
       // date: new Date(.toDate()).toLocaleDateString('en-US', {
       //   day: 'numeric',
       //   month: 'short',
@@ -49,7 +52,7 @@ export function addTodo(
       const collectionRef = collection(db, 'users', auth.currentUser.uid, 'todos');
       inputRef.current.value = '';
 
-      settodos([...todos, inputText]);
+      settodos([...todos, inputText, label]);
 
       setisPrevent(true);
       try {
@@ -196,4 +199,30 @@ export function checkStatus(
       console.error('Update Error ! ' + error);
     }
   };
+}
+export async function deletLabel(id: string, settab: Function) {
+  if (!db) {
+    alert('Firestore database is not available');
+    throw new Error('Firestore database is not available');
+  }
+  if (!auth.currentUser) {
+    alert('User is not authenticated');
+    throw new Error('User is not authenticated');
+  }
+  const uid = auth.currentUser.uid;
+  const isArray = Array.isArray(id);
+  console.info('%cDeleting...', 'color:grey');
+  try {
+    if (!isArray) {
+      const labelRef = doc(db, 'users', uid, 'labels', id);
+      await deleteDoc(labelRef);
+      // setlabel('all');
+      settab('all');
+      console.info('%cDeleted !', 'color: green');
+      return;
+    }
+  } catch (error: any) {
+    alert('Delete Error ! \n' + error.code.toUpperCase());
+    console.error('Delete Error ! ' + error);
+  }
 }

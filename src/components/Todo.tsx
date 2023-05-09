@@ -157,17 +157,20 @@ const Todolist = (props: {
           {/* <p style={{ lineHeight: dateLocale === 'Myanmar' ? '1' : 'initial' }} className="date"> */}
           {time}
         </p>
-        {todo?.label && (tab === '' || tab === 'all') && (
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              settab(label?.text);
-            }}
-            className="label"
-          >
-            {label?.text}
-          </div>
-        )}
+        {todo?.label &&
+          label?.text &&
+          todo.label !== 'undefined' &&
+          (tab === '' || tab === 'all') && (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                settab(label?.text);
+              }}
+              className="label"
+            >
+              {label?.text}
+            </div>
+          )}
 
         {/* <p className="date">{timeAgo('2023-02-09T15:29:01+0000')}</p> */}
         {/* {JSON.stringify(todo?.completed)} */}

@@ -1,7 +1,5 @@
-import { AppContext } from '@/Context/AppContext';
-import { AppContextType } from '@/types';
-import { useMotionValue, motion } from 'framer-motion';
-import { PointerEvent, ReactElement, RefObject, useContext, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ReactElement, RefObject, useEffect, useState } from 'react';
 interface DraggableProps {
   tabWidth: RefObject<HTMLDivElement>;
   constraintsRef: RefObject<HTMLDivElement>;
@@ -20,13 +18,13 @@ export default function Draggable({
 }: DraggableProps) {
   const [draggable, setDraggable] = useState(false);
   const [mounted, setMounted] = useState(true);
-  let mouseX = useMotionValue(0);
-  const { labels } = useContext(AppContext) as AppContextType;
+  // let mouseX = useMotionValue(0);
+  // const { labels } = useContext(AppContext) as AppContextType;
 
-  function dragStart(e: PointerEvent<HTMLDivElement>) {
-    setDraggable(true);
-    e.currentTarget.style.userSelect = 'none';
-  }
+  // function dragStart(e: PointerEvent<HTMLDivElement>) {
+  //   setDraggable(true);
+  //   e.currentTarget.style.userSelect = 'none';
+  // }
   // function dragging(e: PointerEvent | MouseEvent<HTMLDivElement>) {
   //   // if (draggable) {
   //   //   console.log('dragging');
@@ -50,6 +48,20 @@ export default function Draggable({
   // function zoom(e: WheelEvent<HTMLDivElement>) {
   //   console.log((e.deltaY * -0.01).toString());
   // }
+  useEffect(() => {
+    function handleIngore(this: Window, ev: MouseEvent) {
+      if (!draggable) return;
+      console.log('up');
+      setIgnoreClick(false);
+      setDraggable(false);
+      throw new Error('Function not implemented.');
+    }
+    window.addEventListener('pointerup', handleIngore);
+    return () => {
+      window.removeEventListener('pointerup', handleIngore);
+    };
+  }, [draggable]);
+
   return mounted ? (
     <motion.div
       // onWheel={(e) => {
@@ -82,8 +94,7 @@ export default function Draggable({
       }}
       dragElastic={0.2}
       dragDirectionLock={true}
-      onMouseMove={(e) => {
-        // console.log();
+      onPointerMove={() => {
         if (draggable) {
           setIgnoreClick(true);
           // const childElements = Array.from(e.currentTarget.childNodes) as HTMLElement[];

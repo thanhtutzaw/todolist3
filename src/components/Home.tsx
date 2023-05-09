@@ -46,13 +46,6 @@ export default function Home() {
 
   // const pendingOps = new Set();
   const [addLoading, setAddLoading] = useState(false);
-  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
-    async (e) => {
-      e.preventDefault();
-      await addTodo(todoRef, inputRef, settodos, todos, setisPrevent);
-    },
-    [todos]
-  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -101,7 +94,13 @@ export default function Home() {
   const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
   const [text, settext] = useState(todo?.text || null);
   const [label, setlabel] = useState(todo?.label || null);
-
+  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+    async (e) => {
+      e.preventDefault();
+      await addTodo(todoRef, inputRef, settodos, label, todos, setisPrevent);
+    },
+    [todos, label]
+  );
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
     if (todo) {
@@ -123,7 +122,7 @@ export default function Home() {
       }
     }
   }
-  const NotCompleteTodo = todos.filter((todo) => todo.completed !== true);
+  const NotCompleteTodo = todos.filter((todo) => todo?.completed !== true);
   const todoCount = NotCompleteTodo.length;
   // const [filteredTodos, setFilteredTodos] = useState<todosProps[] | null[]>(todos);
   // let filteredTodos: todosProps[] | null[];

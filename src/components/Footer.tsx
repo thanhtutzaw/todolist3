@@ -32,6 +32,7 @@ const Footer = memo(
               const value = e.target.value;
               if (value !== '') {
                 setlabel(e.target.value);
+                // alert(e.target.value);
               }
               if (value === 'add') {
                 setTimeout(() => {
@@ -46,7 +47,7 @@ const Footer = memo(
                 <option
                   // selected={l.id.toString() === getLabel?.id}
                   // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
-                  value={l.id.toString()}
+                  value={l.id?.toString()}
                 >
                   {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
                   {l.text}
