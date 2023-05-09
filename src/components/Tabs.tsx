@@ -1,5 +1,5 @@
 import { AppContext } from '@/Context/AppContext';
-import { addLabel } from '@/lib/label';
+import { addLabel, updateLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
 import { MouseEventHandler, RefObject, useContext, useEffect, useRef, useState } from 'react';
 import { VscAdd } from 'react-icons/vsc';
@@ -161,12 +161,11 @@ function TabItem(props: {
   //   // alert(id);
   //   deletLabel(id);
   // }
-  const { tab } = useContext(AppContext) as AppContextType;
   // function deletLabel(id: string) {
   //   console.log(id);
   //   throw new Error('Function not implemented.');
   // }
-
+  const { setisPrevent, labels, setlabels } = useContext(AppContext) as AppContextType;
   return (
     <div
       aria-selected={otherTab}
@@ -197,8 +196,11 @@ function TabItem(props: {
       <div className={`labelActions ${mounted ? 'mounted' : ''}`}>
         <div>
           <button
-            onClick={() => {
-              editHandle(l.id?.toString());
+            onClick={async () => {
+              // editHandle(l.id?.toString());
+              const labelTextBox = prompt('Update Label', l.text);
+              await updateLabel(l.id?.toString(), labelTextBox, l, setisPrevent, settab);
+              
             }}
           >
             <BiEdit />
@@ -206,8 +208,8 @@ function TabItem(props: {
           <button
             onClick={(e) => {
               // if (tab === l.text) {
-              deletLabel(l.id?.toString() , settab);
-            
+              deletLabel(l.id?.toString(), settab);
+
               // }
             }}
           >

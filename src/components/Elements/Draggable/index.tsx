@@ -51,7 +51,6 @@ export default function Draggable({
   useEffect(() => {
     function handleIngore(this: Window, ev: MouseEvent) {
       if (!draggable) return;
-      console.log('up');
       setIgnoreClick(false);
       setDraggable(false);
       throw new Error('Function not implemented.');
@@ -67,7 +66,6 @@ export default function Draggable({
       // onWheel={(e) => {
       //   zoom(e);
       // }}
-      // role="tablist"
       onAnimationEnd={() => {
         if (!isSelect) {
           setMounted(false);
