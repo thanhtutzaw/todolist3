@@ -143,7 +143,7 @@ function TabItem(props: {
       // constraintsRef.current.style.height = '50px';
     } else {
       if (!constraintsRef.current) return;
-      constraintsRef.current.style.height = '100px';
+      // constraintsRef.current.style.height = '100px';
     }
   }, [otherTab]);
   useEffect(() => {
