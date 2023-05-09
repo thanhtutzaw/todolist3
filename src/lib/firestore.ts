@@ -33,7 +33,7 @@ export function addTodo(
       text: inputText,
       completed: false,
       timeStamp: serverTimestamp(),
-      label: label,
+      label: label ?? '',
       // date: new Date(.toDate()).toLocaleDateString('en-US', {
       //   day: 'numeric',
       //   month: 'short',
@@ -56,7 +56,6 @@ export function addTodo(
 
       setisPrevent(true);
       try {
-        // await addDoc(collectionRef, data, { merge: true });
         await addDoc(collectionRef, data);
         setisPrevent(false);
         // setAddLoading(false);

@@ -3,8 +3,8 @@ import { updateTodo } from '@/lib/firestore';
 import { AppContextType, todosProps } from '@/types';
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ConfirmModal from './ConfirmModal';
-import UpdatingModal from './UpdatingModal';
 import Dialog from './Dialog';
+import UpdatingModal from './UpdatingModal';
 
 export default function EditModal(props: {
   todo: todosProps | null;
@@ -87,7 +87,6 @@ export default function EditModal(props: {
   }
   const { labels } = useContext(AppContext) as AppContextType;
   // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
-  // console.log(typeof getLabel);
   const getLabel = labels.find((l) => l.id === todo?.label);
   useEffect(() => {
     if (todo?.label) {
@@ -129,6 +128,7 @@ export default function EditModal(props: {
 
             <div className="editModalActions">
               <select
+                defaultValue={todo.label ? todo.label : ''}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value !== '') {
@@ -138,16 +138,15 @@ export default function EditModal(props: {
               >
                 <option value="">Change Label</option>
                 {labels.map((l) => (
-                  <>
-                    <option
-                      selected={l.id.toString() === getLabel?.id}
-                      // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
-                      value={l.id.toString()}
-                    >
-                      {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
-                      {l.text}
-                    </option>
-                  </>
+                  <option
+                    key={l.id?.toString()}
+                    // selected={l.id.toString() === getLabel?.id}
+                    // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
+                    value={l.id?.toString()}
+                  >
+                    {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
+                    {l.text}
+                  </option>
                 ))}
               </select>
               <button onClick={close} className="editCloseBtn">

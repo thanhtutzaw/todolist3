@@ -1,8 +1,8 @@
+import { AppContext } from '@/Context/AppContext';
 import { AppContextType, todosProps } from '@/types';
-import { RefObject, useContext, useEffect, useState } from 'react';
+import { RefObject, useContext, useEffect } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
-import { AppContext } from '@/Context/AppContext';
 
 export function RenderTodoList(props: {
   todoRef: RefObject<HTMLUListElement>;
@@ -36,11 +36,11 @@ export function RenderTodoList(props: {
   useEffect(() => {
     // if (todos.length === 0) return;
     setfilter(
-      todos?.filter((t) => {
+      todos?.filter((t: todosProps) => {
         if (tab === '' || tab === 'all') {
           return todos;
         } else {
-          return t.label === activeTab?.id;
+          return t?.label === activeTab?.id;
         }
       })
     );

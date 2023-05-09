@@ -67,11 +67,14 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
         >
           All
         </div>
-        {loading && <>{Array.from([1, 2, 3, 4, 5, 6].map(() => <LabelLoader />))}</>}
+        {loading && (
+          <>{Array.from([1, 2, 3, 4, 5, 6].map((index) => <LabelLoader key={index} />))}</>
+        )}
         {labels.map((l) => {
           const otherTab = tab === l.text;
           return (
             <TabItem
+              key={l?.id}
               constraintsRef={constraintsRef}
               l={l}
               tabItemLoading={tabItemLoading}
@@ -200,7 +203,6 @@ function TabItem(props: {
               // editHandle(l.id?.toString());
               const labelTextBox = prompt('Update Label', l.text);
               await updateLabel(l.id?.toString(), labelTextBox, l, setisPrevent, settab);
-              
             }}
           >
             <BiEdit />

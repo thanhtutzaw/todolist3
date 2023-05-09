@@ -1,9 +1,8 @@
-import { VscAdd } from 'react-icons/vsc';
-import Button from './Elements/Button/Button';
-import { FormEventHandler, RefObject, memo, useContext, useState } from 'react';
 import { AppContext } from '@/Context/AppContext';
 import { AppContextType } from '@/types';
-import { addLabel } from '@/lib/label';
+import { FormEventHandler, RefObject, memo, useContext, useState } from 'react';
+import { VscAdd } from 'react-icons/vsc';
+import Button from './Elements/Button/Button';
 
 const Footer = memo(
   (props: {
@@ -41,18 +40,19 @@ const Footer = memo(
               }
             }}
           >
-            <option value="">Select Label</option>
+            <option key="default" value="">
+              Select Label
+            </option>
             {labels.map((l) => (
-              <>
-                <option
-                  // selected={l.id.toString() === getLabel?.id}
-                  // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
-                  value={l.id?.toString()}
-                >
-                  {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
-                  {l.text}
-                </option>
-              </>
+              <option
+                // selected={l.id.toString() === getLabel?.id}
+                // value={l.id.toString() === getLabel?.id ? l.id.toString() : ""}
+                value={l.id?.toString()}
+                key={l.id?.toString()}
+              >
+                {/* <option selected={l.id.toString() === getLabel?.id} value={l.id.toString()}> */}
+                {l.text}
+              </option>
             ))}
             <option value={'add'}>{createNew ? 'input' : '+ Create New'}</option>
           </select>
@@ -66,7 +66,7 @@ const Footer = memo(
             // onBlur={() => {
             //   setSelectMounted(false);
             // }}
-            aria-label="type todo"
+            aria-label="todo input"
             tabIndex={!SelectModalMounted ? 0 : -1}
             ref={inputRef}
             className="input-text"
