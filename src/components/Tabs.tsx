@@ -61,7 +61,6 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
           onClick={() => settab('all')}
           style={{
             animation: firstItemLoading,
-            // pointerEvents: ignoreClick ? 'none' : 'initial',
           }}
           className={`tabItem ${homeTab && !loading ? 'active' : ''} ${
             ignoreClick ? 'ignoreClick' : ''
@@ -117,7 +116,7 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
 //   useEffect(() => {
 //     if (!tabRef.current) return;
 //     if (mounted) {
-//       tabRef.current.style.height = '100px';
+//       tabRef.current.style.height = '90px';
 //       tabRef.current.style.color = 'green';
 //     }
 //   }, [mounted]);
@@ -145,13 +144,13 @@ function TabItem(props: {
       // constraintsRef.current.style.height = '50px';
     } else {
       if (!constraintsRef.current) return;
-      // constraintsRef.current.style.height = '100px';
+      // constraintsRef.current.style.height = '90px';
     }
   }, [otherTab]);
   useEffect(() => {
     if (!constraintsRef.current) return;
     if (mounted) {
-      constraintsRef.current.style.height = '100px';
+      constraintsRef.current.style.height = '90px';
     } else {
       setTimeout(() => {
         if (!constraintsRef.current) return;
@@ -180,9 +179,8 @@ function TabItem(props: {
         settab(l.text!);
       }}
       style={{
-        height: !mounted ? '50px' : '100px',
+        height: !mounted ? '50px' : '90px',
         animation: tabItemLoading,
-        // pointerEvents: ignoreClick ? 'none' : 'initial',
       }}
       className={`tabItem ${otherTab ? 'active' : ''} ${ignoreClick ? 'ignoreClick' : ''}`}
     >
@@ -192,7 +190,7 @@ function TabItem(props: {
         onClick={(e) => {
           setMounted(true);
           // if (!e.currentTarget || !e.currentTarget.parentElement) return;
-          // e.currentTarget.parentElement.style.height = '100px';
+          // e.currentTarget.parentElement.style.height = '90px';
         }}
         className="dot"
       >

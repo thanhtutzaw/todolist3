@@ -20,11 +20,18 @@ export default function AppProvider({ children }: PropsWithChildren) {
   const tabRef = useRef<HTMLDivElement>(null);
   const { theme, setTheme } = useTheme();
   const [filter, setfilter] = useState<todosProps[] | null[]>([]);
+
   useEffect(() => {
     window.location.hash = tab;
-    // window.location.hash = tab !== '' ? tab : 'all';
     tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // const timeoutId = setTimeout(() => {
+    //   const newTab = tab.replace(/%20/g, '-');
+    //   window.location.replace(`#${newTab}`);
+    //   tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // }, 200);
+    // return () => clearTimeout(timeoutId);
   }, [tab]);
+
   useEffect(() => {
     function preventRefresh(event: BeforeUnloadEvent) {
       event.returnValue = 'You have unfinished changes!';
@@ -58,7 +65,8 @@ export default function AppProvider({ children }: PropsWithChildren) {
   return (
     <AppContext.Provider
       value={{
-        filter, setfilter,
+        filter,
+        setfilter,
         labels,
         setlabels,
         todos,
