@@ -61,9 +61,11 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
           onClick={() => settab('all')}
           style={{
             animation: firstItemLoading,
-            pointerEvents: ignoreClick ? 'none' : 'initial',
+            // pointerEvents: ignoreClick ? 'none' : 'initial',
           }}
-          className={`tabItem ${homeTab && !loading ? 'active' : ''}`}
+          className={`tabItem ${homeTab && !loading ? 'active' : ''} ${
+            ignoreClick ? 'ignoreClick' : ''
+          }`}
         >
           All
         </div>
@@ -180,9 +182,9 @@ function TabItem(props: {
       style={{
         height: !mounted ? '50px' : '100px',
         animation: tabItemLoading,
-        pointerEvents: ignoreClick ? 'none' : 'initial',
+        // pointerEvents: ignoreClick ? 'none' : 'initial',
       }}
-      className={`tabItem ${otherTab ? 'active' : ''}`}
+      className={`tabItem ${otherTab ? 'active' : ''} ${ignoreClick ? 'ignoreClick' : ''}`}
     >
       {!loading && l.text}
       <button

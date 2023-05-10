@@ -494,6 +494,7 @@ html[theme="dark"] .react-loading-skeleton {
   justify-content : center;
   padding         : 10px 20px;
   transition      : height .2s ease-in-out;
+  pointer-events  : initial;
 }
 
 .tabItem .dot {
@@ -558,6 +559,12 @@ html[theme="dark"] .react-loading-skeleton {
 .tabItem.active {
   background-color: var(--main-color) !important;
   color           : white !important;
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .tabItem.ignoreClick {
+    pointer-events: none;
+  }
 }
 
 .tabItem.active .dot {
