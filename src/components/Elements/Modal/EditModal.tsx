@@ -3,7 +3,6 @@ import { updateTodo } from '@/lib/firestore';
 import { AppContextType, todosProps } from '@/types';
 import { RefObject, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import ConfirmModal from './ConfirmModal';
-import Dialog from './Dialog';
 import UpdatingModal from './UpdatingModal';
 
 export default function EditModal(props: {
@@ -79,7 +78,6 @@ export default function EditModal(props: {
   function close() {
     if (exitWithoutSaving) {
       confirmModalRef.current?.showModal();
-      // console.log('confirm update');
     } else {
       closeEditModal();
       console.log('close edit');
@@ -96,12 +94,14 @@ export default function EditModal(props: {
 
   return (
     <>
-      <Dialog id="confirmModal" ref={confirmModalRef}>
-        <ConfirmModal closeConfirm={closeConfirm} closeEditModal={closeEditModal} />
-      </Dialog>
-      <Dialog id="updating" ref={UpdatingRef}>
-        <UpdatingModal />
-      </Dialog>
+      <ConfirmModal
+        confirmModalRef={confirmModalRef}
+        closeConfirm={closeConfirm}
+        closeEditModal={closeEditModal}
+      />
+
+      <UpdatingModal UpdatingRef={UpdatingRef} />
+
       {todo && (
         <div
           style={{

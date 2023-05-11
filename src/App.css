@@ -57,25 +57,28 @@ section:not(.tabSection),
 }
 
 .tabSection {
-  background: linear-gradient(0deg, transparent 13.94%, var(--light-bg) 54.73%);
-  position  : absolute;
-  width     : 100%;
-  max-width : var(--max-width);
-  z-index   : 2;
-  height    : 50px;
-  overflow  : hidden;
+  background   : linear-gradient(0deg, transparent 13.94%, var(--light-bg) 54.73%);
+  position     : absolute;
+  width        : 100%;
+  max-width    : var(--max-width);
+  z-index      : 2;
+  height       : 50px;
+  overflow     : hidden;
+  /* outline   : 1px solid red; */
 }
 
 .tabContainer {
   /* height      : 50px; */
   padding-left: 1.4rem !important;
   touch-action: none;
+
+  scroll-padding: 200px;
 }
 
 .tabs {
-  display: flex;
-  gap    : 10px;
-
+  display   : flex;
+  gap       : 10px;
+  /* outline: 1px solid green; */
 }
 
 .tabContainer .tabItem:last-child {
@@ -536,6 +539,7 @@ html[theme="dark"] .react-loading-skeleton {
 .tabItem.active {
   background-color: var(--main-color) !important;
   color           : white !important;
+  transition      : all .2s ease-in-out;
 }
 
 @media (hover:hover) and (pointer:fine) {
@@ -665,17 +669,18 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .messageBox {
-  position     : fixed;
-  right        : 0;
-  border       : 1px solid rgba(128, 128, 128, 0.466);
-  padding      : 0 .5rem;
-  margin       : 1rem;
-  width        : 205px;
-  height       : 250px;
-  overflow-y   : scroll;
-  opacity      : .8;
-  border       : 1px solid rgba(0, 0, 0, .2);
-  border-radius: 5px;
+  position      : fixed;
+  right         : 0;
+  border        : 1px solid rgba(128, 128, 128, 0.466);
+  padding       : 0 .5rem;
+  margin        : 1rem;
+  width         : 205px;
+  height        : 250px;
+  overflow-y    : scroll;
+  opacity       : .8;
+  border        : 1px solid rgba(0, 0, 0, .2);
+  border-radius : 5px;
+  pointer-events: none;
 }
 
 @media only screen and (max-width: 840px) {
@@ -687,9 +692,10 @@ html[theme="dark"] .react-loading-skeleton {
     user-select: none;
   }
 
-  /* .tabContainer {
+  .tabContainer {
     scroll-padding: 150px;
-  } */
+  }
+
 }
 
 .messages {
@@ -748,10 +754,11 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .confirmModal>p {
-  font-weight: 500;
-  font-size  : 1rem;
-  text-align : center;
-  user-select: none;
+  font-weight   : 500;
+  /* font-size  : 1rem; */
+  text-align    : center;
+  user-select   : none;
+  font-size     : 1.3rem;
 }
 
 li.todo {
@@ -841,10 +848,7 @@ li.todo {
 }
 
 .editModalActions select:focus-visible {
-  /* outline               : 1px solid var(--main-color) !important; */
-  outline               : 0;
-  /* background-color   : var(--btn-blue) !important; */
-  /* color              : white; */
+  outline: 0;
 }
 
 .editModalActions>button {
@@ -1085,13 +1089,17 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .nav select {
-  position  : absolute;
-  top       : 0;
-  left      : 35px;
-  opacity   : 0;
-  visibility: hidden;
+  position              : absolute;
+  top                   : 0;
+  left                  : 25px;
+  opacity               : 0;
+  visibility            : hidden;
+  font-size             : 1rem;
+  padding               : 0.5rem;
+  /* background-color   : var(--main-color); */
+  /* outline            : .5px solid var(--light-text); */
+  /* border             : 0; */
 }
-
 
 .add-btn-parent {
   background-color              : var(--btn-blue);
@@ -1118,7 +1126,7 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 
 .add-btn-parent>svg {
   stroke-width: 1;
-  scale       : 1.5;
+  scale       : 1.4;
 }
 
 .input-text {
@@ -1211,19 +1219,18 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .textarea {
-  resize          : none;
-  font-size       : 1.2rem;
-  width           : 100%;
-  font-family     : sans-serif;
-  height          : 400px;
-  border          : 0;
-  outline         : 0;
-  /* height       : 50dvh; */
-  height          : 34dvh;
-  height          : 34dvh;
-  height          : 30dvh;
-  margin-bottom   : 50px;
-  margin-bottom   : 45px;
+  resize       : none;
+  font-size    : 1.2rem;
+  width        : 100%;
+  font-family  : sans-serif;
+  height       : 400px;
+  border       : 0;
+  outline      : 0;
+  height       : 34dvh;
+  height       : 34dvh;
+  height       : 30dvh;
+  margin-bottom: 50px;
+  margin-bottom: 45px;
 }
 
 .nav-icon-parent {
@@ -1252,12 +1259,11 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .tools select {
-  color              : initial;
-  background-color   : transparent;
-  border             : 0;
-  outline            : 0;
-  /* font-size       : 1rem; */
-  font-size          : calc(10px + 1vmin);
+  color           : initial;
+  background-color: transparent;
+  border          : 0;
+  outline         : 0;
+  font-size       : calc(10px + 1vmin);
 }
 
 select>option {

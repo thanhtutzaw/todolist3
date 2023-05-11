@@ -54,9 +54,11 @@ export function updateLabel(
   // labels: labelProps[] | null[],
   l: labelProps,
   setisPrevent: Function,
-  settab: Function
+  settab: Function,
+  setMounted: Function
 ): Promise<void> {
   return new Promise<void>(async () => {
+    if (l.text === labelTextBox) return;
     // return async (e: FormEventHandler<HTMLFormElement>) => {
     console.info('%cUpdating...', 'color:grey');
     const data = {
@@ -90,6 +92,7 @@ export function updateLabel(
         await updateDoc(collectionRef, newData);
         settab(labelTextBox);
         setisPrevent(false);
+        setMounted(false);
         console.info('%Updated Label ✔️ ', 'color: green');
       } catch (error: any) {
         setisPrevent(false);

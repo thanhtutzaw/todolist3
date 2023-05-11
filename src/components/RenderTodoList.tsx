@@ -4,18 +4,28 @@ import { RefObject, useContext, useEffect } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
 
+// export function RenderTodoList(props: {
+//   todoRef: RefObject<HTMLUListElement>;
+//   SelectedID: number[];
+//   selectCount: boolean;
+//   addLoading: boolean;
+//   setSelectedID: Function;
+//   setselectCount: Function;
+// }) {
 export function RenderTodoList(props: {
+  addLoading: any;
   todoRef: RefObject<HTMLUListElement>;
-  SelectedID: number[];
-  selectCount: boolean;
-  addLoading: boolean;
-  setSelectedID: Function;
-  setselectCount: Function;
+  selectCount: any;
+  setselectCount: any;
+  SelectedID: any;
+  setSelectedID: any;
 }) {
   const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
-  const { loading, todos, labels } = useContext(AppContext) as AppContextType;
 
-  const { tab, filter, setfilter } = useContext(AppContext) as AppContextType;
+  const { tab, filter, setfilter, loading, todos, labels } = useContext(
+    AppContext
+  ) as AppContextType;
+
   // if (todos?.length === 0 && !loading) return <p className="empty">Create Some Todo !</p>;
   // if (todos.length === 0) return <>empty</>;
 

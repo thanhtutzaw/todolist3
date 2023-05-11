@@ -1,12 +1,12 @@
 import { AppContext } from '@/Context/AppContext';
+import { deletLabel } from '@/lib/firestore';
 import { addLabel, updateLabel } from '@/lib/label';
 import { AppContextType, labelProps, todosProps } from '@/types';
+import { motion } from 'framer-motion';
 import { MouseEventHandler, RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { BiDotsVerticalRounded, BiEdit, BiTrash, BiX } from 'react-icons/bi';
 import { VscAdd } from 'react-icons/vsc';
 import Draggable from './Elements/Draggable';
-import { BiDotsVerticalRounded, BiEdit, BiTrash, BiX } from 'react-icons/bi';
-import { deletLabel } from '@/lib/firestore';
-
 interface TabsProps {
   addLabelRef: RefObject<HTMLButtonElement>;
   constraintsRef: RefObject<HTMLDivElement>;
@@ -43,17 +43,19 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
       className="tabItem"
     ></div>
   );
-  const tabWidth = useRef(null);
+  const tabWidth = useRef<HTMLDivElement>(null);
   const [ignoreClick, setIgnoreClick] = useState(false);
+  const [X, setX] = useState(0);
   return (
     <Draggable
+      x={X}
       tabWidth={tabWidth}
       constraintsRef={constraintsRef}
       isSelect={isSelect}
       setIgnoreClick={setIgnoreClick}
       className="tabContainer"
     >
-      <div ref={tabWidth} className="tabs">
+      <motion.div ref={tabWidth} className="tabs">
         <div
           aria-selected={homeTab}
           role="tab"
@@ -62,8 +64,8 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
           style={{
             animation: firstItemLoading,
           }}
-          className={`tabItem ${homeTab && !loading ? 'active' : ''} ${
-            ignoreClick ? 'ignoreClick' : ''
+          className={`tabItem${homeTab && !loading ? ' active' : ''}${
+            ignoreClick ? ' ignoreClick' : ''
           }`}
         >
           All
@@ -71,10 +73,12 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
         {loading && (
           <>{Array.from([1, 2, 3, 4, 5, 6].map((index) => <LabelLoader key={index} />))}</>
         )}
-        {labels.map((l) => {
+        {labels.map((l, index) => {
           const otherTab = tab === l.text;
           return (
             <TabItem
+              setX={setX}
+              index={index}
               key={l?.id}
               constraintsRef={constraintsRef}
               l={l}
@@ -95,7 +99,7 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
         >
           <VscAdd />
         </button>
-      </div>
+      </motion.div>
     </Draggable>
   );
 }
@@ -125,17 +129,29 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
 // }
 
 function TabItem(props: {
+  index: number;
   l: labelProps;
   tabItemLoading: string;
   otherTab: boolean;
   constraintsRef: RefObject<HTMLDivElement>;
   tabRef: RefObject<HTMLDivElement>;
+  setX: Function;
   settab: Function;
   ignoreClick: boolean;
   loading: boolean;
 }) {
-  const { constraintsRef, l, tabItemLoading, otherTab, tabRef, settab, ignoreClick, loading } =
-    props;
+  const {
+    setX,
+    index,
+    constraintsRef,
+    l,
+    tabItemLoading,
+    otherTab,
+    tabRef,
+    settab,
+    ignoreClick,
+    loading,
+  } = props;
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     if (!otherTab) {
@@ -158,18 +174,14 @@ function TabItem(props: {
       }, 300);
     }
   }, [mounted]);
-  function editHandle(id: string) {
-    alert(id);
-  }
-  // function deleteHandle(id: string) {
-  //   // alert(id);
-  //   deletLabel(id);
-  // }
-  // function deletLabel(id: string) {
-  //   console.log(id);
-  //   throw new Error('Function not implemented.');
-  // }
-  const { setisPrevent, labels, setlabels } = useContext(AppContext) as AppContextType;
+  const { setisPrevent } = useContext(AppContext) as AppContextType;
+  const handleTabClick = (index: number) => {
+    // alert(index);
+    const itemWidth = 100; // set the width of the tab item
+    const newX = index * itemWidth + itemWidth / 2; // calculate the new X position
+    setX(newX);
+  };
+
   return (
     <div
       aria-selected={otherTab}
@@ -177,12 +189,13 @@ function TabItem(props: {
       ref={otherTab ? tabRef : null}
       onClick={() => {
         settab(l.text!);
+        handleTabClick(index);
       }}
       style={{
         height: !mounted ? '50px' : '90px',
         animation: tabItemLoading,
       }}
-      className={`tabItem ${otherTab ? 'active' : ''} ${ignoreClick ? 'ignoreClick' : ''}`}
+      className={`tabItem${otherTab ? ' active' : ''}${ignoreClick ? ' ignoreClick' : ''}`}
     >
       {!loading && l.text}
       <button
@@ -200,19 +213,16 @@ function TabItem(props: {
         <div>
           <button
             onClick={async () => {
-              // editHandle(l.id?.toString());
-              const labelTextBox = prompt('Update Label', l.text);
-              await updateLabel(l.id?.toString(), labelTextBox, l, setisPrevent, settab);
+              const labelTextBox = prompt('Rename label', l.text);
+              if (l.text === labelTextBox) return;
+              await updateLabel(l.id?.toString(), labelTextBox, l, setisPrevent, settab ,setMounted);
             }}
           >
             <BiEdit />
           </button>
           <button
-            onClick={(e) => {
-              // if (tab === l.text) {
+            onClick={() => {
               deletLabel(l.id?.toString(), settab);
-
-              // }
             }}
           >
             <BiTrash />

@@ -1,6 +1,6 @@
 import useFirestoreData from '@/hooks/useFirestoreData';
 import useTheme from '@/hooks/useTheme';
-import { AppContextType, labelProps, todosProps } from '@/types';
+import { AppContextType, todosProps } from '@/types';
 import { PropsWithChildren, createContext, useEffect, useRef, useState } from 'react';
 
 export const AppContext = createContext<AppContextType | null>(null);
@@ -22,8 +22,14 @@ export default function AppProvider({ children }: PropsWithChildren) {
   const [filter, setfilter] = useState<todosProps[] | null[]>([]);
 
   useEffect(() => {
-    window.location.hash = tab;
+    const newTab = tab.replaceAll(' ', '-');
+    window.location.hash = newTab;
+    if (tabRef.current) {
+      // alert(tabRef?.current.offsetWidth);
+    }
     tabRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // tabRef.current?.style.
+
     // const timeoutId = setTimeout(() => {
     //   const newTab = tab.replace(/%20/g, '-');
     //   window.location.replace(`#${newTab}`);
