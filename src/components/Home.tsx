@@ -26,7 +26,7 @@ import Tabs from './Tabs';
 import Toast from './Toast';
 import { CustomConsole } from './CustomConsole';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
-
+import { motion } from 'framer-motion';
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
@@ -131,7 +131,9 @@ export default function Home() {
   //   filteredTodos = todos;
   // }, [todos]);
   const auth = getAuth();
-  const constraintsRef = useRef(null);
+  const constraintsRef = useRef<HTMLDivElement>(null);
+  const tabWidth = useRef<HTMLDivElement>(null);
+
   const addLabelRef = useRef(null);
   // const user = auth.currentUser;
   // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
@@ -177,6 +179,7 @@ export default function Home() {
           className="tabSection"
         >
           <Tabs
+            tabWidth={tabWidth}
             addLabelRef={addLabelRef}
             constraintsRef={constraintsRef}
             todos={todos}

@@ -10,10 +10,11 @@ import Draggable from './Elements/Draggable';
 interface TabsProps {
   addLabelRef: RefObject<HTMLButtonElement>;
   constraintsRef: RefObject<HTMLDivElement>;
+  tabWidth: RefObject<HTMLDivElement>;
   SelectedID: number[];
   todos: todosProps[];
 }
-export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsProps) {
+export default function Tabs({tabWidth, addLabelRef, constraintsRef, SelectedID }: TabsProps) {
   const isSelect = SelectedID.length === 0;
   const { loading, labels, setlabels } = useContext(AppContext) as AppContextType;
   const { tabRef, tab, settab, setisPrevent } = useContext(AppContext) as AppContextType;
@@ -43,12 +44,10 @@ export default function Tabs({ addLabelRef, constraintsRef, SelectedID }: TabsPr
       className="tabItem"
     ></div>
   );
-  const tabWidth = useRef<HTMLDivElement>(null);
   const [ignoreClick, setIgnoreClick] = useState(false);
   const [X, setX] = useState(0);
   return (
     <Draggable
-      x={X}
       tabWidth={tabWidth}
       constraintsRef={constraintsRef}
       isSelect={isSelect}
@@ -140,18 +139,8 @@ function TabItem(props: {
   ignoreClick: boolean;
   loading: boolean;
 }) {
-  const {
-    setX,
-    index,
-    constraintsRef,
-    l,
-    tabItemLoading,
-    otherTab,
-    tabRef,
-    settab,
-    ignoreClick,
-    loading,
-  } = props;
+  const { constraintsRef, l, tabItemLoading, otherTab, tabRef, settab, ignoreClick, loading } =
+    props;
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     if (!otherTab) {
@@ -175,12 +164,11 @@ function TabItem(props: {
     }
   }, [mounted]);
   const { setisPrevent } = useContext(AppContext) as AppContextType;
-  const handleTabClick = (index: number) => {
-    // alert(index);
-    const itemWidth = 100; // set the width of the tab item
-    const newX = index * itemWidth + itemWidth / 2; // calculate the new X position
-    setX(newX);
-  };
+  // const handleTabClick = (index: number) => {
+  //   const itemWidth = 100; // set the width of the tab item
+  //   const newX = index * itemWidth + itemWidth / 2; // calculate the new X position
+  //   setX(newX);
+  // };
 
   return (
     <div
@@ -189,7 +177,7 @@ function TabItem(props: {
       ref={otherTab ? tabRef : null}
       onClick={() => {
         settab(l.text!);
-        handleTabClick(index);
+        // handleTabClick(index);
       }}
       style={{
         height: !mounted ? '50px' : '90px',
@@ -215,7 +203,14 @@ function TabItem(props: {
             onClick={async () => {
               const labelTextBox = prompt('Rename label', l.text);
               if (l.text === labelTextBox) return;
-              await updateLabel(l.id?.toString(), labelTextBox, l, setisPrevent, settab ,setMounted);
+              await updateLabel(
+                l.id?.toString(),
+                labelTextBox,
+                l,
+                setisPrevent,
+                settab,
+                setMounted
+              );
             }}
           >
             <BiEdit />

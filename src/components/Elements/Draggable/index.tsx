@@ -1,9 +1,6 @@
-import { AppContext } from '@/Context/AppContext';
-import { AppContextType } from '@/types';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { ReactElement, RefObject, useContext, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ReactElement, RefObject, useEffect, useState } from 'react';
 interface DraggableProps {
-  x: number;
   tabWidth: RefObject<HTMLDivElement>;
   constraintsRef: RefObject<HTMLDivElement>;
   setIgnoreClick: Function;
@@ -12,7 +9,6 @@ interface DraggableProps {
   children: ReactElement;
 }
 export default function Draggable({
-  x,
   tabWidth,
   constraintsRef,
   setIgnoreClick,
@@ -64,7 +60,6 @@ export default function Draggable({
       window.removeEventListener('pointerup', handleIngore);
     };
   }, [draggable]);
-  const { tab } = useContext(AppContext) as AppContextType;
   // const centerX = useTransform(x, (value) => (isCentered ? window.innerWidth / 2 : value));
 
   // const x = useMotionValue(0);
@@ -78,13 +73,13 @@ export default function Draggable({
   const handleDragEnd = () => {
     setDisableConstraints(false);
   };
-  useEffect(() => {
-    // Adjust the right constraint based on the size of the container
-    const containerWidth = constraintsRef?.current?.clientWidth!;
-    const tabWidth2 = tabWidth?.current?.clientWidth!;
-    const rightConstraint = containerWidth - tabWidth2 - 20;
-    setRightConstraint(rightConstraint);
-  }, []);
+  // useEffect(() => {
+  //   // Adjust the right constraint based on the size of the container
+  //   const containerWidth = constraintsRef?.current?.clientWidth!;
+  //   const tabWidth2 = tabWidth?.current?.clientWidth!;
+  //   const rightConstraint = containerWidth - tabWidth2 - 20;
+  //   setRightConstraint(rightConstraint);
+  // }, []);
   const [rightConstraint, setRightConstraint] = useState(0);
   return mounted ? (
     <motion.div
@@ -93,12 +88,13 @@ export default function Draggable({
       // }}
       drag="x"
       dragConstraints={{
-        top: 0,
-        bottom: 0,
         right: 0,
-        left: constraintsRef.current?.clientWidth! - tabWidth.current?.clientWidth! - 20,
+        left:
+          tabWidth.current?.clientWidth! > constraintsRef.current?.clientWidth!
+            ? constraintsRef.current?.clientWidth! - tabWidth.current?.clientWidth! - 20
+            : 0,
       }}
-      dragElastic={0.1}
+      dragElastic={0.2}
       onAnimationEnd={() => {
         if (!isSelect) {
           setMounted(false);
@@ -110,7 +106,6 @@ export default function Draggable({
         animation: isSelect
           ? 'mountFadeIn .2s ease-in-out'
           : 'unMountFadeOut .2s forwards ease-in-out ',
-        // x: mouseX,
       }}
       onPointerMove={() => {
         if (draggable) {
@@ -139,8 +134,4 @@ export default function Draggable({
   ) : (
     <></>
   );
-
-  // function newFunction(): WheelEventHandler<HTMLDivElement> | undefined {
-  //   return (e) => zoom(e);
-  // }
 }

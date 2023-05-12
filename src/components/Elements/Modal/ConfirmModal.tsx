@@ -1,11 +1,16 @@
-import { MouseEventHandler, RefObject } from 'react';
+import { RefObject, useCallback } from 'react';
 import Dialog from './Dialog';
 export default function ConfirmModal(props: {
   closeEditModal: Function;
-  closeConfirm: MouseEventHandler<HTMLButtonElement>;
   confirmModalRef: RefObject<HTMLDialogElement>;
 }) {
-  const { closeEditModal, closeConfirm, confirmModalRef } = props;
+  const { closeEditModal, confirmModalRef } = props;
+
+  const closeConfirm = useCallback(() => {
+    console.log('keep editing');
+    confirmModalRef.current?.close();
+  }, []);
+
   return (
     <Dialog id="confirmModal" ref={confirmModalRef}>
       <div className="confirmModal">
@@ -16,7 +21,7 @@ export default function ConfirmModal(props: {
         <button
           className="btn discardBtn"
           onClick={(e) => {
-            closeConfirm(e);
+            closeConfirm();
             closeEditModal();
             console.log('edit canceled');
           }}
