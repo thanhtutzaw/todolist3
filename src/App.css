@@ -129,7 +129,7 @@ section:not(.tabSection),
   right      : 50%;
   transform  : translate(50%, -50%);
   user-select: none;
-  width:100%;
+  width      : 100%;
 }
 
 main>a>button {
@@ -627,6 +627,11 @@ html[theme="dark"] .react-loading-skeleton {
   transition: scale .1s ease-in-out;
 }
 
+:is(.edit, .delete):active {
+  scale     : 1.1 !important;
+  transition: scale .1s ease-in-out;
+}
+
 .btn.discardBtn,
 .btn.keepEditingBtn {
   /* padding      : .5rem .3rem; */
@@ -666,7 +671,8 @@ html[theme="dark"] .react-loading-skeleton {
 }
 
 .selectModal button:active {
-  background-color: rgba(255 255 255 / .8);
+  /* background-color: rgba(255 255 255 / .8); */
+  /* background-color: rgb(243, 243, 243); */
 }
 
 .messageBox {
@@ -737,21 +743,22 @@ html[theme="dark"] .react-loading-skeleton {
 
 .confirmModal,
 .updatingModal {
-  background            : rgba(255, 255, 255, 0.01);
-  background-color      : var(--background-primary);
-  /* height             : 200px; */
-  padding               : 1rem;
-  width                 : 350px;
-  max-width             : 97vw;
-  display               : flex;
-  justify-content       : center;
-  flex-direction        : column;
-  gap                   : 1rem;
-  border-radius         : .5rem;
-  backdrop-filter       : blur(6px);
-  border                : 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow            : 0px 4px 20px rgba(102, 102, 102, 0.267);
-  /* box-shadow         : 0 4px 30px rgba(0, 0, 0, 0.1); */
+  background                 : rgba(255, 255, 255, 0.01);
+  background-color           : var(--background-primary);
+  /* height                  : 200px; */
+  padding                    : 1rem;
+  width                      : 350px;
+  max-width                  : 97vw;
+  display                    : flex;
+  justify-content            : center;
+  flex-direction             : column;
+  gap                        : 1rem;
+  border-radius              : .5rem;
+  backdrop-filter            : blur(6px);
+  border                     : 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow                 : 0px 4px 20px rgba(102, 102, 102, 0.267);
+  /* box-shadow              : 0 4px 30px rgba(0, 0, 0, 0.1); */
+  -webkit-tap-highlight-color: transparent;
 }
 
 .confirmModal>p {
@@ -829,22 +836,60 @@ li.todo {
 }
 
 .editModalActions {
-  display              : flex;
-  justify-content      : flex-end;
-  flex                 : 1;
-  gap                  : 1rem;
+  /* justify-content      : flex-end;
   position             : fixed;
-  /* bottom            : 20px; */
   bottom               : 0;
   margin               : 10px 0;
   right                : 20px;
-  width                : 100%;
-  transition           : all .3s ease-in-out;
+  width                : 100%; */
+
+  display           : flex;
+  justify-content   : center;
+  align-items       : center;
+  flex              : 1;
+  gap               : 1rem;
+  /* position       : absolute; */
+  /* top            : 0; */
+  bottom            : 20px;
+  /* left           : 0; */
+  right             : 0;
+  bottom            : 0;
+  margin            : 10px 0;
+  /* margin-top     : 1rem; */
+  /* right          : 20px; */
+  width             : 100%;
+  flex-wrap         : wrap;
+  transition        : all .3s ease-in-out;
 
 }
 
+.editModalActions>* {
+  cursor: pointer;
+
+}
+
+.editModalActions>*:active {
+  /* cursor: pointer; */
+  /* opacity: .5; */
+  /* background-color: rgb(235, 235, 235);
+   */
+  opacity: .5;
+
+}
+
+.editModalActions>*:hover {
+  /* cursor: pointer; */
+  /* opacity: .5; */
+  background-color: rgb(235, 235, 235);
+
+}
+
+
+
 .editModalActions select {
+  font-size    : 1rem;
   border-radius: .5rem;
+  padding      : .5rem;
   border       : 0;
 }
 
@@ -874,13 +919,19 @@ li.todo {
 }
 
 .updateBtn {
-  background-color: var(--btn-blue);
+  background-color: var(--main-color);
   color           : var(--btn-text-primary);
   width           : 104px;
 }
 
+.updateBtn:hover {
+  /* background-color: rgb(11, 147, 201); */
+  background-color: rgb(0, 140, 255);
+}
+
 .updateBtn:focus {
-  background-color: rgb(11, 147, 201);
+  /* background-color: rgb(11, 147, 201); */
+  /* background-color: red; */
 }
 
 
@@ -1210,28 +1261,26 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 #editModal>.container>form {
   width              : 100%;
   position           : relative;
-  padding            : 20px;
+  /* padding         : 20px; */
   /* height          : calc(50% + 20px); */
   background-color   : white;
   overflow           : auto;
   border-radius      : 20px;
   outline            : none;
-  height             : 42dvh;
 }
 
 .textarea {
-  resize       : none;
-  font-size    : 1.2rem;
-  width        : 100%;
-  font-family  : sans-serif;
-  height       : 400px;
-  border       : 0;
-  outline      : 0;
-  height       : 34dvh;
-  height       : 34dvh;
-  height       : 30dvh;
-  margin-bottom: 50px;
-  margin-bottom: 45px;
+  resize     : none;
+  font-size  : 100%;
+  width      : 100%;
+  font-family: sans-serif;
+  height     : 400px;
+  border     : 0;
+  outline    : 0;
+  height     : 34dvh;
+  height     : 34dvh;
+  height     : 30dvh;
+  padding    : 1rem;
 }
 
 .nav-icon-parent {
