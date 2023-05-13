@@ -836,16 +836,9 @@ li.todo {
 }
 
 .editModalActions {
-  /* justify-content      : flex-end;
-  position             : fixed;
-  bottom               : 0;
-  margin               : 10px 0;
-  right                : 20px;
-  width                : 100%; */
-
   display           : flex;
   justify-content   : center;
-  align-items       : center;
+  /* align-items    : center; */
   flex              : 1;
   gap               : 1rem;
   /* position       : absolute; */
@@ -854,13 +847,13 @@ li.todo {
   /* left           : 0; */
   right             : 0;
   bottom            : 0;
-  margin            : 10px 0;
+  /* margin         : 10px 0; */
   /* margin-top     : 1rem; */
   /* right          : 20px; */
   width             : 100%;
   flex-wrap         : wrap;
   transition        : all .3s ease-in-out;
-
+  padding-bottom    : 1rem;
 }
 
 .editModalActions>* {
@@ -887,10 +880,16 @@ li.todo {
 
 
 .editModalActions select {
-  font-size    : 1rem;
-  border-radius: .5rem;
-  padding      : .5rem;
-  border       : 0;
+  font-size         : 1rem;
+  /* border-radius  : 0.5rem; */
+  padding           : 0.5rem;
+  border            : 0;
+  display           : flex;
+  /* align-content  : stretch; */
+  /* flex           : 1; */
+  width             : 100%;
+  /* justify-content: center; */
+  align-items       : center;
 }
 
 .editModalActions select:focus-visible {
@@ -905,7 +904,7 @@ li.todo {
   min-width    : 100px;
   cursor       : pointer;
   user-select  : none;
-
+  width        : 45%;
 }
 
 .editCloseBtn {

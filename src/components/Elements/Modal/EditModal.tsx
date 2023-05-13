@@ -63,15 +63,21 @@ export default function EditModal(props: {
     ),
     [todo, text, label]
   );
-
   const inputRef = useRef(null);
+  const { labels } = useContext(AppContext) as AppContextType;
+  const getLabel = labels.find((l) => l.id === todo?.label);
+
+  // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
   useEffect(() => {
     if (todo) {
       settext(todo.text);
+      // setlabel(todo.label);
+    }
+    if (todo?.label) {
+      setlabel(getLabel?.id);
     }
   }, [todo]);
 
-  
   function close() {
     if (exitWithoutSaving) {
       confirmModalRef.current?.showModal();
@@ -80,21 +86,10 @@ export default function EditModal(props: {
       console.log('close edit');
     }
   }
-  const { labels } = useContext(AppContext) as AppContextType;
-  // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
-  const getLabel = labels.find((l) => l.id === todo?.label);
-  useEffect(() => {
-    if (todo?.label) {
-      setlabel(getLabel?.id);
-    }
-  }, [todo]);
 
   return (
     <>
-      <ConfirmModal
-        confirmModalRef={confirmModalRef}
-        closeEditModal={closeEditModal}
-      />
+      <ConfirmModal confirmModalRef={confirmModalRef} closeEditModal={closeEditModal} />
 
       <UpdatingModal UpdatingRef={UpdatingRef} />
 
@@ -125,6 +120,8 @@ export default function EditModal(props: {
             <div className="editModalActions">
               <select
                 defaultValue={todo.label ? todo.label : ''}
+                // defaultValue={getLabel ? getLabel?.id : ''}
+                // defaultValue={todo.label || label === todo.label ? todo.label : ''}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value !== '') {

@@ -17,6 +17,7 @@ import {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CustomConsole } from './CustomConsole';
 import Dialog from './Elements/Modal/Dialog';
 import Footer from './Footer';
 import Header from './Header';
@@ -24,9 +25,7 @@ import { RenderTodoList } from './RenderTodoList';
 import SelectAllBtn from './SelectAllBtn';
 import Tabs from './Tabs';
 import Toast from './Toast';
-import { CustomConsole } from './CustomConsole';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
-import { motion } from 'framer-motion';
 const renderLoader = () => <p>Loading...</p>;
 export default function Home() {
   const navigate = useNavigate();
@@ -105,12 +104,16 @@ export default function Home() {
     editModalRef.current?.close();
     if (todo) {
       settext(todo.text!);
+      setlabel(todo.label!);
     }
+    // if (todo?.label) {
+    //   setlabel(todo?.label!);
+    // }
   }, [todo]);
   function openEditModal() {
     editModalRef.current?.showModal();
   }
-  const exitWithoutSaving = text !== todo?.text;
+  const exitWithoutSaving = text !== todo?.text || label !== todo?.label;
   function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
     const dialog = document.querySelector('dialog');
     if (e.target === dialog) {
