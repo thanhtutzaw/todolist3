@@ -81,6 +81,7 @@ export default function Draggable({
   //   setRightConstraint(rightConstraint);
   // }, []);
   const [rightConstraint, setRightConstraint] = useState(0);
+  // console.log('rendering');
   return mounted ? (
     <motion.div
       // onWheel={(e) => {

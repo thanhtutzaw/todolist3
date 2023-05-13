@@ -78,6 +78,11 @@ export function RenderTodoList(props: {
             key={todo?.id}
           />
         ))}
+      {filter.length === 0 && !loading && tab !== '' && tab !== 'all' && (
+        <h5 className="empty" style={{ opacity: '.1' }}>
+          Empty Notes in this Label !{' '}
+        </h5>
+      )}
     </ul>
   );
 }

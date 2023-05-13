@@ -129,6 +129,7 @@ section:not(.tabSection),
   right      : 50%;
   transform  : translate(50%, -50%);
   user-select: none;
+  width:100%;
 }
 
 main>a>button {
