@@ -12,17 +12,25 @@ const Footer = memo(
     inputRef: RefObject<HTMLInputElement>;
     handleSubmit: FormEventHandler<HTMLFormElement>;
     selectCount: boolean;
+    label: string | null;
   }) => {
     const { labels } = useContext(AppContext) as AppContextType;
-    const { addLabelRef, setlabel, SelectModalMounted, inputRef, handleSubmit, selectCount } =
-      props;
+    const {
+      label,
+      addLabelRef,
+      setlabel,
+      SelectModalMounted,
+      inputRef,
+      handleSubmit,
+      selectCount,
+    } = props;
     // const getLabel = labels.find((l) => l.id === todo?.label);
-    const [createNew, setcreateNew] = useState(false);
     const [selectMounted, setSelectMounted] = useState(false);
     return (
       <footer className="nav" style={{ pointerEvents: selectCount ? 'none' : 'initial' }}>
         <form onSubmit={handleSubmit}>
           <select
+            value={label ?? ''}
             style={{
               opacity: selectMounted ? '1' : '0',
               visibility: selectMounted ? 'visible' : 'hidden',
@@ -31,7 +39,8 @@ const Footer = memo(
               const value = e.target.value;
               if (value !== '') {
                 setlabel(e.target.value);
-                // alert(e.target.value);
+              } else if (value === '' && !SelectModalMounted) {
+                setlabel(null);
               }
               if (value === 'add') {
                 setTimeout(() => {
@@ -54,7 +63,8 @@ const Footer = memo(
                 {l.text}
               </option>
             ))}
-            <option value={'add'}>{createNew ? 'input' : '+ Create New'}</option>
+            <option value={'add'}>Create New</option>
+            {/* <option value={'add'}>{createNew ? 'input' : '+ Create New'}</option> */}
           </select>
           <input
             // onFocus={() => {

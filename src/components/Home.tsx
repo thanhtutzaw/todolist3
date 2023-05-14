@@ -102,14 +102,24 @@ export default function Home() {
   );
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
-    if (todo) {
+    if (todo && SelectedID.length !== 0) {
       settext(todo.text!);
       setlabel(todo.label!);
+    } else {
+      settext(null);
+      setlabel(null);
     }
+    // if(SelectedID.length)
+    // alert(label);
+
     // if (todo?.label) {
     //   setlabel(todo?.label!);
     // }
-  }, [todo]);
+  }, [todo, label, SelectedID]);
+  // useEffect(() => {
+  //   console.log(label ?? '');
+  // }, [label]);
+
   function openEditModal() {
     editModalRef.current?.showModal();
   }
@@ -140,6 +150,14 @@ export default function Home() {
   const addLabelRef = useRef(null);
   // const user = auth.currentUser;
   // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
+  useEffect(() => {
+    if (SelectedID.length === 0) {
+      setlabel(null);
+    } else {
+      setlabel(todo?.label!);
+    }
+  }, [SelectedID, todo]);
+
   return (
     <main>
       <Toast todoRef={todoRef} SelectedID={SelectedID} clearSelect={clearSelect} />
@@ -209,6 +227,7 @@ export default function Home() {
       </section>
 
       <Footer
+        label={label}
         addLabelRef={addLabelRef}
         setlabel={setlabel}
         SelectModalMounted={SelectModalMounted}

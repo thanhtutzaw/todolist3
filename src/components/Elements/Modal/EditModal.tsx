@@ -65,18 +65,33 @@ export default function EditModal(props: {
   );
   const inputRef = useRef(null);
   const { labels } = useContext(AppContext) as AppContextType;
-  const getLabel = labels.find((l) => l.id === todo?.label);
-
+  // const getLabel = labels.find((l) => l.id === todo?.label);
+  const getLabel = labels.find((l) => l.id === label);
+  const [defaultValue, setdefaultValue] = useState('');
   // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
   useEffect(() => {
     if (todo) {
+      // settext(getLabel?.text);
       settext(todo.text);
       // setlabel(todo.label);
+      // settext(todo.label);
+      // settext(todo.text);
+      // setlabel(todo.label);
+      // setlabel(todo.label);
     }
-    if (todo?.label) {
-      setlabel(getLabel?.id);
+    if (label === null) {
+      setlabel(todo?.label);
     }
-  }, [todo]);
+    // if (todo?.label === getLabel?.id) {
+    //   setdefaultValue(todo?.label!);
+    // } else {
+    //   setdefaultValue(label!);
+    // }
+
+    // if (todo?.label) {
+    //   setlabel(getLabel?.id);
+    // }
+  }, [todo, label, getLabel]);
 
   function close() {
     if (exitWithoutSaving) {
@@ -119,17 +134,25 @@ export default function EditModal(props: {
 
             <div className="editModalActions">
               <select
-                defaultValue={todo.label ? todo.label : ''}
+                value={label!}
+                // defaultValue={label! !== todo.label ? getLabel?.id : todo.label}
+                // defaultValue={defaultValue}
+                // value={label! !== todo.label ? getLabel?.id : todo.label}
+                // defaultValue={todo.label ? todo.label : ''}
                 // defaultValue={getLabel ? getLabel?.id : ''}
                 // defaultValue={todo.label || label === todo.label ? todo.label : ''}
                 onChange={(e) => {
                   const value = e.target.value;
                   if (value !== '') {
                     setlabel(e.target.value);
+                  } else {
+                    setlabel('');
                   }
                 }}
               >
-                <option value="">Change Label</option>
+                <option value="">
+                  {todo.label === null || label === '' ? 'Add Label' : 'Remove Label'}
+                </option>
                 {labels.map((l) => (
                   <option
                     key={l.id?.toString()}
