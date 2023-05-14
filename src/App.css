@@ -1141,22 +1141,32 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
 }
 
 .nav select {
-  position           : absolute;
-  top                : 0;
-  left               : 25px;
-  opacity            : 0;
-  visibility         : hidden;
-  font-size          : 1rem;
-  padding            : 0.5rem;
-  /* background-color: var(--main-color); */
-  /* outline         : 0.5px solid var(--light-text); */
-  border             : 0;
-  border-radius      : 100px;
-  background-color   : rgb(0 0 0 / 50%);
-  /* background      : transparent; */
-  color              : white;
-  outline            : 1px solid #ffffff47;
-  cursor             : pointer;
+  position              : absolute;
+  top                   : 0;
+  left                  : 25px;
+  opacity               : 0;
+  visibility            : hidden;
+  font-size             : 1rem;
+  padding               : 0.5rem;
+  /* background-color   : var(--main-color); */
+  /* outline            : 0.5px solid var(--light-text); */
+  border                : 0;
+  border-radius         : 100px;
+  /* background-color   : rgb(0 0 0 / 50%); */
+  background-color      : rgba(230, 230, 230, 0.5);
+  /* background         : transparent; */
+  color                 : rgb(87, 87, 87);
+  outline               : 1px solid #ffffff47;
+  cursor                : pointer;
+  backdrop-filter       : blur(3px);
+}
+
+.nav select>* {
+  background-color: var(--light-bg) !important;
+  color           : var(--light-text);
+  backdrop-filter : blur(3px);
+  cursor          : pointer;
+
 }
 
 .add-btn-parent {
@@ -1191,10 +1201,12 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   border          : 1px solid rgba(0, 0, 0, .2);
   background-color: var(--background-gray);
   border-radius   : 5px;
-  padding         : 0.5em;
-  font-size       : 1rem;
+  padding         : 0.5rem 1rem;
+  font-size       : 100%;
   flex            : 1;
   width           : 100%;
+  border-radius   : 100px;
+  position        : relative;
 }
 
 /* .input-text:focus-within select {

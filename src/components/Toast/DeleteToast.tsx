@@ -77,9 +77,7 @@ export default function DeleteToast(props: { setcancelDelete: Function; cancelDe
       {deleteloading
         ? cancelDelete && (
             <>
-              {deleteloading && (
-                <img width={50} src="/assets/cat-spinner.gif" alt="deleting" />
-              )}
+              {deleteloading && <img width={50} src="/assets/cat-spinner.gif" alt="deleting" />}
               <p>Deleting {`in ${undoCounter}s`}</p>
               <Button tabIndex={0} theme="secondary" onClick={handleUndo} className={s.undoBtn}>
                 Undo
