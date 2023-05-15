@@ -782,17 +782,17 @@ li.todo {
 
 
 .label {
-    background-color: var(--main-color);
-    font-size: 1rem;
-    color: var(--btn-text-primary);
-    padding: 6px 12px;
-    border-radius: 100px;
-    user-select: none;
-    max-width: 100px;
-    word-wrap: break-word;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+  background-color: var(--main-color);
+  font-size       : 1rem;
+  color           : var(--btn-text-primary);
+  padding         : 6px 12px;
+  border-radius   : 100px;
+  user-select     : none;
+  max-width       : 100px;
+  word-wrap       : break-word;
+  white-space     : nowrap;
+  text-overflow   : ellipsis;
+  overflow        : hidden;
 }
 
 #editModal::backdrop,
@@ -1208,6 +1208,11 @@ section.todo-parent.row>ul>span>span:nth-child(1) {
   position        : relative;
 }
 
+.input-text:focus {
+  /* outline: 0; */
+  outline: 1px solid var(--main-color)
+}
+
 /* .input-text:focus-within select {
   opacity   : 1 !important;
   visibility: visible !important;
@@ -1342,6 +1347,31 @@ select>option {
   height          : 50px;
   padding         : 15px;
   border          : 1px solid rgb(41, 18, 18);
+}
+
+.login {
+  display           : flex;
+  justify-content   : space-around;
+  align-items       : center;
+  flex-direction    : column;
+  /* animation      : space forwards 1s ease-in-out; */
+  transition        : all .3s ease-in-out;
+  /* background     : radial-gradient(rgb(255 255 255 / 0%), #1c9dff); */
+  /* background     : linear-gradient(45deg, var(--main-color), #191919); */
+}
+
+/* .login p {
+  color  : var(--main-color);
+} */
+
+@keyframes space {
+  from {
+    justify-content: center;
+  }
+
+  to {
+    justify-content: space-around;
+  }
 }
 
 .loginIcon {

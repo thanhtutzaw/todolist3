@@ -55,7 +55,6 @@ html[theme="dark"] .input-text {
 }
 
 html[theme="dark"] .tabItem {
-    /* color: var(--btn-text-primary); */
     color           : #d0d0d0;
     background-color: rgba(49, 49, 49, 0.63);
 }
@@ -79,7 +78,6 @@ html[theme="dark"] .nav {
 }
 
 html[theme="dark"] .nav select {
-    /* background-color: rgb(255, 255, 255) !important; */
     background-color: rgb(0 0 0 / 50%);
     color           : white;
 }
