@@ -782,18 +782,17 @@ li.todo {
 
 
 .label {
-  background-color: var(--main-color);
-  font-size       : 14px;
-  color           : var(--btn-text-primary);
-  padding         : 6px 10px;
-  border-radius   : 100px;
-  user-select     : none;
-  letter-spacing  : .5px;
-  max-width       : 100px;
-  word-wrap       : break-word;
-  white-space     : nowrap;
-  text-overflow   : ellipsis;
-  overflow        : hidden;
+    background-color: var(--main-color);
+    font-size: 1rem;
+    color: var(--btn-text-primary);
+    padding: 6px 12px;
+    border-radius: 100px;
+    user-select: none;
+    max-width: 100px;
+    word-wrap: break-word;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 #editModal::backdrop,
