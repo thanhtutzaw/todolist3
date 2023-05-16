@@ -90,7 +90,7 @@ export default function DeleteToast(props: { setcancelDelete: Function; cancelDe
               {!deleting ? (
                 <img
                   width={50}
-                  src="/assets/cat-spinner.gif"
+                  src="/assets/checked.gif"
                   alt="delete successful"
                   aria-label="delete successful"
                 />

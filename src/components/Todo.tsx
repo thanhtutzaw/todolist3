@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
 import 'react-loading-skeleton/dist/skeleton.css';
 const Todolist = (props: {
-  addLoading: boolean;
   SelectedID: number[];
   todo: todosProps | null;
   setSelectedID: Function;

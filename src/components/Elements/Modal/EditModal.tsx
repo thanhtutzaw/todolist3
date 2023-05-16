@@ -67,17 +67,20 @@ export default function EditModal(props: {
   const { labels } = useContext(AppContext) as AppContextType;
   // const getLabel = labels.find((l) => l.id === todo?.label);
   const getLabel = labels.find((l) => l.id === label);
-  const [defaultValue, setdefaultValue] = useState('');
+  // const [defaultValue, setdefaultValue] = useState('');
   // const getLabel = labels?.find((l) => l.id.toString() === todo?.label);
   useEffect(() => {
     if (todo) {
+      // settext(todo.text);
       // settext(getLabel?.text);
-      settext(todo.text);
       // setlabel(todo.label);
       // settext(todo.label);
       // settext(todo.text);
       // setlabel(todo.label);
       // setlabel(todo.label);
+    }
+    if (text === null) {
+      settext(todo?.text);
     }
     if (label === null) {
       setlabel(todo?.label);
@@ -134,7 +137,7 @@ export default function EditModal(props: {
 
             <div className="editModalActions">
               <select
-                value={label!}
+                value={label ?? ''}
                 // defaultValue={label! !== todo.label ? getLabel?.id : todo.label}
                 // defaultValue={defaultValue}
                 // value={label! !== todo.label ? getLabel?.id : todo.label}

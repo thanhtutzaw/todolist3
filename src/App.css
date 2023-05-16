@@ -671,11 +671,6 @@ html[theme="dark"] .react-loading-skeleton {
   margin             : 0 5px;
 }
 
-.selectModal button:active {
-  /* background-color: rgba(255 255 255 / .8); */
-  /* background-color: rgb(243, 243, 243); */
-}
-
 .messageBox {
   position      : fixed;
   right         : 0;
@@ -927,12 +922,6 @@ li.todo {
   /* background-color: rgb(11, 147, 201); */
   background-color: rgb(0, 140, 255);
 }
-
-.updateBtn:focus {
-  /* background-color: rgb(11, 147, 201); */
-  /* background-color: red; */
-}
-
 
 ul li {
   list-style: none;

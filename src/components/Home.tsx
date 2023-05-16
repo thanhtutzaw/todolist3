@@ -44,7 +44,6 @@ export default function Home() {
     useSelect(todos);
 
   // const pendingOps = new Set();
-  const [addLoading, setAddLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -90,7 +89,7 @@ export default function Home() {
     }
   }, [selecting]);
 
-  const todo = todos !== null ? todos?.find((t) => t?.id === SelectedID.toString()) : null;
+  const todo = todos?.find((t) => t?.id === SelectedID.toString()) ?? null;
   const [text, settext] = useState(todo?.text || null);
   const [label, setlabel] = useState(todo?.label || null);
   const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
@@ -102,27 +101,18 @@ export default function Home() {
   );
   const closeEditModal = useCallback(() => {
     editModalRef.current?.close();
+    if (todo) {
+      // settext(todo.text!);
+    }
     if (todo && SelectedID.length !== 0) {
       settext(todo.text!);
       setlabel(todo.label!);
     } else {
+      alert('this should not run');
       settext(null);
       setlabel(null);
     }
-    // if(SelectedID.length)
-    // alert(label);
-
-    // if (todo?.label) {
-    //   setlabel(todo?.label!);
-    // }
   }, [todo, label, SelectedID]);
-  // useEffect(() => {
-  //   console.log(label ?? '');
-  // }, [label]);
-
-  function openEditModal() {
-    editModalRef.current?.showModal();
-  }
   const exitWithoutSaving = text !== todo?.text || label !== todo?.label;
   function confirmEditModal(e: MouseEvent<HTMLDialogElement>) {
     const dialog = document.querySelector('dialog');
@@ -135,21 +125,14 @@ export default function Home() {
       }
     }
   }
-  const NotCompleteTodo = todos.filter((todo) => todo?.completed !== true);
+  const NotCompleteTodo = todos.filter((todo) => todo?.completed === false);
   const todoCount = NotCompleteTodo.length;
-  // const [filteredTodos, setFilteredTodos] = useState<todosProps[] | null[]>(todos);
-  // let filteredTodos: todosProps[] | null[];
 
-  // useEffect(() => {
-  //   filteredTodos = todos;
-  // }, [todos]);
   const auth = getAuth();
   const constraintsRef = useRef<HTMLDivElement>(null);
   const tabWidth = useRef<HTMLDivElement>(null);
 
   const addLabelRef = useRef(null);
-  // const user = auth.currentUser;
-  // if (!user) return <>{<p style={{ color: 'var(--light-text)' }}>Loading...</p>}</>;
   useEffect(() => {
     if (SelectedID.length === 0) {
       setlabel(null);
@@ -166,7 +149,7 @@ export default function Home() {
         <SelectModal
           exitWithoutSaving={exitWithoutSaving}
           confirmModalRef={confirmModalRef}
-          openEditModal={openEditModal}
+          openEditModal={() => editModalRef.current?.showModal()}
           clearSelect={clearSelect}
           SelectedID={SelectedID}
           selecting={selecting}
@@ -217,7 +200,6 @@ export default function Home() {
 
       <section className={`todo-parent row`}>
         <RenderTodoList
-          addLoading={addLoading}
           todoRef={todoRef}
           selectCount={selectCount}
           setselectCount={setselectCount}

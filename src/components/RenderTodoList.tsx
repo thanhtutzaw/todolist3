@@ -3,24 +3,14 @@ import { AppContextType, todosProps } from '@/types';
 import { RefObject, useContext, useEffect } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import Todo from './Todo';
-
-// export function RenderTodoList(props: {
-//   todoRef: RefObject<HTMLUListElement>;
-//   SelectedID: number[];
-//   selectCount: boolean;
-//   addLoading: boolean;
-//   setSelectedID: Function;
-//   setselectCount: Function;
-// }) {
 export function RenderTodoList(props: {
-  addLoading: any;
   todoRef: RefObject<HTMLUListElement>;
-  selectCount: any;
-  setselectCount: any;
-  SelectedID: any;
-  setSelectedID: any;
+  selectCount: boolean;
+  setselectCount: Function;
+  SelectedID: number[];
+  setSelectedID: Function;
 }) {
-  const { addLoading, todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
+  const { todoRef, selectCount, setselectCount, SelectedID, setSelectedID } = props;
 
   const { tab, filter, setfilter, loading, todos, labels } = useContext(
     AppContext
@@ -70,7 +60,6 @@ export function RenderTodoList(props: {
       {!loading &&
         filter.map((todo) => (
           <Todo
-            addLoading={addLoading}
             todo={todo}
             setselectCount={setselectCount}
             SelectedID={SelectedID}
