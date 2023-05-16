@@ -996,14 +996,15 @@ ul li {
 }
 
 .todo-parent {
-  text-align        : center;
-  height            : 70vh;
-  min-height        : 400px;
-  padding-bottom    : 3rem;
-  overflow-y        : auto;
-  display           : block;
-  padding-top       : 50px;
-  scroll-padding-top: 50px;
+  text-align           : center;
+  height               : 70vh;
+  min-height           : 400px;
+  /* padding-bottom    : 3rem; */
+  overflow-y           : auto;
+  display              : block;
+  padding-top          : 50px;
+  scroll-padding-top   : 50px;
+  padding-bottom       : 0;
 }
 
 section.todo-parent.row>ul>span>span:nth-child(1) {
