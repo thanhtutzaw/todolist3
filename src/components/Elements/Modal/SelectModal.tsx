@@ -1,11 +1,12 @@
 import { AppContext } from '@/Context/AppContext';
-import { AppContextType } from '@/types';
+import { AppContextType, todosProps } from '@/types';
 import { MouseEventHandler, RefObject, useContext, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import Button from '../Button/Button';
 
 export default function SelectModal(props: {
+  todo: todosProps | null;
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
@@ -19,8 +20,15 @@ export default function SelectModal(props: {
   const unmountStyle = {
     animation: 'selectUnmount 250ms ease-out',
   };
-  const { exitWithoutSaving, confirmModalRef, selecting, SelectedID, clearSelect, openEditModal } =
-    props;
+  const {
+    todo,
+    exitWithoutSaving,
+    confirmModalRef,
+    selecting,
+    SelectedID,
+    clearSelect,
+    openEditModal,
+  } = props;
   const {
     editModalRef,
     openDeleteModal,
@@ -34,7 +42,7 @@ export default function SelectModal(props: {
     function handleEscape(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         if (exitWithoutSaving) {
-          console.log("confirm update");
+          console.log('confirm update');
           editModalRef.current?.showModal();
           confirmModalRef.current?.showModal();
         }
@@ -68,6 +76,7 @@ export default function SelectModal(props: {
         </IconContext.Provider>
         <p className="selectCount">{SelectedID.length}</p>
       </div>
+      <h1>{SelectedID.toString() === todo?.id ? 'true' : 'false'}</h1>
       <div>
         <Button
           tabIndex={controlTabkey}

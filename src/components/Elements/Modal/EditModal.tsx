@@ -72,29 +72,19 @@ export default function EditModal(props: {
   useEffect(() => {
     if (todo) {
       // settext(todo.text);
-      // settext(getLabel?.text);
-      // setlabel(todo.label);
-      // settext(todo.label);
-      // settext(todo.text);
-      // setlabel(todo.label);
-      // setlabel(todo.label);
     }
     if (text === null) {
-      settext(todo?.text);
+      // settext(todo?.text);
     }
     if (label === null) {
       setlabel(todo?.label);
     }
-    // if (todo?.label === getLabel?.id) {
-    //   setdefaultValue(todo?.label!);
-    // } else {
-    //   setdefaultValue(label!);
-    // }
-
-    // if (todo?.label) {
-    //   setlabel(getLabel?.id);
-    // }
   }, [todo, label, getLabel]);
+  useEffect(() => {
+    if (todo) {
+      settext(todo?.text);
+    }
+  }, [todo]);
 
   function close() {
     if (exitWithoutSaving) {
@@ -134,7 +124,7 @@ export default function EditModal(props: {
               }}
               className="textarea"
             />
-
+            {/* <h1>{selectei}</h1> */}
             <div className="editModalActions">
               <select
                 value={label ?? ''}

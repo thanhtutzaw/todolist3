@@ -107,10 +107,6 @@ export default function Home() {
     if (todo && SelectedID.length !== 0) {
       settext(todo.text!);
       setlabel(todo.label!);
-    } else {
-      alert('this should not run');
-      settext(null);
-      setlabel(null);
     }
   }, [todo, label, SelectedID]);
   const exitWithoutSaving = text !== todo?.text || label !== todo?.label;
@@ -147,6 +143,7 @@ export default function Home() {
       <CustomConsole message={message} dummyRef={dummyRef} />
       {SelectModalMounted && (
         <SelectModal
+          todo={todo}
           exitWithoutSaving={exitWithoutSaving}
           confirmModalRef={confirmModalRef}
           openEditModal={() => editModalRef.current?.showModal()}
@@ -156,10 +153,12 @@ export default function Home() {
         />
       )}
 
-      {EditModalMounted && todo && (
+      {EditModalMounted && todo && todo?.id === SelectedID.toString() && (
         <Dialog id="editModal" onClick={confirmEditModal} ref={editModalRef}>
           <Suspense fallback={renderLoader()}>
             <EditModal
+              // key={todo?.id}
+              // key={SelectedID.toString()}
               exitWithoutSaving={exitWithoutSaving}
               confirmModalRef={confirmModalRef}
               label={label}
