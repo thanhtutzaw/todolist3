@@ -76,7 +76,6 @@ export default function SelectModal(props: {
         </IconContext.Provider>
         <p className="selectCount">{SelectedID.length}</p>
       </div>
-      <h1>{SelectedID.toString() === todo?.id ? 'true' : 'false'}</h1>
       <div>
         <Button
           tabIndex={controlTabkey}
