@@ -25,9 +25,6 @@ Project is created with:
 ![Todo-React-App2](https://user-images.githubusercontent.com/71011043/235667990-ea94ea1b-30d0-4c8f-8cd6-448c16d8b1ff.png)
 ![Todo-React-App](https://github.com/thanhtutzaw/todolist3/assets/71011043/bbb5febf-d64a-4a3a-9505-e517c14cdaac)
 
-
-
-
 ## NoSQL document database
 ![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
 

@@ -1,12 +1,11 @@
 import { AppContext } from '@/Context/AppContext';
-import { AppContextType, todosProps } from '@/types';
+import { AppContextType } from '@/types';
 import { MouseEventHandler, RefObject, useContext, useEffect } from 'react';
 import { IconContext } from 'react-icons';
 import { GrClose } from 'react-icons/gr';
 import Button from '../Button/Button';
 
 export default function SelectModal(props: {
-  todo: todosProps | null;
   SelectedID: number[];
   selecting: boolean;
   clearSelect: Function;
@@ -20,15 +19,8 @@ export default function SelectModal(props: {
   const unmountStyle = {
     animation: 'selectUnmount 250ms ease-out',
   };
-  const {
-    todo,
-    exitWithoutSaving,
-    confirmModalRef,
-    selecting,
-    SelectedID,
-    clearSelect,
-    openEditModal,
-  } = props;
+  const { exitWithoutSaving, confirmModalRef, selecting, SelectedID, clearSelect, openEditModal } =
+    props;
   const {
     editModalRef,
     openDeleteModal,

@@ -16,7 +16,6 @@ export type AppContextType = {
   tabRef: RefObject<HTMLDivElement>;
   deleting: boolean;
   openDeleteToast: boolean;
-  // timeAgo: Function;
   setopenDeleteToast: Function;
   dateLocale: string;
   setDateLocale: Function;

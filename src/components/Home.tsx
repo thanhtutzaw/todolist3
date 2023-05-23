@@ -27,6 +27,7 @@ import Tabs from './Tabs';
 import Toast from './Toast';
 const EditModal = lazy(() => import('@/components/Elements/Modal/EditModal'));
 const renderLoader = () => <p>Loading...</p>;
+
 export default function Home() {
   const navigate = useNavigate();
   const [message, setMessage] = useState<string[]>([]);
@@ -34,10 +35,9 @@ export default function Home() {
   const todoRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const confirmModalRef = useRef<HTMLDialogElement>(null);
-  const { todos, settodos } = useContext(AppContext) as AppContextType;
   const [EditModalMounted, setEditModalMounted] = useState(false);
   const [SelectModalMounted, setSelectModalMounted] = useState(false);
-  const { DeleteModalMounted, editModalRef, setisPrevent } = useContext(
+  const { todos, settodos, DeleteModalMounted, editModalRef, setisPrevent } = useContext(
     AppContext
   ) as AppContextType;
   const { SelectedID, setSelectedID, selectCount, setselectCount, clearSelect, selectAll } =
@@ -143,7 +143,6 @@ export default function Home() {
       <CustomConsole message={message} dummyRef={dummyRef} />
       {SelectModalMounted && (
         <SelectModal
-          todo={todo}
           exitWithoutSaving={exitWithoutSaving}
           confirmModalRef={confirmModalRef}
           openEditModal={() => editModalRef.current?.showModal()}
@@ -157,8 +156,6 @@ export default function Home() {
         <Dialog id="editModal" onClick={confirmEditModal} ref={editModalRef}>
           <Suspense fallback={renderLoader()}>
             <EditModal
-              // key={todo?.id}
-              // key={SelectedID.toString()}
               exitWithoutSaving={exitWithoutSaving}
               confirmModalRef={confirmModalRef}
               label={label}
