@@ -27,7 +27,7 @@ Project is created with:
 ![Todo-React-App](https://github.com/thanhtutzaw/todolist3/assets/71011043/bbb5febf-d64a-4a3a-9505-e517c14cdaac)
 
 ## NoSQL document database
-![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
+![database](https://github.com/thanhtutzaw/todolist3/assets/71011043/b73cd2cb-17dc-4d91-884d-be4cc5604831)
 
 ## Demo
 [Todo React App](https://todolistzee3.netlify.app)
