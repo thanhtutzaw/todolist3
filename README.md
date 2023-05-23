@@ -1,12 +1,13 @@
-<h1>A To-Do List Web Application with React and Firebase 🔥</h1>
+
+<div align="center">
+<img src="public/assets/logo.svg" width="100" height="100" alt="logo" title="logo" /></div>
+<h1 >A To-Do List Web Application with React and Firebase 🔥</h1>
 
 Project is created with:
 * React, Vite and Typescript
 * Google Sign-in and [Cloud Firestore](https://github.com/thanhtutzaw/todolist3/blob/main/README.md#nosql-document-database)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 * [React-Icons](https://www.npmjs.com/package/react-icons)
-
-<img src="public/assets/logo512.svg" width="100" height="100" alt="logo512" title="logo512" /> <img src="public/assets/logo.svg" width="100" height="100" alt="logo" title="logo" />
 
 ## Features
 :ballot_box_with_check:	Items Selector\
@@ -26,7 +27,7 @@ Project is created with:
 ![Todo-React-App](https://github.com/thanhtutzaw/todolist3/assets/71011043/bbb5febf-d64a-4a3a-9505-e517c14cdaac)
 
 ## NoSQL document database
-![database](https://user-images.githubusercontent.com/71011043/201272064-33d7e78e-ff79-49e1-9cfc-d7b6965cf386.png)
+![database](https://github.com/thanhtutzaw/todolist3/assets/71011043/b73cd2cb-17dc-4d91-884d-be4cc5604831)
 
 ## Demo
 [Todo React App](https://todolistzee3.netlify.app)
