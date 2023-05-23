@@ -1,12 +1,13 @@
-<h1>A To-Do List Web Application with React and Firebase 🔥</h1>
+
+<div align="center">
+<img src="public/assets/logo.svg" width="100" height="100" alt="logo" title="logo" /></div>
+<h1 >A To-Do List Web Application with React and Firebase 🔥</h1>
 
 Project is created with:
 * React, Vite and Typescript
 * Google Sign-in and [Cloud Firestore](https://github.com/thanhtutzaw/todolist3/blob/main/README.md#nosql-document-database)
 * [React-Loading-Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
 * [React-Icons](https://www.npmjs.com/package/react-icons)
-
-<img src="public/assets/logo512.svg" width="100" height="100" alt="logo512" title="logo512" /> <img src="public/assets/logo.svg" width="100" height="100" alt="logo" title="logo" />
 
 ## Features
 :ballot_box_with_check:	Items Selector\
